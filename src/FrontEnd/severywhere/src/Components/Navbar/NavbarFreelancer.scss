@@ -1,0 +1,49 @@
+.navbarFreelancer{
+    // border: 1px solid #000;
+    background-image: url("./bg1.jpg");
+    background-size: auto;
+    background-repeat: repeat-y;
+    width: 10em;
+    height: calc(100vh - 3em);
+}
+
+.avatar img{
+    background: #FFFFFF;
+    width: 8em;
+    height: 8em;
+    border-radius: 100em;
+    margin: 2em auto 0.6em;
+}
+
+.avatar p{
+    color: #FFFFFF;
+    font-size: 0.8em;
+    margin: 0 auto 2.5em;
+}
+
+button{
+    width: 10em;
+    height: 3em;
+    margin: 1em auto;
+    border-radius: 1em;
+    border: none;
+    background: #0E4D90;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.focus{
+    background: #FFFFFF;
+    color: #0E4D90;
+}
+
+.fas{
+    font-size: 1.2em;
+    margin: 0 0.3em;
+}
+
+.textNavbar{
+    font-size: 0.85em;
+    margin: 0 0.1em; 
+}
