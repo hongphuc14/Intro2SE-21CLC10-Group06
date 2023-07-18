@@ -1,10 +1,12 @@
-.navbarFreelancer{
-    // border: 1px solid #000;
+.navbar-freelancer{
     background-image: url("./bg1.jpg");
     background-size: auto;
     background-repeat: repeat-y;
-    width: 10em;
-    height: calc(100vh - 3em);
+    width: 12em;
+    height: 100vh;
+    display: inline-block;
+    top: 3em;
+    position: fixed;
 }
 
 .avatar img{
@@ -22,10 +24,10 @@
 }
 
 button{
-    width: 10em;
-    height: 3em;
-    margin: 1em auto;
-    border-radius: 1em;
+    width: 13em;
+    height: 3.5em;
+    margin: 1.5em auto;
+    border-radius: 1.5em;
     border: none;
     background: #0E4D90;
     display: flex;
@@ -39,11 +41,10 @@ button{
 }
 
 .fas{
-    font-size: 1.2em;
-    margin: 0 0.3em;
+    font-size: 1.8em;
+    margin: 0 0.4em;
 }
 
 .textNavbar{
-    font-size: 0.85em;
     margin: 0 0.1em; 
 }

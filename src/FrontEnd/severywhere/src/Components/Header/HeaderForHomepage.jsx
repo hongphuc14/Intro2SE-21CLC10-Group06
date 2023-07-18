@@ -3,7 +3,7 @@ import logo from "./logo_horizon.png"
 
 export default function Header(){
     return(
-        <div className = "headerForHomepage">
+        <div className = "header-for-homepage">
             {/* <a href= "https://www.google.com/" target = "_self" className = "SE-logo"> */}
                 <img  src={logo} className="SE-logo" alt="logo" />
             {/* </a> */}

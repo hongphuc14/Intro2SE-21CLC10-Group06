@@ -1,6 +1,45 @@
-.input{
-    width: 50vw;
-    height: 1.5em;
-    background: black;
-    border-radius: 10em;
+.input-field{
+    width: 37.5em;
+    height: 3em;
+    color: #0E4D90;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    // background: red;
+}
+
+.input-field label {
+    min-width: 160px;
+}
+
+.input-field p{
+    display: inline;
+    color: #F71F39;
+}
+
+.input-field input, .input-field textarea{
+    min-width: 28em;
+    height: 2.3em;
+    background: white;
+    border: 0.1em solid #DEDEDE;
+    border-radius: 0.8em;  
+    font-family: 'RocknRoll One';
+    color: #7E94AB;
+    padding: 0.5em;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;        
+    // margin: 0 0 0 auto; 
+}
+
+.input-field input:focus-within, .input-field textarea:focus-within{
+    border: 2px solid #0E4D90;
+    outline: none;
+}
+
+.input-field textarea{
+    align-self: flex-start;
+    margin-top: 1em;
+    height: 8em;
+    resize: none;
 }

@@ -1,4 +1,4 @@
-.headerForHomepage{
+.header-for-homepage{
     background-color: #0E4D90;
     box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.69);
     width: 100vw;
@@ -6,10 +6,10 @@
     display: flex; 
     align-items: center;
     z-index: 1;
-    position: relative;
+    position: fixed;
 }
 
-.headerForHomepage *{
+.header-for-homepage *{
     color: #FFFFFF;
     text-decoration: none;
     margin: 0 1em 0 0.9em;
@@ -18,9 +18,9 @@
 
 .SE-logo{
     height: 2.8em;
-    margin: 0 auto 0 1em;
+    margin: 0 auto 0 2em;
 }
 
-.headerForHomepage a:hover{
+.header-for-homepage a:hover{
     text-decoration: underline;
 }
