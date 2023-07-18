@@ -1,15 +1,13 @@
 .avatar-frame{
     width: 18em;
     height: 30em;
-    // background: red;
     display: inline-block;
     margin: 3em 1em 0;
-    // position: absolute;
 }
 
 .avatar-frame img {
-    height: 16.4em;
-    width: 16.4em;
+    height: 16em;
+    width: 16em;
     border-radius: 0.8em;
 }
 
@@ -34,14 +32,14 @@
     margin: 0.4em 0.8em;
     font-size: 1rem;
     text-align: center;
-    background: green;
+    background: #0C721F;
     color: white;
     border-radius: 1em;
 }
 
 .verified{
     width: 18em;
-    margin: 0.9em auto;
+    margin: 0.6em auto;
 }
 
 .verified .fas{

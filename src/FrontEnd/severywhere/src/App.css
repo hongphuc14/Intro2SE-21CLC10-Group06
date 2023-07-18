@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.main{
+.update-profile{
   display: flex;
   width: 100vw;
   position: relative;
@@ -13,7 +13,7 @@
   top: 3em;
 }
 
-.Form{
+.form{
   max-width: 30em;
   height: 35em;
   /* background: black; */
@@ -21,6 +21,24 @@
   text-align: start;
   display: inline-flex;
   flex-direction: column;
+}
+
+.hr{
+  height: 2px;
+  width: calc(100vwv - 18em);
+  background: #D8D8D8;
+  margin-left: 15em;
+  margin-top: -5em;
+}
+
+.show-attraction{
+  max-width: 30em;
+  height: 35em;
+  display: block;
+}
+
+.show-attraction p{
+  color: #0E4D90;
 }
 
 @media (prefers-reduced-motion: no-preference) {

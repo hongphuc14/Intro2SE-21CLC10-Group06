@@ -48,3 +48,7 @@ button{
 .textNavbar{
     margin: 0 0.1em; 
 }
+
+button:active{
+    transform: translateY(2px);
+}

@@ -1,0 +1,32 @@
+.button-upload, .button-save{
+    font-family: 'RocknRoll One';
+    display: inline-block;
+    background: #0E4D90;
+    height: 2.5em;
+    position: relative;
+    left: 1em;
+    top: 0;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.button-save{
+    left: 8em;
+    top: -9em;
+    background: #0C721F;
+}
+
+.button-upload:hover{
+    background: white;
+    border: 2px solid #0E4D90;
+    color: #0E4D90;
+}
+
+.button-save:active{
+    transform: translateY(2px);
+}
+
+.button-upload:disabled, .button-save:disabled{
+    background: #D8D8D8;
+}
+

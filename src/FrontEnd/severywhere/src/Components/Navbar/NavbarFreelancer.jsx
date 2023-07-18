@@ -12,7 +12,7 @@ function NavbarButtonFreelancer({icon, title, className}){
 function Avatar({img,fullname}){
     return(
         <div className = "avatar">
-            <img src={img}></img>
+            <img src={img} alt = "avatar"></img>
             <p>{fullname}</p>
         </div>
     )
