@@ -5,19 +5,22 @@
   position: relative;
 }
 
+.main{
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 12em);
+  margin-left: auto;
+  height: 200em;
+}
+
 .update-profile{
   display: flex;
-  width: 100vw;
-  position: relative;
-  left: 12em;
-  top: 3em;
+  margin: 6em auto 0;
 }
 
 .form{
   max-width: 30em;
-  height: 35em;
-  /* background: black; */
-  margin: 3em;
+  height: 28em;
   text-align: start;
   display: inline-flex;
   flex-direction: column;
@@ -25,20 +28,57 @@
 
 .hr{
   height: 2px;
-  width: calc(100vwv - 18em);
+  width: 50em;
   background: #D8D8D8;
-  margin-left: 15em;
-  margin-top: -5em;
+  margin: 4.5em auto;
 }
 
 .show-attraction{
-  max-width: 30em;
-  height: 35em;
-  display: block;
+  max-width: calc(100vw - 12em);
+  height: 73em;
 }
 
 .show-attraction p{
   color: #0E4D90;
+  font-size: 1.8em;
+  text-align: center;
+  margin: 0;
+}
+
+.show-attraction .button-save, .button-upload{
+  margin: 2em;
+}
+
+.setting{
+  height: 13em;
+  width: 51em;
+  text-align: start;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.setting .info, .change-pass {
+  width: 23em;
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+  /* background-color: yellow; */
+}
+
+.setting .info [type=email], .setting .info [type=password], .setting .change-pass [type] {
+  min-width: 19em;
+}
+
+.change-pass {
+  margin-left: auto;
+}
+
+.main a{
+  display: block;
+  font-size: 0.8em;
+  margin: 0 auto 2em 5em;
 }
 
 @media (prefers-reduced-motion: no-preference) {

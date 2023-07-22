@@ -1,6 +1,6 @@
-import './ButtonUpload.scss';
+import './ButtonUploadFreelancer.scss';
 
-export default function ButtonUpload({className, title, disabled}){
+export default function ButtonUploadFreelancer({className, title, disabled}){
     return(
         <button type="button" className = {className} disabled={disabled}>
             {title}

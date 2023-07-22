@@ -1,7 +1,7 @@
-import "./HeaderForHomepage.scss";
+import "./HeaderFreelancer.scss";
 import logo from "./logo_horizon.png"
 
-export default function Header(){
+export default function HeaderFreelancer(){
     return(
         <div className = "header-for-homepage">
             {/* <a href= "https://www.google.com/" target = "_self" className = "SE-logo"> */}

@@ -18,7 +18,7 @@ function Avatar({img,fullname}){
     )
 }
 
-export default function Navbar({img, fullname}){
+export default function NavbarNavbarFreelancer({img, fullname}){
     return(
         <div className = "navbar-freelancer">
             <Avatar img = {img} fullname = {fullname}/>

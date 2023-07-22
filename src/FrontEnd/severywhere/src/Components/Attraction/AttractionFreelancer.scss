@@ -1,0 +1,106 @@
+.attraction-frame{
+    width: 45em;
+    height: 20em;
+    margin: 1em auto 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.picture{
+    position: relative;
+}
+
+.picture img{
+    width: 18em;
+    height: 18em;
+    background: white;
+    border-radius: 0.8em;
+    object-fit: cover;
+}
+
+.picture .picture-bg {
+    width: 18em;
+    height: 18em;
+    border-radius: 0.8em;
+    background: rgba(14, 77, 144,0.5);
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picture .icon{
+    width: 3em;
+    height: 3em;
+    margin: 0 0.5em;
+    border-radius: 0.8em;
+    background-color: #0E4D90;
+    color: white;
+    visibility: hidden;
+    z-index: 1;
+}
+
+.picture .icon .fas{
+    font-size: 1.4em;
+    margin: 0.5em auto;
+}
+
+.picture:hover .picture-bg, .picture:hover .icon{
+    visibility: visible;
+    transition: .2s ease;
+}
+
+.picture .icon:hover{
+    background-color: #FFFFFF;
+    color: #0E4D90;
+}
+
+.attraction-frame .attraction{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 3.5em;
+    
+}
+
+.attraction-frame label{
+    text-align: left;
+    font-size: 0.8em;
+    color:#0E4D90;
+}
+
+.attraction-frame label::after{
+    content: " *";
+    color: red;
+}
+
+.attraction-frame input, .attraction-frame textarea{
+    min-width: 28em;
+    height: 2.3em;
+    margin-bottom: 1em;
+    background: white;
+    border: 0.1em solid #DEDEDE;
+    border-radius: 0.8em;  
+    color: #7E94AB;
+    font-family: 'RocknRoll One';
+    padding: 0.5em;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;      
+}
+
+.attraction-frame textarea{
+    height: 18em;
+    resize: none;
+}
+
+.attraction-frame:focus-within, 
+.attraction-frame input:focus-within, 
+.attraction-frame textarea:focus-within{
+    border: 2px solid #0E4D90;
+    outline: none;
+}
+

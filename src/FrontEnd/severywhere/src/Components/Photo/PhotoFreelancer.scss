@@ -2,31 +2,19 @@
     width: 18em;
     height: 30em;
     display: inline-block;
-    margin: 3em 1em 0;
+    margin-left: 3em;
 }
 
-.avatar-frame img {
-    height: 16em;
+.avatar-frame .picture img {
     width: 16em;
-    border-radius: 0.8em;
+    height: 16em;
 }
 
-// .avatar-hover{
-//     margin: 0 auto;
-//     height: 15em;
-//     width: 15em;
-//     border-radius: 0.8em;
-//     background: #0E4D90;
-//     z-index: 1;
-//     // position: absolute;
-// }
-
-// .avatar-frame img:hover{
-//     background: #0E4D90;
-//     // opacity: 0.7
-// }
-
-
+.avatar-frame .picture .picture-bg {
+    width: 16em;
+    height: 16em;
+    margin-left: 1em;
+}
 
 .verified, .verified .fas {
     margin: 0.4em 0.8em;

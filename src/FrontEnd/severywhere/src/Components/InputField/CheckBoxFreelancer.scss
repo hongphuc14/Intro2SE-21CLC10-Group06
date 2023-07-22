@@ -1,14 +1,13 @@
 .check-box{
     width: 100em;
-    height: 3em;
+    min-height: 3em;
     color: #0E4D90;
     font-size: 0.8em;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .check-box legend {
-    margin-top: 0.4em;
     min-width: 160px;
     padding: 0;
 }

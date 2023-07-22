@@ -1,6 +1,6 @@
 .input-field{
     width: 37.5em;
-    min-height: 3em;
+    min-height: 3.5em;
     color: #0E4D90;
     font-size: 0.8em;
     display: flex;
@@ -9,7 +9,7 @@
 }
 
 .input-field label {
-    margin-top: 0.4em;
+    margin-top: 0.3em;
     min-width: 160px;
 }
 
@@ -21,7 +21,7 @@
 
 .input-field input, .input-field textarea{
     min-width: 28em;
-    height: 2.3em;
+    height: 2.5em;
     background: white;
     border: 0.1em solid #DEDEDE;
     border-radius: 0.8em;  
@@ -37,6 +37,14 @@
 .input-field input:focus-within, .input-field textarea:focus-within{
     border: 2px solid #0E4D90;
     outline: none;
+}
+
+.input-field input:disabled{
+    background-color: #DEDEDE;
+}
+
+.input-field label.disabled, .input-field label.disabled p{
+    color: #DEDEDE;
 }
 
 .input-field textarea{
