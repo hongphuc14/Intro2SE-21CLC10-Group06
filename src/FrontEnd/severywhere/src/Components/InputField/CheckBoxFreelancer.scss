@@ -22,7 +22,7 @@
     margin-left: 1em;
 }
 
-input[type=checkbox]{
+.check-box input[type=checkbox]{
     width: 1.5em;
     height: 1.5em;
     border: 0.1em solid #DEDEDE;
@@ -34,12 +34,12 @@ input[type=checkbox]{
     -o-appearance: none;
 }
 
-input[type=checkbox]:checked{
+.check-box input[type=checkbox]:checked{
     border: none;
     background-color: #0E4D90
 }
 
-input[type=radio]{
+.check-box input[type=radio]{
     width: 1.5em;
     height: 1.5em;
     border: 0.1em solid #DEDEDE;
@@ -51,7 +51,7 @@ input[type=radio]{
     -o-appearance: none;
 }
 
-input[type=radio]:checked{
+.check-box input[type=radio]:checked{
     border: none;
     background-color: #0E4D90
 }

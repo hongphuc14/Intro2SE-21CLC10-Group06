@@ -26,7 +26,7 @@
     color: #0E4D90;
 }
 
-.button-save:active, .button-upload:active{
+.button-save:not(:disabled):active, .button-upload:not(:disabled):active{
     transform: translateY(2px);
 }
 

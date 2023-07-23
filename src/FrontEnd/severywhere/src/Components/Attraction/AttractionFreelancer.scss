@@ -45,7 +45,7 @@
 
 .picture .icon .fas{
     font-size: 1.4em;
-    margin: 0.5em auto;
+    margin: 0.6em auto;
 }
 
 .picture:hover .picture-bg, .picture:hover .icon{
@@ -56,6 +56,9 @@
 .picture .icon:hover{
     background-color: #FFFFFF;
     color: #0E4D90;
+    outline: 3px solid #0E4D90;
+    outline-offset: -3px;
+    transition: 0s ease;
 }
 
 .attraction-frame .attraction{
