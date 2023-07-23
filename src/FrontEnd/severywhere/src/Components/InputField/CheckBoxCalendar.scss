@@ -5,7 +5,7 @@
     align-items: center;
 }
 
-.check-box-calendar input{
+.check-box-calendar input, #free-cancallation{
     width: 2em;
     height: 2em;
     border-radius: 0.8em;
@@ -16,10 +16,6 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     -o-appearance: none;
-}
-
-.check-box-calendar label{
-    text-align: center;
 }
 
 .check-box-calendar input:disabled{

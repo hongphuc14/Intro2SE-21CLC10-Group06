@@ -178,10 +178,26 @@
 
 .main-calendar .input-field {
   margin-left: 6em;
+  margin-top: -0.5em;
 }
 .main-calendar [type=number]{
   min-width: 19em;
   margin-left: 4em;
+}
+
+.main-calendar > input{
+  position: absolute;
+  left: 6em;
+  top: 31.5em;
+  display: inline-block;
+}
+
+.main-calendar > label{
+  color: #0E4D90;
+  font-size: 0.8em;
+  position: absolute;
+  left: 9em;
+  top: 29.5em;
 }
 
 @media (prefers-reduced-motion: no-preference) {

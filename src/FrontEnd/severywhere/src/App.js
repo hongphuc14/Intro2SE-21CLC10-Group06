@@ -96,7 +96,6 @@ function App() {
     //           <InputFieldFreelancer title = "New password" type = "password" required disabled/>
     //           <InputFieldFreelancer title = "Confirm password" type = "password" required disabled/>
     //         </div>
-    //         <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" disabled />
     //       </div>
 
     //       <div class = "hr"></div>      
@@ -123,7 +122,7 @@ function App() {
                   <ButtonNextFreelancer next/>
                 </div>
                 <div className = "select-session">
-                <p>Select the available session</p>
+                  <p>Select the available session</p>
                   <div className = "list-session">
                     <CheckBoxCalendar session = "Morning" des="(7:00 - 11:00)" disabled />
                     <CheckBoxCalendar session = "Afternoon" des="(13:00 - 17:00)" />
@@ -131,6 +130,8 @@ function App() {
                   </div>
                 </div>
                 <InputFieldFreelancer title = "Price per session ($)" type = "number" required/>
+                <input type="checkbox" id="free-cancallation"></input>
+                <label htmlFor="free-cancallation">Free cancellation up to 24 hours before the start time</label>
                 
               </div>
             ):
