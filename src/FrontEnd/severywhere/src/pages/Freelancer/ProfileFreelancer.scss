@@ -1,0 +1,255 @@
+// page
+.profile-freelancer {
+  text-align: center;
+  display:flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+// main
+.main-profile{
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 12em);
+    height: 200em;
+    position: relative;
+    left: 12em;
+    top: 3em;
+}
+
+// form + avatar
+.update-profile{
+  display: flex;
+  margin: 3em auto 0;
+}
+
+// form
+.form-profile{
+  max-width: 30em;
+  height: 28em;
+  text-align: start;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+// input 
+.input-field{
+  width: 37.5em;
+  min-height: 3.5em;
+  color: #0E4D90;
+  font-size: 0.8em;
+  display: flex;
+  align-items: flex-start;
+}
+
+.input-field label {
+  margin-top: 0.24em;
+  min-width: 160px;
+}
+
+.input-field p{
+  display: inline;
+  color: #F71F39;
+}
+
+.input-field input, .input-field textarea, .input-field select{
+  min-width: 28em;
+  height: 2.5em;
+  background: white;
+  border: 0.1em solid #DEDEDE;
+  border-radius: 0.8em;  
+  color: #7E94AB;
+  font-family: 'RocknRoll One';
+  padding-left: 0.5em;
+  // padding-bottom: 0.1em;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;    
+  box-sizing: border-box;      
+}
+
+.input-field textarea{
+  align-self: flex-start;
+  margin-bottom: 1em;
+  height: 8em;
+  resize: none;
+}
+
+.input-field input:focus-within, .input-field textarea:focus-within, .input-field select:focus-within{
+  border: 2px solid #0E4D90;
+  outline: none;
+}
+
+// input when change password
+.input-field input:disabled{
+  background-color: #DEDEDE;
+  color: #7E94AB
+}
+
+// .input-field label.disabled, .input-field label.disabled p{
+//   color: #0E4D90
+// }
+
+// check box
+.check-box{
+  width: 100em;
+  min-height: 3em;
+  color: #0E4D90;
+  font-size: 0.8em;
+  display: flex;
+  align-items: flex-start;
+}
+
+.check-box legend {
+  min-width: 160px;
+  padding: 0;
+}
+
+.check-box p{
+  display: inline;
+  color: #F71F39;
+}
+
+.check-box label {
+  min-width: 160px;
+  margin-left: 1em;
+}
+
+.check-box input[type=checkbox]{
+  width: 1.5em;
+  height: 1.5em;
+  border: 0.1em solid #DEDEDE;
+  border-radius: 0.5em;
+  background-color: white;
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+}
+
+.check-box input[type=checkbox]:checked{
+  border: none;
+  background-color: #0E4D90
+}
+
+.check-box input[type=radio]{
+  width: 1.5em;
+  height: 1.5em;
+  border: 0.1em solid #DEDEDE;
+  border-radius: 10em;
+  background-color: white;
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+}
+
+.check-box input[type=radio]:checked{
+  border: none;
+  background-color: #0E4D90
+}
+
+// avatar
+.avatar-frame{
+  width: 18em;
+  height: 30em;
+  display: inline-block;
+  margin-left: 3em;
+}
+
+.avatar-frame .picture img {
+  width: 16em;
+  height: 16em;
+}
+
+.avatar-frame .picture .picture-bg {
+  width: 16em;
+  height: 16em;
+  margin-left: 1em;
+}
+
+// verified bar
+.verified, .verified .fas {
+  margin: 0.4em 0.8em;
+  font-size: 1rem;
+  text-align: center;
+  background: #0C721F;
+  color: white;
+  border-radius: 1em;
+}
+
+.verified{
+  width: 18em;
+  margin: 0.6em auto;
+}
+
+.verified .fas{
+  margin-right: 1em;
+  margin-left: 0;
+}
+
+// horizontal line
+.hr{
+  height: 2px;
+  width: 50em;
+  background: #D8D8D8;
+  margin: 4.5em auto;
+}
+
+// show attraction section
+.show-attraction{
+  max-width: calc(100vw - 12em);
+  height: 73em;
+}
+
+.show-attraction p{
+  color: #0E4D90;
+  font-size: 1.8em;
+  text-align: center;
+  margin: 0;
+}
+
+.show-attraction .button-save, .button-upload{
+  margin: 2em;
+}
+
+// settion section
+.setting{
+  height: 13em;
+  width: 51em;
+  text-align: start;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.setting .info, .change-pass {
+  width: 23em;
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.setting input {
+  min-width: 19em;
+}
+
+.change-pass {
+  margin-left: auto;
+}
+
+.change-pass button{
+  margin: 0.5em auto;
+}
+
+.main-profile a, .main-profile a:visited{
+  display: block;
+  font-size: 0.8em;
+  margin: 0 auto 2em 5em;
+  color: #0E4D90
+}
+
+.main-profile a:hover{
+  color: #7E94AB;
+  transition: .2s ease;
+}

@@ -6,6 +6,7 @@
     height: 100vh;
     display: inline-block;
     top: 3em;
+    // left: 0em;
     position: fixed;
 }
 
@@ -47,6 +48,7 @@
 
 .navbar-freelancer button .textNavbar{
     margin: 0 0.1em; 
+    text-decoration: none;
 }
 
 .navbar-freelancer button:active{
