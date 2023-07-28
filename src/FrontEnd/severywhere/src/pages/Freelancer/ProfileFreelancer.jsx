@@ -4,6 +4,8 @@ import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonUploadFreelancer from '../../Components/Button/ButtonUploadFreelancer';
 import AttractionFreelancer from '../../Components/Attraction/AttractionFreelancer';
+import { useSelector } from "react-redux";
+// import { BasicAction } from '../../redux/actions/BasicAction'
 
 const attractions = [
   {
@@ -28,22 +30,9 @@ const verified = true
 
 const changePassword = false
 
-const destination =[
-  {
-    id: 1,
-    name: 'TPHCM'
-  },
-  {
-    id: 2,
-    name: 'Ha Noi'
-  },
-  {
-    id: 3,
-    name: 'Da Nang'
-  }
-]
-
 export default function ProfileFreelancer(){
+  const {destination} = useSelector(state => state.BasicReducer)
+
   return(
 
     <div className="profile-freelancer">
