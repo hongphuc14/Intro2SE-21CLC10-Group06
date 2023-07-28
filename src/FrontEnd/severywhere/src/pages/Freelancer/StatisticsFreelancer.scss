@@ -6,7 +6,7 @@
 }
 
 .main-statistic{
-    height: 200em;
+    height: fit-content;
     width: calc(100vw - 12em);
     margin-left: 11.5em;
     margin-top: 3em;
@@ -15,7 +15,7 @@
   }
   
   .main-statistic .statistic{
-    margin: 2em 0 ;
+    margin-top: 2em ;
     display: flex;
     justify-content: space-evenly;
   }
@@ -57,26 +57,43 @@
     font-size: 0.8em;
   }
   
+  .hr{
+    height: 2px;
+    width: 50em;
+    background: #D8D8D8;
+    margin: 4.5em auto;
+  }
+
   .tourist-section{
-    height: 35em;
+    height: fit-content;
     width: calc(100vw - 12em);
-    /* background-color: yellow; */
+  }
+
+  .review-section{
+    margin-bottom: 0.5em;
   }
   
-  .tourist-section > p{
+  .tourist-section > p, .review-section > p{
     width: fit-content;
     margin: 0 auto;
     color:#0E4D90;
     font-size: 2em;
   }
-  
+
+  .tourist-section .select, .review-section .select{
+    width: 45em;
+    margin: 2em auto 0.8em;
+    display: flex;
+    justify-content: space-around;
+  } 
+
   .tourist-list{
     width: calc(100vw - 25.5em);
-    margin: 1em auto;
+    margin: 0 auto;
     display: inline-flex;
     flex-wrap: wrap;
   }
-  
+
   .tourist{
     width: 6em;
     height: 7.8em;
@@ -88,9 +105,9 @@
     display: inline-block;
   }
   
-  .tourist img{
-    width: 5em;
-    height: 5em;
+  .tourist img, .review img{
+    width: 4.8em;
+    height: 4.8em;
     object-fit: cover;
     border-radius: 10em;
     margin: 0.7em auto 0.2em;
@@ -100,4 +117,101 @@
     color: #0E4D90;
     font-size: 0.8em;
     margin: 0 auto;
+  }
+
+  .review-section .select{
+    width: 52em;
+  }
+
+  .review-section .check-box-calendar .fas,   .review-section .check-box-calendar .far{
+    color:  #FFF500
+  }
+
+  .review-section .review-list{
+    width: 48em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .review-section .review-list .review{
+    width: 32em;
+    height: 8.8em;
+    margin: 0.5em auto ;
+    background-color: white;
+    border-radius: 0.8em;
+    border: 2px solid #d8d8d8;
+    color: #0E4D90;
+    font-size: 0.7em;
+    position: relative;
+  }
+
+  .review img{
+    width: 3.2em;
+    height: 3.2em;
+    display: inline-block;
+    position: absolute;
+    top: 0.2em;
+    left: 1em;
+  }
+
+  .review > div{
+    width: 25em;
+    position: absolute;
+    left: 5.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .review .review-name{
+    width: fit-content;
+    margin-right: 0.6em;
+  }
+
+  .review .rating-line {
+    color: #FFF500;
+    margin-top: -0.1em;
+  }
+
+  .review .fa-flag{
+    position: relative;
+    left: 12em;
+    font-size: 1.2em;
+  }
+
+  .review .fa-comment-dots{
+    position: relative;
+    left: 12.5em;
+    font-size: 1.2em;
+  }
+
+  .review .fa-flag:hover{
+    color: #F71F39;
+  } 
+  
+  .review .fa-comment-dots:hover {
+    color: #0C721F
+  }
+
+  .review .fa-flag:active, .review .fa-comment-dots:active{
+    transform: translateY(2px);
+  }
+
+  .review .review-date{
+    position: absolute;
+    left: 6.7em;
+    top: 2.1em;
+    color: #7E94AB;
+    font-size: 0.8em;
+  }
+
+  .review .review-line{
+    position: absolute;
+    left: 1em;
+    top: 3.5em;
+    color: #7E94AB;
+    font-size: 1em;
+    font-family: "Assistant";
   }

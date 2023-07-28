@@ -94,6 +94,35 @@ display: flex;
 justify-content: space-between;
 }
 
+.check-box-calendar{
+    font-size: 0.8em;
+    color: #0E4D90;
+    display: flex;
+    align-items: center;
+}
+
+.check-box-calendar input, #free-cancallation{
+    width: 2em;
+    height: 2em;
+    border-radius: 0.8em;
+    margin-right: 1em;
+    background-color: white;
+    outline: 1.5px solid #d8d8d8;
+    outline-offset: -1.5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+}
+
+.check-box-calendar input:disabled{
+    background-color: #d8d8d8;
+}
+
+.check-box-calendar input:checked, #free-cancallation:checked{
+    background-color: #0E4D90;
+    outline: none;
+}
+
 .main-calendar .input-field {
 margin-left: 6em;
 margin-top: -0.5em;

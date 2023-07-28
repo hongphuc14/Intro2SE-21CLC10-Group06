@@ -2,7 +2,6 @@ import './ProfileFreelancer.scss'
 import logo from '../../logo.png';
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
-// import InputFieldFreelancer from '../../Components/InputField/InputFieldFreelancer';
 import ButtonUploadFreelancer from '../../Components/Button/ButtonUploadFreelancer';
 import AttractionFreelancer from '../../Components/Attraction/AttractionFreelancer';
 
@@ -20,7 +19,7 @@ const attractions = [
 ]
 
 const freelancer = {
-  fullname: 'abc',
+  fullname: 'PHAN MY LINH',
   date_of_birth: Date.now(),
   gender: 1,
 }
@@ -44,7 +43,7 @@ const destination =[
   }
 ]
 
-function ProfileFreelancer(){
+export default function ProfileFreelancer(){
   return(
 
     <div className="profile-freelancer">
@@ -207,5 +206,3 @@ function ProfileFreelancer(){
   </div>
   );
 }
-
-export default ProfileFreelancer;
