@@ -3,8 +3,8 @@ from "../types";
 
 const stateDefault = {
     destination: [{id_des: 1, name: "Ho Chi Minh City"},
-                  {id_des: 1, name: "Ha Noi City"},
-                  {id_des: 1, name: "Da Nang City"}],
+                  {id_des: 2, name: "Ha Noi City"},
+                  {id_des: 3, name: "Da Nang City"}],
 };
 
 export const BasicReducer = (state = stateDefault, action) => {

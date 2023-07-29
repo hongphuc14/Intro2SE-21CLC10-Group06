@@ -94,6 +94,10 @@ display: flex;
 justify-content: space-between;
 }
 
+.main-calendar .input-field{
+    width: fit-content;
+}
+
 .check-box-calendar{
     font-size: 0.8em;
     color: #0E4D90;

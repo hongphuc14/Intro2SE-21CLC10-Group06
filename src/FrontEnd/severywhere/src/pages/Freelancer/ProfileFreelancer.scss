@@ -39,12 +39,17 @@
   color: #0E4D90;
   font-size: 0.8em;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.input-field label {
-  margin-top: 0.24em;
+.input-field label, .input-field legend {
   min-width: 160px;
+}
+
+.input-field.type2 label {
+  align-self: flex-start;
+  margin-top: 0.6em;
 }
 
 .input-field p{
@@ -68,10 +73,14 @@
 }
 
 .input-field textarea{
-  align-self: flex-start;
-  margin-bottom: 1em;
+  margin: 0.8em 0;
   height: 8em;
   resize: none;
+}
+
+.input-field a{
+  padding: 0 1em;
+  margin: 0 auto;
 }
 
 .input-field input:focus-within, .input-field textarea:focus-within, .input-field select:focus-within{
@@ -96,7 +105,7 @@
   color: #0E4D90;
   font-size: 0.8em;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .check-box legend {
@@ -198,7 +207,7 @@
 // show attraction section
 .show-attraction{
   max-width: calc(100vw - 12em);
-  height: 73em;
+  height: fit-content;
 }
 
 .show-attraction p{
@@ -214,7 +223,7 @@
 
 // settion section
 .setting{
-  height: 13em;
+  height: fit-content;
   width: 51em;
   text-align: start;
   margin: 0 auto;
@@ -230,6 +239,10 @@
   flex-direction: column;
 }
 
+.setting .input-field{
+  width: fit-content;
+}
+
 .setting input {
   min-width: 19em;
 }
@@ -242,14 +255,16 @@
   margin: 0.5em auto;
 }
 
-.main-profile a, .main-profile a:visited{
+.main-profile > a, .main-profile > a:visited{
   display: block;
+  width: 64em;
   font-size: 0.8em;
-  margin: 0 auto 2em 5em;
-  color: #0E4D90
+  margin: 0 auto 2em;
+  color: #0E4D90;
+  text-align: start;
 }
 
-.main-profile a:hover{
+.main-profile > a:hover{
   color: #7E94AB;
   transition: .2s ease;
 }

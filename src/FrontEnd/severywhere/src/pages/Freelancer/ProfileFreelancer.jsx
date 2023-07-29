@@ -5,20 +5,12 @@ import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonUploadFreelancer from '../../Components/Button/ButtonUploadFreelancer';
 import AttractionFreelancer from '../../Components/Attraction/AttractionFreelancer';
 import { useSelector } from "react-redux";
+import {Link} from "react-router-dom"
+import {useState} from 'react'
+
 // import { BasicAction } from '../../redux/actions/BasicAction'
 
-const attractions = [
-  {
-    img: logo,
-    title: 'abc',
-    description: 'abc'
-  },
-  {
-    img: logo,
-    title: 'abc',
-    description: 'abc'
-  },
-]
+const attractions = []
 
 const freelancer = {
   fullname: 'PHAN MY LINH',
@@ -28,13 +20,12 @@ const freelancer = {
 
 const verified = true
 
-const changePassword = false
-
 export default function ProfileFreelancer(){
   const {destination} = useSelector(state => state.BasicReducer)
+  const {tour_guide_by_id_guide} = useSelector(state => state.Freelancer)
+  const [changePassword, setChangePassword] = useState(false)
 
   return(
-
     <div className="profile-freelancer">
       <HeaderFreelancer/>
       <NavbarFreelancer img = {logo} fullname = {freelancer.fullname.toUpperCase()} flag1 = "focus"/>
@@ -69,7 +60,7 @@ export default function ProfileFreelancer(){
                 </label>
                 <select id="des" name="des">
                   {
-                    destination.map((des)=> <option key = {des.id} value = {des.name}> {des.name} </option>)
+                    destination.map((des)=> <option key = {des.name} value = {des.name}> {des.name} </option>)
                   }
                 </select>
             </div>
@@ -94,7 +85,7 @@ export default function ProfileFreelancer(){
                 </label>
                 <input id = "exp" name = "exp" type = "number" min = {0} required />
             </div>
-            <div className = "input-field">
+            <div className = "input-field type2">
                 <label htmlFor="desc">
                     Description
                     <p> * </p>
@@ -104,7 +95,9 @@ export default function ProfileFreelancer(){
             <div className = "input-field">
               <legend>Tourism licenses</legend>
               <ButtonUploadFreelancer className="button-upload" title = "UPLOAD A LICENSE"/>
-              <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES"/>
+              <Link to = "/license-freelancer">
+                <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES"/>
+              </Link>
             </div>
           </form>
           <div className = "avatar-frame">
@@ -112,32 +105,34 @@ export default function ProfileFreelancer(){
                 <img src={logo} alt = ""></img>
                 <div className = "picture-bg">
                   <div className ="icon">
-                      <i class="fas fa-edit"></i>
+                      <i className="fas fa-edit"></i>
                   </div>
                   <div className ="icon">
-                      <i class="fas fa-trash-alt"></i>
+                      <i className="fas fa-trash-alt"></i>
                   </div>
                 </div>
             </div>
             
             {verified && 
             <div className = "verified">
-                <i class="fas fa-user-check"></i>
+                <i className="fas fa-user-check"></i>
                 Verified user account
             </div>}
         </div>
         </div>
         <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" disabled/>
-        <div class = "hr"></div>
+        
+        <div className = "hr"></div>
 
         <div className = "show-attraction">
           <p>Must-see attractions</p>
-          {attractions.map((attraction,index) => <AttractionFreelancer {...attraction} index={index}/>)}
+          {attractions.map((attraction,index) => <AttractionFreelancer key = {attraction.title} {...attraction} index={index}/>)}
           <AttractionFreelancer />
-          <ButtonUploadFreelancer className="button-save" title = "ADD" disabled/>
-          <ButtonUploadFreelancer className="button-upload" title = "DELETE" />
+          <ButtonUploadFreelancer className="button-save" title = "ADD" disabled = {true}/>
         </div>
-        <div class = "hr"></div>
+
+        <div className = "hr"></div>
+
         <div className = "setting">
           <div className = "info">
             <div className = "input-field">
@@ -155,7 +150,7 @@ export default function ProfileFreelancer(){
                 <input id = "pwd" name = "pwd" type = "password" value = {freelancer.date_of_birth} disabled/>
             </div>
             {!changePassword &&
-            (<ButtonUploadFreelancer className="button-upload" title = "CHANGE PASSWORD" />)}
+            (<ButtonUploadFreelancer className="button-upload" title = "CHANGE PASSWORD" onClick = {()=>{setChangePassword(true)}}/>)}
           </div>
           {changePassword &&
           <div className = "change-pass">
@@ -181,13 +176,13 @@ export default function ProfileFreelancer(){
                 <input id = "confirm-pwd" name = "confirm-pwd" type = "password"/>
             </div>
             <ButtonUploadFreelancer className="button-save" title = "SAVE" />
-            <ButtonUploadFreelancer className="button-upload" title = "BACK" />
+            <ButtonUploadFreelancer className="button-upload" title = "BACK" onClick = {()=>{setChangePassword(false)}}/>
           </div>
           }
               
         </div>
 
-        <div class = "hr"></div>      
+        <div className = "hr"></div>      
 
         <a href = "https://www.google.com/" className = "delete-acc">Delete account</a>
         <a href = "https://www.google.com/" className = "log-out">Log out</a>        

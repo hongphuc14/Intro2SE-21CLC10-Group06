@@ -1,10 +1,11 @@
 import './AttractionFreelancer.scss';
 import placeholder from './placeholder-image.png';
+import ButtonUploadFreelancer from '../Button/ButtonUploadFreelancer'
 
 function EditIcon(){
     return(
         <div className ="icon">
-            <i class="fas fa-edit"></i>
+            <i className="fas fa-edit"></i>
         </div>
     )
 }
@@ -12,7 +13,7 @@ function EditIcon(){
 function TrashIcon(){
     return(
         <div className ="icon">
-            <i class="fas fa-trash-alt"></i>
+            <i className="fas fa-trash-alt"></i>
         </div>
     )
 }
@@ -33,6 +34,8 @@ export default function AttractionFreelancer({img = placeholder, title, descript
                 <label htmlFor = {`desc${index}`}>Description</label>
                 <textarea type = "text" id = {`desc${index}`} required></textarea>
             </div>
+            <ButtonUploadFreelancer className="button-save" title = "SAVE" disabled = {true}/>
+            <ButtonUploadFreelancer className="button-upload" title = "DELETE" disabled = {false}/>
         </div>
     )
 }

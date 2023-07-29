@@ -1,13 +1,14 @@
 import { GET_DESTINATION } 
 from "../types";
 import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
+import { BasicService } from "../../services/BasicService";
+
 export const getDestination = () => {
     return async (dispatch) => {
       try {
         dispatch(displayLoadingAction);
   
-        // const result = await FreelancerService.layDanhSachNguoiDung();
-        const result = {}
+        const result = await BasicService.getDestination();
   
         if (result.status === 200) {
           dispatch({

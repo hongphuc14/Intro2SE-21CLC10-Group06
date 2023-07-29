@@ -4,3 +4,5 @@ import {
 
 import axios from "axios";
 
+export class baseService {
+}

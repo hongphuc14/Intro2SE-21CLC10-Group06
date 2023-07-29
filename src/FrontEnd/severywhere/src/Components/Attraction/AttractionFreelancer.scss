@@ -1,14 +1,17 @@
 .attraction-frame{
     width: 45em;
-    height: 20em;
+    height: fit-content;
     margin: 1em auto 2em;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .picture{
     position: relative;
+    width: 18em;
+    height: fit-content;
 }
 
 .picture img{
@@ -17,6 +20,7 @@
     background: white;
     border-radius: 0.8em;
     object-fit: cover;
+    margin-top: 2em;
 }
 
 .picture .picture-bg {
@@ -30,6 +34,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 2em;
 }
 
 .picture .icon{
@@ -41,6 +46,7 @@
     color: white;
     visibility: hidden;
     z-index: 1;
+    cursor: pointer;
 }
 
 .picture .icon .fas{
@@ -66,6 +72,7 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 3.5em;
+    margin-top: 2em;
     
 }
 
@@ -102,8 +109,26 @@
 
 .attraction-frame:focus-within, 
 .attraction-frame input:focus-within, 
-.attraction-frame textarea:focus-within{
+.attraction-frame textarea:focus-within,
+.attraction-frame.active{
     border: 2px solid #0E4D90;
     outline: none;
 }
 
+.attraction-frame .button-upload{
+    margin: 2.5em auto 1.5em 1em;
+
+}
+
+.attraction-frame .button-save{
+    margin: 2.5em 1em 1.5em auto;
+}
+
+.attraction-frame button{
+    display: none;
+}
+
+
+.attraction-frame:focus-within button{
+    display: block;
+}

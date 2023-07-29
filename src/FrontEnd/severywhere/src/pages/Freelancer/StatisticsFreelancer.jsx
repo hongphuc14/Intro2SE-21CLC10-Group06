@@ -4,6 +4,7 @@ import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 // import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
 import RatingStar from '../../Components/RatingReview/RatingStar';
+import {Link} from 'react-router-dom';
 
 function Review({img, name, date, rating, review}){
   img = img==="" ? logo : img
@@ -28,8 +29,10 @@ function Tourist({img=logo, name }){
 
   return(
     <div className = "tourist">
-      <img src={img} alt = "tourist-avatar"></img>
-      <p>{name}</p>
+      <Link to = "/booking-freelancer" style={{ textDecoration: 'none' }}>
+          <img src={img} alt = "tourist-avatar"></img>
+          <p>{name}</p>
+      </Link>
     </div>
   )
 }
@@ -107,7 +110,11 @@ export default function StatisticsFreelancer(){
               <div className = "tourist-list">
                 {
                   tourists.map(tourist =>{
-                    return <Tourist li={tourist.id} {...tourist}/>
+                    return (
+                      // <Link to = "/booking-freelancer" style={{ textDecoration: 'none' }}>
+                        <Tourist li={tourist.id} {...tourist}/>
+                      //  </Link>
+                      )
                   })
                 }
               </div>
