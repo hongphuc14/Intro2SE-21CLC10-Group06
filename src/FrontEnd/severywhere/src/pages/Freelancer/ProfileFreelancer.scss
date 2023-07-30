@@ -14,12 +14,13 @@
     height: fit-content;
     position: relative;
     left: 12em;
-    top: 3em;
+    top: 1em;
 }
 
 // form + avatar
 .update-profile{
   display: flex;
+  height: fit-content;
   margin: 3em auto 0;
 }
 
@@ -49,7 +50,7 @@
 
 .input-field.type2 label {
   align-self: flex-start;
-  margin-top: 0.6em;
+  margin-top: 0.4em;
 }
 
 .input-field p{
@@ -57,7 +58,7 @@
   color: #F71F39;
 }
 
-.input-field input, .input-field textarea, .input-field select{
+.input-field input:not(input[type=file]), .input-field textarea, .input-field select{
   min-width: 28em;
   height: 2.5em;
   background: white;
@@ -78,12 +79,55 @@
   resize: none;
 }
 
+.input-field input[type=file]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.input-field input[type=file]{
+  width: 12.5em;
+  display: inline-block;
+  background: #0E4D90;
+  height: 2.5em;
+  margin: 1em auto 0;
+  padding: 0 1em;
+  border-radius: 1em;
+  border: none;
+  outline: none;  
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;    
+  box-sizing: border-box; 
+}
+
+.input-field input[type=file]::before {
+  content: 'UPLOAD A LICENSE';
+  cursor: pointer;
+  color: white;
+  font-family: 'RocknRoll One';
+  -webkit-user-select: none;
+  position: relative;
+  top: 0.5em;
+}
+
+.input-field input[type=file]:hover{
+  background: white;
+  outline: 2px solid #0E4D90;
+  outline-offset: -2px;
+}
+
+.input-field input[type=file]:hover::before{
+  color: #0E4D90
+}
+
+.input-field input[type=file]:active{
+  transform: translateY(2px);
+}
+
 .input-field a{
   padding: 0 1em;
   margin: 0 auto;
 }
 
-.input-field input:focus-within, .input-field textarea:focus-within, .input-field select:focus-within{
+.input-field input:not(input[type=file]):focus-within, .input-field textarea:focus-within, .input-field select:focus-within{
   border: 2px solid #0E4D90;
   outline: none;
 }
@@ -129,7 +173,7 @@
   border: 0.1em solid #DEDEDE;
   border-radius: 0.5em;
   background-color: white;
-  margin: 0;
+  margin: 0 0 0 1em;
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -146,7 +190,7 @@
   border: 0.1em solid #DEDEDE;
   border-radius: 10em;
   background-color: white;
-  margin: 0;
+  margin: 0 0 0 1em;
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -243,7 +287,7 @@
   width: fit-content;
 }
 
-.setting input {
+#email, #pwd, #cur-pwd, #new-pwd, #confirm-pwd {
   min-width: 19em;
 }
 

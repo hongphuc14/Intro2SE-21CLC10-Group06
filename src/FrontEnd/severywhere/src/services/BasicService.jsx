@@ -11,4 +11,4 @@ export class BasicService extends baseService {
     };
   }
   
-  export const BasicService = new BasicService();
+export const basicService = new BasicService();

@@ -26,7 +26,9 @@ export class FreelancerService extends baseService {
     // };
 
     // Api 5: cập nhật thông tin tourguide khi có id_guide
-
+    updateTourGuideByIdGude = (id_guide, info) => {
+      return this.post(`api/guide/${id_guide}`, info);
+    };
 
     // Api 6: cập nhật ngôn ngữ của tourguide khi có id_guide
 
@@ -48,4 +50,4 @@ export class FreelancerService extends baseService {
 
   }
   
-  export const quanLyNguoiDungService = new FreelancerService();
+  export const freelancerService = new FreelancerService();

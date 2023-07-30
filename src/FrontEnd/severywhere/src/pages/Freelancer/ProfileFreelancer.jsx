@@ -4,102 +4,129 @@ import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonUploadFreelancer from '../../Components/Button/ButtonUploadFreelancer';
 import AttractionFreelancer from '../../Components/Attraction/AttractionFreelancer';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {Link} from "react-router-dom"
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 // import { BasicAction } from '../../redux/actions/BasicAction'
+import { getTourGuideByIdGude } from '../../redux/actions/FreelancerAction';
 
 const attractions = []
 
-const freelancer = {
-  fullname: 'PHAN MY LINH',
-  date_of_birth: Date.now(),
-  gender: 1,
-}
-
-const verified = true
-
 export default function ProfileFreelancer(){
+  const dispatch = useDispatch()
   const {destination} = useSelector(state => state.BasicReducer)
-  const {tour_guide_by_id_guide} = useSelector(state => state.Freelancer)
+  const {tour_guide_by_id_guide, guide_language_by_id_guide, verified} = useSelector(state => state.FreelancerReducer)
+
   const [changePassword, setChangePassword] = useState(false)
 
+  const [info, setInfo] = useState(tour_guide_by_id_guide)
+  const handleChangeInfo = (e, type)=> setInfo({...info, [type]:e.target.value})
+
+  const [language, setLanguage] = useState(guide_language_by_id_guide.id_lang)
+  const handleChangeLanguage = (e) => {
+    let tmp = [...language]
+    const val = parseInt(e.target.value)
+    if (tmp.includes(val))
+      tmp = tmp.filter(lang => lang !== val)
+    else
+      tmp.push(val)
+    setLanguage([...tmp])}
+
+  const [saveChanges, setSaveChanges] = useState(false)
+  const handleSaveChanges = () => {
+    dispatch({})
+  }
+
+  useEffect(() => {
+    dispatch(getTourGuideByIdGude(info.email))
+  }, [])
+
+  console.log(language)
   return(
     <div className="profile-freelancer">
       <HeaderFreelancer/>
-      <NavbarFreelancer img = {logo} fullname = {freelancer.fullname.toUpperCase()} flag1 = "focus"/>
+      <NavbarFreelancer img = {logo} fullname = {tour_guide_by_id_guide.fullname.toUpperCase()} flag1 = "focus"/>
       <div className = "main-profile">
-
         <div className = "update-profile">
-          <form className = "form-profile">
+          <form className = "form-profile" method = "POST">
+
             <div className = "input-field">
                 <label htmlFor="fullname">
                     Full name
                     <p> * </p>
                 </label>
-                <input id = "fullname" name = "fullname" type = "text" required />
+                <input id = "fullname" name ="fullname" type = "text" value = {info.fullname} onChange = {(e)=>handleChangeInfo(e,"fullname")} required/>
             </div>
+
             <div className = "input-field">
                 <label htmlFor="dob">
                     Date of birth <p> * </p>
                 </label>
-                <input id = "dob" name = "dob" type = "date" required />
+                <input id = "dob" name = "dob" type = "date" defaultValue = {info.birthday} onChange = {(e)=>handleChangeInfo(e,"bỉrthday")}  required />
             </div>
+
             <div className = "check-box">
               <legend> Gender <p> * </p> </legend>
-                <input id = "male" type = "radio" name = "gender" value = "male"></input>
-                <label htmlFor="male">Vietnamese</label>
-                <input id = "female" type = "radio" name = "gender" value = "female"></input>
-                <label htmlFor="female">English</label>
+              <input id = "male" type = "radio" name = "gender" value = {0} defaultChecked ={info.gender === 0} onChange = {(e)=>handleChangeInfo(e,"gender")}></input>
+              <label htmlFor="male">Male</label>
+              <input id = "female" type = "radio" name = "gender" value = {1} defaultChecked ={info.gender === 1} onChange = {(e)=>handleChangeInfo(e,"gender")}></input>
+              <label htmlFor="female">Female</label>
             </div>
+
             <div className = "input-field">
                 <label htmlFor="des">
                     Destination
                     <p> * </p>
                 </label>
-                <select id="des" name="des">
+                <select id="des" name="des" defaultValue={info.id_des} onChange={(e)=>handleChangeInfo(e,"id_des")}>
                   {
-                    destination.map((des)=> <option key = {des.name} value = {des.name}> {des.name} </option>)
+                    destination.map((des)=> <option key = {des.id_des} name ={des.id_des} value = {des.id_des} > {des.name} </option>)
                   }
                 </select>
             </div>
+
             <div className = "input-field">
                 <label htmlFor="phone">
                     Phone number
                     <p> * </p>
                 </label>
-                <input id = "phone" name = "phone" type = "number" required />
+                <input id = "phone" name = "phone" type = "tel" value = {info.phone} onChange = {(e)=>handleChangeInfo(e,"phone")} required />
             </div>
+
             <div className = "check-box">
               <legend> Language <p> * </p> </legend>
-                <input id = "VN" type = "checkbox" name = "language" value = "VN"></input>
+                <input id = "VN" type = "checkbox" name = "language" value = {1} defaultChecked ={language.includes(1)} onChange = {handleChangeLanguage}></input>
                 <label htmlFor="VN">Vietnamese</label>
-                <input id = "EN" type = "checkbox" name = "language" value = "EN"></input>
+                <input id = "EN" type = "checkbox" name = "language" value = {2} defaultChecked ={language.includes(2)} onChange = {handleChangeLanguage}></input>
                 <label htmlFor="EN">English</label>
             </div>
+
             <div className = "input-field">
                 <label htmlFor="exp">
                     Experience (years)
                     <p> * </p>
                 </label>
-                <input id = "exp" name = "exp" type = "number" min = {0} required />
+                <input id = "exp" name = "exp" type = "text" value = {info.experience} onChange = {(e)=>handleChangeInfo(e,"experience")} required />
             </div>
+
             <div className = "input-field type2">
                 <label htmlFor="desc">
                     Description
                     <p> * </p>
                 </label>
-                <textarea id = "desc" type = "text"></textarea>
+                <textarea id = "desc" name = "desc" type = "text" value = {info.description} onChange = {(e)=>handleChangeInfo(e,"des")} ></textarea>
             </div>
+
             <div className = "input-field">
               <legend>Tourism licenses</legend>
-              <ButtonUploadFreelancer className="button-upload" title = "UPLOAD A LICENSE"/>
+              <input type="file" id = "license" name = "license" accept="image/*"/>
               <Link to = "/license-freelancer">
                 <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES"/>
               </Link>
             </div>
           </form>
+
           <div className = "avatar-frame">
             <div className = "picture">
                 <img src={logo} alt = ""></img>
@@ -120,7 +147,7 @@ export default function ProfileFreelancer(){
             </div>}
         </div>
         </div>
-        <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" disabled/>
+        <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" onClick = {handleSaveChanges} disabled = {!saveChanges}/>
         
         <div className = "hr"></div>
 
@@ -140,14 +167,14 @@ export default function ProfileFreelancer(){
                     Email address
                     <p> * </p>
                 </label>
-                <input id = "email" name = "email" type = "email" value = {freelancer.fullname} disabled/>
+                <input id = "email" name = "email" type = "email" value = {info.fullname} disabled/>
             </div>
             <div className = "input-field">
                 <label htmlFor="pwd">
                     Password
                     <p> * </p>
                 </label>
-                <input id = "pwd" name = "pwd" type = "password" value = {freelancer.date_of_birth} disabled/>
+                <input id = "pwd" name = "pwd" type = "password" value = "********" disabled/>
             </div>
             {!changePassword &&
             (<ButtonUploadFreelancer className="button-upload" title = "CHANGE PASSWORD" onClick = {()=>{setChangePassword(true)}}/>)}

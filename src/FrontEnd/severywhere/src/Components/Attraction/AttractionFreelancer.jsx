@@ -30,9 +30,9 @@ export default function AttractionFreelancer({img = placeholder, title, descript
             </div>
             <div className = "attraction">
                 <label htmlFor = {`title${index}`}>Title</label>
-                <input type = "text" id = {`title${index}`} required></input>
+                <input type = "text" id = {`title${index}`} name = {`title${index}`} required></input>
                 <label htmlFor = {`desc${index}`}>Description</label>
-                <textarea type = "text" id = {`desc${index}`} required></textarea>
+                <textarea type = "text" id = {`desc${index}`} name = {`desc${index}`} required></textarea>
             </div>
             <ButtonUploadFreelancer className="button-save" title = "SAVE" disabled = {true}/>
             <ButtonUploadFreelancer className="button-upload" title = "DELETE" disabled = {false}/>

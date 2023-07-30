@@ -3,6 +3,7 @@ import "./CalendarFreelancer.scss";
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
+import { useSelector } from 'react-redux';
 
 const day_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -16,7 +17,6 @@ function Date({day,month,index,focus}){
   )
 }
 
-const verified = true;
   const dates = [{day: 3, month: "July", focus: false},
                 {day: 4, month: "July", focus: false},
                 {day: 5, month: "July", focus: true},
@@ -26,6 +26,8 @@ const verified = true;
                 {day: 9, month: "July", focus: false}]
 
 export default function CalendarFreelancer(){  
+    const {verified} = useSelector(state => state.FreelancerReducer)
+
     return (
         <div className = "calendar-freelancer">
             <HeaderFreelancer/>
@@ -74,7 +76,7 @@ export default function CalendarFreelancer(){
             ):
             (
                 <div className = "main-calendar">
-                <p className = "welcome">Welcome to Manage Tour</p>
+                <p className = "welcome">Welcome to Set Calendar</p>
                 <p>You have to upload legitimate tourism licenses to unlock this section</p>
                 </div>
             )
