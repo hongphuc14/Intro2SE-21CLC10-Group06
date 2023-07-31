@@ -1,0 +1,49 @@
+.button-edit::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+.button-edit, .button-delete{
+    width: 4em;
+    height: 4em;
+    margin: 0 0.5em;
+    border-radius: 0.8em;
+    background-color: #0E4D90;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;  
+}
+
+
+.button-edit::before{
+    content: '\f14b';
+    font-family: "FontAwesome";
+    color: white;
+    font-size: 2em;
+    position : relative;
+    top: 0.5em;
+    left: 0.58em;
+}
+
+.button-delete .fas{
+    content: '\f14b';
+    font-family: "FontAwesome";
+    color: white;
+    font-size: 1.8em;
+}
+
+.button-delete:hover , .button-edit:hover{
+    background: white;
+    outline: 0.25em solid #0E4D90;
+    outline-offset: -0.25em;
+}
+
+.button-edit:hover::before, .button-delete:hover .fas{
+    color: #0E4D90
+}
+
+.button-edit:active{
+    transform: none;
+}

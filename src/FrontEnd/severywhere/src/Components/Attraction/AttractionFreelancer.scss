@@ -37,34 +37,13 @@
     margin-top: 2em;
 }
 
-.picture .icon{
-    width: 3em;
-    height: 3em;
-    margin: 0 0.5em;
-    border-radius: 0.8em;
-    background-color: #0E4D90;
-    color: white;
+.picture .button-edit, .picture .button-delete{
     visibility: hidden;
     z-index: 1;
-    cursor: pointer;
 }
 
-.picture .icon .fas{
-    font-size: 1.4em;
-    margin: 0.6em auto;
-}
-
-.picture:hover .picture-bg, .picture:hover .icon{
+.picture:hover .picture-bg, .picture:hover .button-delete, .picture:hover .button-edit{
     visibility: visible;
-    transition: .2s ease;
-}
-
-.picture .icon:hover{
-    background-color: #FFFFFF;
-    color: #0E4D90;
-    outline: 3px solid #0E4D90;
-    outline-offset: -3px;
-    transition: 0s ease;
 }
 
 .attraction-frame .attraction{
@@ -82,12 +61,12 @@
     color:#0E4D90;
 }
 
-.attraction-frame label::after{
+.attraction-frame .attraction label::after{
     content: " *";
     color: red;
 }
 
-.attraction-frame input, .attraction-frame textarea{
+.attraction-frame input:not(input[type=file]), .attraction-frame textarea{
     min-width: 28em;
     height: 2.3em;
     margin-bottom: 1em;
@@ -111,8 +90,8 @@
 .attraction-frame input:focus-within, 
 .attraction-frame textarea:focus-within,
 .attraction-frame.active{
-    border: 2px solid #0E4D90;
-    outline: none;
+    outline: 2px solid #0E4D90;
+    outline-offset: -2px;
 }
 
 .attraction-frame .button-upload{
@@ -124,7 +103,7 @@
     margin: 2.5em 1em 1.5em auto;
 }
 
-.attraction-frame button{
+.attraction-frame .button-upload, .attraction-frame .button-save{
     display: none;
 }
 

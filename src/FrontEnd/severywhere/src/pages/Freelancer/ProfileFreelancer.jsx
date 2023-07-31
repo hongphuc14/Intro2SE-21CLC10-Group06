@@ -3,27 +3,35 @@ import logo from '../../logo.png';
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonUploadFreelancer from '../../Components/Button/ButtonUploadFreelancer';
+import {ButtonEditFreelancer, ButtonDeleteFreelancer} from "../../Components/Button/ButtonFreelancer"
 import AttractionFreelancer from '../../Components/Attraction/AttractionFreelancer';
 import { useSelector, useDispatch } from "react-redux";
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 import {useState, useEffect} from 'react'
 
 // import { BasicAction } from '../../redux/actions/BasicAction'
-import { getTourGuideByIdGude } from '../../redux/actions/FreelancerAction';
-
-const attractions = []
+import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,getGuideAttractionByIdGuide,
+        updateTourGuideByIdGuide } from '../../redux/actions/FreelancerAction';
 
 export default function ProfileFreelancer(){
   const dispatch = useDispatch()
+  const location = useLocation()
+  window.history.replaceState(null, null, location.pathname);
+  // login mới get để lưu vào state
+  // useEffect(()=> dispatch(getTourGuideByIdGuide("tunglamtran.work@gmail.com")), [] )
+
   const {destination} = useSelector(state => state.BasicReducer)
   const {tour_guide_by_id_guide, guide_language_by_id_guide, verified} = useSelector(state => state.FreelancerReducer)
-
+  const {license, isDelete} = location.state ? location.state : {}
   const [changePassword, setChangePassword] = useState(false)
 
   const [info, setInfo] = useState(tour_guide_by_id_guide)
-  const handleChangeInfo = (e, type)=> setInfo({...info, [type]:e.target.value})
+  const handleChangeInfo = (e, type)=> {
+    setInfo({...info, [type]:e.target.value})
+    setSaveChanges(true)
+  }
 
-  const [language, setLanguage] = useState(guide_language_by_id_guide.id_lang)
+  const [language, setLanguage] = useState(guide_language_by_id_guide)
   const handleChangeLanguage = (e) => {
     let tmp = [...language]
     const val = parseInt(e.target.value)
@@ -31,18 +39,19 @@ export default function ProfileFreelancer(){
       tmp = tmp.filter(lang => lang !== val)
     else
       tmp.push(val)
-    setLanguage([...tmp])}
-
-  const [saveChanges, setSaveChanges] = useState(false)
-  const handleSaveChanges = () => {
-    dispatch({})
+    setLanguage([...tmp])
+    setSaveChanges(true)
   }
 
-  useEffect(() => {
-    dispatch(getTourGuideByIdGude(info.email))
-  }, [])
+  const [saveChanges, setSaveChanges] = useState(isDelete ? isDelete : false)
+  const handleSaveChanges = () => {
+    info.gender = parseInt(info.gender)
+    info.id_des = parseInt(info.id_des)
+    dispatch(updateTourGuideByIdGuide(info.id_guide, info, language, license))
+    setSaveChanges(false)
+  }
 
-  console.log(language)
+  console.log(location)
   return(
     <div className="profile-freelancer">
       <HeaderFreelancer/>
@@ -63,7 +72,7 @@ export default function ProfileFreelancer(){
                 <label htmlFor="dob">
                     Date of birth <p> * </p>
                 </label>
-                <input id = "dob" name = "dob" type = "date" defaultValue = {info.birthday} onChange = {(e)=>handleChangeInfo(e,"bỉrthday")}  required />
+                <input id = "dob" name = "dob" type = "date" defaultValue = {info.birthday} onChange = {(e)=>handleChangeInfo(e,"birthday")}  required />
             </div>
 
             <div className = "check-box">
@@ -115,7 +124,7 @@ export default function ProfileFreelancer(){
                     Description
                     <p> * </p>
                 </label>
-                <textarea id = "desc" name = "desc" type = "text" value = {info.description} onChange = {(e)=>handleChangeInfo(e,"des")} ></textarea>
+                <textarea id = "desc" name = "desc" type = "text" value = {info.description} onChange = {(e)=>handleChangeInfo(e,"description")} ></textarea>
             </div>
 
             <div className = "input-field">
@@ -131,12 +140,8 @@ export default function ProfileFreelancer(){
             <div className = "picture">
                 <img src={logo} alt = ""></img>
                 <div className = "picture-bg">
-                  <div className ="icon">
-                      <i className="fas fa-edit"></i>
-                  </div>
-                  <div className ="icon">
-                      <i className="fas fa-trash-alt"></i>
-                  </div>
+                  <ButtonEditFreelancer/>
+                  <ButtonDeleteFreelancer/>
                 </div>
             </div>
             
@@ -153,9 +158,8 @@ export default function ProfileFreelancer(){
 
         <div className = "show-attraction">
           <p>Must-see attractions</p>
-          {attractions.map((attraction,index) => <AttractionFreelancer key = {attraction.title} {...attraction} index={index}/>)}
-          <AttractionFreelancer />
-          <ButtonUploadFreelancer className="button-save" title = "ADD" disabled = {true}/>
+          <AttractionFreelancer/>
+          <ButtonUploadFreelancer className="button-upload" title = "ADD A NEW ATTRACTION"/>
         </div>
 
         <div className = "hr"></div>
