@@ -1,4 +1,4 @@
-import './HeaderGuest.css'
+import './HeaderGuest.scss'
 import logo from './logo.png'
 
 const HeaderGuest = () => {
