@@ -2,7 +2,7 @@ const multer = require('multer');
 const storage = multer.diskStorage({
     //d/n đường dẫn lưu file
     destination: (req, file, cb)=>{
-        cb(null, process.cwd() + "/public/img")
+        cb(null, process.cwd() + "/public/admin_avatar")
     },
     // đổi tên file khi upload (trước khi lưu file)
     filename: (req, file, cb)=>{
