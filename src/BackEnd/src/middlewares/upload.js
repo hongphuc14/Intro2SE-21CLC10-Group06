@@ -1,8 +1,10 @@
 const multer = require('multer');
-const storage = multer.diskStorage({
+
+const storage = (folderName) => multer.diskStorage({
     //d/n đường dẫn lưu file
     destination: (req, file, cb)=>{
-        cb(null, process.cwd() + "/public/admin_avatar")
+        //cb(null, process.cwd() + "/public/admin_avatar");
+        cb(null, process.cwd() + "/public/" + folderName);
     },
     // đổi tên file khi upload (trước khi lưu file)
     filename: (req, file, cb)=>{
@@ -10,6 +12,10 @@ const storage = multer.diskStorage({
         cb(null, fileName);
     }
 })
-const upload = multer({ storage });
+
+//const upload = multer({ storage });
+const upload = (folderName) => multer({
+    storage: storage(folderName)
+});
 
 module.exports = {upload}
