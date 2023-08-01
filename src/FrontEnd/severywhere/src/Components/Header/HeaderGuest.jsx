@@ -19,7 +19,6 @@ const HeaderGuest = () => {
             </div>
             
             
-            
         </header>
      );
 }

@@ -1,9 +1,12 @@
 import './App.css';
 import HeaderGuest from './Components/Header/HeaderGuest';
+import Signup from './pages/Signup/Signup';
 
 function App() {
   return (
-    <HeaderGuest/>
+    <div>
+      <Signup />
+    </div>
   );
 }
 
