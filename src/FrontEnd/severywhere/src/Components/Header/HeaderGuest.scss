@@ -1,0 +1,126 @@
+
+    // font-family: 'Andika', sans-serif;
+    // font-family: 'RocknRoll One', sans-serif;
+.Header-Guest{
+    background-color: #000000;
+    list-style: none;
+    width: 100vw;   
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: auto 0px;
+    z-index: 1;
+    position: fixed;
+}
+
+.container{
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 90%;
+    height: 100%;
+}
+
+.subcontainer{
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+}
+
+.Menu a{
+    color: white;
+    text-decoration: none;
+    margin: 1rem;
+    padding-right: 1rem;
+    font-family: 'RocknRoll One', sans-serif;
+    transition: color 0.3s;
+}
+
+.Menu{
+    display:flex;
+    width: 70%;
+    align-items: center;
+}
+
+.Menu a{
+    margin-right: 0.5rem;
+}
+
+.Header-Guest a:hover{
+    color: #B6DC6F;
+}
+
+#lg{
+    height: 100%;
+}
+.SE-logo{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    // margin: 0 auto 0 3em;
+    padding:0 0 0 2rem;
+}
+
+.vertical-line {
+    width: 0.75px;
+    // align-self: stretch; /* Adjust the height of the vertical line to match the menu height */
+    height: 3em;
+    background-color: white;
+    margin: 0 1rem; /* Adjust the margin to add spacing between text links and line */
+  }
+
+.header-icon {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0.5em;
+}
+
+// .cartheart::before{
+//     color:white;
+// }
+
+a:hover i.fa-cart-shopping{
+    color:#B6DC6F;
+}
+
+.header-guest a:hover {
+    text-decoration: underline;
+}
+
+.header-guest .header-icon a:hover {
+    color: green;
+}
+
+#header-line {
+    border-left: 2px solid white;
+    height: 3em;
+    margin: 0;
+}
+.user{
+    display:flex;   
+}
+
+.iconuser{
+    margin-right: 0.25rem;
+}
+
+.dropdown{
+    font-size: 0.75rem;
+    padding-top: 0.35rem;
+}
+.icons{
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+    /* Adjust the overall margin on the left side of the icons */
+    justify-content: space-between;
+    margin-left: 1rem;
+}
+
+.icons .cartheart{
+    margin-right: 1.25em;
+}
+
+
