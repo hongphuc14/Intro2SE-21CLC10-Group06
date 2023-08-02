@@ -62,6 +62,16 @@
     padding:0 0 0 2rem;
 }
 
+.icons{
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+    /* Adjust the overall margin on the left side of the icons */
+    justify-content: space-between;
+    margin-left: 1rem;
+}
+
 .vertical-line {
     width: 0.75px;
     // align-self: stretch; /* Adjust the height of the vertical line to match the menu height */
@@ -76,20 +86,20 @@
     margin: 0.5em;
 }
 
-// .cartheart::before{
-//     color:white;
-// }
+.icons .cartheart{
+    color:white;
+}
 
 a:hover i.fa-cart-shopping{
     color:#B6DC6F;
 }
 
-.header-guest a:hover {
-    text-decoration: underline;
+a:hover i.fa-heart{
+    color: #DF4D4D;
 }
 
 .header-guest .header-icon a:hover {
-    color: green;
+    color: #B6DC6F;
 }
 
 #header-line {
@@ -109,15 +119,7 @@ a:hover i.fa-cart-shopping{
     font-size: 0.75rem;
     padding-top: 0.35rem;
 }
-.icons{
-    display: flex;
-    align-items: center;
-    color: white;
-    font-size: 1.5rem;
-    /* Adjust the overall margin on the left side of the icons */
-    justify-content: space-between;
-    margin-left: 1rem;
-}
+
 
 .icons .cartheart{
     margin-right: 1.25em;
