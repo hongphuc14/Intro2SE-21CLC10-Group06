@@ -18,8 +18,9 @@ export default function ProfileFreelancer(){
   const dispatch = useDispatch()
   const location = useLocation()
   window.history.replaceState(null, null, location.pathname);
+
   // login mới get để lưu vào state
-  // useEffect(()=> dispatch(getTourGuideByIdGuide("tunglamtran.work@gmail.com")), [] )
+  useEffect(() => {dispatch(getTourGuideByIdGuide("tunglamtran.work@gmail.com"))}, [] )
 
   const {destination} = useSelector(state => state.BasicReducer)
   const {tour_guide_by_id_guide, guide_language_by_id_guide, verified, guide_license_by_id_guide} = useSelector(state => state.FreelancerReducer)
@@ -79,6 +80,7 @@ export default function ProfileFreelancer(){
     // update avatar -> File object
     // dispatch(updateAvatar())
     // update license -> File object
+    // dispatch(updateLicense())
     setSaveChanges(false)
   }
 

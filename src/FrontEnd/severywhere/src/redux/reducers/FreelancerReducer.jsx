@@ -2,9 +2,15 @@ import { GET_TOUR_GUIDE_BY_ID_GUIDE,
   GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
   GET_GUIDE_LICENSE_BY_ID_GUIDE,
   UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
+  UPDATE_GUIDE_AVATAR,
+  UPDATE_GUIDE_LICENSE,
+  UPDATE_GUIDE_PASSWORD,
   GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
   UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
-  GET_GUIDE_TIME_BY_ID_GUIDE } 
+  GET_GUIDE_TIME_BY_ID_GUIDE,
+  UPDATE_GUIDE_TIME_BY_ID_GUIDE,
+  GET_GUIDE_BOOKING_BY_ID_GUIDE,
+  GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING } 
 from "../types";
 
 // let user = {}
@@ -27,7 +33,11 @@ const stateDefault = {
     guide_time_by_id_guide: [{id_guidetime: 1, guide_date: "2023-08-01",guide_session: 1, is_available: true},
                             {id_guidetime: 2, guide_date: "2023-08-02",guide_session: 2, is_available: true},
                             {id_guidetime: 3, guide_date: "2023-08-03",guide_session: 3, is_available: true},
-                            {id_guidetime: 4, guide_date: "2023-08-04",guide_session: 1, is_available: true}]
+                            {id_guidetime: 4, guide_date: "2023-08-04",guide_session: 1, is_available: true}],
+
+    guide_booking_by_id_guide: [],
+
+    guide_review_by_id_booking: [],
 };
 
 export const FreelancerReducer = (state = stateDefault, action) => {
@@ -51,16 +61,31 @@ export const FreelancerReducer = (state = stateDefault, action) => {
       case UPDATE_TOUR_GUIDE_BY_ID_GUIDE:{
         return {...state, 
           tour_guide_by_id_guide: action.tour_guide_by_id_guide,
-          guide_language_by_id_guide : action.guide_language_by_id_guide,
-          guide_license_by_id_guide: action.guide_license_by_id_guide,
-          verified: action.verified}
+          guide_language_by_id_guide : action.guide_language_by_id_guide}
       }
+
+      // case UPDATE_GUIDE_AVATAR:{
+      //   return {...state, 
+      //     tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update avatar
+      // }
+
+      case UPDATE_GUIDE_LICENSE:{
+        return {...state, 
+          guide_license_by_id_guide: action.guide_license_by_id_guide, // update license
+          verified: action.verified}
+      }   
+      
+      // case UPDATE_GUIDE_PASSWORD:{
+      //   return {...state, 
+      //     tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update password
+      // }    
 
       case GET_GUIDE_ATTRACTION_BY_ID_GUIDE: {
         return { ...state,
                 guide_attraction_by_id_guide: action.guide_attraction_by_id_guide };
       }
 
+      // how to update photo path TT
       case UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE: {
         return { ...state,
                 guide_attraction_by_id_guide: action.guide_attraction_by_id_guide };
@@ -69,6 +94,21 @@ export const FreelancerReducer = (state = stateDefault, action) => {
       case GET_GUIDE_TIME_BY_ID_GUIDE:{
         return{ ...state,
                 guide_time_by_id_guide: action.guide_time_by_id_guide};
+      }
+
+      case UPDATE_GUIDE_TIME_BY_ID_GUIDE:{
+        return {...state, 
+          guide_time_by_id_guide: action.guide_time_by_id_guide}
+      }  
+
+      case GET_GUIDE_BOOKING_BY_ID_GUIDE:{
+        return {...state, 
+          guide_booking_by_id_guide: action.guide_booking_by_id_guide}
+      }  
+
+      case GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING:{
+        return {...state, 
+          guide_review_by_id_booking: action.guide_review_by_id_booking}
       }
 
       default:

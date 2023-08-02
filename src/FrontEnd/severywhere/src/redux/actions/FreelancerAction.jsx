@@ -1,17 +1,40 @@
 import { GET_TOUR_GUIDE_BY_ID_GUIDE,
-    GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
-    GET_GUIDE_LICENSE_BY_ID_GUIDE,
-    UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
-    GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
-    UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
-    GET_GUIDE_TIME_BY_ID_GUIDE } 
+  GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
+  GET_GUIDE_LICENSE_BY_ID_GUIDE,
+  UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
+  UPDATE_GUIDE_AVATAR,
+  UPDATE_GUIDE_LICENSE,
+  UPDATE_GUIDE_PASSWORD,
+  GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
+  UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
+  GET_GUIDE_TIME_BY_ID_GUIDE,
+  UPDATE_GUIDE_TIME_BY_ID_GUIDE,
+  GET_GUIDE_BOOKING_BY_ID_GUIDE,
+  GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING } 
 from "../types";
 // import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
-// import {freelancerService} from '../../services/FreelancerService';
+import {freelancerService} from '../../services/FreelancerService';
 
-const result = [{file_path: "a", status: 1}, {file_path: "b", status: 2}, {file_path: "c", status: 3}]
+const result = []
 
-export const getTourGuideByIdGuide = (email) => {
+export const  getTourGuideByIdGuide = async (email) => {
+  // return async (dispatch) => {
+  //   try {
+  //     dispatch(displayLoadingAction);
+
+  //     const result = await freelancerService.getTourGuideByIdGuide(email);
+
+  //     if (result.status === 200) {
+  //       dispatch({
+  //         type: GET_TOUR_GUIDE_BY_ID_GUIDE,
+  //         tour_guide_by_id_guide: result.data,
+  //       });
+  //       dispatch(hideLoadingAction);
+  //     }
+  //   } catch (error) {
+  //     console.log("error", error.response);
+  //   }
+  // };
   return {
     type: GET_TOUR_GUIDE_BY_ID_GUIDE,
     tour_guide_by_id_guide: {id_guide: 1,	password: "********",	avatar: "",	fullname: "Tran Tung Lam",	birthday: "1998-12-05",	
@@ -22,27 +45,82 @@ export const getTourGuideByIdGuide = (email) => {
 };
 
 export const getGuideLanguageByIdGuide = (id_guide) => {
-  return{
-    type: GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
-    guide_language_by_id_guide: [1,2],
-  }
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+
+      const result = await freelancerService.getGuideLanguageByIdGuide(email);
+
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
+          guide_language_by_id_guide: result.data,
+        });
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+  // return{
+  //   type: GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
+  //   guide_language_by_id_guide: [1,2],
+  // }
 };
 
 export const getGuideLicenseByIdGuide = (id_guide) => {
-  return{
-    type: GET_GUIDE_LICENSE_BY_ID_GUIDE,
-    guide_license_by_id_guide: result,
-    verified: result.some((license) => license.status === 2)
-  }
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+
+      const result = await freelancerService.getGuideLicenseByIdGuide(id_guide);
+
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_LICENSE_BY_ID_GUIDE,
+          guide_license_by_id_guide: result.data,
+        });
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+  // return{
+  //   type: GET_GUIDE_LICENSE_BY_ID_GUIDE,
+  //   guide_license_by_id_guide: result,
+  //   verified: result.some((license) => license.status === 2)
+  // }
 };
 
-export const updateTourGuideByIdGuide = (id_guide, info, language, license) => {
+export const updateTourGuideByIdGuide = (id_guide, info, language) => {
   return {
     type: UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
     tour_guide_by_id_guide: info,
     guide_language_by_id_guide: language,
+  }
+};
+
+export const updateGuideAvatar = (id_guide, preview) => {
+  return {
+    // type: UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
+    // tour_guide_by_id_guide: info,
+  }
+};
+
+export const updateGuideLicense = (id_guide, license, previewLicense) => {
+  return {
+    type: UPDATE_GUIDE_LICENSE,
     guide_license_by_id_guide: license,
     verified: license.some((license) => license.status === 2)
+  }
+};
+
+export const updateGuidePassword = (id_guide, newPassword) => {
+  return {
+    // type: UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
+    // tour_guide_by_id_guide: info,
+    // guide_language_by_id_guide: language,
   }
 };
 
@@ -68,3 +146,23 @@ export const getGuideTimeByIdGuide = (id_guide) => {
   }
 };
 
+export const updateGuideTimeByIGuie = (id_guide, date, session) => {
+  return {
+    type: UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
+    guide_time_by_id_guide: result, // data sau khi cập nhật date và session
+  }
+};
+
+export const getGuideBookingByIdGuide = (id_guide) => {
+  return {
+    type: GET_GUIDE_BOOKING_BY_ID_GUIDE,
+    guide_booking_by_id_guide: result,
+  }
+};
+
+export const getGuideReviewByIdGuidebooking = (id_guide) => {
+  return {
+    type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
+    guide_review_by_id_booking: result
+  }
+};
