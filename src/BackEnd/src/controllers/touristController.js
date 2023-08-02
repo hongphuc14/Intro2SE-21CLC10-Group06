@@ -121,7 +121,7 @@ const uploadTourist = async(req, res)=>{
         res.send("sai định dạng");
     }
     try{
-        //lấy info admin từ db
+        //lấy info tourist từ db
         let tourist = await model.tourist.findOne({
             where:{
                 id_tourist

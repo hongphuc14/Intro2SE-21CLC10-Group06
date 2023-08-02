@@ -106,6 +106,7 @@ const signUp = async(req, res) =>{
             })
             if(checkEmail){
                 failCode(res,"","Email đã tồn tại");
+                return;
             }
             else{
                 let passWordHash = bcrypt.hashSync(password, 10);
@@ -123,6 +124,7 @@ const signUp = async(req, res) =>{
             })
             if(checkEmail){
                 failCode(res,"","Email đã tồn tại");
+                return;
             }
             else{
                 let passWordHash = bcrypt.hashSync(password, 10);
@@ -140,6 +142,7 @@ const signUp = async(req, res) =>{
             })
             if(checkEmail){
                 failCode(res,"","Email đã tồn tại");
+                return;
             }
             else{
                 let passWordHash = bcrypt.hashSync(password, 10);
@@ -154,4 +157,85 @@ const signUp = async(req, res) =>{
     }
 }
 
-module.exports = { login, signUp }
+const deleteAccount = async(req, res) => {
+    try {
+        let { id_role, id } = req.params;
+        //tourist delete account
+        if(id_role == 1){
+            let checkTourist = await model.tourist.findOne({
+                where:{
+                    id
+                }
+            })
+            if(checkTourist){
+                await model.tourist.destroy({ 
+                    where:{
+                        id
+                    }
+                });
+                sucessCode(res,checkTourist,"Xóa dữ liệu thành công");
+                return;
+            }
+            else{
+                failCode(res,"","Tourist không tồn tại");
+                return;
+            }
+        }
+        //company delete account
+        if(id_role == 2){
+            let checkCompany = await model.company.findOne({
+                where:{
+                    id
+                }
+            })
+            if(checkCompany){
+                await model.company.destroy({ 
+                    where:{
+                        id
+                    }
+                });
+                sucessCode(res,checkCompany,"Xóa dữ liệu thành công");
+                return;
+            }
+            else{
+                failCode(res,"","Company không tồn tại");
+                return;
+            }
+        }
+        //freelance delete account
+        if(id_role == 3){
+            let checkFreelancer = await model.tour_guide.findOne({
+                where:{
+                    id
+                }
+            })
+            if(checkFreelancer){
+                await model.tour_guide.destroy({ 
+                    where:{
+                        id
+                    }
+                });
+                sucessCode(res,checkFreelancer,"Xóa dữ liệu thành công");
+                return;
+            }
+            else{
+                failCode(res,"","Freelancer không tồn tại");
+                return;
+            }
+        }   
+    } catch (error) {
+        errorCode(res, "Loi BE");
+    }
+}
+
+const logout = async(req, res) =>{
+    try{
+        // Clear the token on the Backend side
+        // Invalidate the user's token to enforce the logout.
+
+        res.json({ message: "Logout successful" });
+    } catch (error) {
+        errorCode(res, "Lỗi BE");
+    }
+}
+module.exports = { login, signUp, deleteAccount, logout }
