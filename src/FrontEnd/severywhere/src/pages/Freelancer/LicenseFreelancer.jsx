@@ -3,15 +3,17 @@ import './LicenseFreelancer.scss';
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import {ButtonUploadFreelancer} from '../../Components/Button/ButtonFreelancer'
-import {useState} from 'react'
+import {useState, } from 'react'
 import {useSelector} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 
 export default function LicenseFreelancer(){
     const {guide_license_by_id_guide, tour_guide_by_id_guide} = useSelector(state => state.FreelancerReducer)
+    const location = useLocation()
+    window.history.replaceState(null, null, location.pathname);
 
-    const [license, setLicense] = useState(guide_license_by_id_guide)
-    const [isDelete, setIsDelete] = useState(false)
+    const [license, setLicense] = useState(location.state.license)
+    const [isDelete, setIsDelete] = useState(license.length < guide_license_by_id_guide.length)
     const handleDeleteButton = (file_path) => {
       let tmp = [...license]
       tmp = tmp.filter(license => license.file_path !== file_path)

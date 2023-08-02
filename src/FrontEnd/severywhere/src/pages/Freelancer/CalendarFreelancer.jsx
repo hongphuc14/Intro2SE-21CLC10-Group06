@@ -32,17 +32,23 @@ export default function CalendarFreelancer(){
     }
     
     const [no, setNo] = useState(0)
+    console.log(dates[no])
     const checkExist = (session) => {
-        const dateStr = `${dates[no].year}/${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}/${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
-        console.log (guide_time_by_id_guide.some((time)=>{
-            console.log(dateStr, time.guide_date,time.guide_session)
-            return time.guide_date == dates[no]} ))
-        console.log(guide_time_by_id_guide)
+        if ( no !== ""){
+            const dateStr = `${dates[no].year}-${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}-${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
+            return (guide_time_by_id_guide.some((time)=> {
+                // console.log(time.guide_date, dateStr);
+                // console.log(time.guide_session, session);
+                // console.log(time.guide_date === dateStr && time.guide_session === session)
+                return time.guide_date === dateStr && time.guide_session === session
+            }))
+        }
+        return false
     }
     const [price, setPrice] = useState(tour_guide_by_id_guide.price_per_session.toFixed(2))
     const [cancel, setCancel] = useState(tour_guide_by_id_guide.free_cancellation)
     // khi nào mới gửi action
-    console.log(price, cancel)
+    // console.log(price, cancel)
 
     return (
         <div className = "calendar-freelancer">
@@ -52,7 +58,7 @@ export default function CalendarFreelancer(){
                 <div className = "main-calendar">
                 <div className = "select-date">
                     <p>Select the date you want to schedule</p>
-                    <ButtonNextFreelancer onClick = {() => {setNext(next-1); setNo("")}} disabled = {next == 0}/>
+                    <ButtonNextFreelancer onClick = {() => {setNext(next-1); setNo("")}} disabled = {next === 0}/>
                     <div className = "list-date">
                     {
                         dates.map((date,index)=>{
@@ -66,15 +72,15 @@ export default function CalendarFreelancer(){
                     <p>Select the available session</p>
                     <div className = "list-session">
                         <div className = "check-box-calendar">
-                            <input id = "morning" type = "checkbox" name = "session" value = {1} defaultChecked = {checkExist(1)}></input>
+                            <input id = "morning" type = "checkbox" name = "session" value = {1} checked = {checkExist(1)}></input>
                             <label htmlFor="morning">Morning (7:00 - 11:00)</label>
                         </div>
                         <div className = "check-box-calendar">
-                            <input id = "afternoon" type = "checkbox" name = "session" value = {2} defaultChecked = {checkExist(2)}></input>
+                            <input id = "afternoon" type = "checkbox" name = "session" value = {2} checked = {checkExist(2)}></input>
                             <label htmlFor="afternoon">Afternoon (13:00 - 17:00)</label>
                         </div>
                         <div className = "check-box-calendar">
-                            <input id = "evening" type = "checkbox" name = "session" value = {3} defaultChecked = {checkExist(3)}></input>
+                            <input id = "evening" type = "checkbox" name = "session" value = {3} checked = {checkExist(3)}></input>
                             <label htmlFor="evening">Evening (18:00 - 21:00)</label>
                         </div>
                     </div>
