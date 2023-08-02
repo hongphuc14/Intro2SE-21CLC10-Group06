@@ -28,10 +28,7 @@ export default function ProfileFreelancer(){
     license = guide_license_by_id_guide
 
   const handleChangeInfo = (e)=> {
-    const { name, value } = e.target;
-    const trimmedValue = value.trim();
-    const newEvent = { ...e, target: { name, value: trimmedValue } };
-    formik.handleChange(newEvent);
+    formik.handleChange(e);
     setSaveChanges(true)
   }
 
@@ -64,7 +61,7 @@ export default function ProfileFreelancer(){
     reader.onloadend = () => {
       setPreview(reader.result);
     };
-    console.log( e.target.files[0])
+    // console.log( e.target.files[0])
     const newAva = e.target.files[0].name
     const newEvent = { ...e, target: {name: "avatar", value: newAva}};
     formik.handleChange(newEvent);
@@ -77,7 +74,7 @@ export default function ProfileFreelancer(){
     formik.values.id_des = parseInt(formik.values.id_des)
     const {language, ...newInfo} = formik.values
     
-    // update filename
+    // update filename + guide info + language
     dispatch(updateTourGuideByIdGuide(newInfo.id_guide, newInfo, language, license))
     // update avatar -> File object
     // dispatch(updateAvatar())
@@ -103,15 +100,14 @@ export default function ProfileFreelancer(){
   const [changePassword, setChangePassword] = useState(false)
   const [newPassword, setNewPassword] = useState("")
   const savePassword = (e) => {
+    formik.values.password = newPassword
     const {language, ...newInfo} = formik.values
-    newInfo.password = newPassword
     dispatch(updateTourGuideByIdGuide(newInfo.id_guide, newInfo, language, license))
     setChangePassword(false)
   }
 
-  // console.log(formik.errors)
-  console.log(license)
-  // console.log(license)
+  console.log(formik.values)
+  // console.log(newPassword)
 
   return(
     <div className="profile-freelancer">
@@ -257,7 +253,7 @@ export default function ProfileFreelancer(){
                     New password
                     <p> * </p>
                 </label>
-                <input id = "new-pwd" name = "new-pwd" type = "password"  onChange = {(e) => {setNewPassword(e.target.value)}} />
+                <input id = "new-pwd" name = "new-pwd" type = "password"  onChange = {(e) => {if (e.target.value.length >= 8) setNewPassword(e.target.value)}} />
             </div>
             <div className = "input-field">
                 <label htmlFor="confirm-pwd">
@@ -266,7 +262,7 @@ export default function ProfileFreelancer(){
                 </label>
                 <input id = "confirm-pwd" name = "confirm-pwd" type = "password"/>
             </div>
-            <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {(savePassword)}/>
+            <ButtonUploadFreelancer className="button-save" name = "password" title = "SAVE" onClick = {(e) => {savePassword(e)}}/>
             <ButtonUploadFreelancer className="button-upload" title = "BACK" onClick = {()=>{setChangePassword(false)}}/>
           </div>
           }
