@@ -2,7 +2,7 @@ import logo from '../../logo.png';
 import './LicenseFreelancer.scss';
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
-import ButtonUploadFreelancer from '../../Components/Button/ButtonUploadFreelancer'
+import {ButtonUploadFreelancer} from '../../Components/Button/ButtonFreelancer'
 import {useState} from 'react'
 import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -23,7 +23,7 @@ export default function LicenseFreelancer(){
     return (
     <div className="license-freelancer">
       <HeaderFreelancer/>
-      <NavbarFreelancer img = {logo} fullname = {tour_guide_by_id_guide.fullname.toUpperCase()} flag1 = "focus"/>
+      <NavbarFreelancer src = {logo} fullname = {tour_guide_by_id_guide.fullname.toUpperCase()} flag1 = "focus"/>
       <Link to={{ pathname: "/profile-freelancer", state: { license, isDelete }}}>
         <ButtonUploadFreelancer className="button-upload" title = "BACK" />
       </Link>

@@ -1,15 +1,15 @@
 import './ProfileFreelancer.scss'
-import logo from '../../logo.png';
+import placeholder from '../../placeholder-image.png'
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
-import ButtonUploadFreelancer from '../../Components/Button/ButtonUploadFreelancer';
-import {ButtonEditFreelancer, ButtonDeleteFreelancer} from "../../Components/Button/ButtonFreelancer"
+import {ButtonEditFreelancer, ButtonDeleteFreelancer, ButtonUploadFreelancer} from "../../Components/Button/ButtonFreelancer"
 import AttractionFreelancer from '../../Components/Attraction/AttractionFreelancer';
 import { useSelector, useDispatch } from "react-redux";
 import {Link, useLocation} from "react-router-dom"
 import {useState, useEffect} from 'react'
+import {useFormik} from 'formik'
+import * as yup from 'yup'
 
-// import { BasicAction } from '../../redux/actions/BasicAction'
 import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,getGuideAttractionByIdGuide,
         updateTourGuideByIdGuide } from '../../redux/actions/FreelancerAction';
 
@@ -21,65 +21,119 @@ export default function ProfileFreelancer(){
   // useEffect(()=> dispatch(getTourGuideByIdGuide("tunglamtran.work@gmail.com")), [] )
 
   const {destination} = useSelector(state => state.BasicReducer)
-  const {tour_guide_by_id_guide, guide_language_by_id_guide, verified} = useSelector(state => state.FreelancerReducer)
-  const {license, isDelete} = location.state ? location.state : {}
-  const [changePassword, setChangePassword] = useState(false)
+  const {tour_guide_by_id_guide, guide_language_by_id_guide, verified, guide_license_by_id_guide} = useSelector(state => state.FreelancerReducer)
+  let {license, isDelete} = location.state ? location.state : {}
+  if (!license)
+    license = guide_license_by_id_guide
 
-  const [info, setInfo] = useState(tour_guide_by_id_guide)
-  const handleChangeInfo = (e, type)=> {
-    setInfo({...info, [type]:e.target.value})
+  const handleChangeInfo = (e)=> {
+    const { name, value } = e.target;
+    const trimmedValue = value.trim();
+    const newEvent = { ...e, target: { name, value: trimmedValue } };
+    formik.handleChange(newEvent);
     setSaveChanges(true)
   }
 
-  const [language, setLanguage] = useState(guide_language_by_id_guide)
   const handleChangeLanguage = (e) => {
-    let tmp = [...language]
+    let tmp = [...formik.values.language]
     const val = parseInt(e.target.value)
     if (tmp.includes(val))
       tmp = tmp.filter(lang => lang !== val)
     else
       tmp.push(val)
-    setLanguage([...tmp])
+
+    const newEvent = { ...e, target: { name: "language", value: tmp} };
+    formik.handleChange(newEvent);
     setSaveChanges(true)
   }
 
+  const [uploadedLicense, setUploadedLicense] = useState(license)
+  const handleAddLicense = (e) => {
+    const newAva = e.target.files[0].name
+    const newEvent = { ...e, target: {name: "avatar", value: newAva}};
+    formik.handleChange(newEvent);
+    setSaveChanges(true)  
+  }
+
+
+  const [preview, setPreview] = useState(null)
+  const handleChangeAvatar = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+    console.log( e.target.files[0])
+    const newAva = e.target.files[0].name
+    const newEvent = { ...e, target: {name: "avatar", value: newAva}};
+    formik.handleChange(newEvent);
+    setSaveChanges(true)
+  }
+
+  const formik = useFormik({
+    initialValues: {...tour_guide_by_id_guide,language: guide_language_by_id_guide},
+    onSubmit: (values) =>{
+      console.log("-", values)
+    },
+    validationSchema: yup.object().shape({
+      fullname: yup.string().min(8,"oke").required('Name is required')
+    })
+  })
+
   const [saveChanges, setSaveChanges] = useState(isDelete ? isDelete : false)
-  const handleSaveChanges = () => {
-    info.gender = parseInt(info.gender)
-    info.id_des = parseInt(info.id_des)
-    dispatch(updateTourGuideByIdGuide(info.id_guide, info, language, license))
+  const handleSaveChanges = (e) => {
+    e.preventDefault()
+    formik.values.gender = parseInt(formik.values.gender)
+    formik.values.id_des = parseInt(formik.values.id_des)
+    const {language, ...newInfo} = formik.values
+    // update filename
+    dispatch(updateTourGuideByIdGuide(newInfo.id_guide, newInfo, language, license))
+    // update avatar -> File object
+    // dispatch(uploadAvatar())
+    // update license -> File object
     setSaveChanges(false)
   }
 
-  console.log(location)
+  const [changePassword, setChangePassword] = useState(false)
+  const [newPassword, setNewPassword] = useState("")
+  const savePassword = (e) => {
+    const {language, ...newInfo} = formik.values
+    newInfo.password = newPassword
+    dispatch(updateTourGuideByIdGuide(newInfo.id_guide, newInfo, language, license))
+    setChangePassword(false)
+  }
+
+  // console.log(formik.errors)
+  // console.log(formik.values)
+  // console.log(license)
+
   return(
     <div className="profile-freelancer">
       <HeaderFreelancer/>
-      <NavbarFreelancer img = {logo} fullname = {tour_guide_by_id_guide.fullname.toUpperCase()} flag1 = "focus"/>
+      <NavbarFreelancer src = {preview ? preview : placeholder} fullname = {tour_guide_by_id_guide.fullname.toUpperCase()} flag1 = "focus"/>
       <div className = "main-profile">
-        <div className = "update-profile">
-          <form className = "form-profile" method = "POST">
-
+        <form className = "update-profile" onSubmit = {(e) => {handleSaveChanges(e)}}>
+          <div className = "form-profile">
             <div className = "input-field">
                 <label htmlFor="fullname">
                     Full name
                     <p> * </p>
                 </label>
-                <input id = "fullname" name ="fullname" type = "text" value = {info.fullname} onChange = {(e)=>handleChangeInfo(e,"fullname")} required/>
+                <input id = "fullname" name ="fullname" type = "text" value = {formik.values.fullname} onChange = {(e)=>handleChangeInfo(e, formik.handleChange)} required/>
             </div>
 
             <div className = "input-field">
-                <label htmlFor="dob">
+                <label htmlFor="birthday">
                     Date of birth <p> * </p>
                 </label>
-                <input id = "dob" name = "dob" type = "date" defaultValue = {info.birthday} onChange = {(e)=>handleChangeInfo(e,"birthday")}  required />
+                <input id = "birthday" name = "birthday" type = "date" defaultValue = {formik.values.birthday} onChange = {(e)=>handleChangeInfo(e, formik.handleChange)}  required />
             </div>
 
             <div className = "check-box">
               <legend> Gender <p> * </p> </legend>
-              <input id = "male" type = "radio" name = "gender" value = {0} defaultChecked ={info.gender === 0} onChange = {(e)=>handleChangeInfo(e,"gender")}></input>
+              <input id = "male" type = "radio" name = "gender" value = {0} defaultChecked ={formik.values.gender === 0} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)}></input>
               <label htmlFor="male">Male</label>
-              <input id = "female" type = "radio" name = "gender" value = {1} defaultChecked ={info.gender === 1} onChange = {(e)=>handleChangeInfo(e,"gender")}></input>
+              <input id = "female" type = "radio" name = "gender" value = {1} defaultChecked ={formik.values.gender === 1} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)}></input>
               <label htmlFor="female">Female</label>
             </div>
 
@@ -88,7 +142,7 @@ export default function ProfileFreelancer(){
                     Destination
                     <p> * </p>
                 </label>
-                <select id="des" name="des" defaultValue={info.id_des} onChange={(e)=>handleChangeInfo(e,"id_des")}>
+                <select id="des" name="id_des" defaultValue={formik.values.id_des} onChange={(e)=>handleChangeInfo(e,formik.handleChange)}>
                   {
                     destination.map((des)=> <option key = {des.id_des} name ={des.id_des} value = {des.id_des} > {des.name} </option>)
                   }
@@ -100,14 +154,14 @@ export default function ProfileFreelancer(){
                     Phone number
                     <p> * </p>
                 </label>
-                <input id = "phone" name = "phone" type = "tel" value = {info.phone} onChange = {(e)=>handleChangeInfo(e,"phone")} required />
+                <input id = "phone" name = "phone" type = "tel" value = {formik.values.phone} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} required />
             </div>
 
             <div className = "check-box">
               <legend> Language <p> * </p> </legend>
-                <input id = "VN" type = "checkbox" name = "language" value = {1} defaultChecked ={language.includes(1)} onChange = {handleChangeLanguage}></input>
+                <input id = "VN" type = "checkbox" name = "language" value = {1} defaultChecked ={formik.values.language.includes(1)} onChange = {(e)=>handleChangeLanguage(e,formik.handleChange)}></input>
                 <label htmlFor="VN">Vietnamese</label>
-                <input id = "EN" type = "checkbox" name = "language" value = {2} defaultChecked ={language.includes(2)} onChange = {handleChangeLanguage}></input>
+                <input id = "EN" type = "checkbox" name = "language" value = {2} defaultChecked ={formik.values.language.includes(2)} onChange = {(e)=>handleChangeLanguage(e,formik.handleChange)}></input>
                 <label htmlFor="EN">English</label>
             </div>
 
@@ -116,7 +170,7 @@ export default function ProfileFreelancer(){
                     Experience (years)
                     <p> * </p>
                 </label>
-                <input id = "exp" name = "exp" type = "text" value = {info.experience} onChange = {(e)=>handleChangeInfo(e,"experience")} required />
+                <input id = "exp" name = "experience" type = "text" value = {formik.values.experience} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} required />
             </div>
 
             <div className = "input-field type2">
@@ -124,23 +178,23 @@ export default function ProfileFreelancer(){
                     Description
                     <p> * </p>
                 </label>
-                <textarea id = "desc" name = "desc" type = "text" value = {info.description} onChange = {(e)=>handleChangeInfo(e,"description")} ></textarea>
+                <textarea id = "desc" name = "description" type = "text" value = {formik.values.description} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} ></textarea>
             </div>
 
             <div className = "input-field">
               <legend>Tourism licenses</legend>
               <input type="file" id = "license" name = "license" accept="image/*"/>
               <Link to = "/license-freelancer">
-                <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES"/>
+                <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES" name = "upload-license" onChange = {(e) => {handleAddLicense(e)}}/>
               </Link>
             </div>
-          </form>
+          </div>
 
           <div className = "avatar-frame">
             <div className = "picture">
-                <img src={logo} alt = ""></img>
+                <img src={preview ? preview : placeholder} alt = ""></img>
                 <div className = "picture-bg">
-                  <ButtonEditFreelancer/>
+                  <ButtonEditFreelancer name = "edit-avatar" onChange = {(e) => {handleChangeAvatar(e)}}/>
                   <ButtonDeleteFreelancer/>
                 </div>
             </div>
@@ -150,9 +204,9 @@ export default function ProfileFreelancer(){
                 <i className="fas fa-user-check"></i>
                 Verified user account
             </div>}
-        </div>
-        </div>
-        <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" onClick = {handleSaveChanges} disabled = {!saveChanges}/>
+          </div>
+          <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" type = "submit" disabled = {!saveChanges}/>
+        </form>
         
         <div className = "hr"></div>
 
@@ -171,7 +225,7 @@ export default function ProfileFreelancer(){
                     Email address
                     <p> * </p>
                 </label>
-                <input id = "email" name = "email" type = "email" value = {info.fullname} disabled/>
+                <input id = "email" name = "email" type = "email" value = {formik.values.email} disabled/>
             </div>
             <div className = "input-field">
                 <label htmlFor="pwd">
@@ -197,7 +251,7 @@ export default function ProfileFreelancer(){
                     New password
                     <p> * </p>
                 </label>
-                <input id = "new-pwd" name = "new-pwd" type = "password"/>
+                <input id = "new-pwd" name = "new-pwd" type = "password"  onChange = {(e) => {setNewPassword(e.target.value)}} />
             </div>
             <div className = "input-field">
                 <label htmlFor="confirm-pwd">
@@ -206,7 +260,7 @@ export default function ProfileFreelancer(){
                 </label>
                 <input id = "confirm-pwd" name = "confirm-pwd" type = "password"/>
             </div>
-            <ButtonUploadFreelancer className="button-save" title = "SAVE" />
+            <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {(savePassword)}/>
             <ButtonUploadFreelancer className="button-upload" title = "BACK" onClick = {()=>{setChangePassword(false)}}/>
           </div>
           }

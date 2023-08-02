@@ -62,7 +62,7 @@ export default function StatisticsFreelancer(){
         <div>
       <div className = "statistics-freelancer">
          <HeaderFreelancer/>
-         <NavbarFreelancer img = {logo} fullname = "PHAN MY LINH" flag3 = "focus"/>  
+         <NavbarFreelancer src = {logo} fullname = "PHAN MY LINH" flag3 = "focus"/>  
          <div className = "main-statistic">
             <div className = "statistic">
               <div className = "sale">

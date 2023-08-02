@@ -1,64 +1,81 @@
-import logo from '../../logo.png';
+import placeholder from '../../placeholder-image.png'
 import "./CalendarFreelancer.scss";
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
-const day_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
-function Date({day,month,index,focus}){
-  return(
-    <button className ={focus ? "date focus" : "date"}>
-      <p>{day_of_week[index]}</p>
-      <p>{day}</p>
-      <p>{month}</p>
-    </button>
+const day_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const month_of_year = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function Day({day, week, month,focus, onClick}){
+    return(
+        <button className ={focus ? "date focus" : "date"} onClick = {onClick}>
+        <p>{week}</p>
+        <p>{day}</p>
+        <p>{month_of_year[month]}</p>
+        </button>
   )
 }
 
-  const dates = [{day: 3, month: "July", focus: false},
-                {day: 4, month: "July", focus: false},
-                {day: 5, month: "July", focus: true},
-                {day: 6, month: "July", focus: false},
-                {day: 7, month: "July", focus: false},
-                {day: 8, month: "July", focus: false},
-                {day: 9, month: "July", focus: false}]
-
 export default function CalendarFreelancer(){  
-    const {verified} = useSelector(state => state.FreelancerReducer)
+    const {verified, guide_time_by_id_guide, tour_guide_by_id_guide} = useSelector(state => state.FreelancerReducer)
+
+    const [next, setNext] = useState(0)
+
+    const dates = []
+    const currentDate = new Date()
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(currentDate);
+        date.setDate(currentDate.getDate() + i + 7 * next);
+        dates.push({week: day_of_week[date.getDay()], day: date.getDate(), month: date.getMonth(), year: date.getFullYear()});
+    }
+    
+    const [no, setNo] = useState(0)
+    const checkExist = (session) => {
+        const dateStr = dates[no].year + '-' + (dates[no].month + 1) + '-' + dates[no].day
+        
+        console.log (guide_time_by_id_guide.some((time)=>{
+            console.log(dateStr, time.guide_date,time.guide_session)
+            return time.guide_date == dates[no]} ))
+        // console.log(guide_time_by_id_guide)
+    }
+    const [price, setPrice] = useState(tour_guide_by_id_guide.price_per_session.toFixed(2))
+    const [cancel, setCancel] = useState(tour_guide_by_id_guide.free_cancellation)
+    // khi nào mới gửi action
+    console.log(price, cancel)
 
     return (
         <div className = "calendar-freelancer">
             <HeaderFreelancer/>
-            <NavbarFreelancer img = {logo} fullname = "PHAN MY LINH" flag2 = "focus"/>
+            <NavbarFreelancer src = {placeholder} fullname ={tour_guide_by_id_guide.fullname.toUpperCase()} flag2 = "focus"/>
             {verified ? (
                 <div className = "main-calendar">
                 <div className = "select-date">
                     <p>Select the date you want to schedule</p>
-                    <ButtonNextFreelancer disabled/>
+                    <ButtonNextFreelancer onClick = {() => {setNext(next-1); setNo("")}} disabled = {next == 0}/>
                     <div className = "list-date">
                     {
-                    dates.map((date,index)=>{
-                        return <Date key={date.day} {...date} index = {index}/>
-                    })
+                        dates.map((date,index)=>{
+                            return <Day key={`${date.day}-${date.month}`} {...date} focus = {index === no} onClick = {() => {setNo(index)}}/>
+                        })
                     }
                     </div>
-                    <ButtonNextFreelancer next/>
+                    <ButtonNextFreelancer onClick = {() => {setNext(next+1); setNo("")}}  next/>
                 </div>
                 <div className = "select-session">
                     <p>Select the available session</p>
                     <div className = "list-session">
                         <div className = "check-box-calendar">
-                            <input id = "morning" type = "checkbox" name = "session" value = "morning" disabled></input>
+                            <input id = "morning" type = "checkbox" name = "session" value = {1} defaultChecked = {checkExist(1)}></input>
                             <label htmlFor="morning">Morning (7:00 - 11:00)</label>
                         </div>
                         <div className = "check-box-calendar">
-                            <input id = "afternoon" type = "checkbox" name = "session" value = "afternoon"></input>
+                            <input id = "afternoon" type = "checkbox" name = "session" value = {2} defaultChecked = {checkExist(2)}></input>
                             <label htmlFor="afternoon">Afternoon (13:00 - 17:00)</label>
                         </div>
                         <div className = "check-box-calendar">
-                            <input id = "evening" type = "checkbox" name = "session" value = "evening"></input>
+                            <input id = "evening" type = "checkbox" name = "session" value = {3} defaultChecked = {checkExist(3)}></input>
                             <label htmlFor="evening">Evening (18:00 - 21:00)</label>
                         </div>
                     </div>
@@ -68,9 +85,9 @@ export default function CalendarFreelancer(){
                         Price per session ($)
                         <p> * </p>
                     </label>
-                    <input id = "price_session" type = "number" required ></input>
+                    <input id = "price_session" type = "number" name = "price" value = {price} onChange = {(e) => setPrice(e.target.value)} required ></input>
                 </div>
-                <input type="checkbox" id="free-cancallation"></input>
+                <input type="checkbox" id="free-cancallation" checked = {cancel} onChange = {(e) => setCancel(!cancel)}></input>
                 <label htmlFor="free-cancallation">Free cancellation up to 24 hours before the start time</label>
                 </div>
             ):

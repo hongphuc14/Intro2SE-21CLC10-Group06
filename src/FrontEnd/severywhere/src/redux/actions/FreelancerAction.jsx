@@ -3,7 +3,8 @@ import { GET_TOUR_GUIDE_BY_ID_GUIDE,
     GET_GUIDE_LICENSE_BY_ID_GUIDE,
     UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
     GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
-    UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE } 
+    UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
+    GET_GUIDE_TIME_BY_ID_GUIDE } 
 from "../types";
 // import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
 // import {freelancerService} from '../../services/FreelancerService';
@@ -57,6 +58,13 @@ export const updateGuideAttractionByIdGuide = (id_guide, attraction) => {
   return {
     type: UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
     guide_attraction_by_id_guide: attraction
+  }
+};
+
+export const getGuideTimeByIdGuide = (id_guide) => {
+  return {
+    type: GET_GUIDE_TIME_BY_ID_GUIDE,
+    guide_time_by_id_guide: []
   }
 };
 

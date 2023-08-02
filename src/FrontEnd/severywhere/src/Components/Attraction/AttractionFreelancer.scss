@@ -39,7 +39,7 @@
 
 .picture .button-edit, .picture .button-delete{
     visibility: hidden;
-    z-index: 1;
+    // z-index: 1;
 }
 
 .picture:hover .picture-bg, .picture:hover .button-delete, .picture:hover .button-edit{
@@ -86,10 +86,8 @@
     resize: none;
 }
 
-.attraction-frame:focus-within, 
 .attraction-frame input:focus-within, 
-.attraction-frame textarea:focus-within,
-.attraction-frame.active{
+.attraction-frame textarea:focus-within{
     outline: 2px solid #0E4D90;
     outline-offset: -2px;
 }
@@ -101,13 +99,4 @@
 
 .attraction-frame .button-save{
     margin: 2.5em 1em 1.5em auto;
-}
-
-.attraction-frame .button-upload, .attraction-frame .button-save{
-    display: none;
-}
-
-
-.attraction-frame:focus-within button{
-    display: block;
 }

@@ -1,11 +1,11 @@
 import "./NavbarFreelancer.scss";
 import {Link} from "react-router-dom"
 
-export default function NavbarNavbarFreelancer({img, fullname, flag1, flag2, flag3}){
+export default function NavbarNavbarFreelancer({src, fullname, flag1, flag2, flag3}){
     return(
         <nav className = "navbar-freelancer">
             <div className = "avatar">
-                <img src={img} alt = "avatar"></img>
+                <img src={src} alt = "avatar"></img>
                 <p>{fullname}</p>
             </div>
             <Link to = "/profile-freelancer" style={{ textDecoration: 'none' }}>

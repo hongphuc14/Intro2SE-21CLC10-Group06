@@ -41,15 +41,15 @@ margin-left: 6em;
 }
 
 .main-calendar .list-date{
-width: calc(100vw - 19em);
+width: calc(100vw - 25.5em);
 margin: 0 auto;
 display: inline-flex;
-justify-content: space-around;
+justify-content: space-evenly;
 margin-top: 0.5em;
 }
 
 .list-date .date{
-width: 6.5em;
+width: 7em;
 height: 8em;
 background-color: white;
 border-radius: 0.8em;
@@ -63,11 +63,7 @@ justify-content: center;
 
 .list-date .date p{
 margin: 0 auto;
-font-size: 1.1em;
-}
-
-.list-date .date p:nth-child(1){
-font-size: 0.8em;
+font-size: 1em;
 }
 
 .list-date .date p:nth-child(2){
@@ -116,6 +112,7 @@ justify-content: space-between;
     -webkit-appearance: none;
     -moz-appearance: none;
     -o-appearance: none;
+    cursor: pointer;
 }
 
 .check-box-calendar input:disabled{

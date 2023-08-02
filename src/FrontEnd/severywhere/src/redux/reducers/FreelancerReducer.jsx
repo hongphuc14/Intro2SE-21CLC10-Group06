@@ -3,7 +3,8 @@ import { GET_TOUR_GUIDE_BY_ID_GUIDE,
   GET_GUIDE_LICENSE_BY_ID_GUIDE,
   UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
   GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
-  UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE } 
+  UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
+  GET_GUIDE_TIME_BY_ID_GUIDE } 
 from "../types";
 
 // let user = {}
@@ -20,7 +21,13 @@ const stateDefault = {
     verified: true,
 
     guide_attraction_by_id_guide: [{id_attraction: 1, photo_path: "a", title: "Cua Lo Beach", 
-    description: "This is a pristine beach with a long stretch of white sand that attracts visitors for swimming, sunbathing, and relaxing."}],
+    description: "This is a pristine beach with a long stretch of white sand that attracts visitors for swimming, sunbathing, and relaxing."},
+    {id_attraction: 2, photo_path: "a", title: "abc", description: "This is a"}],
+
+    guide_time_by_id_guide: [{id_guidetime: 1, guide_date: "2023-08-01",guide_session: 1, is_available: true},
+                            {id_guidetime: 2, guide_date: "2023-8-2",guide_session: 2, is_available: true},
+                            {id_guidetime: 3, guide_date: "2023-08-03",guide_session: 3, is_available: true},
+                            {id_guidetime: 4, guide_date: "2023-08-04",guide_session: 1, is_available: true}]
 };
 
 export const FreelancerReducer = (state = stateDefault, action) => {
@@ -57,6 +64,11 @@ export const FreelancerReducer = (state = stateDefault, action) => {
       case UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE: {
         return { ...state,
                 guide_attraction_by_id_guide: action.guide_attraction_by_id_guide };
+      }
+
+      case GET_GUIDE_TIME_BY_ID_GUIDE:{
+        return{ ...state,
+                guide_time_by_id_guide: action.guide_time_by_id_guide};
       }
 
       default:

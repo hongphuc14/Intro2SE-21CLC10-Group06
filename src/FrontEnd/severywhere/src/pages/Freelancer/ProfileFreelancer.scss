@@ -14,14 +14,16 @@
     height: fit-content;
     position: relative;
     left: 12em;
-    top: 1em;
+    top: 3em;
 }
 
 // form + avatar
 .update-profile{
-  display: flex;
+  display: flex ;
+  flex-wrap: wrap;
+  width: 55em;
   height: fit-content;
-  margin: 3em auto 0;
+  margin: 1em auto 0;
 }
 
 // form
@@ -260,11 +262,6 @@
   text-align: center;
   margin: 0;
 }
-
-.show-attraction .button-save, .button-upload{
-  margin: 2em;
-}
-
 // settion section
 .setting{
   height: fit-content;
