@@ -2,6 +2,7 @@ const sequelize = require('../models/index');
 const init_models = require('../models/init-models');
 const model = init_models(sequelize);
 const { sucessCode, failCode, errorCode } = require('../config/response');
+const { parseToken, clearLocalStorage } = require('../middlewares/baseToken');
 
 const bcrypt = require('bcrypt'); 
 //GET: login
@@ -17,7 +18,7 @@ const login = async(req, res)=>{
         if(checkAdmin){
             let checkPass = bcrypt.compareSync(password, checkAdmin.password);
             if(checkPass){
-                sucessCode(res, checkAdmin, "Login thành công");
+                sucessCode(res, parseToken(checkAdmin), "Login thành công");
                 return;
             }
             else{
@@ -33,11 +34,11 @@ const login = async(req, res)=>{
             }
         })
         if(checkTourist){
-            let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
-            let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkTourist.password);
+            //let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
+            //let checkPass = bcrypt.compareSync(password, passWordHash);
+            let checkPass = bcrypt.compareSync(password, checkTourist.password);
             if(checkPass){
-                sucessCode(res, checkTourist, "Login thành công");
+                sucessCode(res, parseToken(checkTourist), "Login thành công");
                 return;
             }
             else{
@@ -53,11 +54,11 @@ const login = async(req, res)=>{
             }
         })
         if(checkCompany){
-            let passWordHash = bcrypt.hashSync(checkCompany.password, 10);
-            let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkCompany.password);
+            //let passWordHash = bcrypt.hashSync(checkCompany.password, 10);
+            //let checkPass = bcrypt.compareSync(password, passWordHash);
+            let checkPass = bcrypt.compareSync(password, checkCompany.password);
             if(checkPass){
-                sucessCode(res, checkCompany, "Login thành công");
+                sucessCode(res, parseToken(checkCompany), "Login thành công");
                 return;
             }
             else{
@@ -73,11 +74,11 @@ const login = async(req, res)=>{
             }
         })
         if(checkFreelancer){
-            let passWordHash = bcrypt.hashSync(checkFreelancer.password, 10);
-            let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkFreelancer.password);
+            //let passWordHash = bcrypt.hashSync(checkFreelancer.password, 10);
+            //let checkPass = bcrypt.compareSync(password, passWordHash);
+            let checkPass = bcrypt.compareSync(password, checkFreelancer.password);
             if(checkPass){
-                sucessCode(res, checkFreelancer, "Login thành công");
+                sucessCode(res, parseToken(checkFreelancer), "Login thành công");
                 return;
             }
             else{
@@ -230,10 +231,9 @@ const deleteAccount = async(req, res) => {
 
 const logout = async(req, res) =>{
     try{
-        // Clear the token on the Backend side
-        // Invalidate the user's token to enforce the logout.
-
-        res.json({ message: "Logout successful" });
+        // Xóa token khỏi localStorage khi đăng xuất
+        clearLocalStorage("Token");
+        sucessCode(res, null, "Logout successful");
     } catch (error) {
         errorCode(res, "Lỗi BE");
     }

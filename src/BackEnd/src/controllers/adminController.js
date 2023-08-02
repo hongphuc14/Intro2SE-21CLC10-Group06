@@ -111,7 +111,7 @@ const uploadAdmin = async(req, res)=>{
     
     //Nếu size tệp vượt quá 4Mb, hàm sẽ xóa tệp và gửi phản hồi
     if(req.file.size >= 400000){
-        fs.unlinkSync(process.cwd() + "/public/admin_avatar/" + req.file.filename);
+        fs.unlinkSync(process.cwd() + "/public/admin_avatar/" + req.file.filename); //process.cwd() --> Intro2SE-21CLC10-Group06
         res.send("chỉ được phép upload 4Mb");
         return;
     }
