@@ -33,12 +33,11 @@ export default function CalendarFreelancer(){
     
     const [no, setNo] = useState(0)
     const checkExist = (session) => {
-        const dateStr = dates[no].year + '-' + (dates[no].month + 1) + '-' + dates[no].day
-        
+        const dateStr = `${dates[no].year}/${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}/${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
         console.log (guide_time_by_id_guide.some((time)=>{
             console.log(dateStr, time.guide_date,time.guide_session)
             return time.guide_date == dates[no]} ))
-        // console.log(guide_time_by_id_guide)
+        console.log(guide_time_by_id_guide)
     }
     const [price, setPrice] = useState(tour_guide_by_id_guide.price_per_session.toFixed(2))
     const [cancel, setCancel] = useState(tour_guide_by_id_guide.free_cancellation)
