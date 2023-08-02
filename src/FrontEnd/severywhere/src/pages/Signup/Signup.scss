@@ -73,17 +73,17 @@ input[type=submit]:hover {
     margin: 20px 40px 30px 20px;
 }
 .role-title {
-    margin: 40px 0 0 0;
+    margin: 3rem 0 1rem 0;
     padding: none;
     color: #0C721F;
-    font-size: 20px;
+    font-size: 1.2rem;
     text-align: center;
     height: auto;
 }
 .role-option {
     list-style: none;
     padding: 0;
-    height: 220px;
+    height: 16rem;
     display: grid;
 }
 input[type=button] {
@@ -93,8 +93,8 @@ input[type=button] {
     font-size: 20px;
     border: none;
     border-radius: 10px;
-    margin: 0 0 20px 0;
-    height: 59px;
+    margin: 0 0 2rem 0;
+    height: 4rem;
 }
 input[type=button]:focus {
     background-color: #0C721F;
