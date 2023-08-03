@@ -9,8 +9,8 @@ const Signup = () => {
                     <p className="signup-subtitle">Create your new account</p>
                     <ul className="signup-input">
                         <li><input type="text" placeholder="Email address *"/></li>
-                        <li><input type="text" placeholder="Password *"/></li>
-                        <li><input type="text" placeholder="Confirm password *"/></li>
+                        <li><input type="password" placeholder="Password *"/></li>
+                        <li><input type="password" placeholder="Confirm password *"/></li>
                     </ul>
                     <div class="signup-button">
                         <input type="submit" value="SIGN UP"/>

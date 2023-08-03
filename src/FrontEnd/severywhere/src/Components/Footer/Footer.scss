@@ -1,0 +1,123 @@
+footer {
+    position: relative;
+}
+#copyright {
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px 0px;
+}
+#footer-container {
+    color: white;
+    width: 94%;
+    height: 13rem;
+    display: flex;
+    padding: 30px 3%;
+    justify-content: center;
+    // background-image: url("../../../public/login-background.png"); 
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.footer-col {
+    height: 100%;
+    width: 20%;
+    text-align: left;
+    font-size: 0.8rem;
+    padding-right: 1.5rem;
+}
+.footer-col > p {
+    margin: 0;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+.footer-col.newsletter {
+    margin-left: -2.5rem;
+    margin-right: 2.5rem;
+}
+.footer-col.pages {
+    margin-left: 2rem;
+    margin-right: -2rem;
+}
+.col-title {
+    height: fit-content;
+    width: 100%;
+    font-size: 1.3rem;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+.col-title.footer-logo {
+    padding: 0;
+    width: 7.5rem;
+}
+.social-icon {
+    font-size: 1.8rem;
+    color: white;
+    margin: 10%;
+}
+.social-icon:hover {
+    color: #0C721F;
+    cursor: pointer;
+}
+#social-media {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+}
+.pages-link {
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+.pages-link > ul {
+    padding: 0;
+    list-style: none;
+}
+.pages-link li {
+    margin-bottom: 1rem;
+}
+.pages-link li:hover {
+    color: #0C721F;
+    cursor: pointer;
+}
+.newsletter-input {
+    margin-top: 3rem;
+    height: fit-content;
+    width: 100%;
+}
+.newsletter-input > input[type=text] {
+    height: 2rem;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    position: relative;
+    left: 0;
+    top: 0px;
+    padding: 5px 10px;
+    margin: 0;
+}
+/* .newsletter-input > button[type=submit] {
+    border: 2px solid #0C721F;
+    border-radius: 0 10px 10px 0;
+    background-color: #0C721F;
+    height: 2rem;
+    width: 25%;
+    padding: 0;
+    margin: 0;
+    color: white;
+    position: relative;
+    left: 85%;
+    top: -35px;
+} */
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.contact-icon {
+    margin-right: 0.4rem;
+    margin-bottom: 1.5rem;
+}

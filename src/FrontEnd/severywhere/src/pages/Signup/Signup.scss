@@ -1,7 +1,7 @@
 #signup-background{
     min-width: 700px;
     overflow-x: auto;
-    background-image: url("hoian2.jpg");
+    background-image: url("../../../public/login-background.png");
     background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
@@ -42,7 +42,7 @@
 ::placeholder {
     color: #8C8C8C;
 }
-input[type=text] {
+input[type=text],  input[type=password] {
     border: 1px solid #8C8C8C;
     border-radius: 8px;
     height: 20px;
@@ -54,7 +54,7 @@ input[type=text] {
 .signup-button {
     text-align: center;
 }
-input[type=submit] {
+input[type=submit]{
     background-color: #0C721F;
     border: none;
     color: white;
