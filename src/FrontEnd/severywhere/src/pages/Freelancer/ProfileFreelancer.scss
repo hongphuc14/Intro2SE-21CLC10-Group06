@@ -29,7 +29,7 @@
 // form
 .form-profile{
   max-width: 30em;
-  height: 28em;
+  height: fit-content;
   text-align: start;
   display: inline-flex;
   flex-direction: column;
@@ -179,6 +179,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
+  cursor: pointer;
 }
 
 .check-box input[type=checkbox]:checked{
@@ -196,6 +197,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
+  cursor: pointer;
 }
 
 .check-box input[type=radio]:checked{

@@ -6,8 +6,8 @@ export class FreelancerService extends baseService {
     }
 
     // Api 1: thông tin tourguide khi có id_guide
-    getTourGuideByIdGude = (id_guide) => {
-      return this.get(`api/guide/${id_guide}`);
+    getTourGuideByIdGude = (email) => {
+      return this.get(`company/${email}`);
     };
 
     // Api 2: ngôn ngữ của tourguide khi có id_guide

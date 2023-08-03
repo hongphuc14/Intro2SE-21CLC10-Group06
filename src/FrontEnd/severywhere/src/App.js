@@ -6,7 +6,10 @@ import CalendarFreelancer from "./pages/Freelancer/CalendarFreelancer";
 import StatisticsFreelancer from "./pages/Freelancer/StatisticsFreelancer";
 import LicenseFreelancer from "./pages/Freelancer/LicenseFreelancer";
 import BookingFreelancer from "./pages/Freelancer/BookingFreelancer";
+
 export const history = createBrowserHistory();
+
+
 
 function App(){
   return(
