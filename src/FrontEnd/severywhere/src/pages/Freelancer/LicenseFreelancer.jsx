@@ -8,7 +8,7 @@ import {useSelector} from 'react-redux'
 import {Link, useLocation} from 'react-router-dom'
 
 export default function LicenseFreelancer(){
-    const {guide_license_by_id_guide, tour_guide_by_id_guide} = useSelector(state => state.FreelancerReducer)
+    const {guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
     const location = useLocation()
     window.history.replaceState(null, null, location.pathname);
 
@@ -25,7 +25,7 @@ export default function LicenseFreelancer(){
     return (
     <div className="license-freelancer">
       <HeaderFreelancer/>
-      <NavbarFreelancer src = {logo} fullname = {tour_guide_by_id_guide.fullname.toUpperCase()} flag1 = "focus"/>
+      <NavbarFreelancer src = {logo} fullname = {guide_info.fullname.toUpperCase()} flag1 = "focus"/>
       <Link to={{ pathname: "/profile-freelancer", state: { license, isDelete }}}>
         <ButtonUploadFreelancer className="button-upload" title = "BACK" />
       </Link>

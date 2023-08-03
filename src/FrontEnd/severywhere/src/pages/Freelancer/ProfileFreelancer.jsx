@@ -11,8 +11,9 @@ import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as yup from 'yup'
 
-import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
-        updateTourGuideByIdGuide, updateGuideLicense } from '../../redux/actions/FreelancerAction';
+import {getDestination} from '../../redux/actions/BasicAction'
+import { getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
+    updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar } from '../../redux/actions/FreelancerAction';
 
 export default function ProfileFreelancer(){
   const dispatch = useDispatch()
@@ -20,14 +21,14 @@ export default function ProfileFreelancer(){
   window.history.replaceState(null, null, location.pathname);
 
   const {destination} = useSelector(state => state.BasicReducer)
-  const {tour_guide_by_id_guide, guide_language_by_id_guide, verified, guide_license_by_id_guide} = useSelector(state => state.FreelancerReducer)
+  const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
+  // console.log(user_login)
 
   // login mới get để lưu vào state
   useEffect(() => {
-    dispatch(getTourGuideByIdGuide("email"))
-    dispatch(getGuideLanguageByIdGuide("email"))
-    dispatch(getGuideLicenseByIdGuide("email"))
-    // console.log(tour_guide_by_id_guide))
+    console.log(guide_info)
+    dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
+    dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
   },[] )
 
   const handleChangeInfo = (e)=> {
@@ -60,8 +61,6 @@ export default function ProfileFreelancer(){
   //   setSaveChanges(true)  
   // }
 
-  // verified = license.some((license) => license.status === 2)
-
   const [preview, setPreview] = useState(null)
   const handleChangeAvatar = (e) => {
     if (e.target.files[0]){
@@ -83,8 +82,8 @@ export default function ProfileFreelancer(){
     formik.values.id_des = parseInt(formik.values.id_des)
     const {language, ...newInfo} = formik.values
     
-    // update filename + guide info + language
-    dispatch(updateTourGuideByIdGuide(newInfo.id_guide, newInfo, language, license))
+    dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
+    dispatch(updateGuideLanguage(newInfo.id_guide, language))
     dispatch(updateGuideLicense(newInfo.id_guide, license, []))
     // update avatar -> File object
     // dispatch(updateAvatar())
@@ -95,7 +94,7 @@ export default function ProfileFreelancer(){
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {...tour_guide_by_id_guide,language: guide_language_by_id_guide},
+    initialValues: {...guide_info,language: guide_language_by_id_guide},
     onSubmit: handleSaveChanges,
     validationSchema: yup.object().shape({
       fullname: yup.string().max(50,"Full name has the maximum of 50 characters").min(5,"Full name must have at least 5 characters").required('Full name is required'),
@@ -115,18 +114,18 @@ export default function ProfileFreelancer(){
     if (newPassword){
       formik.values.password = newPassword
       const {language, ...newInfo} = formik.values
-      dispatch(updateTourGuideByIdGuide(newInfo.id_guide, newInfo, language, license))
+      // dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
       setChangePassword(false)
     }
   }
 
   // console.log(formik.values.gender)
-  // console.log(preview)
+  // console.log(user_login)
 
   return(
     <div className="profile-freelancer">
       <HeaderFreelancer/>
-      <NavbarFreelancer src = {preview ? preview : placeholder} fullname = {tour_guide_by_id_guide?.fullname?.toUpperCase()} flag1 = "focus"/>
+      <NavbarFreelancer src = {preview ? preview : placeholder} fullname = {guide_info?.fullname?.toUpperCase()} flag1 = "focus"/>
       <div className = "main-profile">
         <form className = "update-profile" onSubmit = {formik.handleSubmit}>
           <div className = "form-profile">

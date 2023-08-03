@@ -5,8 +5,9 @@ export class BasicService extends baseService {
       super();
     }
 
+    // Api 1: login
     logIn = (user_login) => {
-      return this.post('basic/login', user_login);
+      return this.get('basic/login', user_login);
     }
 
     // Api 2: thông tin destination

@@ -59,11 +59,11 @@ const tourists = [{id: 1, name: "ML", img: ""},
                   {id: 12, name: "ML", img: ""},]
 
 export default function StatisticsFreelancer(){
-  const { tour_guide_by_id_guide} = useSelector(state => state.FreelancerReducer)
+  const { tour_info} = useSelector(state => state.FreelancerReducer)
   return(
     <div className = "statistics-freelancer">
         <HeaderFreelancer/>
-        <NavbarFreelancer src = {logo} fullname = {tour_guide_by_id_guide.fullname} flag3 = "focus"/>  
+        <NavbarFreelancer src = {logo} fullname = {tour_info.fullname} flag3 = "focus"/>  
         <div className = "main-statistic">
           <div className = "statistic">
             <div className = "sale">

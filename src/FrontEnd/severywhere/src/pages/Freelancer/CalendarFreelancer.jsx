@@ -3,8 +3,9 @@ import "./CalendarFreelancer.scss";
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import {getGuideLicenseByIdGuide} from '../../redux/actions/FreelancerAction'
 
 const day_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const month_of_year = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -19,8 +20,14 @@ function Day({day, week, month,focus, onClick}){
   )
 }
 
-export default function CalendarFreelancer(){  
-    const {verified, guide_time_by_id_guide, tour_guide_by_id_guide} = useSelector(state => state.FreelancerReducer)
+export default function CalendarFreelancer(){ 
+    const dispatch = useDispatch() 
+    const {user_login} = useSelector(state => state.BasicReducer)
+    const {verified, guide_time_by_id_guide} = useSelector(state => state.FreelancerReducer)
+   
+    useEffect(() => {
+        dispatch(getGuideLicenseByIdGuide(user_login.id_guide))
+      },[] )
 
     const [next, setNext] = useState(0)
 
@@ -52,15 +59,15 @@ export default function CalendarFreelancer(){
         // dispatch action to update guide time    
     }
 
-    const [price, setPrice] = useState(tour_guide_by_id_guide.price_per_session.toFixed(2))
-    const [cancel, setCancel] = useState(tour_guide_by_id_guide.free_cancellation)
+    const [price, setPrice] = useState(user_login.price_per_session.toFixed(2))
+    const [cancel, setCancel] = useState(user_login.free_cancellation)
     // khi nào mới gửi action
     // console.log(price, cancel)
 
     return (
         <div className = "calendar-freelancer">
             <HeaderFreelancer/>
-            <NavbarFreelancer src = {placeholder} fullname ={tour_guide_by_id_guide.fullname.toUpperCase()} flag2 = "focus"/>
+            <NavbarFreelancer src = {placeholder} fullname ={user_login.fullname.toUpperCase()} flag2 = "focus"/>
             {verified ? (
                 <div className = "main-calendar">
                 <div className = "select-date">

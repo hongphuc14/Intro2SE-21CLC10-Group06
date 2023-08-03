@@ -15,4 +15,7 @@ basicRoute.delete("/deleteAccount/:id_role/:id", verifyToken, deleteAccount);
 //POST: logout
 basicRoute.post("logout/", verifyToken, logout);
 
+//GET: get destination
+// basicRoute.get("/destination", getDestination);
+
 module.exports = basicRoute;

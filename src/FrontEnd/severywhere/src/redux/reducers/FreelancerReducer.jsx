@@ -1,7 +1,8 @@
-import { GET_TOUR_GUIDE_BY_ID_GUIDE,
+import {
   GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
   GET_GUIDE_LICENSE_BY_ID_GUIDE,
-  UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
+  UPDATE_GUIDE_INFO,
+  UPDATE_GUIDE_LANGUAGE,
   UPDATE_GUIDE_AVATAR,
   UPDATE_GUIDE_LICENSE,
   UPDATE_GUIDE_PASSWORD,
@@ -12,10 +13,12 @@ import { GET_TOUR_GUIDE_BY_ID_GUIDE,
   GET_GUIDE_BOOKING_BY_ID_GUIDE,
   GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING } 
 from "../types";
+import { stateDefault } from "../reducers/BasicReducer";
 
-// let user = {}
-const stateDefault = {
-    tour_guide_by_id_guide: {},
+let user_login = stateDefault.user_login
+
+const stateInit = {
+    guide_info: user_login,
 
     guide_language_by_id_guide: [],
 
@@ -37,14 +40,9 @@ const stateDefault = {
     guide_review_by_id_booking: [],
 };
 
-export const FreelancerReducer = (state = stateDefault, action) => {
+export const FreelancerReducer = (state = stateInit, action) => {
   console.log(action)
     switch (action.type) {
-      case GET_TOUR_GUIDE_BY_ID_GUIDE: {
-        return { ...state,
-          tour_guide_by_id_guide: action.tour_guide_by_id_guide };
-      }
-
       case GET_GUIDE_LANGUAGUE_BY_ID_GUIDE: {
         return { ...state,
                 guide_language_by_id_guide: action.guide_language_by_id_guide };
@@ -56,10 +54,14 @@ export const FreelancerReducer = (state = stateDefault, action) => {
                verified: action.verified };
       }
 
-      case UPDATE_TOUR_GUIDE_BY_ID_GUIDE:{
+      case UPDATE_GUIDE_INFO:{
         return {...state, 
-          tour_guide_by_id_guide: action.tour_guide_by_id_guide,
-          guide_language_by_id_guide : action.guide_language_by_id_guide}
+          guide_info: action.guide_info}
+      }
+
+      case UPDATE_GUIDE_LANGUAGE:{
+        return {...state, 
+          guide_language_by_id_guide: action.guide_language_by_id_guide}
       }
 
       // case UPDATE_GUIDE_AVATAR:{
