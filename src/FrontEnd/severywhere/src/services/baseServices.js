@@ -60,6 +60,12 @@ export class baseService {
       headers: this.addCommonHeaders(headers)
     });
   };
+
+  isGuest = () =>{
+    const roleId = localStorage.getItem(RoleKey);
+    // if roleId is null or undefined, the user is a guest
+    return !roleId;
+  }
 }
 
 // Setup axios interceptor
