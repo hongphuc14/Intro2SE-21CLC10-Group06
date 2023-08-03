@@ -3,7 +3,7 @@ import SignupBox from '../../Components/SignupBox/SignupBox';
 import HeaderGuest from '../../Components/Header/HeaderGuest'
 import Footer from '../../Components/Footer/Footer';
 
-const Signup = () => {
+export default function Signup() {
     return (  
         <div id="signup-background">
             <HeaderGuest/>
@@ -13,4 +13,4 @@ const Signup = () => {
     );
 }
  
-export default Signup;
+// export default Signup;

@@ -4,7 +4,7 @@ import HeaderGuest from '../../Components/Header/HeaderGuest';
 import Footer from '../../Components/Footer/Footer';
 
 
-function Login (){
+export default function Login (){
     return(
         <div className = "login-page">
             <HeaderGuest/>
@@ -15,4 +15,4 @@ function Login (){
     )
 }
 
-export default Login;
+// export default Login;

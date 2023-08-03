@@ -53,13 +53,10 @@ const Navbar = () => {
 
 function DropdownItem(props) {
   return (
-    <Link to = {props.link} style={{ textDecoration: 'none'}}>
       <li className="dropdownItem">
         <i className={props.className}></i>
-        <a >{props.text}</a>
+        <a href = {props.link}>{props.text}</a>
       </li>
-    </Link>
-
   );
 }
 
