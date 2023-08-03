@@ -1,14 +1,3 @@
-// .background{
-//     // max-width: 1440px;
-//     width: 100%;
-//     height: 100%;
-//     overflow-x: auto;
-//     background-image: url("./background.png");
-//     background-color: black;
-//     background-repeat: no-repeat;
-//     background-size: cover;
-//     justify-content: space-between;
-// }
 
 .auth-form-container, .login-form{
     display: flex;
@@ -67,9 +56,9 @@ h2{
     color: #7EAA92;
     outline: none;
     border: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -o-appearance: none;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // -o-appearance: none;
     }
 
 #email,
