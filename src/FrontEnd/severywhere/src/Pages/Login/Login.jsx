@@ -1,6 +1,7 @@
 import './Login.scss'
 import LoginBox from '../../Components/LoginBox/LoginBox';
 import HeaderGuest from '../../Components/Header/HeaderGuest';
+import Footer from '../../Components/Footer/Footer';
 
 
 function Login (){
@@ -8,6 +9,7 @@ function Login (){
         <div className = "login-page">
             <HeaderGuest/>
             <LoginBox/>
+            <Footer/>
         </div>
         
     )

@@ -40,7 +40,7 @@ const Navbar = () => {
               <div className="dropdown-menu" ref={menuRef}>
                 <ul>
                   <DropdownItem className={"fa-regular fa-user"} text={"Login"} link = "/login"/>
-                  <DropdownItem className={"fa-solid fa-user-plus"} text={"Register"} />
+                  <DropdownItem className={"fa-solid fa-user-plus"} text={"Register"} link = "/signup"/>
                 </ul>
               </div>
             )}
