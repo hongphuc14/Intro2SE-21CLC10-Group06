@@ -161,22 +161,25 @@ a:hover i.fa-heart{
   .dropdown-menu .dropdownItem{
     text-align: start;
     margin-top: 0.5em;
+    ;
   }
 
-  .dropdown-menu .dropdownItem i{
+
+.dropdown-menu .dropdownItem i{
     width: 1em;
     color: white;
-  }
-
-  .dropdownItem:hover{
-    text-decoration: underline;
-  }
+}
 
   .dropdown-menu .dropdownItem a{
     margin-left: 0.7em;
     cursor: pointer;
     color: white;
     display: inline-block;
+    text-decoration: none;
+}
+
+.dropdownItem:hover a{
+    text-decoration: underline;
   }
 
 

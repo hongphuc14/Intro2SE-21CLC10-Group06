@@ -16,8 +16,8 @@ footer {
     display: flex;
     padding: 30px 3%;
     justify-content: center;
-    // background-image: url("../../../public/login-background.png"); 
-    background-color: black;
+    background-image: url("./footerbg.png"); 
+    // background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -84,6 +84,9 @@ footer {
     cursor: pointer;
 }
 .newsletter-input {
+    // content: "\f1d8"; /* Replace '\f0e0' with the Unicode for your Font Awesome icon (check Font Awesome documentation) */
+    // font-family: "Font Awesome 5 Free"; /* Set the Font Awesome font family */
+    // font: var(--fa-font-solid);
     margin-top: 3rem;
     height: fit-content;
     width: 100%;
@@ -99,6 +102,7 @@ footer {
     padding: 5px 10px;
     margin: 0;
 }
+
 /* .newsletter-input > button[type=submit] {
     border: 2px solid #0C721F;
     border-radius: 0 10px 10px 0;
