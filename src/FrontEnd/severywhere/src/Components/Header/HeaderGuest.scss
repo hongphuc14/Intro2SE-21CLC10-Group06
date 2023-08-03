@@ -168,6 +168,10 @@ a:hover i.fa-heart{
     color: white;
   }
 
+  .dropdownItem:hover{
+    text-decoration: underline;
+  }
+
   .dropdown-menu .dropdownItem a{
     margin-left: 0.7em;
     cursor: pointer;
