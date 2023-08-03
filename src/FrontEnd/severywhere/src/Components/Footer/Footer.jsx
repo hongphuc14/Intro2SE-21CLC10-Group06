@@ -32,6 +32,7 @@ const Footer = () => {
                 </div>
                 <p>Subcribe our newsletter to get latest update & news.</p>
                 <div className="newsletter-input">
+                    <i className="fa-solid fa-paper-plane"></i>
                     <input type="text" placeholder="Email address" />
                 </div>
             </div>
