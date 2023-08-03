@@ -1,10 +1,10 @@
 import './App.css';
-import HeaderGuest from './Components/Header/HeaderGuest';
+import Navbar from './Components/Header/HeaderGuest';
 import Signup from './pages/Signup/Signup';
-
 function App() {
   return (
-    <div>
+    <div className="App">
+      <Navbar/>
       <Signup />
     </div>
   );
