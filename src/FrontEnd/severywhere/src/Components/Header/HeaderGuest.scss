@@ -109,6 +109,11 @@ a:hover i.fa-heart{
 }
 .user{
     display:flex;   
+    cursor: pointer;
+}
+
+.user i{
+    cursor: pointer;
 }
 
 .iconuser{
@@ -140,14 +145,36 @@ a:hover i.fa-heart{
   
   .dropdown-menu{
     position: absolute;
-    top: 100px;
-    right: 20px;
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    padding: 10px 20px;
-    width: 200px;
+    top: 3em;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border-radius: 0.8em;
+    width: 9em;
+    font-size: 0.7em;
+  }
+
+  .dropdown-menu ul{
+    list-style-type: none;
+    padding-left: 1em;
   }
   
+  .dropdown-menu .dropdownItem{
+    text-align: start;
+    margin-top: 0.5em;
+  }
+
+  .dropdown-menu .dropdownItem i{
+    width: 1em;
+    color: white;
+  }
+
+  .dropdown-menu .dropdownItem a{
+    margin-left: 0.7em;
+    cursor: pointer;
+    color: white
+  }
+
+
   .dropdown-menu::before{
     content: '';
     position: absolute;

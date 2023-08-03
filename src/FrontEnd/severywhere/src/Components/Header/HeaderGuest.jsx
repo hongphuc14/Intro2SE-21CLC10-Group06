@@ -76,6 +76,7 @@
 
 import "./HeaderGuest.scss";
 import React, { useState, useEffect, useRef } from 'react';
+import {Link} from 'react-router-dom';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -83,17 +84,18 @@ const Navbar = () => {
 
   useEffect(() => {
     let handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
+      console.log(e)
+      if ( menuRef.current && menuRef.current.contains(e.target)) {
         setOpen(false);
         console.log(menuRef.current);
       }
     };
 
-    document.addEventListener("mousedown", handler);
+    // document.addEventListener("mousedown", handler);
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
+    // return () => {
+    //   document.removeEventListener("mousedown", handler);
+    // };
   });
 
   return (
@@ -128,7 +130,7 @@ const Navbar = () => {
             {open && (
               <div className="dropdown-menu" ref={menuRef}>
                 <ul>
-                  <DropdownItem className={"fa-regular fa-user"} text={"Login"} />
+                  <DropdownItem className={"fa-regular fa-user"} text={"Login"} link = "/login-test"/>
                   <DropdownItem className={"fa-solid fa-user-plus"} text={"Register"} />
                 </ul>
               </div>
@@ -142,10 +144,13 @@ const Navbar = () => {
 
 function DropdownItem(props) {
   return (
-    <li className="dropdownItem">
-      <i className={props.className}></i>
-      <a>{props.text}</a>
-    </li>
+    <Link to = {props.link} style={{ textDecoration: 'none'}}>
+      <li className="dropdownItem">
+        <i className={props.className}></i>
+        <a >{props.text}</a>
+      </li>
+    </Link>
+
   );
 }
 
