@@ -1,17 +1,28 @@
-import { DOMAIN, TokenKey } from "../util/config";
+import { DOMAIN, TokenKey, RoleKey, RoleMapping } from "../util/config";
 import axios from "axios";
 
 export class baseService {
-  put = (url, model) => {
-    // put json về phía backend
+  getUserRole = () =>{
+    const roleId = localStorage.getItem(RoleKey);
+    return RoleMapping[roleId];
+  };
+
+  //add common headers to all requests
+  addCommonHeaders = (headers = {}) => {
+    const role = this.getUserRole();
+    return {
+      ...headers,
+      TokenByClass: localStorage.getItem(TokenKey),
+      Token: localStorage.getItem(TokenKey),
+      Role: role, // Add the user role to the request headers
+    };
+  };
+
+  get = (url, headers = {}) => {
     return axios({
       url: `${DOMAIN}/${url}`,
-      method: "PUT",
-      data: model,
-      headers: { // JWT
-        TokenByClass: localStorage.getItem(TokenKey), 
-        Token: localStorage.getItem(TokenKey) 
-      }, 
+      method: "GET",
+      headers: this.addCommonHeaders(headers)
     });
   };
 
@@ -20,41 +31,33 @@ export class baseService {
       url: `${DOMAIN}/${url}`,
       method: "POST",
       data: model,
-      headers: {
-        ...headers,
-        TokenByClass: localStorage.getItem(TokenKey),
-        Token: localStorage.getItem(TokenKey),
-      }, 
+      headers: this.addCommonHeaders(headers)
     });
   };
 
-  get = (url) => {
+  put = (url, model, headers = {}) => {
+    // put json về phía backend
     return axios({
       url: `${DOMAIN}/${url}`,
-      method: "GET",
-      headers: { 
-        TokenByClass: localStorage.getItem(TokenKey), 
-        Token: localStorage.getItem(TokenKey) }, // token yêu cầu từ backend chứng minh user đã đăng nhập rồi
+      method: "PUT",
+      data: model,
+      headers: this.addCommonHeaders(headers) 
     });
   };
 
-  delete = (url) => {
+  delete = (url, headers = {}) => {
     return axios({
       url: `${DOMAIN}/${url}`,
       method: "DELETE",
-      headers: { 
-        TokenByClass: localStorage.getItem(TokenKey), 
-        Token: localStorage.getItem(TokenKey) }, // token yêu cầu từ backend chứng minh user đã đăng nhập rồi
+      headers: this.addCommonHeaders(headers) // token yêu cầu từ backend chứng minh user đã đăng nhập rồi
     });
   };
 
-  patch = (url) => {
+  patch = (url, headers = {}) => {
     return axios({
       url: `${DOMAIN}/${url}`,
       method: "PATCH",
-      headers: { 
-        TokenByClass: localStorage.getItem(TokenKey), 
-        Token: localStorage.getItem(TokenKey) },
+      headers: this.addCommonHeaders(headers)
     });
   };
 }
