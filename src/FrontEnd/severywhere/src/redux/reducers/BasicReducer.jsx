@@ -1,7 +1,8 @@
-import { GET_DESTINATION } 
+import { GET_DESTINATION, LOGIN } 
 from "../types";
 
 const stateDefault = {
+    user_login: {},
     destination: [{id_des: 1, name: "Ho Chi Minh City"},
                   {id_des: 2, name: "Ha Noi City"},
                   {id_des: 3, name: "Da Nang City"}],
@@ -9,10 +10,12 @@ const stateDefault = {
 
 export const BasicReducer = (state = stateDefault, action) => {
     switch (action.type) {
+        case LOGIN:{
+          return {...state, action: action.user_login}
+        }
         case GET_DESTINATION: {
-            state.destination = action.destination;
-            return { ...state };
-          }
+          return { ...state, destination: action.destination };
+        }
       default:
         return { ...state };
     }

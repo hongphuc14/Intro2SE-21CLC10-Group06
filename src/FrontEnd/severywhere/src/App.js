@@ -1,5 +1,4 @@
 import './App.css';
-<<<<<<< HEAD
 import { createBrowserHistory } from "history";
 import { Route, Switch, Router } from "react-router-dom";
 import ProfileFreelancer from "./pages/Freelancer/ProfileFreelancer";
@@ -25,18 +24,6 @@ function App(){
         </Switch>
       </div>
     </Router>
-=======
-import Navbar from './Components/Header/HeaderGuest';
-// import Header from './Components/Header/HeaderForHomepage';
-
-// import { Route, Switch, Router } from "react-router-dom";
-
-function App() {
-  return (
-    <div className="App">
-      <Navbar/>
-    </div>
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
   );
 }
 

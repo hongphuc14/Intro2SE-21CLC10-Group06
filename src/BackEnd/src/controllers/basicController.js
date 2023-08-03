@@ -2,10 +2,7 @@ const sequelize = require('../models/index');
 const init_models = require('../models/init-models');
 const model = init_models(sequelize);
 const { sucessCode, failCode, errorCode } = require('../config/response');
-<<<<<<< HEAD
-=======
 const { parseToken, clearLocalStorage } = require('../middlewares/baseToken');
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
 
 const bcrypt = require('bcrypt'); 
 //GET: login
@@ -21,11 +18,7 @@ const login = async(req, res)=>{
         if(checkAdmin){
             let checkPass = bcrypt.compareSync(password, checkAdmin.password);
             if(checkPass){
-<<<<<<< HEAD
-                sucessCode(res, checkAdmin, "Login thành công");
-=======
                 sucessCode(res, parseToken(checkAdmin), "Login thành công");
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
                 return;
             }
             else{
@@ -41,19 +34,11 @@ const login = async(req, res)=>{
             }
         })
         if(checkTourist){
-<<<<<<< HEAD
-            let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
-            let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkTourist.password);
-            if(checkPass){
-                sucessCode(res, checkTourist, "Login thành công");
-=======
             //let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
             //let checkPass = bcrypt.compareSync(password, passWordHash);
             let checkPass = bcrypt.compareSync(password, checkTourist.password);
             if(checkPass){
                 sucessCode(res, parseToken(checkTourist), "Login thành công");
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
                 return;
             }
             else{
@@ -69,19 +54,11 @@ const login = async(req, res)=>{
             }
         })
         if(checkCompany){
-<<<<<<< HEAD
-            let passWordHash = bcrypt.hashSync(checkCompany.password, 10);
-            let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkCompany.password);
-            if(checkPass){
-                sucessCode(res, checkCompany, "Login thành công");
-=======
             //let passWordHash = bcrypt.hashSync(checkCompany.password, 10);
             //let checkPass = bcrypt.compareSync(password, passWordHash);
             let checkPass = bcrypt.compareSync(password, checkCompany.password);
             if(checkPass){
                 sucessCode(res, parseToken(checkCompany), "Login thành công");
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
                 return;
             }
             else{
@@ -97,19 +74,11 @@ const login = async(req, res)=>{
             }
         })
         if(checkFreelancer){
-<<<<<<< HEAD
-            let passWordHash = bcrypt.hashSync(checkFreelancer.password, 10);
-            let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkFreelancer.password);
-            if(checkPass){
-                sucessCode(res, checkFreelancer, "Login thành công");
-=======
             //let passWordHash = bcrypt.hashSync(checkFreelancer.password, 10);
             //let checkPass = bcrypt.compareSync(password, passWordHash);
             let checkPass = bcrypt.compareSync(password, checkFreelancer.password);
             if(checkPass){
                 sucessCode(res, parseToken(checkFreelancer), "Login thành công");
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
                 return;
             }
             else{
@@ -262,16 +231,9 @@ const deleteAccount = async(req, res) => {
 
 const logout = async(req, res) =>{
     try{
-<<<<<<< HEAD
-        // Clear the token on the Backend side
-        // Invalidate the user's token to enforce the logout.
-
-        res.json({ message: "Logout successful" });
-=======
         // Xóa token khỏi localStorage khi đăng xuất
         clearLocalStorage("Token");
         sucessCode(res, null, "Logout successful");
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
     } catch (error) {
         errorCode(res, "Lỗi BE");
     }

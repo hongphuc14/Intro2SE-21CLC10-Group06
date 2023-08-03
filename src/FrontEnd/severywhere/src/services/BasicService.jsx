@@ -5,9 +5,13 @@ export class BasicService extends baseService {
       super();
     }
 
-    // Api 1: thông tin destination
+    logIn = (user_login) => {
+      return this.post('basic/login', user_login);
+    }
+
+    // Api 2: thông tin destination
     getDestination = () => {
-      return this.get(`api/destinations`);
+      return this.get(`basic/destination`);
     };
   }
   

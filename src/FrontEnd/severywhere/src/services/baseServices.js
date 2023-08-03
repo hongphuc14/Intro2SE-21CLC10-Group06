@@ -2,9 +2,6 @@ import { DOMAIN, TokenKey, RoleKey, RoleMapping } from "../util/config";
 import axios from "axios";
 
 export class baseService {
-<<<<<<< HEAD
-}
-=======
   getUserRole = () =>{
     const roleId = localStorage.getItem(RoleKey);
     return RoleMapping[roleId];
@@ -76,4 +73,3 @@ export const http = axios.create({
   baseURL: DOMAIN, // Domain khi request api sẽ được ghép vào với link
   timeout: 30000, // Thời gian tối đa chờ response trả về
 });
->>>>>>> d56f5ef35bb8d2570a75b6e19d2d854ae7467842
