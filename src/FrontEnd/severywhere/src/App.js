@@ -1,5 +1,6 @@
 import './App.css';
 import Navbar from './Components/Header/HeaderGuest';
+import Login from './Pages/Login/Login';
 // import Header from './Components/Header/HeaderForHomepage';
 
 // import { Route, Switch, Router } from "react-router-dom";
@@ -7,7 +8,8 @@ import Navbar from './Components/Header/HeaderGuest';
 function App() {
   return (
     <div className="App">
-      <Navbar/>
+      {/* <Navbar/> */}
+      <Login/>
     </div>
   );
 }
