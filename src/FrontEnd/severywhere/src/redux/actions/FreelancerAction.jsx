@@ -5,6 +5,7 @@ import {
   UPDATE_GUIDE_LANGUAGE,
   UPDATE_GUIDE_AVATAR,
   UPDATE_GUIDE_LICENSE,
+  UPDATE_UPLOADED_LICENSE,
   UPDATE_GUIDE_PASSWORD,
   GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
   UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
@@ -100,38 +101,101 @@ export const getGuideLicenseByIdGuide = (email) => {
 
 export const updateGuideInfo = (id_guide, info) => {
   return async (dispatch) => {
-    dispatch({type: UPDATE_GUIDE_INFO,
+    // try {
+    //   dispatch(displayLoadingAction);
+
+    //   const result = await freelancerService.updateGuideInfo(id_guide, info);
+
+    //   if (result.status === 200) {
+    //     dispatch({
+    //       type: UPDATE_GUIDE_INFO,
+    //       guide_info: result.data,
+    //     });
+    //     dispatch(hideLoadingAction);
+    //   }
+    // } catch (error) {
+    //   console.log("error", error.response);
+    // }
+    dispatch({
+      type: UPDATE_GUIDE_INFO,
       guide_info: info,})
   }
 };
 
 export const updateGuideLanguage = (id_guide, language) => {
   return async (dispatch) => {
-    dispatch({type: UPDATE_GUIDE_LANGUAGE,
+    // try {
+    //   dispatch(displayLoadingAction);
+
+    //   const result = await freelancerService.updateGuideLanguage(id_guide, language);
+
+    //   if (result.status === 200) {
+    //     dispatch({
+    //       type: UPDATE_GUIDE_LANGUAGE,
+    //       guide_language_by_id_guide: result.data,
+    //     });
+    //     dispatch(hideLoadingAction);
+    //   }
+    // } catch (error) {
+    //   console.log("error", error.response);
+    // }
+    dispatch({
+      type: UPDATE_GUIDE_LANGUAGE,
       guide_language_by_id_guide: language,})
   }
 };
 
 export const updateGuideAvatar = (id_guide, preview) => {
-  return {
-    // type: UPDATE_TOUR_GUIDE_BY_ID_GUIDE,
-    // tour_guide_by_id_guide: info,
+  return async (dispatch) => {
+    // try {
+    //   dispatch(displayLoadingAction);
+
+    //   const result = await freelancerService.updateGuideAvatar(id_guide, preview);
+
+    //   if (result.status === 200) {
+    //     dispatch(hideLoadingAction);
+    //   }
+    // } catch (error) {
+    //   console.log("error", error.response);
+    // }
+    
   }
 };
 
-export const updateGuideLicense = (id_guide, license, previewLicense) => {
+export const updateGuideLicense = (id_guide, license, uploaded_license) => {
   return async (dispatch) => {
-    dispatch({type: UPDATE_GUIDE_LICENSE,
+    dispatch({
+      type: UPDATE_GUIDE_LICENSE,
       guide_license_by_id_guide: license,
       verified: license.some((license) => license.status === 2)})
   }
 };
 
+export const updateUploadedLicense = (newLicense) => {
+  return async (dispatch) => {
+    dispatch({
+      type: UPDATE_UPLOADED_LICENSE,
+      uploaded_license: newLicense})
+  }
+};
+
+export const updateGuidePassword = (id_guide, info) => {
+  return async (dispatch) => {
+    dispatch({
+      type: UPDATE_GUIDE_PASSWORD,
+      guide_info: info})
+  }
+};
+
 export const getGuideAttractionByIdGuide = (id_guide) => {
-  return {
-    type: GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
-    guide_attraction_by_id_guide: [{id_attraction: 1, photo_path: "a", title: "Cua Lo Beach", 
-                                    description: "This is a pristine beach with a long stretch of white sand that attracts visitors for swimming, sunbathing, and relaxing."}]
+  return async (dispatch) => {
+    dispatch({
+      type: GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
+      guide_attraction_by_id_guide: [{id_attraction: 1, photo_path: "logo512.png", title: "Cua Lo Beach", 
+      description: "This is a pristine beach with a long stretch of white sand that attracts visitors for swimming, sunbathing, and relaxing."},
+      {id_attraction: 2, photo_path: "", title: "abcd", description: "This is a"},
+      {id_attraction: 3, photo_path: "", title: "", description: ""}]
+    })
   }
 };
 

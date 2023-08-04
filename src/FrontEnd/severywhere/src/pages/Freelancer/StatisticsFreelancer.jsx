@@ -1,4 +1,4 @@
-import logo from '../../logo.png';
+import placeholder from '../../placeholder-image.png'
 import './StatisticsFreelancer.scss';
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Review({img, name, date, rating, review}){
-  img = img==="" ? logo : img
+  img = img==="" ? placeholder : img
 
   return(
     <div className = "review">
@@ -25,8 +25,8 @@ function Review({img, name, date, rating, review}){
   )
 }
 
-function Tourist({img=logo, name }){
-  img = img==="" ? logo : img
+function Tourist({img=placeholder, name }){
+  img = img==="" ? placeholder : img
 
   return(
     <div className = "tourist">
@@ -59,11 +59,19 @@ const tourists = [{id: 1, name: "ML", img: ""},
                   {id: 12, name: "ML", img: ""},]
 
 export default function StatisticsFreelancer(){
-  const { tour_info} = useSelector(state => state.FreelancerReducer)
+  const { guide_info} = useSelector(state => state.FreelancerReducer)
+
+  const importAvatar = (filename) => {
+    if (typeof filename === 'undefined' || filename === "")
+      return null
+    const path = require(`../../../public/freelancer_avatar/${filename}`)
+    return path
+}
+
   return(
     <div className = "statistics-freelancer">
         <HeaderFreelancer/>
-        <NavbarFreelancer src = {logo} fullname = {tour_info.fullname} flag3 = "focus"/>  
+        <NavbarFreelancer src = {importAvatar(guide_info.avatar || placeholder)} fullname = {guide_info.fullname.toUpperCase()} flag3 = "focus"/>  
         <div className = "main-statistic">
           <div className = "statistic">
             <div className = "sale">

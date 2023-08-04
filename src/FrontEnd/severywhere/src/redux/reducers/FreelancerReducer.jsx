@@ -5,6 +5,7 @@ import {
   UPDATE_GUIDE_LANGUAGE,
   UPDATE_GUIDE_AVATAR,
   UPDATE_GUIDE_LICENSE,
+  UPDATE_UPLOADED_LICENSE,
   UPDATE_GUIDE_PASSWORD,
   GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
   UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
@@ -24,11 +25,11 @@ const stateInit = {
 
     guide_license_by_id_guide: [],
 
-    verified: null,
+    uploaded_license: [],
 
-    guide_attraction_by_id_guide: [{id_attraction: 1, photo_path: "a", title: "Cua Lo Beach", 
-    description: "This is a pristine beach with a long stretch of white sand that attracts visitors for swimming, sunbathing, and relaxing."},
-    {id_attraction: 2, photo_path: "a", title: "abc", description: "This is a"}],
+    verified: false,
+
+    guide_attraction_by_id_guide: [],
 
     guide_time_by_id_guide: [{id_guidetime: 1, guide_date: "2023-08-01",guide_session: 1, is_available: true},
                             {id_guidetime: 2, guide_date: "2023-08-02",guide_session: 2, is_available: true},
@@ -64,21 +65,26 @@ export const FreelancerReducer = (state = stateInit, action) => {
           guide_language_by_id_guide: action.guide_language_by_id_guide}
       }
 
-      // case UPDATE_GUIDE_AVATAR:{
-      //   return {...state, 
-      //     tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update avatar
-      // }
+      case UPDATE_GUIDE_AVATAR:{
+        return {...state, 
+          tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update avatar
+      }
 
       case UPDATE_GUIDE_LICENSE:{
         return {...state, 
           guide_license_by_id_guide: action.guide_license_by_id_guide, // update license
           verified: action.verified}
-      }   
+      } 
       
-      // case UPDATE_GUIDE_PASSWORD:{
-      //   return {...state, 
-      //     tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update password
-      // }    
+      case UPDATE_UPLOADED_LICENSE:{
+        return {...state, 
+          uploaded_license: action.uploaded_license};
+      }  
+      
+      case UPDATE_GUIDE_PASSWORD:{
+        return {...state, 
+          tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update password
+      }    
 
       case GET_GUIDE_ATTRACTION_BY_ID_GUIDE: {
         return { ...state,

@@ -239,12 +239,14 @@ const logout = async(req, res) =>{
     }
 }
 
-// const getDestination = async(req, res) => {
-//     try{
-//         let destinations = await model.destination.find()
-//         sucessCode(res, destinations, "Get successfully");
-//     }catch(err){
-//         errorCode(res, "Lỗi BE");
-//     }
-// }
-module.exports = { login, signUp, deleteAccount, logout }
+const getDestination = async(req, res) => {
+    try{
+        let destinations = await model.destination.find()
+        // sucessCode(res, destinations, "Get successfully");
+        res.send(destinations)
+        // return;
+    }catch(err){
+        errorCode(res, "Lỗi BE");
+    }
+}
+module.exports = { login, signUp, deleteAccount, logout,getDestination }

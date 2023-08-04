@@ -10,10 +10,12 @@ import {Link, useLocation} from "react-router-dom"
 import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as yup from 'yup'
+// import im from '../../../public/image'
 
 import {getDestination} from '../../redux/actions/BasicAction'
-import { getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
-    updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar } from '../../redux/actions/FreelancerAction';
+import { getGuideLanguageByIdGuide, getGuideLicenseByIdGuide, getGuideAttractionByIdGuide,
+  updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
+  updateGuidePassword, updateUploadedLicense } from '../../redux/actions/FreelancerAction';
 
 export default function ProfileFreelancer(){
   const dispatch = useDispatch()
@@ -21,14 +23,15 @@ export default function ProfileFreelancer(){
   window.history.replaceState(null, null, location.pathname);
 
   const {destination} = useSelector(state => state.BasicReducer)
-  const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
+  const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info, guide_attraction_by_id_guide} = useSelector(state => state.FreelancerReducer)
   // console.log(user_login)
 
   // login mới get để lưu vào state
   useEffect(() => {
-    console.log(guide_info)
+    // console.log(guide_info)
     dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
     dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
+    dispatch(getGuideAttractionByIdGuide(guide_info.id_guide))
   },[] )
 
   const handleChangeInfo = (e)=> {
@@ -53,30 +56,45 @@ export default function ProfileFreelancer(){
   if (!license)
     license = guide_license_by_id_guide
 
-  // const [uploadedLicense, setUploadedLicense] = useState(license)
-  // const handleAddLicense = (e) => {
-  //   const newAva = e.target.files[0].name
-  //   const newEvent = { ...e, target: {name: "avatar", value: newAva}};
-  //   formik.handleChange(newEvent);
-  //   setSaveChanges(true)  
-  // }
+  const [uploadedLicense, setUploadedLicense] = useState([])
+  const handleUploadLicense = (e) => {
+    const tmp = [...uploadedLicense, {file_path: e.target.files[0].name, status: 1, file: e.target.files[0]}]
+    setSaveChanges(true)
+    setUploadedLicense (tmp)
+    // console.log(license)
+  }
 
-  const [preview, setPreview] = useState(null)
+  // console.log(uploadedLicense)
+
+  const importAvatar = (filename) => {
+    if (typeof filename === 'undefined' || filename === "")
+      return null
+    const path = require(`../../../public/freelancer_avatar/${filename}`)
+    return path
+  }
+  
+  const [preview, setPreview] = useState( importAvatar(guide_info.avatar) || placeholder)
+  const [errorAva, setErrorAva] = useState(null)
   const handleChangeAvatar = (e) => {
-    if (e.target.files[0]){
+    if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
+      console.log(1)
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => {
         setPreview(reader.result);
       };
+      // console.log(preview);
       const newAva = e.target.files[0].name
       const newEvent = { ...e, target: {name: "avatar", value: newAva}};
       formik.handleChange(newEvent);
       setSaveChanges(true)
+      setErrorAva(null)
     }
+    else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
+      setErrorAva('Avatar has invalid file type')
   }
 
-  const [saveChanges, setSaveChanges] = useState(isDelete ? isDelete : false)
+  const [saveChanges, setSaveChanges] = useState(isDelete || license.length > guide_license_by_id_guide.length || false )
   const handleSaveChanges = () => {
     formik.values.gender = parseInt(formik.values.gender)
     formik.values.id_des = parseInt(formik.values.id_des)
@@ -84,11 +102,8 @@ export default function ProfileFreelancer(){
     
     dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
     dispatch(updateGuideLanguage(newInfo.id_guide, language))
-    dispatch(updateGuideLicense(newInfo.id_guide, license, []))
-    // update avatar -> File object
-    // dispatch(updateAvatar())
-    // update license -> File object
-    // dispatch(updateLicense())
+    dispatch(updateGuideLicense(newInfo.id_guide, license))
+    dispatch(updateGuideAvatar(newInfo.id_guide, preview))
     setSaveChanges(false)
   }
 
@@ -104,6 +119,7 @@ export default function ProfileFreelancer(){
       id_des: yup.string().required('Destination is required'),
       language: yup.number().required('Language is required'),
       experience: yup.string().required('Experience is required'),
+      // avatar: yup.string().test('fileType', 'Avatar has invalid file type', value => {return /\.(jpg|jpeg|png)$/i.test(value)}),
       description: yup.string().required('Description is required').max(200, 'Description has the maximum of 200 characters')
     }),
   })
@@ -114,12 +130,12 @@ export default function ProfileFreelancer(){
     if (newPassword){
       formik.values.password = newPassword
       const {language, ...newInfo} = formik.values
-      // dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
+      dispatch(updateGuidePassword(newInfo.id_guide, newInfo))
       setChangePassword(false)
     }
   }
 
-  // console.log(formik.values.gender)
+  console.log(formik.errors)
   // console.log(user_login)
 
   return(
@@ -196,20 +212,22 @@ export default function ProfileFreelancer(){
                 <textarea id = "desc" name = "description" type = "text" value = {formik.values.description || ''} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} ></textarea>
             </div>
             <ErrorInput mess = {formik.errors.description} hidden = {!formik.errors.description}/>
-            <div className = "input-field">
+            <div className = "input-field last">
               <legend>Tourism licenses</legend>
-              <input type="file" id = "license" name = "license" accept="image/*"/>
-              <Link to = {{pathname: "/license-freelancer", state: {license}}}>
-                <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES" name = "upload-license" />
+              <input type="file" id = "license" name = "license" accept="image/*" onChange = {(e) => {handleUploadLicense(e)}}/>
+              <Link to = {{pathname: "/license-freelancer", state: {license: [...license,...uploadedLicense]}}}>
+                <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES" name = "view-license" />
               </Link>
             </div>
+            {/* <ErrorInput mess = {errorLicense} hidden = {!errorLicense}/> */}
+            <ErrorInput mess = {errorAva} hidden = {!errorAva}/>
           </div>
 
           <div className = "avatar-frame">
             <div className = "picture">
                 <img src={preview ? preview : placeholder} alt = ""></img>
                 <div className = "picture-bg">
-                  <ButtonEditFreelancer name = "edit-avatar" onChange = {(e) => {handleChangeAvatar(e)}}/>
+                  <ButtonEditFreelancer name = "avatar" onChange = {(e) => {handleChangeAvatar(e)}}/>
                   <ButtonDeleteFreelancer onClick = {() => {if (preview) setSaveChanges(true); setPreview(null)}}/>
                 </div>
             </div>
@@ -227,8 +245,8 @@ export default function ProfileFreelancer(){
 
         <div className = "show-attraction">
           <p>Must-see attractions</p>
-          <AttractionFreelancer/>
-          <ButtonUploadFreelancer className="button-upload" title = "ADD A NEW ATTRACTION"/>
+          <AttractionFreelancer list = {guide_attraction_by_id_guide}/>
+          <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES"/>
         </div>
 
         <div className = "hr"></div>

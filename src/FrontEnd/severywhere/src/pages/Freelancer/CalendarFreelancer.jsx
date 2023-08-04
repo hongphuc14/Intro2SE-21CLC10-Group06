@@ -22,11 +22,18 @@ function Day({day, week, month,focus, onClick}){
 
 export default function CalendarFreelancer(){ 
     const dispatch = useDispatch() 
-    const {user_login} = useSelector(state => state.BasicReducer)
-    const {verified, guide_time_by_id_guide} = useSelector(state => state.FreelancerReducer)
-   
+    // const {user_login} = useSelector(state => state.BasicReducer)
+    const {verified, guide_time_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
+
+    const importAvatar = (filename) => {
+        if (typeof filename === 'undefined' || filename === "")
+          return null
+        const path = require(`../../../public/freelancer_avatar/${filename}`)
+        return path
+    }
+
     useEffect(() => {
-        dispatch(getGuideLicenseByIdGuide(user_login.id_guide))
+        dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
       },[] )
 
     const [next, setNext] = useState(0)
@@ -59,15 +66,15 @@ export default function CalendarFreelancer(){
         // dispatch action to update guide time    
     }
 
-    const [price, setPrice] = useState(user_login.price_per_session.toFixed(2))
-    const [cancel, setCancel] = useState(user_login.free_cancellation)
+    const [price, setPrice] = useState(guide_info.price_per_session.toFixed(2))
+    const [cancel, setCancel] = useState(guide_info.free_cancellation)
     // khi nào mới gửi action
     // console.log(price, cancel)
 
     return (
         <div className = "calendar-freelancer">
             <HeaderFreelancer/>
-            <NavbarFreelancer src = {placeholder} fullname ={user_login.fullname.toUpperCase()} flag2 = "focus"/>
+            <NavbarFreelancer src = {importAvatar(guide_info.avatar) || placeholder} fullname ={guide_info.fullname.toUpperCase()} flag2 = "focus"/>
             {verified ? (
                 <div className = "main-calendar">
                 <div className = "select-date">

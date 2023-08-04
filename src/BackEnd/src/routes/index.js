@@ -10,3 +10,4 @@ rootRoute.use("/admin", adminRoute);
 rootRoute.use("/tourist", touristRoute);
 rootRoute.use("/company", companyRoute);
 
+module.exports = rootRoute;

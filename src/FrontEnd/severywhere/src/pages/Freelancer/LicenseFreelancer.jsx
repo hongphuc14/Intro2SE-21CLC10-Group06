@@ -1,4 +1,4 @@
-import logo from '../../logo.png';
+import placeholder from '../../placeholder-image.png'
 import './LicenseFreelancer.scss';
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
@@ -20,12 +20,18 @@ export default function LicenseFreelancer(){
       setLicense(tmp)
       setIsDelete(true)
     }
-    // console.log(license)
+
+    const setPreviewLicense = (file) =>{
+      if (file){
+        return URL.createObjectURL(file);
+      }
+      return placeholder
+    }
 
     return (
     <div className="license-freelancer">
       <HeaderFreelancer/>
-      <NavbarFreelancer src = {logo} fullname = {guide_info.fullname.toUpperCase()} flag1 = "focus"/>
+      <NavbarFreelancer src = {placeholder} fullname = {guide_info.fullname.toUpperCase()} flag1 = "focus"/>
       <Link to={{ pathname: "/profile-freelancer", state: { license, isDelete }}}>
         <ButtonUploadFreelancer className="button-upload" title = "BACK" />
       </Link>
@@ -34,9 +40,9 @@ export default function LicenseFreelancer(){
           license.map((license) =>{
             return (
               <div key = {license.file_path} className = "license">
-                <img src = {logo} alt = "license-preview"/>
+                <img src = {setPreviewLicense(license.file)} alt = "license-preview"/>
                 <div className = "license-info">
-                  <p>Name license</p>
+                  <p>{license.file_path}</p>
                   {license.status === 1 && <p className = "gray">Pending</p>}
                   {license.status === 2 && <p>Verified</p>}
                   {license.status === 3 && <p className = "red">Rejected</p>}
