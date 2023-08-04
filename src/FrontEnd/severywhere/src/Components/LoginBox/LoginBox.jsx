@@ -17,7 +17,7 @@ const LoginBox = () =>{
                 </div>
                 <a className="Forgetpw" href = "https://colorhunt.co/palettes/green">Forget your password?</a>
                 <button type = "submit" className="submitBut">Login</button>
-                <a className = "Register" href = "https://colorhunt.co/palettes/green">Don't have an account? Register</a>
+                <a className = "Register" href = "/signup">Don't have an account? Register</a>
             </form>
         </div>
         
