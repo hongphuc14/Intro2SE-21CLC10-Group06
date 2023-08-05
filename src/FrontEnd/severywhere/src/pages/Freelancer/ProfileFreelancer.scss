@@ -262,12 +262,22 @@
   height: fit-content;
 }
 
-.show-attraction p{
+.show-attraction > p:first-child{
   color: #0E4D90;
   font-size: 1.8em;
   text-align: center;
   margin: 0;
+  margin-bottom: 0.1em;
 }
+
+.show-attraction p:nth-child(2), .show-attraction p:nth-child(3){
+  color: #0E4D90;
+  font-size: 0.7em;
+  margin: 0 auto;
+  font-style: italic;
+  opacity: 0.6;
+}
+
 // settion section
 .setting{
   height: fit-content;

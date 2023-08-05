@@ -23,7 +23,7 @@ export default function AttractionFreelancer({id_guide}){
           }
     },[guide_attractions])
     
-    console.log(attractions)
+    // console.log(attractions)
     const importImage = (filename) => {
         if (typeof filename === 'undefined' || filename === "")
             return null
@@ -38,39 +38,74 @@ export default function AttractionFreelancer({id_guide}){
         return null
       }
 
+    const [saveChanges, setSaveChanges] = useState (true)
+
+    const [err, setErr] = useState([{img: "", title: "", description: ""},{img: "", title: "", description: ""},{img: "", title: "", description: ""}])
+
     const handleChangeInfo = (e, type, id) => {
-        const newAttractions = [...attractions]
-        // console.log(newAttractions[id])
-        newAttractions[id][type] = e.target.value
-        setAttractions(newAttractions)
+        if (e.target.value.length > 50 && type === "title"){
+            const newErr = [...err]
+            newErr[id][type] = "Title has the maximum length of 50 characters"
+            setErr(newErr)
+            setSaveChanges(false)
+        }
+        else if (e.target.value.length > 500 && type !== "title"){
+            const newErr = [...err]
+            newErr[id][type] = "Description has the maximum length of 500 characters"
+            setErr(newErr)
+            setSaveChanges(false)
+        }
+        else{
+            const newAttractions = [...attractions]
+            newAttractions[id][type] = e.target.value
+            setAttractions(newAttractions)
+            const newErr = [...err]
+            newErr[id][type] = ""
+            setErr(newErr)
+            setSaveChanges(true)
+        }   
     }
 
-    const [errorImage, setErrorImage] = useState (null)
     const handleChangeImage = (e, id) =>{
         if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
             const newAttraction = [...attractions]
             newAttraction[id] = {...newAttraction[id], photo_path: e.target.files[0].name, file: e.target.files[0]}
             setAttractions(newAttraction)
-            setErrorImage(null)
+            const newErr = [...err]
+            newErr[id].img = ""
+            setErr(newErr)
+            setSaveChanges(true)
         }
-        else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
-        setErrorImage({name: e.target.name, error: 'Uploaded file must be an image file (.jpg, .png, .jpeg)'})     
+        else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/')){
+            const newErr = [...err]
+            newErr[id].img = "Uploaded file must be an image file (.jpg, .png, .jpeg)"
+            setErr(newErr)
+            setSaveChanges(false)
         }
+    }
 
+    const handleDeleteImage = (e,id) =>{
+        const newAttraction = [...attractions]
+        newAttraction[id] = {...newAttraction[id], photo_path: "", file: null}
+        setAttractions(newAttraction)       
+    }
+
+   
     const handleSave = () => {
         dispatch(updateGuideAttractionByIdGuide(id_guide, attractions))
+        setSaveChanges(false)
     }
 
     console.log(attractions)
     if (attractions)
     return(
         <>
-            <div className = "attraction-frame" key = {1}>
+            <div className = "attraction-frame" key = {0}>
                 <div className = "picture">
                     <img src = {loadLicense(attractions[0]?.file) || importImage(attractions[0]?.photo_path) || placeholder} alt = "attraction"/>
                     <div className = "picture-bg">
                         <ButtonEditFreelancer onChange = {(e) => handleChangeImage(e,0)}/>
-                        <ButtonDeleteFreelancer/>
+                        <ButtonDeleteFreelancer onClick = {(e) => handleDeleteImage(e,0)}/>
                     </div>
                 </div>
                 <div className = "attraction">
@@ -79,14 +114,18 @@ export default function AttractionFreelancer({id_guide}){
                     <label htmlFor = "desc1">Description</label>
                     <textarea type = "text" id = "desc1" name = "desc1" value = {attractions[0]?.description} onChange = {(e) => handleChangeInfo(e,"description", 0)} ></textarea>
                 </div>
-                {/* <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {handleSave}/> */}
             </div>
-            <div className = "attraction-frame" key = {2}>
+
+            <ErrorInput mess = {err[0].img} hidden = {!err[0].img}/>
+            <ErrorInput mess = {err[0].title} hidden = {!err[0].title}/>
+            <ErrorInput mess = {err[0].description} hidden = {!err[0].description}/>
+
+            <div className = "attraction-frame" key = {1}>
                 <div className = "picture">
-                    <img src = {importImage(attractions[1]?.photo_path) || placeholder} alt = "attraction"/>
+                    <img src = {loadLicense(attractions[1]?.file) || importImage(attractions[1]?.photo_path) || placeholder} alt = "attraction"/>
                     <div className = "picture-bg">
-                        <ButtonEditFreelancer/>
-                        <ButtonDeleteFreelancer/>
+                        <ButtonEditFreelancer onChange = {(e) => handleChangeImage(e,1)}/>
+                        <ButtonDeleteFreelancer onClick = {(e) => handleDeleteImage(e,1)}/>
                     </div>
                 </div>
                 <div className = "attraction">
@@ -95,14 +134,18 @@ export default function AttractionFreelancer({id_guide}){
                     <label htmlFor = "desc2">Description</label>
                     <textarea type = "text" id = "desc2" name = "desc2" value = {attractions[1]?.description} onChange = {(e) => handleChangeInfo(e,"description", 1)} ></textarea>
                 </div>
-                {/* <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {handleSave}/> */}
             </div>
-            <div className = "attraction-frame" key = {3}>
+
+            <ErrorInput mess = {err[1].img} hidden = {!err[1].img}/>
+            <ErrorInput mess = {err[1].title} hidden = {!err[1].title}/>
+            <ErrorInput mess = {err[1].description} hidden = {!err[1].description}/>
+
+            <div className = "attraction-frame" key = {2}>
                 <div className = "picture">
-                    <img src = {importImage(attractions[2]?.photo_path) || placeholder} alt = "attraction"/>
+                    <img src = {loadLicense(attractions[2]?.file) || importImage(attractions[2]?.photo_path) || placeholder} alt = "attraction"/>
                     <div className = "picture-bg">
-                        <ButtonEditFreelancer/>
-                        <ButtonDeleteFreelancer/>
+                        <ButtonEditFreelancer onChange = {(e) => handleChangeImage(e,2)}/>
+                        <ButtonDeleteFreelancer onClick = {(e) => handleDeleteImage(e,2)}/>
                     </div>
                 </div>
                 <div className = "attraction">
@@ -111,9 +154,13 @@ export default function AttractionFreelancer({id_guide}){
                     <label htmlFor = "desc3">Description</label>
                     <textarea type = "text" id = "desc3" name = "desc3" value = {attractions[2]?.description} onChange = {(e) => handleChangeInfo(e,"description", 2)} ></textarea>
                 </div>
-                {/* <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {handleSave}/> */}
             </div>
-            <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES" onClick = {handleSave}/>
+
+            <ErrorInput mess = {err[2].img} hidden = {!err[2].img}/>
+            <ErrorInput mess = {err[2].title} hidden = {!err[2].title}/>
+            <ErrorInput mess = {err[2].description} hidden = {!err[2].description}/>
+
+            <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES" onClick = {handleSave} disabled = {!saveChanges}/>
         </>
     )
 }

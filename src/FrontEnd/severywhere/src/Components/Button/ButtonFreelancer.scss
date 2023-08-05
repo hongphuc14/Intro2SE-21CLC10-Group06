@@ -80,7 +80,8 @@
     color: #0C721F;
 }
 
-.button-save:not(:disabled):active, .button-upload:not(:disabled):active{
+.button-save:not(:disabled):active, .button-upload:not(:disabled):active,
+.button-edit:active, .button-delete:active{
     transform: translateY(2px);
 }
 

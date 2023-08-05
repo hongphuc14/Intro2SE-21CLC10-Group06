@@ -81,6 +81,21 @@
     resize: none;
 }
 
+.show-attraction .attraction-frame ~ .error-input{
+    margin: 0.5em auto;
+    font-size: 1em;
+}
+
+.show-attraction .attraction-frame .error-input p::before{
+    content: '\f06a';
+    font-family: "FontAwesome";
+    margin: 0 0.5em;
+}
+
+// .show-attraction .attraction-frame .error-input.hidden{
+//     display: none;
+// }
+
 .attraction-frame input:focus-within, 
 .attraction-frame textarea:focus-within{
     outline: 2px solid #0E4D90;

@@ -250,7 +250,9 @@ export default function ProfileFreelancer(){
         <div className = "hr"></div>
 
         <div className = "show-attraction">
-          <p>Must-see attractions</p>
+          <p>Introduce must-see attractions</p>
+          <p>If the image, title, and description fields are left empty,</p>
+          <p> they will be hidden in the tourist's profile view.</p>
           <AttractionFreelancer id_guide = {guide_info.id_guide} />
           {/* <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES"/> */}
         </div>
