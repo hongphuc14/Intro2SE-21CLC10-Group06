@@ -199,10 +199,12 @@ export const getGuideAttractionByIdGuide = (id_guide) => {
   }
 };
 
-export const updateGuideAttractionByIdGuide = (id_guide, attraction) => {
-  return {
+export const updateGuideAttractionByIdGuide = (id_guide, attractions) => {
+  return async (dispatch) => {
+    dispatch({
     type: UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
-    guide_attraction_by_id_guide: attraction
+    guide_attraction_by_id_guide: attractions
+    })
   }
 };
 

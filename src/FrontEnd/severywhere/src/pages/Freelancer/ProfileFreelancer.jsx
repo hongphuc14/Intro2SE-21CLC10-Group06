@@ -31,7 +31,7 @@ export default function ProfileFreelancer(){
     // console.log(guide_info)
     dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
     dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
-    dispatch(getGuideAttractionByIdGuide(guide_info.id_guide))
+    // dispatch(getGuideAttractionByIdGuide(guide_info.id_guide))
   },[] )
 
   const handleChangeInfo = (e)=> {
@@ -56,11 +56,17 @@ export default function ProfileFreelancer(){
   if (!license)
     license = guide_license_by_id_guide
 
+  const [errorLicense, setErrorLicense] = useState(null)
   const [uploadedLicense, setUploadedLicense] = useState([])
   const handleUploadLicense = (e) => {
-    const tmp = [...uploadedLicense, {file_path: e.target.files[0].name, status: 1, file: e.target.files[0]}]
-    setSaveChanges(true)
-    setUploadedLicense (tmp)
+    if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
+      const tmp = [...uploadedLicense, {file_path: e.target.files[0].name, status: 1, file: e.target.files[0]}]
+      setSaveChanges(true)
+      setUploadedLicense (tmp)
+      setErrorLicense(null)
+    }
+    else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
+    setErrorLicense('License must be an image file (.jpg, .png, .jpeg)')
     // console.log(license)
   }
 
@@ -91,7 +97,7 @@ export default function ProfileFreelancer(){
       setErrorAva(null)
     }
     else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
-      setErrorAva('Avatar has invalid file type')
+      setErrorAva('Avatar must be an image file (.jpg, .png, .jpeg)')
   }
 
   const [saveChanges, setSaveChanges] = useState(isDelete || license.length > guide_license_by_id_guide.length || false )
@@ -135,7 +141,7 @@ export default function ProfileFreelancer(){
     }
   }
 
-  console.log(formik.errors)
+  // console.log(formik.errors)
   // console.log(user_login)
 
   return(
@@ -219,7 +225,7 @@ export default function ProfileFreelancer(){
                 <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES" name = "view-license" />
               </Link>
             </div>
-            {/* <ErrorInput mess = {errorLicense} hidden = {!errorLicense}/> */}
+            <ErrorInput mess = {errorLicense} hidden = {!errorAva}/>
             <ErrorInput mess = {errorAva} hidden = {!errorAva}/>
           </div>
 
@@ -245,8 +251,8 @@ export default function ProfileFreelancer(){
 
         <div className = "show-attraction">
           <p>Must-see attractions</p>
-          <AttractionFreelancer list = {guide_attraction_by_id_guide}/>
-          <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES"/>
+          <AttractionFreelancer id_guide = {guide_info.id_guide} />
+          {/* <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES"/> */}
         </div>
 
         <div className = "hr"></div>

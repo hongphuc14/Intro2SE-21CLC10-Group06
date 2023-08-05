@@ -1,104 +1,83 @@
 import './AttractionFreelancer.scss';
 import placeholder from '../../placeholder-image.png';
 import {ButtonEditFreelancer, ButtonDeleteFreelancer, ButtonUploadFreelancer} from "../Button/ButtonFreelancer"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import {useFormik} from 'formik'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
-import {updateGuideAttractionByIdGuide} from '../../redux/actions/FreelancerAction'
+import {getGuideAttractionByIdGuide, updateGuideAttractionByIdGuide} from '../../redux/actions/FreelancerAction'
+import ErrorInput from '../Message/ErrorInput';
 
-export default function AttractionFreelancer({list}){
-    const [attractions, setAttractions] = useState([])
-    // const [attractionFrame, setAttractionFrame] = useState(new Array(attractions.length).fill(false))
+export default function AttractionFreelancer({id_guide}){
+    const [attractions, setAttractions] = useState(null)
+    const dispatch = useDispatch()
+    const guide_attractions = useSelector(state => state.FreelancerReducer.guide_attraction_by_id_guide )
 
-    useEffect(() =>{
-        setAttractions([...list])
-    }, [list])
+    useEffect(() => {
+        dispatch(getGuideAttractionByIdGuide(id_guide))
+    },[dispatch])
 
+    useEffect(() => {
+        if (!attractions) {
+            setAttractions(guide_attractions);
+          }
+    },[guide_attractions])
+    
+    console.log(attractions)
     const importImage = (filename) => {
         if (typeof filename === 'undefined' || filename === "")
             return null
         const path = require(`../../../public/freelancer_avatar/${filename}`)
         return path
-      }
+    }
     
-    // const [preview, setPreview] = useState( importAvatar(guide_info.avatar) || placeholder)
-    // const handleChangeAvatar = (e) => {
-    // if (e.target.files[0]){
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(e.target.files[0]);
-    //     reader.onloadend = () => {
-    //     setPreview(reader.result);
-    //     };
-    //     // console.log(preview);
-    //     const newAva = e.target.files[0].name
-    //     const newEvent = { ...e, target: {name: "avatar", value: newAva}};
-    //     formik.handleChange(newEvent);
-    //     setSaveChanges(true)
-    // }
-    //   }
+    const loadLicense = (file) =>{
+        if (file){
+          return URL.createObjectURL(file);
+        }
+        return null
+      }
 
-    const handleChange = (e, type, id) => {
-        // const newAttractions = [...attractions]
-        // console.log(newAttractions[id-1])
-        // newAttractions[id-1][type] = e.target.value
-        // setAttractions(newAttractions)
+    const handleChangeInfo = (e, type, id) => {
+        const newAttractions = [...attractions]
+        // console.log(newAttractions[id])
+        newAttractions[id][type] = e.target.value
+        setAttractions(newAttractions)
     }
 
-    // console.log(attractions)
+    const [errorImage, setErrorImage] = useState (null)
+    const handleChangeImage = (e, id) =>{
+        if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
+            const newAttraction = [...attractions]
+            newAttraction[id] = {...newAttraction[id], photo_path: e.target.files[0].name, file: e.target.files[0]}
+            setAttractions(newAttraction)
+            setErrorImage(null)
+        }
+        else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
+        setErrorImage({name: e.target.name, error: 'Uploaded file must be an image file (.jpg, .png, .jpeg)'})     
+        }
 
-    const formik1 = useFormik({
-        enableReinitialize: true,
-        // initialValues: {...attractions[0]},
-        // validationSchema: yup.object().shape({
-        //     title: yup.string().max(50,"Full name has the maximum of 50 characters").min(5,"Full name must have at least 5 characters"),
-        //     description: yup.string().max(200, 'Description has the maximum of 200 characters'),
-        //     photo_path: yup.mixed().test('fileType', 'Invalid file type', value => {
-        //         return value && value.type.includes('image');
-        //       }),
-        // }),      
-    })
+    const handleSave = () => {
+        dispatch(updateGuideAttractionByIdGuide(id_guide, attractions))
+    }
 
+    console.log(attractions)
     if (attractions)
     return(
-        // <>
-        // {attractions?.map((attr) =>{
-        //     return(
-        //         <div className = "attraction-frame" key = {attr.id_attraction}>
-        //             <div className = "picture">
-        //                 <img src = {importImage(attr.photo_path) || placeholder} alt = {attr.photo_path}/>
-        //                 <div className = "picture-bg">
-        //                     <ButtonEditFreelancer/>
-        //                     <ButtonDeleteFreelancer/>
-        //                 </div>
-        //             </div>
-        //             <div className = "attraction">
-        //                 <label htmlFor = {`title${attr.id_attraction}`}>Title</label>
-        //                 <input type = "text" id = {`title${attr.id_attraction}`} name = {`title${attr.id_attraction}`} value = {attr.title} onChange = {(e) => handleChange(e,"title", attr.id_attraction)}></input>
-        //                 <label htmlFor = {`desc${attr.id_attraction}`}>Description</label>
-        //                 <textarea type = "text" id = {`desc${attr.id_attraction}`} name = {`desc${attr.id_attraction}`} value = {attr.description} onChange = {(e) => handleChange(e,"description", attr.id_attraction)} ></textarea>
-        //             </div>
-        //             <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {handleSave}/>
-        //             {/* <ButtonUploadFreelancer className="button-upload" title = "DELETE" /> */}
-        //         </div>
-        //     )
-        // }) 
-        // }
-        // </>
         <>
             <div className = "attraction-frame" key = {1}>
                 <div className = "picture">
-                    <img src = {importImage(attractions[0]?.photo_path) || placeholder} alt = "attraction"/>
+                    <img src = {loadLicense(attractions[0]?.file) || importImage(attractions[0]?.photo_path) || placeholder} alt = "attraction"/>
                     <div className = "picture-bg">
-                        <ButtonEditFreelancer/>
+                        <ButtonEditFreelancer onChange = {(e) => handleChangeImage(e,0)}/>
                         <ButtonDeleteFreelancer/>
                     </div>
                 </div>
                 <div className = "attraction">
                     <label htmlFor = "title1">Title</label>
-                    <input type = "text" id = "title1" name = "title1" value = {attractions[0]?.title} onChange = {(e) => handleChange(e,"title", 0)}></input>
+                    <input type = "text" id = "title1" name = "title1" value = {attractions[0]?.title} onChange = {(e) => handleChangeInfo(e,"title", 0)}></input>
                     <label htmlFor = "desc1">Description</label>
-                    <textarea type = "text" id = "desc1" name = "desc1" value = {attractions[0]?.description} onChange = {(e) => handleChange(e,"description", 0)} ></textarea>
+                    <textarea type = "text" id = "desc1" name = "desc1" value = {attractions[0]?.description} onChange = {(e) => handleChangeInfo(e,"description", 0)} ></textarea>
                 </div>
                 {/* <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {handleSave}/> */}
             </div>
@@ -112,9 +91,9 @@ export default function AttractionFreelancer({list}){
                 </div>
                 <div className = "attraction">
                     <label htmlFor = "title2">Title</label>
-                    <input type = "text" id = "title2" name = "title2" value = {attractions[1]?.title} onChange = {(e) => handleChange(e,"title", 1)}></input>
+                    <input type = "text" id = "title2" name = "title2" value = {attractions[1]?.title} onChange = {(e) => handleChangeInfo(e,"title", 1)}></input>
                     <label htmlFor = "desc2">Description</label>
-                    <textarea type = "text" id = "desc2" name = "desc2" value = {attractions[1]?.description} onChange = {(e) => handleChange(e,"description", 1)} ></textarea>
+                    <textarea type = "text" id = "desc2" name = "desc2" value = {attractions[1]?.description} onChange = {(e) => handleChangeInfo(e,"description", 1)} ></textarea>
                 </div>
                 {/* <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {handleSave}/> */}
             </div>
@@ -128,12 +107,13 @@ export default function AttractionFreelancer({list}){
                 </div>
                 <div className = "attraction">
                     <label htmlFor = "title3">Title</label>
-                    <input type = "text" id = "title3" name = "title3" value = {attractions[2]?.title} onChange = {(e) => handleChange(e,"title", 2)}></input>
+                    <input type = "text" id = "title3" name = "title3" value = {attractions[2]?.title} onChange = {(e) => handleChangeInfo(e,"title", 2)}></input>
                     <label htmlFor = "desc3">Description</label>
-                    <textarea type = "text" id = "desc3" name = "desc3" value = {attractions[2]?.description} onChange = {(e) => handleChange(e,"description", 2)} ></textarea>
+                    <textarea type = "text" id = "desc3" name = "desc3" value = {attractions[2]?.description} onChange = {(e) => handleChangeInfo(e,"description", 2)} ></textarea>
                 </div>
                 {/* <ButtonUploadFreelancer className="button-save" title = "SAVE" onClick = {handleSave}/> */}
             </div>
+            <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES" onClick = {handleSave}/>
         </>
     )
 }
