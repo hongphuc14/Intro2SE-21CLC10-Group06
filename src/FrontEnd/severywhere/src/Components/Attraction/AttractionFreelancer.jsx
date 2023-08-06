@@ -38,7 +38,7 @@ export default function AttractionFreelancer({id_guide}){
         return null
       }
 
-    const [saveChanges, setSaveChanges] = useState (true)
+    const [saveChanges, setSaveChanges] = useState (false)
 
     const [err, setErr] = useState([{img: "", title: "", description: ""},{img: "", title: "", description: ""},{img: "", title: "", description: ""}])
 
@@ -67,9 +67,9 @@ export default function AttractionFreelancer({id_guide}){
     }
 
     const handleChangeImage = (e, id) =>{
-        if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
+        if (e.target.files[0] && e.target.files[0].type.startsWith('image/') && e.target.files[0].size / 1024 <= 4 * 1024){
             const newAttraction = [...attractions]
-            newAttraction[id] = {...newAttraction[id], photo_path: e.target.files[0].name, file: e.target.files[0]}
+            newAttraction[id] = {...newAttraction[id], file: e.target.files[0]}
             setAttractions(newAttraction)
             const newErr = [...err]
             newErr[id].img = ""
@@ -82,12 +82,22 @@ export default function AttractionFreelancer({id_guide}){
             setErr(newErr)
             setSaveChanges(false)
         }
+        else if (e.target.files[0] && e.target.files[0].size / 1024 <= 4 * 1024){
+            const newErr = [...err]
+            newErr[id].img = "Uploaded file must not exceed 4MB"
+            setErr(newErr)
+            setSaveChanges(false)
+        }
     }
 
     const handleDeleteImage = (e,id) =>{
         const newAttraction = [...attractions]
-        newAttraction[id] = {...newAttraction[id], photo_path: "", file: null}
-        setAttractions(newAttraction)       
+        newAttraction[id] = {...newAttraction[id], photo_path: "", file: ""}
+        setAttractions(newAttraction) 
+        const newErr = [...err]
+        newErr[id].img = ""
+        setErr(newErr)
+        setSaveChanges(true)      
     }
 
    

@@ -5,7 +5,8 @@ import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import {getGuideLicenseByIdGuide} from '../../redux/actions/FreelancerAction'
+import {getGuideLicenseByIdGuide, updateGuideInfo, 
+    updateGuideTimeByIdGuide} from '../../redux/actions/FreelancerAction'
 
 const day_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const month_of_year = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -22,13 +23,13 @@ function Day({day, week, month,focus, onClick}){
 
 export default function CalendarFreelancer(){ 
     const dispatch = useDispatch() 
-    // const {user_login} = useSelector(state => state.BasicReducer)
+    
     const {verified, guide_time_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
 
     const importAvatar = (filename) => {
         if (typeof filename === 'undefined' || filename === "")
           return null
-        const path = require(`../../../public/freelancer_avatar/${filename}`)
+        const path = require(`../../../../../BackEnd/public/admin_avatar/${filename}`)
         return path
     }
 
@@ -47,7 +48,7 @@ export default function CalendarFreelancer(){
     }
     
     const [no, setNo] = useState(0)
-    console.log(dates[no])
+
     const checkExist = (session) => {
         if ( no !== ""){
             const dateStr = `${dates[no].year}-${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}-${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
@@ -63,13 +64,22 @@ export default function CalendarFreelancer(){
     const handleSession = (session) => {
         const dateStr = `${dates[no].year}-${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}-${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
         console.log(dateStr, session); 
-        // dispatch action to update guide time    
+        // dispatch(updateGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
     }
 
-    const [price, setPrice] = useState(guide_info.price_per_session.toFixed(2))
+    const [price, setPrice] = useState(parseFloat(guide_info.price_per_session).toFixed(2))
+    const savePrice = () => {
+        guide_info.price_per_session = parseFloat(price)
+        dispatch(updateGuideInfo(guide_info.id_guide, guide_info))
+    }
+
     const [cancel, setCancel] = useState(guide_info.free_cancellation)
-    // khi nào mới gửi action
-    // console.log(price, cancel)
+    const saveCancel = () => {
+        setCancel(!cancel)
+        guide_info.free_cancellation = !cancel
+        dispatch(updateGuideInfo(guide_info.id_guide, guide_info))
+    }
+    console.log(price, cancel)
 
     return (
         <div className = "calendar-freelancer">
@@ -111,9 +121,9 @@ export default function CalendarFreelancer(){
                         Price per session ($)
                         <p> * </p>
                     </label>
-                    <input id = "price_session" type = "number" name = "price" value = {price} onChange = {(e) => setPrice(e.target.value)} required ></input>
+                    <input id = "price_session" type = "number" name = "price" value = {price} onChange = {(e) => setPrice(e.target.value)} onBlur = {savePrice} required ></input>
                 </div>
-                <input type="checkbox" id="free-cancallation" checked = {cancel} onChange = {(e) => setCancel(!cancel)}></input>
+                <input type="checkbox" id="free-cancallation" checked = {cancel} onChange = {saveCancel}></input>
                 <label htmlFor="free-cancallation">Free cancellation up to 24 hours before the start time</label>
                 </div>
             ):

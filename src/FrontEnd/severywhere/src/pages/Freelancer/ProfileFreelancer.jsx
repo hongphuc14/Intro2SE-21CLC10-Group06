@@ -10,6 +10,7 @@ import {Link, useLocation} from "react-router-dom"
 import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as yup from 'yup'
+// import image from '../../../../../BackEnd/public/admin_avatar'
 // import im from '../../../public/image'
 
 import {getDestination} from '../../redux/actions/BasicAction'
@@ -70,34 +71,49 @@ export default function ProfileFreelancer(){
     // console.log(license)
   }
 
-  // console.log(uploadedLicense)
-
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../public/freelancer_avatar/${filename}`)
+    const path = require(`../../../../../BackEnd/public/admin_avatar/${filename}`)
     return path
   }
   
-  const [preview, setPreview] = useState( importAvatar(guide_info.avatar) || placeholder)
+  const loadLicense = (file) =>{
+    if (file){
+      return URL.createObjectURL(file);
+    }
+    return null
+  }
+
+  const [preview, setPreview] = useState( null)
   const [errorAva, setErrorAva] = useState(null)
   const handleChangeAvatar = (e) => {
-    if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
-      console.log(1)
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      // console.log(preview);
-      const newAva = e.target.files[0].name
-      const newEvent = { ...e, target: {name: "avatar", value: newAva}};
-      formik.handleChange(newEvent);
-      setSaveChanges(true)
-      setErrorAva(null)
-    }
-    else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
-      setErrorAva('Avatar must be an image file (.jpg, .png, .jpeg)')
+    if (e.target.files[0])
+      if (e.target.files[0].type.startsWith('image/') &&  e.target.files[0].size / 1024 <= 4*1024){
+        setPreview(e.target.files[0])
+        // console.log(preview);
+        const newAva = e.target.files[0].name
+        const newEvent = { ...e, target: {name: "avatar", value: newAva}};
+        formik.handleChange(newEvent);
+        setSaveChanges(true)
+        setErrorAva(null)
+      }
+      else if (!e.target.files[0].type.startsWith('image/')){
+        setSaveChanges(false)
+        setErrorAva('Avatar must be an image file (.jpg, .png, .jpeg)')
+      }
+      else if (!(e.target.files[0].size / 1024 <= 4)){
+        setSaveChanges(false)
+        setErrorAva('Avatar must not exceed 4MB')
+      }
+  }
+
+  const handleDeleteAvatar = (e) => {
+    const newEvent = { ...e, target: {name: "avatar", value: ""}};
+    formik.handleChange(newEvent);
+    setPreview("")
+    setSaveChanges(true)
+    setErrorAva(null) 
   }
 
   const [saveChanges, setSaveChanges] = useState(isDelete || license.length > guide_license_by_id_guide.length || false )
@@ -109,7 +125,7 @@ export default function ProfileFreelancer(){
     dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
     dispatch(updateGuideLanguage(newInfo.id_guide, language))
     dispatch(updateGuideLicense(newInfo.id_guide, license))
-    dispatch(updateGuideAvatar(newInfo.id_guide, preview))
+    dispatch(updateGuideAvatar(newInfo.id_guide, newInfo, preview))
     setSaveChanges(false)
   }
 
@@ -125,20 +141,20 @@ export default function ProfileFreelancer(){
       id_des: yup.string().required('Destination is required'),
       language: yup.number().required('Language is required'),
       experience: yup.string().required('Experience is required'),
-      // avatar: yup.string().test('fileType', 'Avatar has invalid file type', value => {return /\.(jpg|jpeg|png)$/i.test(value)}),
       description: yup.string().required('Description is required').max(200, 'Description has the maximum of 200 characters')
     }),
   })
   
   const [changePassword, setChangePassword] = useState(false)
   const [newPassword, setNewPassword] = useState("")
-  const savePassword = (e) => {
-    if (newPassword){
-      formik.values.password = newPassword
-      const {language, ...newInfo} = formik.values
-      dispatch(updateGuidePassword(newInfo.id_guide, newInfo))
-      setChangePassword(false)
-    }
+  const [confirmPassword, setConfirmPassword] = useState("")
+
+  const savePassword = () => {
+    const current = formik.values.password
+    formik.values.password = newPassword
+    const {language, ...newInfo} = formik.values
+    dispatch(updateGuidePassword(newInfo.id_guide, newInfo, current))
+    setChangePassword(false)
   }
 
   // console.log(formik.errors)
@@ -147,7 +163,7 @@ export default function ProfileFreelancer(){
   return(
     <div className="profile-freelancer">
       <HeaderFreelancer/>
-      <NavbarFreelancer src = {preview ? preview : placeholder} fullname = {guide_info?.fullname?.toUpperCase()} flag1 = "focus"/>
+      <NavbarFreelancer src = {importAvatar(guide_info.avatar) || placeholder} fullname = {guide_info?.fullname?.toUpperCase()} flag1 = "focus"/>
       <div className = "main-profile">
         <form className = "update-profile" onSubmit = {formik.handleSubmit}>
           <div className = "form-profile">
@@ -225,16 +241,16 @@ export default function ProfileFreelancer(){
                 <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES" name = "view-license" />
               </Link>
             </div>
-            <ErrorInput mess = {errorLicense} hidden = {!errorAva}/>
+            <ErrorInput mess = {errorLicense} hidden = {!errorLicense}/>
             <ErrorInput mess = {errorAva} hidden = {!errorAva}/>
           </div>
 
           <div className = "avatar-frame">
             <div className = "picture">
-                <img src={preview ? preview : placeholder} alt = ""></img>
+                <img src={loadLicense(preview) || importAvatar(formik.values.avatar) || placeholder} alt = ""></img>
                 <div className = "picture-bg">
                   <ButtonEditFreelancer name = "avatar" onChange = {(e) => {handleChangeAvatar(e)}}/>
-                  <ButtonDeleteFreelancer onClick = {() => {if (preview) setSaveChanges(true); setPreview(null)}}/>
+                  <ButtonDeleteFreelancer onClick = {(e) => {handleDeleteAvatar(e)}}/>
                 </div>
             </div>
             
@@ -285,23 +301,27 @@ export default function ProfileFreelancer(){
                     Current password
                     <p> * </p>
                 </label>
-                <input id = "cur-pwd" name = "cur-pwd" type = "password" minLength={8}/>
+                <input id = "cur-pwd" name = "cur-pwd" type = "password"/>
             </div>
             <div className = "input-field">
                 <label htmlFor="new-pwd">
                     New password
                     <p> * </p>
                 </label>
-                <input id = "new-pwd" name = "new-pwd" type = "password"  onChange = {(e) => {if (e.target.value.length >= 8) setNewPassword(e.target.value)}} />
+                <input id = "new-pwd" name = "new-pwd" type = "password"  onBlur = {(e) => {setNewPassword(e.target.value)}} />
             </div>
             <div className = "input-field">
                 <label htmlFor="confirm-pwd">
                     Confirm password
                     <p> * </p>
                 </label>
-                <input id = "confirm-pwd" name = "confirm-pwd" type = "password"/>
+                <input id = "confirm-pwd" name = "confirm-pwd" type = "password" onBlur = {(e) => {setConfirmPassword(e.target.value)}}/>
             </div>
-            <ButtonUploadFreelancer className="button-save" name = "password" title = "SAVE" onClick = {(e) => {savePassword(e)}}/>
+            <ErrorInput mess = "The new password must not be shorter than 8 characters" hidden = {!newPassword || newPassword.length >= 8}/>
+            <ErrorInput mess = "The confirm password must not be same as the new password" hidden = {!confirmPassword || newPassword === confirmPassword}/>
+            {(!newPassword || newPassword.length >= 8) && (!confirmPassword || newPassword === confirmPassword)
+            && <ButtonUploadFreelancer className="button-save" name = "password" title = "SAVE" onClick = {savePassword()}/>
+            }
             <ButtonUploadFreelancer className="button-upload" title = "BACK" onClick = {()=>{setChangePassword(false)}}/>
           </div>
           }

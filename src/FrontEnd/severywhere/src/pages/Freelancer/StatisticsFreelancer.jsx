@@ -64,7 +64,7 @@ export default function StatisticsFreelancer(){
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../public/freelancer_avatar/${filename}`)
+    const path = require(`../../../../../BackEnd/public/admin_avatar/${filename}`)
     return path
 }
 

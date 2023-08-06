@@ -31,10 +31,7 @@ const stateInit = {
 
     guide_attraction_by_id_guide: [],
 
-    guide_time_by_id_guide: [{id_guidetime: 1, guide_date: "2023-08-01",guide_session: 1, is_available: true},
-                            {id_guidetime: 2, guide_date: "2023-08-02",guide_session: 2, is_available: true},
-                            {id_guidetime: 3, guide_date: "2023-08-03",guide_session: 3, is_available: true},
-                            {id_guidetime: 4, guide_date: "2023-08-04",guide_session: 1, is_available: true}],
+    guide_time_by_id_guide: [],
 
     guide_booking_by_id_guide: [],
 

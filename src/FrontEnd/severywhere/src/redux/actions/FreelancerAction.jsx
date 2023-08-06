@@ -3,7 +3,6 @@ import {
   GET_GUIDE_LICENSE_BY_ID_GUIDE,
   UPDATE_GUIDE_INFO,
   UPDATE_GUIDE_LANGUAGE,
-  UPDATE_GUIDE_AVATAR,
   UPDATE_GUIDE_LICENSE,
   UPDATE_UPLOADED_LICENSE,
   UPDATE_GUIDE_PASSWORD,
@@ -145,7 +144,7 @@ export const updateGuideLanguage = (id_guide, language) => {
   }
 };
 
-export const updateGuideAvatar = (id_guide, preview) => {
+export const updateGuideAvatar = (id_guide, info, preview) => {
   return async (dispatch) => {
     // try {
     //   dispatch(displayLoadingAction);
@@ -158,7 +157,9 @@ export const updateGuideAvatar = (id_guide, preview) => {
     // } catch (error) {
     //   console.log("error", error.response);
     // }
-    
+    dispatch({
+      type: UPDATE_GUIDE_INFO,
+      guide_info: {...info, avatar: preview.name}})
   }
 };
 
@@ -179,7 +180,7 @@ export const updateUploadedLicense = (newLicense) => {
   }
 };
 
-export const updateGuidePassword = (id_guide, info) => {
+export const updateGuidePassword = (id_guide, info, currentPwd) => {
   return async (dispatch) => {
     dispatch({
       type: UPDATE_GUIDE_PASSWORD,
@@ -211,16 +212,22 @@ export const updateGuideAttractionByIdGuide = (id_guide, attractions) => {
 export const getGuideTimeByIdGuide = (id_guide) => {
   return {
     type: GET_GUIDE_TIME_BY_ID_GUIDE,
-    guide_time_by_id_guide: []
+    guide_time_by_id_guide: [{id_guidetime: 1, guide_date: "2023-08-01",guide_session: 1, is_available: true},
+    {id_guidetime: 2, guide_date: "2023-08-02",guide_session: 2, is_available: true},
+    {id_guidetime: 3, guide_date: "2023-08-03",guide_session: 3, is_available: true},
+    {id_guidetime: 4, guide_date: "2023-08-04",guide_session: 1, is_available: true}]
   }
 };
 
-export const updateGuideTimeByIGuie = (id_guide, date, session) => {
+export const updateGuideTimeByIdGuide = (id_guide, date, session) => {
+  // tìm thấy {date, session,id_guide} thì xóa
+  // nếu tìm k thấy thì thêm vào
   return {
     type: UPDATE_GUIDE_TIME_BY_ID_GUIDE,
     guide_time_by_id_guide: result, // data sau khi cập nhật date và session
   }
 };
+
 
 export const getGuideBookingByIdGuide = (id_guide) => {
   return {
