@@ -1,0 +1,80 @@
+$navbar-background-color: #E5F2CA;
+$navbar-text-color: #9C9C9C;
+$icon-size: 24px;
+
+.sidebar{
+    width: 200px;
+    background-color: $navbar-background-color;
+    color: $navbar-text-color;
+    padding: 20px;
+    height: 100vh;
+    margin-top: 3rem;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.user-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 8px;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background: #fff;
+}
+
+.profile-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name{
+    margin-bottom: 20px;
+}
+
+.profile-name .mail{
+    font-size: 0.7em;
+    color:#9DB2BF;
+}
+.sidebar ul{
+    list-style: none;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;;
+}
+
+.sidebar a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #9C9C9C;
+    font-size: 0.9em;
+}
+
+.sidebar a i{
+    margin-right: 10px;
+}
+
+.sidebar a span{
+    margin-left: 10px;
+}
+
+.sidebar a:hover{
+    text-decoration: underline;
+}
