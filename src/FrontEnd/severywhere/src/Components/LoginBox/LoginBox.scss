@@ -116,6 +116,12 @@ h2{
     color: #FFFFFF;
     font-size: 1.55em;
     text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.submitBut:hover{
+    background-color: black;
+    color:#FFFFFF;
 }
 
 .Register{
@@ -139,3 +145,4 @@ h2{
 .Forgetpw:hover{
     text-decoration: underline;
 }
+
