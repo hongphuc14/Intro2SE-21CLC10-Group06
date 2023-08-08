@@ -3,8 +3,34 @@ const init_models = require('../models/init-models');
 const model = init_models(sequelize);
 const { sucessCode, failCode, errorCode } = require('../config/response');
 
-//GET: get company info by id_company
+//GET: get freelancer info by id_guide
 const getInfoByID = async(req, res) =>{
+    try{
+        let { email } = req.params;
+        
+        let guide = await model.tour_guide.findOne({
+            where:{
+                email
+            }
+        });
+        if(guide){
+            let data = await model.tour_guide.findOne({
+                where:{
+                    email
+                }
+            });
+            sucessCode(res,data,"Get thành công")
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+//GET: get freelancer languages by id_guide
+const getLanguageByID = async(req, res) =>{
     try{
         let { id_guide } = req.params;
         let guide = await model.tour_guide.findOne({
@@ -13,12 +39,103 @@ const getInfoByID = async(req, res) =>{
             }
         });
         if(guide){
-            let data = await model.tour_guide.findOne({
+            let data = await model.guide_language.findAll({
                 where:{
                     id_guide
                 }
             });
-            res.send(data);
+            data = data.map(data => {
+                const {id_lang} = data
+                return id_lang
+            })
+            sucessCode(res,data,"Get thành công")
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+//GET: get freelancer license by id_guide
+const getLicenseByID = async(req, res) =>{
+    try{
+        let { id_guide } = req.params;
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        if(guide){
+            let data = await model.guide_license.findAll({
+                where:{
+                    id_guide
+                }
+            });
+            data = data.map(data => {
+                const {file_path, status} = data
+                return {file_path, status} 
+            })
+            sucessCode(res,data,"Get thành công")
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+//GET: get freelancer attration by id_guide
+const getAttractionByID = async(req, res) =>{
+    try{
+        let { id_guide } = req.params;
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        if(guide){
+            let data = await model.guide_attraction.findAll({
+                where:{
+                    id_guide
+                }
+            });
+            data = data.map(data => {
+                const {id_attraction, photo_path, title, content} = data
+                return {id_attraction, photo_path, title, content}
+            })
+            sucessCode(res,data,"Get thành công")
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+//GET: get freelancer time by id_guide
+const getTimeByID = async(req, res) =>{
+    try{
+        let { id_guide } = req.params;
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        if(guide){
+            let data = await model.guide_time.findAll({
+                where:{
+                    id_guide
+                }
+            });
+            data = data.map(data => {
+                const {guide_date, guide_session, is_available} = data
+                return {guide_date, guide_session, is_available} 
+            })
+            sucessCode(res,data,"Get thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")
@@ -32,7 +149,7 @@ const getInfoByID = async(req, res) =>{
 const updateInfoByID = async(req, res) =>{
     try{
         let { id_guide } = req.params;
-        let { fullname, avatar, phone, gender, birthday,
+        let { fullname, phone, gender, birthday,
         id_des, experience, description, price_per_session, free_cancellation } = req.body;
         
         let checkGuide = await model.tour_guide.findOne({
@@ -42,7 +159,7 @@ const updateInfoByID = async(req, res) =>{
         });
         if(checkGuide){
             await model.tour_guide.update({ 
-                fullname, avatar, phone, gender, birthday,
+                fullname, phone, gender, birthday,
                 id_des, experience, description, price_per_session, free_cancellation
             }, {
                 where:{
@@ -96,6 +213,49 @@ const updatePwdByID = async(req, res) =>{
             else{
                 failCode(res,"","Mật khẩu không đúng")
             }
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+//PUT: update freelancer language by id_guide
+const updateLanguageByID = async(req, res) =>{
+    try{
+        let { id_guide } = req.params;
+        let { language } = req.body;
+        
+        let checkGuide = await model.tour_guide.findOne({
+            where:{
+                id_guide 
+            }
+        });
+        if(checkGuide){
+            await model.guide_language.destroy({
+                where: {
+                    id_guide
+                }
+            })
+            language.forEach(async(lang) => 
+                await model.guide_language.create({
+                    id_guide: id_guide,
+                    id_lang: lang
+                })
+            ); 
+            let data = await model.guide_language.findAll({
+                where:{
+                    id_guide
+                }
+            });
+            console.log(data);
+            // data = data.map(data => {
+            //     const {id_lang} = data
+            //     return id_lang
+            // })
+            sucessCode(res,language,"Update thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")
@@ -208,4 +368,5 @@ const uploadLicense = async(req, res)=>{
     })
 }
 
-module.exports = { getInfoByID, updateInfoByID, updatePwdByID, uploadAvatar, uploadLicense } 
+module.exports = { getInfoByID, getLanguageByID, getLicenseByID, getAttractionByID, getTimeByID,
+                    updateInfoByID, updatePwdByID, updateLanguageByID, uploadAvatar, uploadLicense } 

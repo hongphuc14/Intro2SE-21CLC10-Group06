@@ -1,4 +1,5 @@
 import {
+  GET_TOUR_GUIDE_BY_ID_GUIDE,
   GET_GUIDE_LANGUAGUE_BY_ID_GUIDE,
   GET_GUIDE_LICENSE_BY_ID_GUIDE,
   UPDATE_GUIDE_INFO,
@@ -41,6 +42,10 @@ const stateInit = {
 export const FreelancerReducer = (state = stateInit, action) => {
   console.log(action)
     switch (action.type) {
+      case GET_TOUR_GUIDE_BY_ID_GUIDE: {
+        return { ...state,
+                guide_info: action.guide_info };
+      }
       case GET_GUIDE_LANGUAGUE_BY_ID_GUIDE: {
         return { ...state,
                 guide_language_by_id_guide: action.guide_language_by_id_guide };

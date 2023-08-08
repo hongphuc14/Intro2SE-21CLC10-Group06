@@ -19,8 +19,9 @@ function App(){
           <Route path = "/profile-freelancer" exact component ={ProfileFreelancer} />
           <Route path = "/license-freelancer" exact component ={LicenseFreelancer} />
           <Route path = "/calendar-freelancer" exact component ={CalendarFreelancer} />
-          <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
           <Route path = "/booking-freelancer" exact component ={BookingFreelancer} />
+          <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
+
         </Switch>
       </div>
     </Router>

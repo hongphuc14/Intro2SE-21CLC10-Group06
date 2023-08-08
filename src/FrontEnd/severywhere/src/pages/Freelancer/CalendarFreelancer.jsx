@@ -5,8 +5,8 @@ import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import {getGuideLicenseByIdGuide, updateGuideInfo, 
-    updateGuideTimeByIdGuide} from '../../redux/actions/FreelancerAction'
+import {getGuideLicenseByIdGuide,getGuideTimeByIdGuide, updateGuideInfo, 
+    updateGuideTimeByIdGuide, deleteGuideTimeByIdGuide, addGuideTimeByIdGuide } from '../../redux/actions/FreelancerAction'
 
 const day_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const month_of_year = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -29,12 +29,13 @@ export default function CalendarFreelancer(){
     const importAvatar = (filename) => {
         if (typeof filename === 'undefined' || filename === "")
           return null
-        const path = require(`../../../../../BackEnd/public/admin_avatar/${filename}`)
+        const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
         return path
     }
 
     useEffect(() => {
         dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
+        dispatch(getGuideTimeByIdGuide(guide_info.id_guide))
       },[] )
 
     const [next, setNext] = useState(0)
@@ -64,7 +65,13 @@ export default function CalendarFreelancer(){
     const handleSession = (session) => {
         const dateStr = `${dates[no].year}-${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}-${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
         console.log(dateStr, session); 
-        // dispatch(updateGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
+        const isExist = (guide_time_by_id_guide.some((time)=> {
+            return time.guide_date === dateStr && time.guide_session === session
+        }))
+        if (isExist)
+            dispatch(deleteGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
+        else 
+            dispatch(addGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
     }
 
     const [price, setPrice] = useState(parseFloat(guide_info.price_per_session).toFixed(2))

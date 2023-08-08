@@ -15,10 +15,12 @@ export default function LicenseFreelancer(){
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/admin_avatar/${filename}`)
+    const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
     return path
   }
-
+  
+  const {info, isChange, pre} = location.state
+  // console.log(pre)
   const [license, setLicense] = useState(location.state.license)
   const [isDelete, setIsDelete] = useState(license.length < guide_license_by_id_guide.length)
   const handleDeleteButton = (file_path) => {
@@ -39,7 +41,7 @@ export default function LicenseFreelancer(){
   <div className="license-freelancer">
     <HeaderFreelancer/>
     <NavbarFreelancer src = {importAvatar(guide_info.avatar) || placeholder} fullname = {guide_info.fullname.toUpperCase()} flag1 = "focus"/>
-    <Link to={{ pathname: "/profile-freelancer", state: { license, isDelete }}}>
+    <Link to={{ pathname: "/profile-freelancer", state: { license, isDelete, info, isChange, pre }}}>
       <ButtonUploadFreelancer className="button-upload" title = "BACK" />
     </Link>
     <div className = "main-license">

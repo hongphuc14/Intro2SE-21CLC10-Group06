@@ -2,9 +2,9 @@ import placeholder from '../../placeholder-image.png'
 import './StatisticsFreelancer.scss';
 import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
-// import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
+import TouristFreelancer from '../../Components/TouristBooking/TouristFreelancer'
 import RatingStar from '../../Components/RatingReview/RatingStar';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Review({img, name, date, rating, review}){
@@ -25,18 +25,7 @@ function Review({img, name, date, rating, review}){
   )
 }
 
-function Tourist({img=placeholder, name }){
-  img = img==="" ? placeholder : img
 
-  return(
-    <div className = "tourist">
-      <Link to = "/booking-freelancer" style={{ textDecoration: 'none' }}>
-          <img src={img} alt = "tourist-avatar"></img>
-          <p>{name}</p>
-      </Link>
-    </div>
-  )
-}
 
 const reviews = [{id: 1, name: "ML", img: "", date: "12/07/2023", rating: 5, review: "The guide is so friendly!"},
                   {id: 2, name: "ML", img: ""},
@@ -45,28 +34,31 @@ const reviews = [{id: 1, name: "ML", img: "", date: "12/07/2023", rating: 5, rev
                   {id: 5, name: "ML", img: ""},
                   {id: 6, name: "ML", img: ""},]
 
-const tourists = [{id: 1, name: "ML", img: ""},
-                  {id: 2, name: "ML", img: ""},
-                  {id: 3, name: "ML", img: ""},
-                  {id: 4, name: "ML", img: ""},
-                  {id: 5, name: "ML", img: ""},
-                  {id: 6, name: "ML", img: ""},
-                  {id: 7, name: "ML", img: ""},
-                  {id: 8, name: "ML", img: ""},
-                  {id: 9, name: "ML", img: ""},
-                  {id: 10, name: "ML", img: ""},
-                  {id: 11, name: "ML", img: ""},
-                  {id: 12, name: "ML", img: ""},]
+const tourists = [{id_tourist: 1, fullname: "ML", img: ""},
+                  {id_tourist: 2, fullname: "ML", img: ""},
+                  {id_tourist: 3, fullname: "ML", img: ""},
+                  {id_tourist: 4, fullname: "ML", img: ""},
+                  {id_tourist: 5, fullname: "ML", img: ""},
+                  {id_tourist: 6, fullname: "ML", img: ""},
+                  {id_tourist: 7, fullname: "ML", img: ""},
+                  {id_tourist: 8, fullname: "ML", img: ""},
+                  {id_tourist: 9, fullname: "ML", img: ""},
+                  {id_tourist: 10, fullname: "ML", img: ""},
+                  {id_tourist: 11, fullname: "ML", img: ""},
+                  {id_tourist: 12, fullname: "ML", img: ""},]
 
 export default function StatisticsFreelancer(){
   const { guide_info} = useSelector(state => state.FreelancerReducer)
 
+  const location = useLocation()
+  window.history.replaceState(null, null, location.pathname);
+
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/admin_avatar/${filename}`)
+    const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
     return path
-}
+  }
 
   return(
     <div className = "statistics-freelancer">
@@ -120,9 +112,9 @@ export default function StatisticsFreelancer(){
               {
                 tourists.map(tourist =>{
                   return (
-                    // <Link to = "/booking-freelancer" style={{ textDecoration: 'none' }}>
-                      <Tourist li={tourist.id} {...tourist}/>
-                    //  </Link>
+                    <Link to = {{pathname: "/booking-freelancer", state: {id_guidebooking: tourist.id_tourist}}}>
+                      <TouristFreelancer li={tourist.id_tourist} {...tourist}/>
+                    </Link>
                     )
                 })
               }

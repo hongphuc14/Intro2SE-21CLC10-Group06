@@ -93,19 +93,8 @@
     display: inline-flex;
     flex-wrap: wrap;
   }
-
-  .tourist{
-    width: 6em;
-    height: 7.8em;
-    background-color: white;
-    border-radius: 0.8em;
-    outline: 0.1em solid #d8d8d8;
-    outline-offset: -0.1em;
-    margin: 1em 0.8em;
-    display: inline-block;
-  }
   
-  .tourist img, .review img{
+  .review img{
     width: 4.8em;
     height: 4.8em;
     object-fit: cover;
@@ -113,11 +102,7 @@
     margin: 0.7em auto 0.2em;
   }
   
-  .tourist p{
-    color: #0E4D90;
-    font-size: 0.8em;
-    margin: 0 auto;
-  }
+  
 
   .review-section .select{
     width: 52em;

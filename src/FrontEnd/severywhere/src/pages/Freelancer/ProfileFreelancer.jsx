@@ -14,26 +14,32 @@ import * as yup from 'yup'
 // import im from '../../../public/image'
 
 import {getDestination} from '../../redux/actions/BasicAction'
-import { getGuideLanguageByIdGuide, getGuideLicenseByIdGuide, getGuideAttractionByIdGuide,
+import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide, getGuideAttractionByIdGuide,
   updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
-  updateGuidePassword, updateUploadedLicense } from '../../redux/actions/FreelancerAction';
+  updateGuidePassword } from '../../redux/actions/FreelancerAction';
 
 export default function ProfileFreelancer(){
   const dispatch = useDispatch()
   const location = useLocation()
   window.history.replaceState(null, null, location.pathname);
 
-  const {destination} = useSelector(state => state.BasicReducer)
+  const {destination, user_login} = useSelector(state => state.BasicReducer)
   const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info, guide_attraction_by_id_guide} = useSelector(state => state.FreelancerReducer)
   // console.log(user_login)
 
   // login mới get để lưu vào state
   useEffect(() => {
-    // console.log(guide_info)
-    dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
-    dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
+    // console.log(user_login.email)
+    dispatch(getTourGuideByIdGuide(user_login.email))
     // dispatch(getGuideAttractionByIdGuide(guide_info.id_guide))
   },[] )
+
+  useEffect(() => {
+    if (guide_info){
+      dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
+      dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
+    }
+  }, [guide_info])
 
   const handleChangeInfo = (e)=> {
     formik.handleChange(e);
@@ -53,7 +59,7 @@ export default function ProfileFreelancer(){
     setSaveChanges(true)
   }
 
-  let {license, isDelete} = location.state ? location.state : {}
+  let {license, isDelete, info, isChange, pre} = location.state ? location.state : {}
   if (!license)
     license = guide_license_by_id_guide
 
@@ -74,7 +80,7 @@ export default function ProfileFreelancer(){
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/admin_avatar/${filename}`)
+    const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
     return path
   }
   
@@ -85,7 +91,8 @@ export default function ProfileFreelancer(){
     return null
   }
 
-  const [preview, setPreview] = useState( null)
+  const [preview, setPreview] = useState( pre || null)
+  // console.log(pre)
   const [errorAva, setErrorAva] = useState(null)
   const handleChangeAvatar = (e) => {
     if (e.target.files[0])
@@ -116,7 +123,7 @@ export default function ProfileFreelancer(){
     setErrorAva(null) 
   }
 
-  const [saveChanges, setSaveChanges] = useState(isDelete || license.length > guide_license_by_id_guide.length || false )
+  const [saveChanges, setSaveChanges] = useState(isChange || isDelete || license.length > guide_license_by_id_guide.length || false )
   const handleSaveChanges = () => {
     formik.values.gender = parseInt(formik.values.gender)
     formik.values.id_des = parseInt(formik.values.id_des)
@@ -124,14 +131,14 @@ export default function ProfileFreelancer(){
     
     dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
     dispatch(updateGuideLanguage(newInfo.id_guide, language))
-    dispatch(updateGuideLicense(newInfo.id_guide, license))
+    dispatch(updateGuideLicense(newInfo.id_guide, [...license, ...uploadedLicense]))
     dispatch(updateGuideAvatar(newInfo.id_guide, newInfo, preview))
     setSaveChanges(false)
   }
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {...guide_info,language: guide_language_by_id_guide},
+    initialValues: info || {...guide_info,language: guide_language_by_id_guide},
     onSubmit: handleSaveChanges,
     validationSchema: yup.object().shape({
       fullname: yup.string().max(50,"Full name has the maximum of 50 characters").min(5,"Full name must have at least 5 characters").required('Full name is required'),
@@ -139,7 +146,7 @@ export default function ProfileFreelancer(){
       gender: yup.number().required('Gender is required'),
       phone: yup.string().test('len', 'Phone number must have exactly 10 digits', val => val && val.toString().length === 10).required('Phone number is required'),
       id_des: yup.string().required('Destination is required'),
-      language: yup.number().required('Language is required'),
+      language: yup.array().min(1, 'Language is required').required('Language is required'),
       experience: yup.string().required('Experience is required'),
       description: yup.string().required('Description is required').max(200, 'Description has the maximum of 200 characters')
     }),
@@ -237,7 +244,8 @@ export default function ProfileFreelancer(){
             <div className = "input-field last">
               <legend>Tourism licenses</legend>
               <input type="file" id = "license" name = "license" accept="image/*" onChange = {(e) => {handleUploadLicense(e)}}/>
-              <Link to = {{pathname: "/license-freelancer", state: {license: [...license,...uploadedLicense]}}}>
+              <Link to = {{pathname: "/license-freelancer", 
+                    state: {license: [...license,...uploadedLicense], info: formik.values, isChange: saveChanges, pre: preview}}}>
                 <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES" name = "view-license" />
               </Link>
             </div>
