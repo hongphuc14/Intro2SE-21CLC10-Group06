@@ -29,7 +29,7 @@ const NavBar = () => {
                 </li>
                 <li>
                     <a href="#">
-                        <i className="fa-solid fa-heart"></i>
+                        <i className="fa-solid fa-heart heartedit"></i>
                         <span>Wishlist</span>
                     </a>
                 </li>
@@ -47,7 +47,7 @@ const NavBar = () => {
                 </li>
                 <li>
                     <a href="#">
-                        <i className="fa-solid fa-cart-shopping"></i>
+                        <i className="fa-solid fa-cart-shopping cartedit"></i>
                         <span>My Orders</span>
                     </a>
                 </li>
