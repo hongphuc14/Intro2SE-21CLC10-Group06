@@ -2,6 +2,7 @@ const sequelize = require('../models/index');
 const init_models = require('../models/init-models');
 const model = init_models(sequelize);
 const { sucessCode, failCode, errorCode } = require('../config/response');
+const { Op } = require("sequelize");
 
 //GET: get freelancer info by id_guide
 const getInfoByID = async(req, res) =>{
@@ -182,6 +183,8 @@ const updateInfoByID = async(req, res) =>{
 }
 
 //PUT: update company password by id_company
+// lấy id_guide = 1 để test. pass mới là 1234567890
+const bcrypt = require('bcrypt'); 
 const updatePwdByID = async(req, res) =>{
     try{
         let { id_guide } = req.params;
@@ -193,7 +196,7 @@ const updatePwdByID = async(req, res) =>{
             }
         });
         if(checkGuide){
-            let checkPass = bcrypt.compareSync(c_password, checkcompany.password);
+            let checkPass = bcrypt.compareSync(c_password, checkGuide.password);
             if(checkPass){
                 let passWordHash = bcrypt.hashSync(n_password, 10);
                 await model.tour_guide.update({ 
@@ -239,23 +242,22 @@ const updateLanguageByID = async(req, res) =>{
                     id_guide
                 }
             })
-            language.forEach(async(lang) => 
+            for (const lang of language){
                 await model.guide_language.create({
                     id_guide: id_guide,
                     id_lang: lang
                 })
-            ); 
+            }
             let data = await model.guide_language.findAll({
                 where:{
                     id_guide
                 }
             });
-            console.log(data);
-            // data = data.map(data => {
-            //     const {id_lang} = data
-            //     return id_lang
-            // })
-            sucessCode(res,language,"Update thành công")
+            data = data.map(data => {
+                const {id_lang} = data
+                return id_lang
+            })
+            sucessCode(res,data,"Update thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")
@@ -265,25 +267,13 @@ const updateLanguageByID = async(req, res) =>{
     }
 }
 
-//POST: upload company avatar by id_company
-const uploadAvatar = async(req, res)=>{
+//POST: update freelancer avatar by id_guide
+const updateAvatarByID = async(req, res)=>{
     //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
     const fs = require('fs');
     const id_guide = req.params.id_guide;
-    
-    //Nếu size tệp vượt quá 4Mb, hàm sẽ xóa tệp và gửi phản hồi
-    // if(req.file.size >= 400000){
-    //     fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
-    //     res.send("chỉ được phép upload 4Mb");
-    //     return;
-    // }
-    // // // Nếu định dạng tệp không phải jpeg, jpg, png thì xóa tệp và gửi phản hồi
-    // if(req.file.mimetype != "image/jpeg" && req.file.mimetype != "image/jpg" && req.file.mimetype != "image/png"){
-    //     fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
-    //     res.send("sai định dạng");
-    // }
+    const file = req.file;
     try{
-        //lấy info company từ db
         let guide = await model.tour_guide.findOne({
             where:{
                 id_guide
@@ -299,22 +289,22 @@ const uploadAvatar = async(req, res)=>{
                     console.log("Lỗi khi xóa avatar cũ", err);
                 }
             }
-        }
-        await model.tour_guide.update({
-            avatar: req.file.filename
-        }, {
-            where:{
-                id_guide
-            }
-        });
-        let data = await model.tour_guide.findOne({
-            where:{
-                id_guide
-            }
-        });
+            await model.tour_guide.update({
+                avatar: req.file.filename
+            }, {
+                where:{
+                    id_guide
+                }
+            });
+            let data = await model.tour_guide.findOne({
+                where:{
+                    id_guide
+                }
+            });
         sucessCode(res,data,"Update thành công")
+        }
     }catch(err){
-        fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
         errorCode(res, "Lỗi BE");
         return;
     }
@@ -328,45 +318,127 @@ const uploadAvatar = async(req, res)=>{
     // })
 }
 
-//POST: upload company license by id_company (file img)
-const uploadLicense = async(req, res)=>{
+// PUT: delete freelancer avatar by id_guide
+const deleteAvatarByID = async(req, res)=>{
     //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
     const fs = require('fs');
-    const id_company = req.params.id_company;
-    
-    //Nếu size tệp vượt quá 4Mb, hàm sẽ xóa tệp và gửi phản hồi
-    if(req.file.size >= 400000){
-        fs.unlinkSync(process.cwd() + "/public/company_license/" + req.file.filename);
-        res.send("chỉ được phép upload 4Mb");
-        return;
-    }
-    // Nếu định dạng tệp không phải jpeg, jpg, png thì xóa tệp và gửi phản hồi
-    if(req.file.mimetype != "image/jpeg" && req.file.mimetype != "image/jpg" && req.file.mimetype != "image/png"){
-        fs.unlinkSync(process.cwd() + "/public/company_license/" + req.file.filename);
-        res.send("sai định dạng");
-    }
-    try{        
-        await model.company_license.update({
-            file_path: req.file.filename
-        }, {
+    const id_guide = req.params.id_guide;
+    try{
+        let guide = await model.tour_guide.findOne({
             where:{
-                id_company
+                id_guide
             }
         });
+        //check nếu đã upload avatar
+        if(guide){
+            if(guide.avatar){
+                try{
+                    //xóa avatar cũ trước khi update avatar mới
+                    fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + guide.avatar);
+                } catch(err){
+                    console.log("Lỗi khi xóa avatar cũ", err);
+                }
+            }
+            await model.tour_guide.update({
+                avatar: ""
+            }, {
+                where:{
+                    id_guide
+                }
+            });
+            let data = await model.tour_guide.findOne({
+                where:{
+                    id_guide
+                }
+            });
+        sucessCode(res,data,"Update thành công")
+        }
     }catch(err){
-        fs.unlinkSync(process.cwd() + "/public/company_license/" + req.file.filename);
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
         errorCode(res, "Lỗi BE");
         return;
     }
-    fs.readFile(process.cwd() + "/public/company_license/" + req.file.filename, (err, data)=>{
-        if(err){
-            errorCode(res, "Lỗi khi đọc tệp tin");
-            return;
+}
+
+// PUT: delete freelancer license by id_guide
+const deleteLicenseByID = async(req, res)=>{
+    //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
+    const fs = require('fs');
+    const id_guide = req.params.id_guide;
+    const license = req.body.license;
+
+    try{
+        const notDelete = []
+        for (const item of license){
+            const {file_path} = item;
+            notDelete.push( file_path)
         }
-        let dataBase = `data:${req.file.mimetype};base64,${Buffer.from(data).toString("base64")}`;
-        res.send(dataBase);
-    })
+
+
+        let allLicense = await model.guide_license.findAll({
+            where:{
+                id_guide
+            }
+        });   
+
+        allLicense.forEach(license => {
+            if (!notDelete.includes(license.file_path)){
+                try{
+                    fs.unlinkSync(process.cwd() + "/public/freelancer_license/" + license.file_path);
+                } catch(err){
+                    console.log("Lỗi khi xóa", err);
+                } 
+            }
+        })
+
+        await model.guide_license.destroy({
+            where:{
+                id_guide,
+                file_path:{
+                    [Op.notIn]: notDelete
+                }
+            }
+        });
+
+        sucessCode(res,"","Update thành công")
+
+    }catch(err){
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        errorCode(res, "Lỗi BE");
+        return;
+    }
+}
+
+// POST: update freelancer license by id_guide
+//POST: upload company license by id_company (file img)
+const updateLicenseByID = async(req, res)=>{
+    //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
+    const id_guide = req.params.id_guide;
+    const files = req.files
+
+    try{
+        for (const file of files) {
+            await model.guide_license.create({
+                id_guide: id_guide,
+                file_path: file.filename,
+                status: 1
+            });
+        }
+
+        let data = await model.guide_license.findAll({
+            where:{
+                id_guide
+            }
+        });
+        sucessCode(res,files,"Update thành công")
+
+    }catch(err){
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        errorCode(res, "Lỗi BE");
+        return;
+    }
 }
 
 module.exports = { getInfoByID, getLanguageByID, getLicenseByID, getAttractionByID, getTimeByID,
-                    updateInfoByID, updatePwdByID, updateLanguageByID, uploadAvatar, uploadLicense } 
+updateInfoByID, updatePwdByID, updateLanguageByID, updateAvatarByID, deleteAvatarByID, 
+deleteLicenseByID, updateLicenseByID } 

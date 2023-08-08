@@ -5,7 +5,6 @@ import {
   UPDATE_GUIDE_INFO,
   UPDATE_GUIDE_LANGUAGE,
   UPDATE_GUIDE_LICENSE,
-  UPDATE_UPLOADED_LICENSE,
   UPDATE_GUIDE_PASSWORD,
   GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
   UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
@@ -138,40 +137,99 @@ export const updateGuideLanguage = (id_guide, lang) => {
   }
 };
 
-export const updateGuideAvatar = (id_guide, info, preview) => {
+export const updateGuideAvatar = (id_guide, preview) => {
   return async (dispatch) => {
-    // try {
-    //   dispatch(displayLoadingAction);
-
-    //   const result = await freelancerService.updateGuideAvatar(id_guide, preview);
-
-    //   if (result.status === 200) {
-    //     dispatch(hideLoadingAction);
-    //   }
-    // } catch (error) {
-    //   console.log("error", error.response);
-    // }
-    dispatch({
-      type: UPDATE_GUIDE_INFO,
-      guide_info: {...info, avatar: preview?.name || info.avatar}})
+    try {
+      dispatch(displayLoadingAction);
+      if (preview === "delete"){
+        const result = await freelancerService.deleteGuideAvatar(id_guide);
+        if (result.status === 200) {
+          dispatch({
+            type: UPDATE_GUIDE_INFO,
+            guide_info: result.data.content})
+          dispatch(hideLoadingAction);
+        }
+      }
+      else{
+        const formData = new FormData();
+        formData.append('file', preview);
+        console.log(formData)
+        const result = await freelancerService.updateGuideAvatar(id_guide, formData);
+        if (result.status === 200) {
+          dispatch({
+            type: UPDATE_GUIDE_INFO,
+            guide_info: result.data.content})
+          dispatch(hideLoadingAction);
+        }
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
   }
 };
 
-export const updateGuideLicense = (id_guide, license, uploaded_license) => {
+export const updateGuideLicense = (id_guide, license) => {
   return async (dispatch) => {
-    dispatch({
-      type: UPDATE_GUIDE_LICENSE,
-      guide_license_by_id_guide: license,
-      verified: license.some((license) => license.status === 2)})
+    try {
+      dispatch(displayLoadingAction);
+      const formData = new FormData();
+      for (const item of license) {
+        if (item.file)
+          formData.append("file", item.file);
+        }
+
+      const tmp = []
+      for (const item of license) {
+        if (!item.file)
+          tmp.push(item)
+      }
+
+      const obj = {license: [...tmp]}
+
+      // console.log(license, tmp)
+
+      await freelancerService.deleteGuideLicense(id_guide, obj);
+
+      const result = await freelancerService.updateGuideLicense(id_guide, formData);
+      if (result.status === 200) {
+        dispatch({
+          type: UPDATE_GUIDE_LICENSE,
+          guide_license_by_id_guide: result.data.content,
+          verified: license.some((license) => license.status === 2)})
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
   }
+  // return async (dispatch) => {
+  //   dispatch({
+  //     type: UPDATE_GUIDE_LICENSE,
+  //     guide_license_by_id_guide: license,
+  //     verified: license.some((license) => license.status === 2)})
+  // }
 };
 
-export const updateGuidePassword = (id_guide, info, currentPwd) => {
+export const updateGuidePassword = (id_guide, currentPass, newPass) => {
   return async (dispatch) => {
-    dispatch({
-      type: UPDATE_GUIDE_PASSWORD,
-      guide_info: info})
-  }
+    try {
+      dispatch(displayLoadingAction);
+      const obj = {c_password: currentPass, n_password: newPass};
+      const result = await freelancerService.updateGuidePassword(id_guide, obj);
+    
+      if (result.status === 200) {
+        dispatch({
+          type: UPDATE_GUIDE_PASSWORD,
+          guide_language_by_id_guide: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+        alert('Update password successfully');
+      }
+    } catch (error) {
+      console.log("error", error.response);
+      alert('The current password is incorrect');
+    }
+}
 };
 
 export const getGuideAttractionByIdGuide = (id_guide) => {

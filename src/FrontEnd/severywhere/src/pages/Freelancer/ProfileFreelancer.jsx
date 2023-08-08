@@ -10,11 +10,9 @@ import {Link, useLocation} from "react-router-dom"
 import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as yup from 'yup'
-// import image from '../../../../../BackEnd/public/admin_avatar'
-// import im from '../../../public/image'
+// import image from '../../../../../BackEnd/public/freelancer_avatar'
 
-import {getDestination} from '../../redux/actions/BasicAction'
-import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide, getGuideAttractionByIdGuide,
+import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
   updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
   updateGuidePassword } from '../../redux/actions/FreelancerAction';
 
@@ -24,7 +22,7 @@ export default function ProfileFreelancer(){
   window.history.replaceState(null, null, location.pathname);
 
   const {destination, user_login} = useSelector(state => state.BasicReducer)
-  const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info, guide_attraction_by_id_guide} = useSelector(state => state.FreelancerReducer)
+  const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
   // console.log(user_login)
 
   // login mới get để lưu vào state
@@ -35,11 +33,13 @@ export default function ProfileFreelancer(){
   },[] )
 
   useEffect(() => {
-    if (guide_info){
+    
+    if (guide_info?.id_guide) {
       dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
       dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
     }
-  }, [guide_info])
+    
+  }, [guide_info.id_guide])
 
   const handleChangeInfo = (e)=> {
     formik.handleChange(e);
@@ -73,19 +73,28 @@ export default function ProfileFreelancer(){
       setErrorLicense(null)
     }
     else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
-    setErrorLicense('License must be an image file (.jpg, .png, .jpeg)')
-    // console.log(license)
+      setErrorLicense('License must be an image file (.jpg, .png, .jpeg)')
+    else if (e.target.files[0] && !(e.target.files[0].size / 1024 <= 4 * 1024))
+      setErrorLicense('License must not exceed 4MB')
   }
+  // console.log(uploadedLicense)
+  // console.log('-', license)
 
-  const importAvatar = (filename) => {
+  const importAvatar =  (filename) =>  {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
-    return path
+    // filename = "tourist_2.jpg"
+    try{
+      const path =  require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
+      return path
+    }
+    catch(err){
+      return null
+    }
   }
   
   const loadLicense = (file) =>{
-    if (file){
+    if (file && file !== "delete"){
       return URL.createObjectURL(file);
     }
     return null
@@ -118,7 +127,7 @@ export default function ProfileFreelancer(){
   const handleDeleteAvatar = (e) => {
     const newEvent = { ...e, target: {name: "avatar", value: ""}};
     formik.handleChange(newEvent);
-    setPreview("")
+    setPreview("delete")
     setSaveChanges(true)
     setErrorAva(null) 
   }
@@ -129,10 +138,12 @@ export default function ProfileFreelancer(){
     formik.values.id_des = parseInt(formik.values.id_des)
     const {language, ...newInfo} = formik.values
     
+    if (preview)
+      dispatch(updateGuideAvatar(newInfo.id_guide, preview))
     dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
     dispatch(updateGuideLanguage(newInfo.id_guide, language))
     dispatch(updateGuideLicense(newInfo.id_guide, [...license, ...uploadedLicense]))
-    dispatch(updateGuideAvatar(newInfo.id_guide, newInfo, preview))
+    
     setSaveChanges(false)
   }
 
@@ -153,15 +164,15 @@ export default function ProfileFreelancer(){
   })
   
   const [changePassword, setChangePassword] = useState(false)
+  const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
   const savePassword = () => {
-    const current = formik.values.password
-    formik.values.password = newPassword
-    const {language, ...newInfo} = formik.values
-    dispatch(updateGuidePassword(newInfo.id_guide, newInfo, current))
-    setChangePassword(false)
+    dispatch(updateGuidePassword(guide_info.id_guide, currentPassword, newPassword))
+    setCurrentPassword("")
+    setNewPassword("")
+    setConfirmPassword("")
   }
 
   // console.log(formik.errors)
@@ -309,26 +320,26 @@ export default function ProfileFreelancer(){
                     Current password
                     <p> * </p>
                 </label>
-                <input id = "cur-pwd" name = "cur-pwd" type = "password"/>
+                <input id = "cur-pwd" name = "cur-pwd" type = "password" value = {currentPassword} onChange = {(e) => {setCurrentPassword(e.target.value)}}/>
             </div>
             <div className = "input-field">
                 <label htmlFor="new-pwd">
                     New password
                     <p> * </p>
                 </label>
-                <input id = "new-pwd" name = "new-pwd" type = "password"  onBlur = {(e) => {setNewPassword(e.target.value)}} />
+                <input id = "new-pwd" name = "new-pwd" type = "password" value = {newPassword}  onChange = {(e) => {setNewPassword(e.target.value)}} />
             </div>
             <div className = "input-field">
                 <label htmlFor="confirm-pwd">
                     Confirm password
                     <p> * </p>
                 </label>
-                <input id = "confirm-pwd" name = "confirm-pwd" type = "password" onBlur = {(e) => {setConfirmPassword(e.target.value)}}/>
+                <input id = "confirm-pwd" name = "confirm-pwd" type = "password" value = {confirmPassword} onChange = {(e) => {setConfirmPassword(e.target.value)}}/>
             </div>
             <ErrorInput mess = "The new password must not be shorter than 8 characters" hidden = {!newPassword || newPassword.length >= 8}/>
             <ErrorInput mess = "The confirm password must not be same as the new password" hidden = {!confirmPassword || newPassword === confirmPassword}/>
             {(!newPassword || newPassword.length >= 8) && (!confirmPassword || newPassword === confirmPassword)
-            && <ButtonUploadFreelancer className="button-save" name = "password" title = "SAVE" onClick = {savePassword()}/>
+            && <ButtonUploadFreelancer className="button-save" name = "password" title = "SAVE" onClick = {savePassword}/>
             }
             <ButtonUploadFreelancer className="button-upload" title = "BACK" onClick = {()=>{setChangePassword(false)}}/>
           </div>

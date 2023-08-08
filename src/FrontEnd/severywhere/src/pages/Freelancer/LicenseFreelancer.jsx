@@ -18,6 +18,13 @@ export default function LicenseFreelancer(){
     const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
     return path
   }
+
+  const importLicense = (filename) => {
+    if (typeof filename === 'undefined' || filename === "")
+      return null
+    const path = require(`../../../../../BackEnd/public/freelancer_license/${filename}`)
+    return path
+  }
   
   const {info, isChange, pre} = location.state
   // console.log(pre)
@@ -49,7 +56,7 @@ export default function LicenseFreelancer(){
         license.map((license) =>{
           return (
             <div key = {license.file_path} className = "license">
-              <img src = {setPreviewLicense(license.file)} alt = "license-preview"/>
+              <img src = { setPreviewLicense(license.file) || importLicense(license.file_path)} alt = "license-preview"/>
               <div className = "license-info">
                 <p>{license.file_path}</p>
                 {license.status === 1 && <p className = "gray">Pending</p>}

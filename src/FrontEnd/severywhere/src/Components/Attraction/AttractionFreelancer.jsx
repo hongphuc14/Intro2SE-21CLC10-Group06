@@ -1,9 +1,7 @@
 import './AttractionFreelancer.scss';
 import placeholder from '../../placeholder-image.png';
 import {ButtonEditFreelancer, ButtonDeleteFreelancer, ButtonUploadFreelancer} from "../Button/ButtonFreelancer"
-import { useState, useEffect, useLayoutEffect } from 'react';
-import {useFormik} from 'formik'
-import * as yup from 'yup'
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {getGuideAttractionByIdGuide, updateGuideAttractionByIdGuide} from '../../redux/actions/FreelancerAction'
 import ErrorInput from '../Message/ErrorInput';
@@ -16,9 +14,9 @@ export default function AttractionFreelancer(){
     const [attractions, setAttractions] = useState(guide_attractions)
     
     useEffect(() => {
-        if (guide_info)
+        if (guide_info.id_guide)
             dispatch(getGuideAttractionByIdGuide(guide_info.id_guide))
-    },[guide_info])
+    },[guide_info.id_guide])
 
     useEffect(() => {
         // console.log("1")
@@ -41,7 +39,7 @@ export default function AttractionFreelancer(){
         return null
       }
 
-    const [saveChanges, setSaveChanges] = useState (false)
+    const [saveChange, setSaveChange] = useState (false)
 
     const [err, setErr] = useState([{img: "", title: "", content: ""},{img: "", title: "", content: ""},{img: "", title: "", content: ""}])
 
@@ -50,13 +48,13 @@ export default function AttractionFreelancer(){
             const newErr = [...err]
             newErr[id][type] = "Title has the maximum length of 50 characters"
             setErr(newErr)
-            setSaveChanges(false)
+            setSaveChange(false)
         }
         else if (e.target.value.length > 500 && type !== "title"){
             const newErr = [...err]
             newErr[id][type] = "Content has the maximum length of 500 characters"
             setErr(newErr)
-            setSaveChanges(false)
+            setSaveChange(false)
         }
         else{
             const newAttractions = [...attractions]
@@ -65,7 +63,7 @@ export default function AttractionFreelancer(){
             const newErr = [...err]
             newErr[id][type] = ""
             setErr(newErr)
-            setSaveChanges(true)
+            setSaveChange(true)
         }   
     }
 
@@ -77,19 +75,19 @@ export default function AttractionFreelancer(){
             const newErr = [...err]
             newErr[id].img = ""
             setErr(newErr)
-            setSaveChanges(true)
+            setSaveChange(true)
         }
         else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/')){
             const newErr = [...err]
             newErr[id].img = "Uploaded file must be an image file (.jpg, .png, .jpeg)"
             setErr(newErr)
-            setSaveChanges(false)
+            setSaveChange(false)
         }
         else if (e.target.files[0] && e.target.files[0].size / 1024 <= 4 * 1024){
             const newErr = [...err]
             newErr[id].img = "Uploaded file must not exceed 4MB"
             setErr(newErr)
-            setSaveChanges(false)
+            setSaveChange(false)
         }
     }
 
@@ -100,13 +98,13 @@ export default function AttractionFreelancer(){
         const newErr = [...err]
         newErr[id].img = ""
         setErr(newErr)
-        setSaveChanges(true)      
+        setSaveChange(true)      
     }
 
    
     const handleSave = () => {
         dispatch(updateGuideAttractionByIdGuide(guide_info.id_guide, attractions))
-        setSaveChanges(false)
+        setSaveChange(false)
     }
 
     // console.log(attractions)
@@ -173,7 +171,7 @@ export default function AttractionFreelancer(){
             <ErrorInput mess = {err[2].title} hidden = {!err[2].title}/>
             <ErrorInput mess = {err[2].content} hidden = {!err[2].content}/>
 
-            <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES" onClick = {handleSave} disabled = {!saveChanges}/>
+            <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES" onClick = {handleSave} disabled = {!saveChange}/>
         </>
     )
 }
