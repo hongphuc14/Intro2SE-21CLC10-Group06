@@ -533,6 +533,43 @@ const getGuideBookingByID = async(req, res) =>{
     }
 } 
 
+//PUT: update freelancer booking status by id_guide
+const updateBookingStatusByID = async(req, res) =>{
+    try{
+        let { id_guide } = req.params;
+        let {status, id_guidebooking} = req.body;
+        
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        if(guide){
+            await model.guide_booking.update({
+                status: status,
+            },{
+                where:{
+                    id_guidebooking
+                }
+            });
+
+            let data = await model.guide_booking.findOne({
+                where:{
+                    id_guidebooking
+                }
+            })
+
+            sucessCode(res,data,"Update thành công")
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+//GET: get freelancer review by id_guide
 const getGuideReviewByID = async(req, res) =>{
     try{
         let { id_guide } = req.params;
@@ -569,15 +606,13 @@ const getGuideReviewByID = async(req, res) =>{
                 idguidebooking.push(id_guidebooking)
             }
 
-
-            let data = await model.guide_review.findAll()
-            // let data = await model.guide_review.findAll({
-            //     where:{
-            //         id_guidebooking: {
-            //             [Op.in]: idguidebooking
-            //         }
-            //     }
-            // });
+            let data = await model.guide_review.findAll({
+                where:{
+                    id_guidebooking: {
+                        [Op.in]: idguidebooking
+                    }
+                }
+            });
 
             sucessCode(res,data,"Get thành công")
         }
@@ -589,7 +624,83 @@ const getGuideReviewByID = async(req, res) =>{
     }
 } 
 
+//PUT: update freelancer reply by id_guide
+const updateGuideReplyByID = async(req, res) =>{
+    try{
+        let { id_guide } = req.params;
+        let {reply, date, id_guidebooking} = req.body;
+        
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        if(guide){
+            await model.guide_review.update({
+                reply: reply,
+                reply_date: date
+            },{
+                where:{
+                    id_guidebooking
+                }
+            });
+
+            let data = await model.guide_review.findOne({
+                where:{
+                    id_guidebooking
+                }
+            })
+
+            sucessCode(res,data,"Update thành công")
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+//PUT: update freelancer report by id_guide
+const updateGuideReportByID = async(req, res) =>{
+    try{
+        let { id_guide } = req.params;
+        let {report, date, id_guidebooking} = req.body;
+        
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        if(guide){
+            await model.guide_review.update({
+                report: report,
+                report_date: date
+            },{
+                where:{
+                    id_guidebooking
+                }
+            });
+
+            let data = await model.guide_review.findOne({
+                where:{
+                    id_guidebooking
+                }
+            })
+
+            sucessCode(res,data,"Update thành công")
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+
+
 module.exports = { getInfoByID, getLanguageByID, getLicenseByID, getAttractionByID, getTimeByID,
 updateInfoByID, updatePwdByID, updateLanguageByID, updateAvatarByID, deleteAvatarByID, 
 deleteLicenseByID, updateLicenseByID, updateTimeByID,
-getGuideBookingByID, getGuideReviewByID } 
+getGuideBookingByID, updateBookingStatusByID, getGuideReviewByID, updateGuideReplyByID, updateGuideReportByID } 
