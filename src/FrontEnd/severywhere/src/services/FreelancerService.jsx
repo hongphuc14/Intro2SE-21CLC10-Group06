@@ -75,7 +75,9 @@ export class FreelancerService extends baseService {
     };
 
     // Api 10: cập nhật thông tin calendar khi có id_guide
-
+    updateGuideTimeByIdGuide = (id_guide, obj) => {
+      return this.put(`freelancer/updateTime/${id_guide}`, obj);
+    };
 
     
 

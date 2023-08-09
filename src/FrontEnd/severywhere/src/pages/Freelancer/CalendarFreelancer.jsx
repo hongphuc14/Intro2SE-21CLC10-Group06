@@ -5,7 +5,7 @@ import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import {getGuideLicenseByIdGuide,getGuideTimeByIdGuide, updateGuideInfo, 
+import {getTourGuideByIdGuide, getGuideLicenseByIdGuide,getGuideTimeByIdGuide, updateGuideInfo, 
     updateGuideTimeByIdGuide, deleteGuideTimeByIdGuide, addGuideTimeByIdGuide } from '../../redux/actions/FreelancerAction'
 
 const day_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -24,6 +24,7 @@ function Day({day, week, month,focus, onClick}){
 export default function CalendarFreelancer(){ 
     const dispatch = useDispatch() 
     
+    const { user_login} = useSelector(state => state.BasicReducer)
     const {verified, guide_time_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
 
     const importAvatar = (filename) => {
@@ -34,9 +35,20 @@ export default function CalendarFreelancer(){
     }
 
     useEffect(() => {
-        dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
-        dispatch(getGuideTimeByIdGuide(guide_info.id_guide))
-      },[] )
+        dispatch(getTourGuideByIdGuide(user_login.email))
+    },[] )
+
+    // useEffect(() => {
+    //     dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
+        
+    //   },[] )
+
+    useEffect(() => {
+        if (guide_info?.id_guide) {
+            dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
+            dispatch(getGuideTimeByIdGuide(guide_info.id_guide))
+        }
+    }, [guide_info.id_guide])
 
     const [next, setNext] = useState(0)
 
@@ -65,33 +77,40 @@ export default function CalendarFreelancer(){
     const handleSession = (session) => {
         const dateStr = `${dates[no].year}-${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}-${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
         console.log(dateStr, session); 
-        const isExist = (guide_time_by_id_guide.some((time)=> {
-            return time.guide_date === dateStr && time.guide_session === session
-        }))
-        if (isExist)
-            dispatch(deleteGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
-        else 
-            dispatch(addGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
+        // const isExist = (guide_time_by_id_guide.some((time)=> {
+        //     return time.guide_date === dateStr && time.guide_session === session
+        // }))
+        // if (isExist)
+        dispatch(updateGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
+        // else 
+        //     dispatch(addGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
     }
 
-    const [price, setPrice] = useState(parseFloat(guide_info.price_per_session).toFixed(2))
+    const [price, setPrice] = useState(null)
     const savePrice = () => {
-        guide_info.price_per_session = parseFloat(price)
-        dispatch(updateGuideInfo(guide_info.id_guide, guide_info))
+        const newInfo = {...guide_info, price_per_session: parseFloat(price) }
+        dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
     }
 
-    const [cancel, setCancel] = useState(guide_info.free_cancellation)
+    const [cancel, setCancel] = useState(null)
     const saveCancel = () => {
         setCancel(!cancel)
-        guide_info.free_cancellation = !cancel
-        dispatch(updateGuideInfo(guide_info.id_guide, guide_info))
+        const newInfo = {...guide_info, free_cancellation: !cancel }
+        dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
     }
+
+    useEffect(() => {
+        setPrice(parseFloat(guide_info.price_per_session).toFixed(2))
+        setCancel(guide_info.free_cancellation)
+
+    },[guide_info])
+
     console.log(price, cancel)
 
     return (
         <div className = "calendar-freelancer">
             <HeaderFreelancer/>
-            <NavbarFreelancer src = {importAvatar(guide_info.avatar) || placeholder} fullname ={guide_info.fullname.toUpperCase()} flag2 = "focus"/>
+            <NavbarFreelancer src = {importAvatar(guide_info.avatar) || placeholder} fullname ={guide_info?.fullname?.toUpperCase()} flag2 = "focus"/>
             {verified ? (
                 <div className = "main-calendar">
                 <div className = "select-date">

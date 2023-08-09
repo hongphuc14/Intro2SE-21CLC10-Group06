@@ -295,24 +295,43 @@ export const getGuideTimeByIdGuide = (id_guide) => {
   // }
 };
 
-export const deleteGuideTimeByIdGuide = (id_guide, date, session) => {
-  // tìm thấy {date, session,id_guide} thì xóa
-  // nếu tìm k thấy thì thêm vào
-  
-  return {
-    type: DELETE_GUIDE_TIME_BY_ID_GUIDE,
-    guide_time_by_id_guide: result, // data sau khi cập nhật date và session
+export const updateGuideTimeByIdGuide = (id_guide, date, session) => {
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+      const obj = {
+        date: date,
+        session: session
+      }
+      const result = await freelancerService.updateGuideTimeByIdGuide(id_guide, obj);
+      console.log(result);
+
+      if (result.status === 200) {
+        dispatch({
+          type: UPDATE_GUIDE_TIME_BY_ID_GUIDE,
+          guide_time_by_id_guide: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
   }
+  
+  // return {
+  //   type: UPDATE_GUIDE_TIME_BY_ID_GUIDE,
+  //   guide_time_by_id_guide: result, // data sau khi cập nhật date và session
+  // }
 };
 
-export const addGuideTimeByIdGuide = (id_guide, date, session) => {
-  // tìm thấy {date, session,id_guide} thì xóa
-  // nếu tìm k thấy thì thêm vào
-  return {
-    type: ADD_GUIDE_TIME_BY_ID_GUIDE,
-    guide_time_by_id_guide: result, // data sau khi cập nhật date và session
-  }
-};
+// export const addGuideTimeByIdGuide = (id_guide, date, session) => {
+//   // tìm thấy {date, session,id_guide} thì xóa
+//   // nếu tìm k thấy thì thêm vào
+//   return {
+//     type: ADD_GUIDE_TIME_BY_ID_GUIDE,
+//     guide_time_by_id_guide: result, // data sau khi cập nhật date và session
+//   }
+// };
 
 
 export const getGuideBookingByIdGuide = (id_guide) => {

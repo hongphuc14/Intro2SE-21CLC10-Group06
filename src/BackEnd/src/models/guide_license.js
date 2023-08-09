@@ -34,6 +34,7 @@ class guide_license extends Sequelize.Model {
         using: "BTREE",
         fields: [
           { name: "id_guide" },
+          { name: "file_path" },
         ]
       },
     ]

@@ -2,7 +2,8 @@ const express = require('express');
 const freelancerRoute = express.Router();
 const { getInfoByID, getLanguageByID, getLicenseByID, getAttractionByID, getTimeByID,
         updateInfoByID, updatePwdByID, updateAvatarByID, deleteAvatarByID, updateLanguageByID, 
-        deleteLicenseByID, updateLicenseByID } = require('../controllers/freelancerController')
+        deleteLicenseByID, updateLicenseByID, updateTimeByID,
+        getGuideBookingByID, getGuideReviewByID } = require('../controllers/freelancerController')
 const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
@@ -42,11 +43,17 @@ freelancerRoute.put("/deleteLicense/:id_guide", deleteLicenseByID);
 // POST: update freelancer license by id_guide
 freelancerRoute.post("/updateLicense/:id_guide", upload('freelancer_license').array("file"), updateLicenseByID);
 
-//PUT: update freelancer attraction by id_guide
+// PUT: update freelancer attraction by id_guide
 // freelancerRoute.put("/updateAttraction/:id_guide", verifyToken, updateAttrationByID);
 
 //PUT: update freelancer time by id_guide
-// freelancerRoute.put("/updateTime/:id_guide", verifyToken, updateTimeByID);
+freelancerRoute.put("/updateTime/:id_guide", updateTimeByID);
+
+//GET: get freelancer booking by id_guide
+freelancerRoute.get("/getBooking/:id_guide", getGuideBookingByID);
+
+//GET: get freelancer review by id_guide
+freelancerRoute.get("/getReview/:id_guide", getGuideReviewByID);
 
 module.exports = freelancerRoute;
 

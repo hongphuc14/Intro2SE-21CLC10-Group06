@@ -27,9 +27,7 @@ export default function ProfileFreelancer(){
 
   // login mới get để lưu vào state
   useEffect(() => {
-    // console.log(user_login.email)
     dispatch(getTourGuideByIdGuide(user_login.email))
-    // dispatch(getGuideAttractionByIdGuide(guide_info.id_guide))
   },[] )
 
   useEffect(() => {
@@ -175,7 +173,7 @@ export default function ProfileFreelancer(){
     setConfirmPassword("")
   }
 
-  // console.log(formik.errors)
+  // console.log(formik.values.id_des)
   // console.log(user_login)
 
   return(
@@ -213,7 +211,7 @@ export default function ProfileFreelancer(){
                     Destination
                     <p> * </p>
                 </label>
-                <select id="des" name="id_des" defaultValue={formik.values.id_des || ''} onChange={(e)=>handleChangeInfo(e,formik.handleChange)}>
+                <select id="des" name="id_des" value={formik?.values?.id_des?.toString()} onChange={(e)=>handleChangeInfo(e,formik.handleChange)}>
                   {
                     destination.map((des)=> <option key = {des.id_des} name ={des.id_des} value = {des.id_des} > {des.name} </option>)
                   }

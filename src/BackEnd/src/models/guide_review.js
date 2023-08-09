@@ -6,13 +6,13 @@ module.exports = (sequelize, DataTypes) => {
 class guide_review extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    id_guide_booking: {
+    id_guidebooking: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'guide_booking',
-        key: 'id_guide_booking'
+        key: 'id_guidebooking'
       }
     },
     rating: {
@@ -57,7 +57,7 @@ class guide_review extends Sequelize.Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_guide_booking" },
+          { name: "id_guidebooking" },
         ]
       },
     ]

@@ -41,7 +41,7 @@ export default function LicenseFreelancer(){
     if (file){
       return URL.createObjectURL(file);
     }
-    return placeholder
+    return null
   }
 
   return (
@@ -56,7 +56,7 @@ export default function LicenseFreelancer(){
         license.map((license) =>{
           return (
             <div key = {license.file_path} className = "license">
-              <img src = { setPreviewLicense(license.file) || importLicense(license.file_path)} alt = "license-preview"/>
+              <img src = { setPreviewLicense(license.file) || importLicense(license.file_path) || placeholder} alt = "license-preview"/>
               <div className = "license-info">
                 <p>{license.file_path}</p>
                 {license.status === 1 && <p className = "gray">Pending</p>}

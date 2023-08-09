@@ -8,6 +8,7 @@ class guide_time extends Sequelize.Model {
   return super.init({
     id_guidetime: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true
     },
