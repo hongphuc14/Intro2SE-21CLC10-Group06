@@ -39,43 +39,46 @@ export default function MyForm() {
       <div className="fullname-block">
         <label htmlFor="fullname">Fullname</label>
         <div className="fullname-input">
-          <input value={fullname} onChange={(e) => setFullname(e.target.value)} type="text" placeholder="Nguyen Thi Minh Minh" id="fullname" name="fullname"/>
+          <input value={fullname} onChange={(e) => setFullname(e.target.value)} type="text" placeholder="Nguyen Thi Minh Minh" id="fullname" className="fullname"/>
           <i className="fa-solid fa-pen-to-square"></i>
+          {/* {fullname && <i className="fa-solid fa-pen-to-square"></i>} */}
         </div> 
       </div>
-      <div className="email-phone">
-        <div className="email-block">
-          <label htmlFor="email">Email</label>
-          <div className="username-input">
-            <input value={email} readOnly type="email" placeholder="ntmminh21@clc.fitus.edu.vn"id="email" name="email"/>
+        <div className="email-phone">
+          <div className="email-block">
+            <label htmlFor="email">Email</label>
+            <div className="email-input">
+              <input value={email} readOnly type="email" placeholder="ntmminh21@clc.fitus.edu.vn"id="email" name="email"/>
+            </div>
+          </div>
+          <div className="phone-block">
+            <label htmlFor="phone">Phone number</label>
+            <div className="phone-input">
+              <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" placeholder="0899496257" id="phonenum" name="phonenum"/>
+              <i className="fa-solid fa-pen-to-square phone-icon"></i>
+            </div>
           </div>
         </div>
-        <div className="phone-block">
-          <label htmlFor="phone">Phone number</label>
-          <div className="phone-input">
-            <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" placeholder="0899496257" id="phonenum" name="phonenum"/>
-            <i className="fa-solid fa-pen-to-square"></i>
-          </div>
-        </div>
-      </div>
       <div className="birthday-gender">
         <div className="birthday-block">
           <label htmlFor="birthday">Birthday</label>
           <div className="birthday-input">
-            <input type="date" value={birthday} onChange={handleBirthdayChange}/>
+            <input type="date" value={birthday} onChange={handleBirthdayChange} className="birthday-box"/>
           </div>
         </div>
 
         <div className="gender">
           <label>Gender</label>
           <div className="gender-button">
-            <label><input type="radio" name="gender" value="Male" defaultChecke/>Male</label>
-            <label><input type="radio" name="gender" value="Female"/>Female</label>
+            <input type="radio" className ="option-input" name="gender" value="Male" defaultChecked/>
+            <label className = "maleCheck">Male</label>
+            <input type="radio" className="option-input" name="gender" value="Female"/>
+            <label className = "femaleCheck">Female</label>
           </div>
         </div>
       </div>
 
-      <button type="submit">Save</button>
+      <button type="submit" className="SaveButton">Save</button>
     </form>
     </div>
   );
