@@ -1,6 +1,6 @@
 import "./NavBar.scss"
 import React, { useState, useEffect } from 'react';
-import defaultAvatar from './avatar.png'
+import defaultAvatar from './defaultImage.jpg'
 const NavBar = () => {
     const [profileImage, setProfileImage] = useState(defaultAvatar);
     const [profileName, setProfileName] = useState("Minh Minh"); // Default value
@@ -40,7 +40,7 @@ const NavBar = () => {
             </div>
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="/editprofile">
                         <i className="fa-solid fa-pen-to-square"></i>
                         <span>Edit Profile</span>
                     </a>

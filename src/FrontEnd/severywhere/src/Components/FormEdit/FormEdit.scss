@@ -5,6 +5,7 @@
   max-width: 500px;
   margin: 6.5rem auto;
   margin-top: 4rem;
+  margin-bottom: 2rem;
   padding: 20px;
   border: none;
   background-color: none;
@@ -139,7 +140,7 @@
           display: inline-block;
           outline: none;
           position: relative;
-          z-index: 1000;
+          // z-index: 1000;
         }
 
         .option-input:hover {
