@@ -47,7 +47,7 @@ export default function MyForm() {
           <div className="email-block">
             <label htmlFor="email">Email</label>
             <div className="email-input">
-              <input value={email} readOnly type="email" placeholder="ntmminh21@clc.fitus.edu.vn"id="email" name="email"/>
+              <input value={email} readOnly type="email" placeholder="ntmminh21@clc.fitus.edu.vn"id="emailEdit" name="email"/>
             </div>
           </div>
           <div className="phone-block">

@@ -1,7 +1,7 @@
-import './EmailInput.scss'
+import './EmailInputResetPw.scss'
 import React, { useState, useRef } from 'react';
 
-const EmailInput = () => {
+const EmailInputResetPw = () => {
     return (
         <div className="email-input">
             <div className="reset-pw">
@@ -11,11 +11,11 @@ const EmailInput = () => {
             </div>
             <div className="email-input-text">
                 <label htmlFor="email" className="emailLabel">Your email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" />
+                <input type="email" id="emailResetPw" name="email" placeholder="Enter your email" />
             </div>
             <button className="send-button">SEND</button>
         </div>
     );
 }
 
-export default EmailInput;
+export default EmailInputResetPw;

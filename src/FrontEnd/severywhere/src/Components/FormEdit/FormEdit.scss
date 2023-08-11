@@ -70,11 +70,13 @@
 
     .email-block {
       margin-right: 2em;
-
-      #email {
-        width: 15rem; // Chiều dài bằng với fullname-input
-        margin: 0;
-        margin-top: 0.5em;
+      .email-input{
+        position: relative;
+          #emailEdit {
+            width: 15rem; // Chiều dài bằng với fullname-input
+            margin: 0;
+            margin-top: 0.5em;
+          }
       }
     }
 
