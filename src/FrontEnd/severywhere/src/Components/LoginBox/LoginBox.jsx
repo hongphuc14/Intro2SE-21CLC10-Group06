@@ -20,7 +20,7 @@ const LoginBox = () =>{
                 <div className = "passInput">
                     <input value = {pass} onChange={(e) =>setPass(e.target.value)}type="password" placeholder="********" id="password" name="password"/>
                 </div>
-                <a className="Forgetpw" href = "https://colorhunt.co/palettes/green">Forget your password?</a>
+                <a className="Forgetpw" href = "/emailResetpw">Forget your password?</a>
                 <button type = "submit" className="submitBut">Login</button>
                 <a className = "Register" href = "/signup">Don't have an account? Register</a>
             </form>
