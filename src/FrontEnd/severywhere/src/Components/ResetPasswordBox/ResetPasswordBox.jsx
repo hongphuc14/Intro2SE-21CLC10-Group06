@@ -9,7 +9,7 @@ export default function ResetPasswordBox() {
             <div className="resetPw-box-text">
                 <label htmlFor="password" className="passwordLabel">New password *</label>
                 <input type="password" id="passwordReset" name="password" placeholder="********" />
-                <label htmlFor="password" className="passwordLabel">Confirm new password *</label>
+                <label htmlFor="password" className="passwordLabel">Confirmed password *</label>
                 <input type="password" id="passwordReset" name="password" placeholder="********" />
             </div>
             <button className="resetPw-button">RESET PASSWORD</button>
