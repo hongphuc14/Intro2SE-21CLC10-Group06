@@ -9,11 +9,11 @@ export default function EditProfile() {
         // <div className="editprofile-page">
         //     <HeaderGuest />
         //     <div className="TwoColumnLayout">
-        //         <NavBar/>
+                <NavBar/>
         //     </div>
             
         //     <Footer />
         // </div>
-        <Avatar/>
+        // <Avatar/>
     );
 }

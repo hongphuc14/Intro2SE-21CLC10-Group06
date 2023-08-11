@@ -51,6 +51,12 @@ const NavBar = () => {
                         <span>My Orders</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-window-close"></i>
+                        <span>Cancelled</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     )
