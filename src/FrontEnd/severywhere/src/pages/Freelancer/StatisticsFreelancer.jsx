@@ -4,85 +4,132 @@ import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
 import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
 import TouristFreelancer from '../../Components/TouristBooking/TouristFreelancer'
 import RatingStar from '../../Components/RatingReview/RatingStar';
+import { ButtonUploadFreelancer } from '../../Components/Button/ButtonFreelancer';
 import {Link, useLocation} from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-function Review({img, name, date, rating, review}){
-  img = img==="" ? placeholder : img
-
-  return(
-    <div className = "review">
-      <img src={img} alt = "tourist-avatar"></img>
-      <div>
-        <p className = "review-name">{name}</p>
-        <RatingStar numberStar={rating}/>
-        <i class="fas fa-flag"></i>
-        <i class="fas fa-comment-dots"></i>
-      </div>
-      <p className = "review-date">{date}</p>
-      <p className = "review-line">{review}</p>
-    </div>
-  )
-}
-
-
-
-const reviews = [{id: 1, name: "ML", img: "", date: "12/07/2023", rating: 5, review: "The guide is so friendly!"},
-                  {id: 2, name: "ML", img: ""},
-                  {id: 3, name: "ML", img: ""},
-                  {id: 4, name: "ML", img: ""},
-                  {id: 5, name: "ML", img: ""},
-                  {id: 6, name: "ML", img: ""},]
-
-const tourists = [{id_tourist: 1, fullname: "ML", img: ""},
-                  {id_tourist: 2, fullname: "ML", img: ""},
-                  {id_tourist: 3, fullname: "ML", img: ""},
-                  {id_tourist: 4, fullname: "ML", img: ""},
-                  {id_tourist: 5, fullname: "ML", img: ""},
-                  {id_tourist: 6, fullname: "ML", img: ""},
-                  {id_tourist: 7, fullname: "ML", img: ""},
-                  {id_tourist: 8, fullname: "ML", img: ""},
-                  {id_tourist: 9, fullname: "ML", img: ""},
-                  {id_tourist: 10, fullname: "ML", img: ""},
-                  {id_tourist: 11, fullname: "ML", img: ""},
-                  {id_tourist: 12, fullname: "ML", img: ""},]
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import {getGuideBookingByIdGuide, getGuideReviewByIdGuidebooking, getTourGuideByIdGuide,
+  updateReply, updateReport } from '../../redux/actions/FreelancerAction'
 
 export default function StatisticsFreelancer(){
-  const { guide_info} = useSelector(state => state.FreelancerReducer)
-
+  const dispatch = useDispatch() 
   const location = useLocation()
   window.history.replaceState(null, null, location.pathname);
 
-  const importAvatar = (filename) => {
+  const { user_login} = useSelector(state => state.BasicReducer)
+  const { guide_info, guide_booking_by_id_guide, guide_review_by_id_booking} = useSelector(state => state.FreelancerReducer)
+
+  useEffect(() => {
+    if (!guide_info.id_guide)
+      dispatch(getTourGuideByIdGuide(user_login.email))
+  },[] )
+
+  useEffect(() => {
+    if (guide_info?.id_guide) {
+        dispatch(getGuideBookingByIdGuide(guide_info.id_guide))
+        dispatch(getGuideReviewByIdGuidebooking(guide_info.id_guide))
+    }
+  }, [guide_info.id_guide])
+
+  const [tourists, setTourists] = useState([])
+  useEffect(() => {
+    setTourists([...guide_booking_by_id_guide]);
+  },[guide_booking_by_id_guide])
+
+  const [reviews, setReviews] = useState([])
+  useEffect(() => {
+    setReviews([...guide_review_by_id_booking]);
+  },[guide_review_by_id_booking])
+
+  const importAvatar = (folder, filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
+    const path = require(`../../../../../BackEnd/public/${folder}/${filename}`)
     return path
+  }
+
+  const totalSale = tourists.reduce((accumulator, tourist) => accumulator + tourist.price, 0)
+  const validReview = reviews.length > 0 ? reviews.filter(review => review.rating) : []
+  let averageRating = validReview.reduce((accumulator,review) => accumulator + review.rating, 0) 
+  if (validReview.length > 0) 
+    averageRating = averageRating / validReview.length
+  
+  const [noReview, setNoReview] = useState(null)
+
+  const [isReply, setIsReply] = useState(false)
+  const [reply, setReply] = useState("")
+  const saveReply = () => {
+    if (reply === "")
+      alert ("Please don't leave an empty reply or press the Back button.")
+    else{
+      dispatch(updateReply(noReview, reply))
+      // console.log(noReview, reply)
+      setIsReply(false)
+      setReply("")
+    }
+  }
+
+  const [isReport, setIsReport] = useState(false)
+  const [report, setReport] = useState("")
+  const saveReport = () => {
+    if (report === "")
+      alert ("Please don't leave an empty report or press the Back button.")
+    else{
+      dispatch(updateReport(noReview, report))
+      setIsReport(false)
+      setReport("")
+    }
   }
 
   return(
     <div className = "statistics-freelancer">
         <HeaderFreelancer/>
-        <NavbarFreelancer src = {importAvatar(guide_info.avatar || placeholder)} fullname = {guide_info.fullname.toUpperCase()} flag3 = "focus"/>  
+        <NavbarFreelancer src = {importAvatar("freelancer_avatar",guide_info.avatar) || placeholder} fullname = {guide_info?.fullname?.toUpperCase()} flag3 = "focus"/>  
         <div className = "main-statistic">
+          {
+            isReply && (
+              <div className = "reply-section">
+                <div className = "reply">
+                  <p>Reply</p>
+                  <textarea value = {reply} onChange = {(e) => {setReply(e.target.value)}}></textarea>
+                  <ButtonUploadFreelancer className = "button-save" title = "BACK" onClick = {() => {setIsReply(false); setReply("")}}/>
+                  <ButtonUploadFreelancer className = "button-upload" title = "COMMIT" onClick = {saveReply}/>
+                </div>
+              </div>
+            )
+          }
+          {
+            isReport && (
+              <div className = "report-section">
+                <div className = "report">
+                  <p>Report</p>
+                  <p>We're sorry something's wrong. How can we help you? </p>
+                  <p>Please provide a detailed description of this issue.</p>
+                  <textarea value = {report} onChange = {(e) => {setReport(e.target.value)}}></textarea>
+                  <ButtonUploadFreelancer className = "button-save" title = "BACK" onClick = {() => {setIsReport(false); setReport("")}}/>
+                  <ButtonUploadFreelancer className = "button-upload" title = "COMMIT" onClick = {saveReport}/>
+                </div>
+              </div>
+            )
+          }
           <div className = "statistic">
             <div className = "sale">
-              <i class="fas fa-dollar-sign"></i>
+              <i className="fas fa-dollar-sign"></i>
               <p className = "title">TOTAL SALES</p>
-              <p className = "data">100.000</p>
+              <p className = "data">{totalSale.toFixed(2)}</p>
               <p className = "des">$</p>
             </div>
             <div className = "booking">
-              <i class="fas fa-cart-plus"></i>
+              <i className="fas fa-cart-plus"></i>
               <p className = "title">TOTAL BOOKINGS</p>
-              <p className = "data">100</p>
+              <p className = "data">{tourists.length}</p>
               <p className = "des">BOOKINGS</p>
             </div>
             <div className = "rating">
-              <i class="fas fa-star"></i>
+              <i className="fas fa-star"></i>
               <p className = "title">AVERAGE RATINGS</p>
-              <p className = "data">5.0</p>
-              <p className = "des">(100 RATINGS)</p>
+              <p className = "data">{averageRating.toFixed(1)}</p>
+              <p className = "des">({validReview.length} RATING{validReview.length > 1 && 'S'})</p>
             </div>
           </div>
 
@@ -112,8 +159,9 @@ export default function StatisticsFreelancer(){
               {
                 tourists.map(tourist =>{
                   return (
-                    <Link to = {{pathname: "/booking-freelancer", state: {id_guidebooking: tourist.id_tourist}}}>
-                      <TouristFreelancer li={tourist.id_tourist} {...tourist}/>
+                    <Link key={tourist.id_guidebooking} style={{ textDecoration: 'none' }}
+                     to = {{pathname: "/booking-freelancer", state: {info: tourist}}}>
+                      <TouristFreelancer key={tourist.id_guidebooking} {...tourist}/>
                     </Link>
                     )
                 })
@@ -166,7 +214,20 @@ export default function StatisticsFreelancer(){
             <div className = "review-list">
               {
                 reviews.map(review =>{
-                  return <Review li={review.id} {...review}/>
+                  const {id_tourist_tourist, guide_review, id_guidebooking} = review
+                  return (
+                    <div key = {review.id_guidebooking} className = "review">
+                      <img src={importAvatar("tourist_avatar",id_tourist_tourist.avatar)} alt = "tourist-avatar"></img>
+                      <div>
+                        <p className = "review-name">{id_tourist_tourist.fullname}</p>
+                        <RatingStar numberStar={guide_review.rating}/>
+                        <i className="fas fa-flag" onClick = {() => {setIsReport(true); setNoReview(id_guidebooking)}}></i>
+                        <i className="fas fa-comment-dots" onClick = {() => {setIsReply(true); setNoReview(id_guidebooking)}}></i>
+                      </div>
+                      <p className = "review-date">{new Date(guide_review.review_date).toLocaleDateString("en-GB")}</p>
+                      <p className = "review-line">{guide_review.review}</p>
+                    </div>
+                  )
                 })
               }
             </div>

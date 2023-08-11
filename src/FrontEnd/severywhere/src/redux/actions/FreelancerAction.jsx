@@ -10,15 +10,12 @@ import {
   UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
   GET_GUIDE_TIME_BY_ID_GUIDE,
   UPDATE_GUIDE_TIME_BY_ID_GUIDE,
-  ADD_GUIDE_TIME_BY_ID_GUIDE,
-  DELETE_GUIDE_TIME_BY_ID_GUIDE,
   GET_GUIDE_BOOKING_BY_ID_GUIDE,
-  GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING } 
+  GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
+} 
 from "../types";
 import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
 import {freelancerService} from '../../services/FreelancerService';
-
-const result = []
 
 export const getTourGuideByIdGuide = (email) => {
   return async (dispatch) => {
@@ -192,6 +189,7 @@ export const updateGuideLicense = (id_guide, license) => {
 
       const result = await freelancerService.updateGuideLicense(id_guide, formData);
       if (result.status === 200) {
+        console.log(result);
         dispatch({
           type: UPDATE_GUIDE_LICENSE,
           guide_license_by_id_guide: result.data.content,
@@ -218,10 +216,6 @@ export const updateGuidePassword = (id_guide, currentPass, newPass) => {
       const result = await freelancerService.updateGuidePassword(id_guide, obj);
     
       if (result.status === 200) {
-        dispatch({
-          type: UPDATE_GUIDE_PASSWORD,
-          guide_language_by_id_guide: result.data.content,
-        });
         dispatch(hideLoadingAction);
         alert('Update password successfully');
       }
@@ -260,12 +254,12 @@ export const getGuideAttractionByIdGuide = (id_guide) => {
 };
 
 export const updateGuideAttractionByIdGuide = (id_guide, attractions) => {
-  return async (dispatch) => {
-    dispatch({
-    type: UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
-    guide_attraction_by_id_guide: attractions
-    })
-  }
+  // return async (dispatch) => {
+  //   dispatch({
+  //   type: UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
+  //   guide_attraction_by_id_guide: attractions
+  //   })
+  // }
 };
 
 export const getGuideTimeByIdGuide = (id_guide) => {
@@ -304,7 +298,6 @@ export const updateGuideTimeByIdGuide = (id_guide, date, session) => {
         session: session
       }
       const result = await freelancerService.updateGuideTimeByIdGuide(id_guide, obj);
-      console.log(result);
 
       if (result.status === 200) {
         dispatch({
@@ -315,35 +308,97 @@ export const updateGuideTimeByIdGuide = (id_guide, date, session) => {
       }
     } catch (error) {
       console.log("error", error.response);
+      alert(error?.response?.data?.message);
     }
   }
-  
-  // return {
-  //   type: UPDATE_GUIDE_TIME_BY_ID_GUIDE,
-  //   guide_time_by_id_guide: result, // data sau khi cập nhật date và session
-  // }
 };
 
-// export const addGuideTimeByIdGuide = (id_guide, date, session) => {
-//   // tìm thấy {date, session,id_guide} thì xóa
-//   // nếu tìm k thấy thì thêm vào
-//   return {
-//     type: ADD_GUIDE_TIME_BY_ID_GUIDE,
-//     guide_time_by_id_guide: result, // data sau khi cập nhật date và session
-//   }
-// };
-
-
 export const getGuideBookingByIdGuide = (id_guide) => {
-  return {
-    type: GET_GUIDE_BOOKING_BY_ID_GUIDE,
-    guide_booking_by_id_guide: result,
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+      const result = await freelancerService.getGuideBookingByIdGuide(id_guide);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_BOOKING_BY_ID_GUIDE,
+          guide_booking_by_id_guide: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+};
+
+export const updateBookingStatus = (id_guide) => {
+  return async (dispatch) => {
+    try {
+      // dispatch(displayLoadingAction);
+      // const result = await freelancerService.updateBookingStatus(id_guide);
+      // if (result.status === 200) {
+      //   dispatch({
+      //     type: GET_GUIDE_BOOKING_BY_ID_GUIDE,
+      //     guide_booking_by_id_guide: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      // }
+    } catch (error) {
+      console.log("error", error.response);
+    }
   }
 };
 
 export const getGuideReviewByIdGuidebooking = (id_guide) => {
-  return {
-    type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
-    guide_review_by_id_booking: result
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+      const result = await freelancerService.getGuideReviewByIdGuidebooking(id_guide);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
+          guide_review_by_id_booking: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+}
+
+export const updateReply = (id_guidebooking, ) => {
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+      const result = await freelancerService.updateReply(id_guide);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
+          guide_review_by_id_booking: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+};
+
+export const updateReport = (id_guide) => {
+  return async (dispatch) => {
+    try {
+      // dispatch(displayLoadingAction);
+      // const result = await freelancerService.updateReport(id_guide);
+      // if (result.status === 200) {
+      //   dispatch({
+      //     type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
+      //     guide_review_by_id_booking: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      // }
+    } catch (error) {
+      console.log("error", error.response);
+    }
   }
 };
