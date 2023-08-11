@@ -7,6 +7,7 @@ import StatisticsFreelancer from "./pages/Freelancer/StatisticsFreelancer";
 import LicenseFreelancer from "./pages/Freelancer/LicenseFreelancer";
 import BookingFreelancer from "./pages/Freelancer/BookingFreelancer";
 import ProfileCompany from './pages/Company/ProfileCompany';
+import LicenseCompany from './pages/Company/LicenseCompany';
 import TourCompany from './pages/Company/TourCompany';
 import StatisticsCompany from './pages/Company/StatisticCompany';
 
@@ -26,7 +27,8 @@ function App(){
           <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
 
           <Route path = "/profile-company" exact component ={ProfileCompany} />
-          {/* <Route path = "/tour-company" exact component ={TourCompany} /> */}
+          <Route path = "/license-company" exact component ={LicenseCompany} />
+          <Route path = "/tour-company" exact component ={TourCompany} />
           {/* <Route path = "/booking-company" exact component ={BookingCompany} /> */}
           {/* <Route path = "/statistics-company" exact component ={StatisticsCompany} /> */}
         </Switch>
