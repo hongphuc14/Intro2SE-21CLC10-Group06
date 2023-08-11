@@ -13,6 +13,7 @@ from "../types";
 export const stateDefault = {
   company_info: {},
   company_license: [],
+  verified: false,
   company_tour: [],
   company_booking: [],
   company_review: [],
@@ -26,7 +27,8 @@ switch (action.type) {
     }
     case GET_GOMPANY_LICENSE: {
       return { ...state, 
-        company_license: action.company_license };
+        company_license: action.company_license,
+        verified: action.verified};
     }
     case GET_TOUR_BY_ID_COMPANY:{
       return {...state, 

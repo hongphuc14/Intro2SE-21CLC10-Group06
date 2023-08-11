@@ -60,6 +60,8 @@
     font-size: 0.8em;
     margin: 0 auto;
     color: #0E4D90;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .license .license-info .gray{

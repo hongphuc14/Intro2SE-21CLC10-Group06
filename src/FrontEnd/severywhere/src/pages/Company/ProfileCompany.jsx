@@ -12,69 +12,51 @@ import {useFormik} from 'formik'
 import * as yup from 'yup'
 // import image from '../../../../../BackEnd/public/freelancer_avatar'
 
-// import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
-//   updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
-//   updateGuidePassword } from '../../redux/actions/FreelancerAction';
+import { getCompanyInfo, getCompanyLicense, updateCompanyPassword,
+  updateCompanyLicense, updateCompanyAvatar, updateCompanyInfo} from '../../redux/actions/CompanyAction';
 
 export default function ProfileCompany(){
   const dispatch = useDispatch()
   const location = useLocation()
   window.history.replaceState(null, null, location.pathname);
 
-  const {destination, user_login} = useSelector(state => state.BasicReducer)
-  // const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
-  // // console.log(user_login)
+  const {user_login} = useSelector(state => state.BasicReducer)
+  const {verified, company_info, company_license} = useSelector(state => state.CompanyReducer)
 
   // // login mới get để lưu vào state
-  // useEffect(() => {
-  //   dispatch(getTourGuideByIdGuide(user_login.email))
-  // },[] )
+  useEffect(() => {
+    dispatch(getCompanyInfo(user_login.email))
+  },[] )
 
-  // useEffect(() => {
-    
-  //   if (guide_info?.id_guide) {
-  //     dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
-  //     dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
-  //   }
-    
-  // }, [guide_info.id_guide])
+  useEffect(() => {
+    if (company_info?.id_company) {
+      dispatch(getCompanyLicense(company_info.id_company))
+    }
+  }, [company_info.id_company])
 
-  // const handleChangeInfo = (e)=> {
-  //   formik.handleChange(e);
-  //   setSaveChanges(true)
-  // }
-
-  // const handleChangeLanguage = (e) => {
-  //   let tmp = [...formik.values.language]
-  //   const val = parseInt(e.target.value)
-  //   if (tmp.includes(val))
-  //     tmp = tmp.filter(lang => lang !== val)
-  //   else
-  //     tmp.push(val)
-
-  //   const newEvent = { ...e, target: { name: "language", value: tmp} };
-  //   formik.handleChange(newEvent);
-  //   setSaveChanges(true)
-  // }
+  const handleChangeInfo = (e)=> {
+    formik.handleChange(e);
+    setSaveChanges(true)
+  }
 
   let {license, isDelete, info, isChange, pre} = location.state ? location.state : {}
-  // if (!license)
-  //   license = guide_license_by_id_guide
+  if (!license)
+    license = company_license
 
-  // const [errorLicense, setErrorLicense] = useState(null)
-  // const [uploadedLicense, setUploadedLicense] = useState([])
-  // const handleUploadLicense = (e) => {
-  //   if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
-  //     const tmp = [...uploadedLicense, {file_path: e.target.files[0].name, status: 1, file: e.target.files[0]}]
-  //     setSaveChanges(true)
-  //     setUploadedLicense (tmp)
-  //     setErrorLicense(null)
-  //   }
-  //   else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
-  //     setErrorLicense('License must be an image file (.jpg, .png, .jpeg)')
-  //   else if (e.target.files[0] && !(e.target.files[0].size / 1024 <= 4 * 1024))
-  //     setErrorLicense('License must not exceed 4MB')
-  // }
+  const [errorLicense, setErrorLicense] = useState(null)
+  const [uploadedLicense, setUploadedLicense] = useState([])
+  const handleUploadLicense = (e) => {
+    if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
+      const tmp = [...uploadedLicense, {file_path: e.target.files[0].name, status: 1, file: e.target.files[0]}]
+      setSaveChanges(true)
+      setUploadedLicense (tmp)
+      setErrorLicense(null)
+    }
+    else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
+      setErrorLicense('License must be an image file (.jpg, .png, .jpeg)')
+    else if (e.target.files[0] && !(e.target.files[0].size / 1024 <= 4 * 1024))
+      setErrorLicense('License must not exceed 4MB')
+  }
   // // console.log(uploadedLicense)
   // // console.log('-', license)
 
@@ -83,7 +65,7 @@ export default function ProfileCompany(){
       return null
     // filename = "tourist_2.jpg"
     try{
-      const path =  require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
+      const path =  require(`../../../../../BackEnd/public/company_avatar/${filename}`)
       return path
     }
     catch(err){
@@ -100,64 +82,60 @@ export default function ProfileCompany(){
 
   const [preview, setPreview] = useState( pre || null)
   // console.log(pre)
-  // const [errorAva, setErrorAva] = useState(null)
-  // const handleChangeAvatar = (e) => {
-  //   if (e.target.files[0])
-  //     if (e.target.files[0].type.startsWith('image/') &&  e.target.files[0].size / 1024 <= 4*1024){
-  //       setPreview(e.target.files[0])
-  //       // console.log(preview);
-  //       const newAva = e.target.files[0].name
-  //       const newEvent = { ...e, target: {name: "avatar", value: newAva}};
-  //       formik.handleChange(newEvent);
-  //       setSaveChanges(true)
-  //       setErrorAva(null)
-  //     }
-  //     else if (!e.target.files[0].type.startsWith('image/')){
-  //       setSaveChanges(false)
-  //       setErrorAva('Avatar must be an image file (.jpg, .png, .jpeg)')
-  //     }
-  //     else if (!(e.target.files[0].size / 1024 <= 4)){
-  //       setSaveChanges(false)
-  //       setErrorAva('Avatar must not exceed 4MB')
-  //     }
-  // }
+  const [errorAva, setErrorAva] = useState(null)
+  const handleChangeAvatar = (e) => {
+    if (e.target.files[0])
+      if (e.target.files[0].type.startsWith('image/') &&  e.target.files[0].size / 1024 <= 4*1024){
+        setPreview(e.target.files[0])
+        // console.log(preview);
+        const newAva = e.target.files[0].name
+        const newEvent = { ...e, target: {name: "avatar", value: newAva}};
+        formik.handleChange(newEvent);
+        setSaveChanges(true)
+        setErrorAva(null)
+      }
+      else if (!e.target.files[0].type.startsWith('image/')){
+        setSaveChanges(false)
+        setErrorAva('Avatar must be an image file (.jpg, .png, .jpeg)')
+      }
+      else if (!(e.target.files[0].size / 1024 <= 4)){
+        setSaveChanges(false)
+        setErrorAva('Avatar must not exceed 4MB')
+      }
+  }
 
-  // const handleDeleteAvatar = (e) => {
-  //   const newEvent = { ...e, target: {name: "avatar", value: ""}};
-  //   formik.handleChange(newEvent);
-  //   setPreview("delete")
-  //   setSaveChanges(true)
-  //   setErrorAva(null) 
-  // }
+  const handleDeleteAvatar = (e) => {
+    const newEvent = { ...e, target: {name: "avatar", value: ""}};
+    formik.handleChange(newEvent);
+    setPreview("delete")
+    setSaveChanges(true)
+    setErrorAva(null) 
+  }
 
-  // const [saveChanges, setSaveChanges] = useState(isChange || isDelete || license.length > guide_license_by_id_guide.length || false )
-  // const handleSaveChanges = () => {
-  //   formik.values.gender = parseInt(formik.values.gender)
-  //   formik.values.id_des = parseInt(formik.values.id_des)
-  //   const {language, ...newInfo} = formik.values
-    
-  //   if (preview)
-  //     dispatch(updateGuideAvatar(newInfo.id_guide, preview))
-  //   dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
-  //   dispatch(updateGuideLanguage(newInfo.id_guide, language))
-  //   dispatch(updateGuideLicense(newInfo.id_guide, [...license, ...uploadedLicense]))
-    
-  //   setSaveChanges(false)
-  // }
+  const [saveChanges, setSaveChanges] = useState(isChange || isDelete || license.length > company_license.length || false )
+  const handleSaveChanges = () => {
+    const newInfo = {...formik.values}
+    // console.log(preview)
+    if (preview)
+      dispatch(updateCompanyAvatar(newInfo.id_company, preview))
+    dispatch(updateCompanyInfo(newInfo.id_company, newInfo))
+    dispatch(updateCompanyLicense(newInfo.id_company, [...license, ...uploadedLicense]))
+    console.log([...license, ...uploadedLicense])
+    setSaveChanges(false)
+  }
 
   const formik = useFormik({
     enableReinitialize: true,
-    // initialValues: info || {...company_info,language: guide_language_by_id_guide},
-    // onSubmit: handleSaveChanges,
+    initialValues: info || {...company_info},
+    onSubmit: handleSaveChanges,
     validationSchema: yup.object().shape({
-      fullname: yup.string().max(50,"Full name has the maximum of 50 characters").min(5,"Full name must have at least 5 characters").required('Full name is required'),
-      birthday: yup.string().required('Birthday is required'),
-      gender: yup.number().required('Gender is required'),
+      name: yup.string().max(50,"Company name has the maximum of 50 characters").min(5,"Company name must have at least 5 characters").required('Company name is required'),
       phone: yup.string().test('len', 'Phone number must have exactly 10 digits', val => val && val.toString().length === 10).required('Phone number is required'),
-      id_des: yup.string().required('Destination is required'),
-      language: yup.array().min(1, 'Language is required').required('Language is required'),
-      experience: yup.string().required('Experience is required'),
-      description: yup.string().required('Description is required').max(200, 'Description has the maximum of 200 characters')
+      address: yup.string().required('Address is required'),
+      website: yup
+      .string()
+      .url("Website must be a valid URL")
+      .required("Website is required"),
     }),
   })
   
@@ -167,62 +145,36 @@ export default function ProfileCompany(){
   const [confirmPassword, setConfirmPassword] = useState("")
 
   const savePassword = () => {
-    // edit to company
-    // dispatch(updateGuidePassword(company_info.id_guide, currentPassword, newPassword))
+    dispatch(updateCompanyPassword(company_info.id_company, currentPassword, newPassword))
     setCurrentPassword("")
     setNewPassword("")
     setConfirmPassword("")
   }
 
-  // // console.log(formik.values.id_des)
-  // // console.log(user_login)
+  // console.log(verified)
 
-
-  const company_info = {
-
-  }
   return(
     <div className="profile-company">
       <HeaderCompany/>
-      <NavbarCompany src = {importAvatar(company_info?.avatar) || placeholder} fullname = {company_info?.fullname?.toUpperCase()} flag1 = "focus"/>
+      <NavbarCompany src = {importAvatar(company_info?.avatar) || placeholder} name = {company_info?.name?.toUpperCase()} flag1 = "focus"/>
       <div className = "main-profile">
         <form className = "update-profile" onSubmit = {formik.handleSubmit}>
-          {/* <div className = "form-profile">
+          <div className = "form-profile">
             <div className = "input-field">
-                <label htmlFor="fullname">
-                    Full name
+                <label htmlFor="name">
+                    Company name
                     <p> * </p>
                 </label>
-                <input id = "fullname" name ="fullname" type = "text" value = {formik.values.fullname || ''} onChange = {(e)=>handleChangeInfo(e, formik.handleChange)} required/>
+                <input id = "name" name ="name" type = "text" value = {formik.values.name || ''} onChange = {(e)=>handleChangeInfo(e, formik.handleChange)} required/>
             </div>
-            <ErrorInput mess = {formik.errors.fullname} hidden = {!formik.errors.fullname}/>
+            <ErrorInput mess = {formik.errors.name} hidden = {!formik.errors.name}/>
             <div className = "input-field">
-                <label htmlFor="birthday">
-                    Date of birth <p> * </p>
+                <label htmlFor="address">
+                    Address<p> * </p>
                 </label>
-                <input id = "birthday" name = "birthday" type = "date" defaultValue = {formik.values.birthday || ''} onChange = {(e)=>handleChangeInfo(e, formik.handleChange)}  required />
+                <input id = "address" name = "address" type = "text" value = {formik.values.address || ''} onChange = {(e)=>handleChangeInfo(e, formik.handleChange)}  required />
             </div>
-            <ErrorInput mess = {formik.errors.birthday} hidden = {!formik.errors.birthday}/>
-            <div className = "check-box">
-              <legend> Gender <p> * </p> </legend>
-              <input id = "male" type = "radio" name = "gender" value = {0} checked ={parseInt(formik.values.gender) === 0 || false} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)}></input>
-              <label htmlFor="male">Male</label>
-              <input id = "female" type = "radio" name = "gender" value = {1} checked ={parseInt(formik.values.gender) === 1 || false} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)}></input>
-              <label htmlFor="female">Female</label>
-            </div>
-            <ErrorInput mess = {formik.errors.gender} hidden = {!formik.errors.gender}/>
-            <div className = "input-field">
-                <label htmlFor="des">
-                    Destination
-                    <p> * </p>
-                </label>
-                <select id="des" name="id_des" value={formik?.values?.id_des?.toString()} onChange={(e)=>handleChangeInfo(e,formik.handleChange)}>
-                  {
-                    destination.map((des)=> <option key = {des.id_des} name ={des.id_des} value = {des.id_des} > {des.name} </option>)
-                  }
-                </select>
-            </div>
-            <ErrorInput mess = {formik.errors.id_des} hidden = {!formik.errors.id_des}/>
+            <ErrorInput mess = {formik.errors.address} hidden = {!formik.errors.address}/>
             <div className = "input-field">
                 <label htmlFor="phone">
                     Phone number
@@ -231,41 +183,25 @@ export default function ProfileCompany(){
                 <input id = "phone" name = "phone" type = "tel" value = {formik.values.phone || ''} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} required />
             </div>
             <ErrorInput mess = {formik.errors.phone} hidden = {!formik.errors.phone}/>
-            <div className = "check-box">
-              <legend> Language <p> * </p> </legend>
-                <input id = "VN" type = "checkbox" name = "language" value = {1} checked ={formik.values.language.includes(1) || false} onChange = {(e)=>handleChangeLanguage(e,formik.handleChange)}></input>
-                <label htmlFor="VN">Vietnamese</label>
-                <input id = "EN" type = "checkbox" name = "language" value = {2} checked ={formik.values.language.includes(2) || false} onChange = {(e)=>handleChangeLanguage(e,formik.handleChange)}></input>
-                <label htmlFor="EN">English</label>
-            </div>
-            <ErrorInput mess = {formik.errors.language} hidden = {!formik.errors.language}/>
             <div className = "input-field">
-                <label htmlFor="exp">
-                    Experience (years)
-                    <p> * </p>
+                <label htmlFor="website">
+                    Website
                 </label>
-                <input id = "exp" name = "experience" type = "text" value = {formik.values.experience || ''} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} required />
+                <input id = "website" name = "website" type = "text" value = {formik.values.website || ''} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} required />
             </div>
-            <ErrorInput mess = {formik.errors.experience} hidden = {!formik.errors.experience}/>
-            <div className = "input-field type2">
-                <label htmlFor="desc">
-                    Description
-                    <p> * </p>
-                </label>
-                <textarea id = "desc" name = "description" type = "text" value = {formik.values.description || ''} onChange = {(e)=>handleChangeInfo(e,formik.handleChange)} ></textarea>
-            </div>
-            <ErrorInput mess = {formik.errors.description} hidden = {!formik.errors.description}/>
+            <ErrorInput mess = {formik.errors.website} hidden = {!formik.errors.website}/>
+
             <div className = "input-field last">
               <legend>Tourism licenses</legend>
               <input type="file" id = "license" name = "license" accept="image/*" onChange = {(e) => {handleUploadLicense(e)}}/>
-              <Link to = {{pathname: "/license-freelancer", 
+              <Link to = {{pathname: "/license-company", 
                     state: {license: [...license,...uploadedLicense], info: formik.values, isChange: saveChanges, pre: preview}}}>
                 <ButtonUploadFreelancer className="button-upload" title = "VIEW ALL LICENSES" name = "view-license" />
               </Link>
             </div>
             <ErrorInput mess = {errorLicense} hidden = {!errorLicense}/>
             <ErrorInput mess = {errorAva} hidden = {!errorAva}/>
-          </div> */}
+          </div>
 
           <div className = "avatar-frame">
             <div className = "picture">
@@ -282,7 +218,7 @@ export default function ProfileCompany(){
                 Verified user account
             </div>}
           </div>
-          <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" type = "submit" disabled = {!saveChanges}/>
+            <ButtonUploadFreelancer className="button-save" title = "SAVE CHANGES" type = "submit" disabled = {!saveChanges}/>
         </form>
         
         <div className = "hr"></div>

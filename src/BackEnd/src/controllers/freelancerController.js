@@ -20,6 +20,7 @@ const getInfoByID = async(req, res) =>{
                     email
                 }
             });
+            data.password = "********"
             sucessCode(res,data,"Get thành công")
         }
         else{

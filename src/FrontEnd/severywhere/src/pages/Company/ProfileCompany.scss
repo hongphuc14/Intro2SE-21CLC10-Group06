@@ -24,6 +24,7 @@ flex-wrap: wrap;
 width: 55em;
 height: fit-content;
 margin: 1em auto 0;
+justify-content: space-evenly;
 }
 
 // form
@@ -33,6 +34,7 @@ height: fit-content;
 text-align: start;
 display: inline-flex;
 flex-direction: column;
+margin-top: 1.6em;
 }
 
 // input 
@@ -148,71 +150,10 @@ color: #7E94AB
 //   color: #0E4D90
 // }
 
-// check box
-.check-box{
-width: 100em;
-min-height: 3em;
-color: #0E4D90;
-font-size: 0.8em;
-display: flex;
-align-items: center;
-}
-
-.check-box legend {
-min-width: 160px;
-padding: 0;
-}
-
-.check-box p{
-display: inline;
-color: #F71F39;
-}
-
-.check-box label {
-min-width: 160px;
-margin-left: 1em;
-}
-
-.check-box input[type=checkbox]{
-width: 1.5em;
-height: 1.5em;
-border: 0.1em solid #DEDEDE;
-border-radius: 0.5em;
-background-color: white;
-margin: 0 0 0 1em;
--webkit-appearance: none;
--moz-appearance: none;
--o-appearance: none;
-cursor: pointer;
-}
-
-.check-box input[type=checkbox]:checked{
-border: none;
-background-color: #0E4D90
-}
-
-.check-box input[type=radio]{
-width: 1.5em;
-height: 1.5em;
-border: 0.1em solid #DEDEDE;
-border-radius: 10em;
-background-color: white;
-margin: 0 0 0 1em;
--webkit-appearance: none;
--moz-appearance: none;
--o-appearance: none;
-cursor: pointer;
-}
-
-.check-box input[type=radio]:checked{
-border: none;
-background-color: #0E4D90
-}
-
 // avatar
 .avatar-frame{
 width: 18em;
-height: 30em;
+height: fit-content;
 display: inline-block;
 margin-left: 3em;
 }
@@ -281,7 +222,7 @@ opacity: 0.6;
 // settion section
 .setting{
 height: fit-content;
-width: 51em;
+width: 52em;
 text-align: start;
 margin: 0 auto;
 display: flex;
@@ -322,7 +263,7 @@ margin: 0.5em auto;
 
 .main-profile > a, .main-profile > a:visited{
 display: block;
-width: 64em;
+width: 65em;
 font-size: 0.8em;
 margin: 0 auto 2em;
 color: #0E4D90;

@@ -3,7 +3,11 @@ import { GET_DESTINATION,
 from "../types";
 
 export const stateDefault = {
-    user_login: {email: "tunglamtran.work@gmail.com"},
+  // freelancer
+    // user_login: {email: "tunglamtran.work@gmail.com"},
+
+  // company
+    user_login: {email: "ldgroup@gmail.com"},
     destination: [{id_des: 1, name: "Ho Chi Minh City"},
                   {id_des: 2, name: "Ha Noi City"},
                   {id_des: 3, name: "Da Nang City"}],

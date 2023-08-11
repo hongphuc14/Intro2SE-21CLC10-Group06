@@ -25,8 +25,8 @@ function App(){
           <Route path = "/booking-freelancer" exact component ={BookingFreelancer} />
           <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
 
-          {/* <Route path = "/profile-company" exact component ={ProfileCompany} />
-          <Route path = "/tour-company" exact component ={TourCompany} /> */}
+          <Route path = "/profile-company" exact component ={ProfileCompany} />
+          {/* <Route path = "/tour-company" exact component ={TourCompany} /> */}
           {/* <Route path = "/booking-company" exact component ={BookingCompany} /> */}
           {/* <Route path = "/statistics-company" exact component ={StatisticsCompany} /> */}
         </Switch>

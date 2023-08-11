@@ -58,7 +58,7 @@ export default function LicenseFreelancer(){
             <div key = {license.file_path} className = "license">
               <img src = { setPreviewLicense(license.file) || importLicense(license.file_path) || placeholder} alt = "license-preview"/>
               <div className = "license-info">
-                <p>{license.file_path}</p>
+                <p>{license.file_path.substring(license.file_path.indexOf('_') + 1,license.file_path.lastIndexOf('.'))}</p>
                 {license.status === 1 && <p className = "gray">Pending</p>}
                 {license.status === 2 && <p>Verified</p>}
                 {license.status === 3 && <p className = "red">Rejected</p>}
