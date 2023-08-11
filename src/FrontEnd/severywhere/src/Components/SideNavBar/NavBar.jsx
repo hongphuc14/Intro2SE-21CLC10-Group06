@@ -46,7 +46,7 @@ const NavBar = () => {
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/changepw">
                         <i className="fa-solid fa-lock"></i>
                         <span>Password</span>
                     </a>

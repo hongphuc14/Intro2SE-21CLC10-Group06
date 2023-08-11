@@ -5,6 +5,7 @@ import Signup from './Pages/Signup/Signup';
 import EditProfile from './Pages/Profile/EditProfile';
 import ResetPasswordEmail from './Pages/ResetPasswordEmail/ResetPasswordEmail';
 import ResetPassword from './Pages/ResetPassword/ResetPassword';
+import ChangePassword from './Pages/ChangePassword/ChangePassword';
 import {Route, Switch, Router} from 'react-router-dom';
 import { createBrowserHistory } from "history";
 // import Header from './Components/Header/HeaderForHomepage';
@@ -23,6 +24,7 @@ function App() {
         <Route path = "/editprofile" exact component = {EditProfile} />
         <Route path = "/emailResetpw" exact component = {ResetPasswordEmail} />
         <Route path = "/resetpw" exact component = {ResetPassword} />
+        <Route path = "/changepw" exact component = {ChangePassword} />
       </Switch>
     </div>
   </Router>
