@@ -331,18 +331,23 @@ export const getGuideBookingByIdGuide = (id_guide) => {
   }
 };
 
-export const updateBookingStatus = (id_guide) => {
+export const updateBookingStatus = (id_guide, id_guidebooking, status) => {
   return async (dispatch) => {
     try {
-      // dispatch(displayLoadingAction);
-      // const result = await freelancerService.updateBookingStatus(id_guide);
-      // if (result.status === 200) {
-      //   dispatch({
-      //     type: GET_GUIDE_BOOKING_BY_ID_GUIDE,
-      //     guide_booking_by_id_guide: result.data.content,
-      //   });
-      //   dispatch(hideLoadingAction);
-      // }
+      dispatch(displayLoadingAction);
+      const obj = {
+        id_guidebooking: id_guidebooking,
+        status: status
+      }
+      await freelancerService.updateBookingStatus(id_guide, obj)
+      const result = await freelancerService.getGuideBookingByIdGuide(id_guide);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_BOOKING_BY_ID_GUIDE,
+          guide_booking_by_id_guide: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+      }
     } catch (error) {
       console.log("error", error.response);
     }
@@ -367,11 +372,17 @@ export const getGuideReviewByIdGuidebooking = (id_guide) => {
   }
 }
 
-export const updateReply = (id_guidebooking, ) => {
+export const updateReply = (id_guide, id_guidebooking, content, date) => {
   return async (dispatch) => {
     try {
       dispatch(displayLoadingAction);
-      const result = await freelancerService.updateReply(id_guide);
+      const obj = {
+        id_guidebooking: id_guidebooking,
+        reply: content,
+        date: date
+      }
+      await freelancerService.updateReply(id_guide,obj);
+      const result = await freelancerService.getGuideReviewByIdGuidebooking(id_guide);
       if (result.status === 200) {
         dispatch({
           type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
@@ -385,18 +396,24 @@ export const updateReply = (id_guidebooking, ) => {
   }
 };
 
-export const updateReport = (id_guide) => {
+export const updateReport = (id_guide, id_guidebooking, content, date) => {
   return async (dispatch) => {
     try {
-      // dispatch(displayLoadingAction);
-      // const result = await freelancerService.updateReport(id_guide);
-      // if (result.status === 200) {
-      //   dispatch({
-      //     type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
-      //     guide_review_by_id_booking: result.data.content,
-      //   });
-      //   dispatch(hideLoadingAction);
-      // }
+      dispatch(displayLoadingAction);
+      const obj = {
+        id_guidebooking: id_guidebooking,
+        report: content,
+        date: date
+      }
+      await freelancerService.updateReport(id_guidebooking,obj);
+      const result = await freelancerService.getGuideReviewByIdGuidebooking(id_guide);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,
+          guide_review_by_id_booking: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+      }
     } catch (error) {
       console.log("error", error.response);
     }

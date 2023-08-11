@@ -1,7 +1,8 @@
 import placeholder from '../../placeholder-image.png'
-import "./CalendarFreelancer.scss";
-import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
-import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
+import "./TourCompany.scss";
+import HeaderCompany from '../../Components/Header/HeaderCompany';
+import NavbarCompany from '../../Components/Navbar/NavbarCompany';
+
 import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -21,7 +22,7 @@ function Day({day, week, month,focus, onClick}){
   )
 }
 
-export default function CalendarFreelancer(){ 
+export default function TourCompany(){ 
     const dispatch = useDispatch() 
     
     const { user_login} = useSelector(state => state.BasicReducer)
@@ -109,8 +110,8 @@ export default function CalendarFreelancer(){
 
     return (
         <div className = "calendar-freelancer">
-            <HeaderFreelancer/>
-            <NavbarFreelancer src = {importAvatar(guide_info.avatar) || placeholder} fullname ={guide_info?.fullname?.toUpperCase()} flag2 = "focus"/>
+            <HeaderCompany/>
+            <NavbarCompany src = {importAvatar(guide_info.avatar) || placeholder} fullname ={guide_info?.fullname?.toUpperCase()} flag2 = "focus"/>
             {verified ? (
                 <div className = "main-calendar">
                 <div className = "select-date">

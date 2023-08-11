@@ -1,10 +1,10 @@
-import './ProfileFreelancer.scss'
+import './ProfileCompany.scss'
 import placeholder from '../../placeholder-image.png'
-import HeaderFreelancer from '../../Components/Header/HeaderFreelancer';
-import NavbarFreelancer from '../../Components/Navbar/NavbarFreelancer';
+import HeaderCompany from '../../Components/Header/HeaderCompany';
+import NavbarCompany from '../../Components/Navbar/NavbarCompany';
 import ErrorInput from '../../Components/Message/ErrorInput'
 import {ButtonEditFreelancer, ButtonDeleteFreelancer, ButtonUploadFreelancer} from "../../Components/Button/ButtonFreelancer"
-import AttractionFreelancer from '../../Components/Attraction/AttractionFreelancer';
+
 import { useSelector, useDispatch } from "react-redux";
 import {Link, useLocation} from "react-router-dom"
 import {useState, useEffect} from 'react'
@@ -12,71 +12,71 @@ import {useFormik} from 'formik'
 import * as yup from 'yup'
 // import image from '../../../../../BackEnd/public/freelancer_avatar'
 
-import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
-  updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
-  updateGuidePassword } from '../../redux/actions/FreelancerAction';
+// import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
+//   updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
+//   updateGuidePassword } from '../../redux/actions/FreelancerAction';
 
-export default function ProfileFreelancer(){
+export default function ProfileCompany(){
   const dispatch = useDispatch()
   const location = useLocation()
   window.history.replaceState(null, null, location.pathname);
 
   const {destination, user_login} = useSelector(state => state.BasicReducer)
-  const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
-  // console.log(user_login)
+  // const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
+  // // console.log(user_login)
 
-  // login mới get để lưu vào state
-  useEffect(() => {
-    dispatch(getTourGuideByIdGuide(user_login.email))
-  },[] )
+  // // login mới get để lưu vào state
+  // useEffect(() => {
+  //   dispatch(getTourGuideByIdGuide(user_login.email))
+  // },[] )
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    if (guide_info?.id_guide) {
-      dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
-      dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
-    }
+  //   if (guide_info?.id_guide) {
+  //     dispatch(getGuideLanguageByIdGuide(guide_info.id_guide))
+  //     dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
+  //   }
     
-  }, [guide_info.id_guide])
+  // }, [guide_info.id_guide])
 
-  const handleChangeInfo = (e)=> {
-    formik.handleChange(e);
-    setSaveChanges(true)
-  }
+  // const handleChangeInfo = (e)=> {
+  //   formik.handleChange(e);
+  //   setSaveChanges(true)
+  // }
 
-  const handleChangeLanguage = (e) => {
-    let tmp = [...formik.values.language]
-    const val = parseInt(e.target.value)
-    if (tmp.includes(val))
-      tmp = tmp.filter(lang => lang !== val)
-    else
-      tmp.push(val)
+  // const handleChangeLanguage = (e) => {
+  //   let tmp = [...formik.values.language]
+  //   const val = parseInt(e.target.value)
+  //   if (tmp.includes(val))
+  //     tmp = tmp.filter(lang => lang !== val)
+  //   else
+  //     tmp.push(val)
 
-    const newEvent = { ...e, target: { name: "language", value: tmp} };
-    formik.handleChange(newEvent);
-    setSaveChanges(true)
-  }
+  //   const newEvent = { ...e, target: { name: "language", value: tmp} };
+  //   formik.handleChange(newEvent);
+  //   setSaveChanges(true)
+  // }
 
   let {license, isDelete, info, isChange, pre} = location.state ? location.state : {}
-  if (!license)
-    license = guide_license_by_id_guide
+  // if (!license)
+  //   license = guide_license_by_id_guide
 
-  const [errorLicense, setErrorLicense] = useState(null)
-  const [uploadedLicense, setUploadedLicense] = useState([])
-  const handleUploadLicense = (e) => {
-    if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
-      const tmp = [...uploadedLicense, {file_path: e.target.files[0].name, status: 1, file: e.target.files[0]}]
-      setSaveChanges(true)
-      setUploadedLicense (tmp)
-      setErrorLicense(null)
-    }
-    else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
-      setErrorLicense('License must be an image file (.jpg, .png, .jpeg)')
-    else if (e.target.files[0] && !(e.target.files[0].size / 1024 <= 4 * 1024))
-      setErrorLicense('License must not exceed 4MB')
-  }
-  // console.log(uploadedLicense)
-  // console.log('-', license)
+  // const [errorLicense, setErrorLicense] = useState(null)
+  // const [uploadedLicense, setUploadedLicense] = useState([])
+  // const handleUploadLicense = (e) => {
+  //   if (e.target.files[0] && e.target.files[0].type.startsWith('image/')){
+  //     const tmp = [...uploadedLicense, {file_path: e.target.files[0].name, status: 1, file: e.target.files[0]}]
+  //     setSaveChanges(true)
+  //     setUploadedLicense (tmp)
+  //     setErrorLicense(null)
+  //   }
+  //   else if (e.target.files[0] && !e.target.files[0].type.startsWith('image/'))
+  //     setErrorLicense('License must be an image file (.jpg, .png, .jpeg)')
+  //   else if (e.target.files[0] && !(e.target.files[0].size / 1024 <= 4 * 1024))
+  //     setErrorLicense('License must not exceed 4MB')
+  // }
+  // // console.log(uploadedLicense)
+  // // console.log('-', license)
 
   const importAvatar =  (filename) =>  {
     if (typeof filename === 'undefined' || filename === "")
@@ -100,55 +100,55 @@ export default function ProfileFreelancer(){
 
   const [preview, setPreview] = useState( pre || null)
   // console.log(pre)
-  const [errorAva, setErrorAva] = useState(null)
-  const handleChangeAvatar = (e) => {
-    if (e.target.files[0])
-      if (e.target.files[0].type.startsWith('image/') &&  e.target.files[0].size / 1024 <= 4*1024){
-        setPreview(e.target.files[0])
-        // console.log(preview);
-        const newAva = e.target.files[0].name
-        const newEvent = { ...e, target: {name: "avatar", value: newAva}};
-        formik.handleChange(newEvent);
-        setSaveChanges(true)
-        setErrorAva(null)
-      }
-      else if (!e.target.files[0].type.startsWith('image/')){
-        setSaveChanges(false)
-        setErrorAva('Avatar must be an image file (.jpg, .png, .jpeg)')
-      }
-      else if (!(e.target.files[0].size / 1024 <= 4)){
-        setSaveChanges(false)
-        setErrorAva('Avatar must not exceed 4MB')
-      }
-  }
+  // const [errorAva, setErrorAva] = useState(null)
+  // const handleChangeAvatar = (e) => {
+  //   if (e.target.files[0])
+  //     if (e.target.files[0].type.startsWith('image/') &&  e.target.files[0].size / 1024 <= 4*1024){
+  //       setPreview(e.target.files[0])
+  //       // console.log(preview);
+  //       const newAva = e.target.files[0].name
+  //       const newEvent = { ...e, target: {name: "avatar", value: newAva}};
+  //       formik.handleChange(newEvent);
+  //       setSaveChanges(true)
+  //       setErrorAva(null)
+  //     }
+  //     else if (!e.target.files[0].type.startsWith('image/')){
+  //       setSaveChanges(false)
+  //       setErrorAva('Avatar must be an image file (.jpg, .png, .jpeg)')
+  //     }
+  //     else if (!(e.target.files[0].size / 1024 <= 4)){
+  //       setSaveChanges(false)
+  //       setErrorAva('Avatar must not exceed 4MB')
+  //     }
+  // }
 
-  const handleDeleteAvatar = (e) => {
-    const newEvent = { ...e, target: {name: "avatar", value: ""}};
-    formik.handleChange(newEvent);
-    setPreview("delete")
-    setSaveChanges(true)
-    setErrorAva(null) 
-  }
+  // const handleDeleteAvatar = (e) => {
+  //   const newEvent = { ...e, target: {name: "avatar", value: ""}};
+  //   formik.handleChange(newEvent);
+  //   setPreview("delete")
+  //   setSaveChanges(true)
+  //   setErrorAva(null) 
+  // }
 
-  const [saveChanges, setSaveChanges] = useState(isChange || isDelete || license.length > guide_license_by_id_guide.length || false )
-  const handleSaveChanges = () => {
-    formik.values.gender = parseInt(formik.values.gender)
-    formik.values.id_des = parseInt(formik.values.id_des)
-    const {language, ...newInfo} = formik.values
+  // const [saveChanges, setSaveChanges] = useState(isChange || isDelete || license.length > guide_license_by_id_guide.length || false )
+  // const handleSaveChanges = () => {
+  //   formik.values.gender = parseInt(formik.values.gender)
+  //   formik.values.id_des = parseInt(formik.values.id_des)
+  //   const {language, ...newInfo} = formik.values
     
-    if (preview)
-      dispatch(updateGuideAvatar(newInfo.id_guide, preview))
-    dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
-    dispatch(updateGuideLanguage(newInfo.id_guide, language))
-    dispatch(updateGuideLicense(newInfo.id_guide, [...license, ...uploadedLicense]))
+  //   if (preview)
+  //     dispatch(updateGuideAvatar(newInfo.id_guide, preview))
+  //   dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
+  //   dispatch(updateGuideLanguage(newInfo.id_guide, language))
+  //   dispatch(updateGuideLicense(newInfo.id_guide, [...license, ...uploadedLicense]))
     
-    setSaveChanges(false)
-  }
+  //   setSaveChanges(false)
+  // }
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: info || {...guide_info,language: guide_language_by_id_guide},
-    onSubmit: handleSaveChanges,
+    // initialValues: info || {...company_info,language: guide_language_by_id_guide},
+    // onSubmit: handleSaveChanges,
     validationSchema: yup.object().shape({
       fullname: yup.string().max(50,"Full name has the maximum of 50 characters").min(5,"Full name must have at least 5 characters").required('Full name is required'),
       birthday: yup.string().required('Birthday is required'),
@@ -167,19 +167,27 @@ export default function ProfileFreelancer(){
   const [confirmPassword, setConfirmPassword] = useState("")
 
   const savePassword = () => {
-    dispatch(updateGuidePassword(guide_info.id_guide, currentPassword, newPassword))
+    // edit to company
+    // dispatch(updateGuidePassword(company_info.id_guide, currentPassword, newPassword))
     setCurrentPassword("")
     setNewPassword("")
     setConfirmPassword("")
   }
 
+  // // console.log(formik.values.id_des)
+  // // console.log(user_login)
+
+
+  const company_info = {
+
+  }
   return(
-    <div className="profile-freelancer">
-      <HeaderFreelancer/>
-      <NavbarFreelancer src = {importAvatar(guide_info.avatar) || placeholder} fullname = {guide_info?.fullname?.toUpperCase()} flag1 = "focus"/>
+    <div className="profile-company">
+      <HeaderCompany/>
+      <NavbarCompany src = {importAvatar(company_info?.avatar) || placeholder} fullname = {company_info?.fullname?.toUpperCase()} flag1 = "focus"/>
       <div className = "main-profile">
         <form className = "update-profile" onSubmit = {formik.handleSubmit}>
-          <div className = "form-profile">
+          {/* <div className = "form-profile">
             <div className = "input-field">
                 <label htmlFor="fullname">
                     Full name
@@ -257,7 +265,7 @@ export default function ProfileFreelancer(){
             </div>
             <ErrorInput mess = {errorLicense} hidden = {!errorLicense}/>
             <ErrorInput mess = {errorAva} hidden = {!errorAva}/>
-          </div>
+          </div> */}
 
           <div className = "avatar-frame">
             <div className = "picture">
@@ -279,16 +287,6 @@ export default function ProfileFreelancer(){
         
         <div className = "hr"></div>
 
-        <div className = "show-attraction">
-          <p>Introduce must-see attractions</p>
-          <p>If the image, title, and description fields are left empty,</p>
-          <p> they will be hidden in the tourist's profile view.</p>
-          <AttractionFreelancer id_guide = {guide_info.id_guide} />
-          {/* <ButtonUploadFreelancer className="button-save" title = "SAVE ALL CHANGES"/> */}
-        </div>
-
-        <div className = "hr"></div>
-
         <div className = "setting">
           <div className = "info">
             <div className = "input-field">
@@ -296,7 +294,7 @@ export default function ProfileFreelancer(){
                     Email address
                     <p> * </p>
                 </label>
-                <input id = "email" name = "email" type = "email" value = {formik.values.email || ''} disabled/>
+                <input id = "email" name = "email" type = "email" value = {formik?.values?.email || ''} disabled/>
             </div>
             <div className = "input-field">
                 <label htmlFor="pwd">

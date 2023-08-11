@@ -4,9 +4,12 @@ import { composeWithDevTools} from "redux-devtools-extension";
 import { BasicReducer } from "./reducers/BasicReducer";
 import { FreelancerReducer } from "./reducers/FreelancerReducer";
 import { LoadingReducer } from "./reducers/LoadingReducer";
+import { CompanyReducer } from "./reducers/CompanyReducer";
+
 const rootReducer = combineReducers({
     BasicReducer,
     FreelancerReducer,
+    CompanyReducer,
     LoadingReducer
 
 })

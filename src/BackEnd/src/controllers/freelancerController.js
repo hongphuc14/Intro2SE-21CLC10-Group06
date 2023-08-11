@@ -133,8 +133,8 @@ const getTimeByID = async(req, res) =>{
                 }
             });
             data = data.map(data => {
-                const {guide_date, guide_session, is_available} = data
-                return {guide_date, guide_session, is_available} 
+                const {id_guidetime, guide_date, guide_session, is_available} = data
+                return {id_guidetime, guide_date, guide_session, is_available} 
             })
             sucessCode(res,data,"Get thành công")
         }
@@ -429,7 +429,7 @@ const updateLicenseByID = async(req, res)=>{
                 id_guide
             }
         });
-        sucessCode(res,files,"Update thành công")
+        sucessCode(res,data,"Update thành công")
 
     }catch(err){
         // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
@@ -459,13 +459,26 @@ const updateTimeByID = async(req, res) =>{
             }); 
 
             if (checkSession){
-                await model.guide_time.destroy({
+                const {id_guidetime} = checkSession
+                const beBooked = await model.guide_booking.findOne({
                     where:{
-                        id_guide: id_guide, 
-                        guide_date: date,
-                        guide_session: session
+                        id_guidetime
                     }
-                });
+                })
+
+                if (beBooked){
+                    failCode(res,"","The session has already been booked")
+                    return
+                }
+                else{
+                    await model.guide_time.destroy({
+                        where:{
+                            id_guide: id_guide, 
+                            guide_date: date,
+                            guide_session: session
+                        }
+                    });
+                }
             }
             else{
                 //create
@@ -516,14 +529,16 @@ const getGuideBookingByID = async(req, res) =>{
                 idguidetime.push(id_guidetime)
             }
 
-            let data = await model.guide_booking.findAll({
+            const mergedData = await model.guide_booking.findAll({
                 where:{
                     id_guidetime: {
                         [Op.in]: idguidetime
                     }
-                }
+                },
+                include: [{ model: model.tourist, as: "id_tourist_tourist" }],
             });
-            sucessCode(res,data,"Get thành công")
+
+            sucessCode(res,mergedData,"Get thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")
@@ -553,13 +568,13 @@ const updateBookingStatusByID = async(req, res) =>{
                 }
             });
 
-            let data = await model.guide_booking.findOne({
-                where:{
-                    id_guidebooking
-                }
-            })
+            // let data = await model.guide_booking.findOne({
+            //     where:{
+            //         id_guidebooking
+            //     }
+            // })
 
-            sucessCode(res,data,"Update thành công")
+            sucessCode(res,"","Update thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")
@@ -592,29 +607,36 @@ const getGuideReviewByID = async(req, res) =>{
                 idguidetime.push(id_guidetime)
             }
 
-            let booking = await model.guide_booking.findAll({
-                where:{
-                    id_guidetime: {
+            const data1 = await model.guide_booking.findAll({
+                where: {
+                    id_guidetime:{
                         [Op.in]: idguidetime
-                    }
-                }
+                    },
+                    status: 6
+                },
+                include: [{model: model.tourist, as: "id_tourist_tourist"}],
             });
 
-            let idguidebooking = []
-            for (const item of booking){
-                const {id_guidebooking} = item
-                idguidebooking.push(id_guidebooking)
+            const data2 = await model.guide_booking.findAll({
+                where: {
+                    id_guidetime:{
+                        [Op.in]: idguidetime
+                    },
+                    status: 6
+                },
+                include: [{model: model.guide_review, as: "guide_review"}],
+            });
+
+            const data = []
+            for (let i = 0; i < data1.length; i++) {
+                const {id_guidebooking, id_tourist_tourist} = data1[i];
+                const {guide_review} = data2[i];
+                data.push({id_guidebooking, id_tourist_tourist, guide_review})
             }
 
-            let data = await model.guide_review.findAll({
-                where:{
-                    id_guidebooking: {
-                        [Op.in]: idguidebooking
-                    }
-                }
-            });
+            let result = data.filter(item => item.guide_review !== null)
 
-            sucessCode(res,data,"Get thành công")
+            sucessCode(res,result,"Get thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")
@@ -645,13 +667,13 @@ const updateGuideReplyByID = async(req, res) =>{
                 }
             });
 
-            let data = await model.guide_review.findOne({
-                where:{
-                    id_guidebooking
-                }
-            })
+            // let data = await model.guide_review.findOne({
+            //     where:{
+            //         id_guidebooking
+            //     }
+            // })
 
-            sucessCode(res,data,"Update thành công")
+            sucessCode(res,"","Update thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")
@@ -682,13 +704,13 @@ const updateGuideReportByID = async(req, res) =>{
                 }
             });
 
-            let data = await model.guide_review.findOne({
-                where:{
-                    id_guidebooking
-                }
-            })
+            // let data = await model.guide_review.findOne({
+            //     where:{
+            //         id_guidebooking
+            //     }
+            // })
 
-            sucessCode(res,data,"Update thành công")
+            sucessCode(res,"","Update thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")

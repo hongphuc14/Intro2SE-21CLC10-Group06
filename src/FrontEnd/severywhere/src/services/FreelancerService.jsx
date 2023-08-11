@@ -79,7 +79,30 @@ export class FreelancerService extends baseService {
       return this.put(`freelancer/updateTime/${id_guide}`, obj);
     };
 
-    
+    // Api 10: lấy guide_booking khi có id_guide
+    getGuideBookingByIdGuide = (id_guide) => {
+      return this.get(`freelancer/getBooking/${id_guide}`);
+    };
+
+    // Api 10: update report khi có id_guidebooking
+    updateBookingStatus = (id_guide, obj) => {
+      return this.put(`freelancer/updateBookingStatus/${id_guide}`, obj);
+    };
+
+    // Api 10: lấy guide_review khi có id_guide
+    getGuideReviewByIdGuidebooking = (id_guide) => {
+      return this.get(`freelancer/getReview/${id_guide}`);
+    };
+
+    // Api 10: update reply khi có id_guidebooking
+    updateReply = (id_guide, obj) => {
+      return this.put(`freelancer/updateReply/${id_guide}`, obj);
+    };
+
+    // Api 10: update report khi có id_guidebooking
+    updateReport = (id_guide, obj) => {
+      return this.put(`freelancer/updateReport/${id_guide}`, obj);
+    };
 
 
   }

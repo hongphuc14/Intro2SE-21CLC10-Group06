@@ -4,16 +4,13 @@ import {
   GET_GUIDE_LICENSE_BY_ID_GUIDE,
   UPDATE_GUIDE_INFO,
   UPDATE_GUIDE_LANGUAGE,
-  UPDATE_GUIDE_AVATAR,
   UPDATE_GUIDE_LICENSE,
-  UPDATE_UPLOADED_LICENSE,
-  UPDATE_GUIDE_PASSWORD,
   GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
   UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
   GET_GUIDE_TIME_BY_ID_GUIDE,
   UPDATE_GUIDE_TIME_BY_ID_GUIDE,
   GET_GUIDE_BOOKING_BY_ID_GUIDE,
-  GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING } 
+  GET_GUIDE_REVIEW_BY_ID_GUIDEBOOKING,} 
 from "../types";
 import { stateDefault } from "../reducers/BasicReducer";
 
@@ -67,26 +64,12 @@ export const FreelancerReducer = (state = stateInit, action) => {
           guide_language_by_id_guide: action.guide_language_by_id_guide}
       }
 
-      case UPDATE_GUIDE_AVATAR:{
-        return {...state, 
-          tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update avatar
-      }
-
       case UPDATE_GUIDE_LICENSE:{
         return {...state, 
           guide_license_by_id_guide: action.guide_license_by_id_guide, // update license
           verified: action.verified}
-      } 
-      
-      case UPDATE_UPLOADED_LICENSE:{
-        return {...state, 
-          uploaded_license: action.uploaded_license};
       }  
-      
-      case UPDATE_GUIDE_PASSWORD:{
-        return {...state, 
-          tour_guide_by_id_guide: action.tour_guide_by_id_guide} // update password
-      }    
+        
 
       case GET_GUIDE_ATTRACTION_BY_ID_GUIDE: {
         return { ...state,
@@ -118,6 +101,21 @@ export const FreelancerReducer = (state = stateInit, action) => {
         return {...state, 
           guide_review_by_id_booking: action.guide_review_by_id_booking}
       }
+
+      // case UPDATE_BOOKING_STATUS:{
+      //   return {...state, 
+      //     guide_booking_by_id_guide: action.guide_booking_by_id_guide}
+      // }
+
+      // case UPDATE_REPLY:{
+      //   return {...state, 
+      //     guide_review_by_id_booking: action.guide_review_by_id_booking}
+      // }
+
+      // case UPDATE_REPORT:{
+      //   return {...state, 
+      //     guide_review_by_id_booking: action.guide_review_by_id_booking}
+      // }
 
       default:
         return { ...state };
