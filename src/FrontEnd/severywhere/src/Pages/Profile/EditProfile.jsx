@@ -3,6 +3,7 @@ import HeaderGuest from '../../Components/Header/HeaderGuest';
 import Footer from '../../Components/Footer/Footer';
 import NavBar from '../../Components/SideNavBar/NavBar';
 import FormEdit from '../../Components/FormEdit/FormEdit';
+import Avatar from '../../Components/AvatarComponent/Avatar';
 export default function EditProfile() {
     return (
         // <div className="editprofile-page">
@@ -13,6 +14,6 @@ export default function EditProfile() {
             
         //     <Footer />
         // </div>
-        <FormEdit/>
+        <Avatar/>
     );
 }

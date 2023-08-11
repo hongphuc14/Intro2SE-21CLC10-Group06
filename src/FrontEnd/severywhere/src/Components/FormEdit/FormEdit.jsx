@@ -41,7 +41,6 @@ export default function MyForm() {
         <div className="fullname-input">
           <input value={fullname} onChange={(e) => setFullname(e.target.value)} type="text" placeholder="Nguyen Thi Minh Minh" id="fullname" className="fullname"/>
           <i className="fa-solid fa-pen-to-square"></i>
-          {/* {fullname && <i className="fa-solid fa-pen-to-square"></i>} */}
         </div> 
       </div>
         <div className="email-phone">

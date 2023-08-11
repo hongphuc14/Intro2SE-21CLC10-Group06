@@ -1,0 +1,56 @@
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    max-width: 300px;
+  }
+  
+  .avatar-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #D4E1A1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    position: relative; /* Ensure that z-index works */
+  }
+  
+  $dark: #000;
+  .avatar-circle:hover {
+    background-color: rgba($dark, 0.3);
+    position: relative;
+  }
+  
+  .avatar-circle:hover .change-avatar-text{
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
+  
+  
+  
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+  
+  .change-avatar-text {
+    position: absolute; /* Position the text over the circle */
+    font-size: 18px;
+    color: #F6FFDE;
+    opacity: 0; /* Hide by default */
+    transition: opacity 0.3s;
+    pointer-events: none; /* Allow clicking through the text */
+  }
+  
+  
+  
+  
+  
