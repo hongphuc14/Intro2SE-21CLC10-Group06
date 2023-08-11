@@ -1,17 +1,41 @@
 import "./NavBar.scss"
-
+import React, { useState, useEffect } from 'react';
+import defaultAvatar from './avatar.png'
 const NavBar = () => {
+    const [profileImage, setProfileImage] = useState(defaultAvatar);
+    const [profileName, setProfileName] = useState("Minh Minh"); // Default value
+    const [profileEmail, setProfileEmail] = useState("ntmminh21@clc.fitus.edu.vn"); // Default value
+
+    useEffect(() => {
+        // Fetch user profile data from the backend
+        fetch('your_backend_profile_data_endpoint')
+            .then(response => response.json())
+            .then(data => {
+                if (data.name) {
+                    setProfileName(data.name);
+                }
+                if (data.email) {
+                    setProfileEmail(data.email);
+                }
+                if (data.profileImage) {
+                    setProfileImage(data.profileImage);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching profile data:', error);
+            });
+    }, []);
     return (
         <nav className="sidebar">
             <div className="user-profile">
                 <div className="profile-image">
-                    <img src="avatar.png" alt="User Profile"/>
+                    <img src={profileImage} alt="User Profile"/>
                 </div>
             </div>
             <div className="profile-name">
-                Minh Minh
+                {profileName}
                 <div className="mail">
-                    ntmminh21@clc.fitus.edu.vn
+                    {profileEmail}
                 </div>
             </div>
             <ul>
