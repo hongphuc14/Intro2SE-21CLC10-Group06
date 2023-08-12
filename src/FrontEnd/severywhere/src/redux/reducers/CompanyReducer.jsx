@@ -3,9 +3,6 @@ import { GET_COMPANY_INFO,
   UPDATE_COMPANY_INFO,
   UPDATE_COMPANY_LICENSE,
   GET_TOUR_BY_ID_COMPANY,
-  ADD_TOUR_BY_ID_COMPANY,
-  UPDATE_TOUR_BY_ID_TOUR,
-  DELETE_TOUR_BY_ID_TOUR,
   GET_COMPANY_BOOKING,
   GET_COMPANY_REVIEW} 
 from "../types";
@@ -13,7 +10,7 @@ from "../types";
 export const stateDefault = {
   company_info: {},
   company_license: [],
-  verified: false,
+  verified: null,
   company_tour: [],
   company_booking: [],
   company_review: [],

@@ -1,8 +1,8 @@
 const express = require('express');
 const companyRoute = express.Router();
 const { getInfoByID, getLicenseByID, updateInfoByID, updateAvatarByID, deleteAvatarByID, updatePwdByID
-    , deleteLicenseByID, updateLicenseByID, getTourByID, getBooking, updateBooking,
-    deleteTour, getReview, updateReply, updateReport } = require('../controllers/companyController')
+    , deleteLicenseByID, updateLicenseByID, getTourByID, updateTourInfo, getBooking, updateBooking, 
+    deleteTour, getReview, updateReply, updateReport, updateTourFile } = require('../controllers/companyController')
 const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
@@ -34,10 +34,10 @@ companyRoute.post("/updateLicense/:id_company", upload('company_license').array(
 companyRoute.get("/getTour/:id_company", getTourByID);
 
 // PUT: update tour info by id_tour
-// companyRoute.put("/updateTourInfo/:id_tour", updateTourInfo);
+companyRoute.put("/updateTourInfo/:id_tour", updateTourInfo);
 
 // POST: update tour file by id_tour
-// companyRoute.post("/updateTourFile/:id_tour", upload('tour').single("file"), updateTourFile);
+companyRoute.post("/updateTourFile/:id_tour", upload('tour').single("file"), updateTourFile);
 
 // PUT: delete company tour by id_tour
 companyRoute.put("/deleteTour/:id_tour", deleteTour);

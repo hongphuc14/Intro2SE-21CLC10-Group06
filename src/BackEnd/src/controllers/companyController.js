@@ -312,7 +312,9 @@ const getTourByID = async(req, res) =>{
         });
         if(checkCompany){
             const [data, metadata] = await sequelize.query
-            (`SELECT tour.*, tour_photo.photo_path FROM tour LEFT JOIN tour_photo ON tour.id_tour = tour_photo.id_tour WHERE tour.id_company = ${id_company}`);
+            (`SELECT tour.*, tour_photo.photo_path 
+            FROM tour LEFT JOIN tour_photo ON tour.id_tour = tour_photo.id_tour 
+            WHERE tour.id_company = ${id_company} AND tour.is_deleted = false`);
 
             sucessCode(res,data,"Get thành công")
         }
@@ -321,6 +323,92 @@ const getTourByID = async(req, res) =>{
         } 
     }catch(err){
         errorCode(res,"Lỗi BE")
+    }
+}
+
+// PUT: update tour info by id_tour
+const updateTourInfo = async(req, res)=>{
+    const id_tour = req.params.id_tour;
+    const {name, id_des, id_category, num_max, duration, description, included, not_included,
+    schedule, price, free_cancellation, is_deleted, id_company } = req.body
+
+    try{
+        const checkTour = await model.tour.findOne({
+            where:{
+                id_tour
+            }
+        })
+        if (checkTour){
+            await model.tour.update({
+                name, id_des, id_category, num_max, duration, description, included, not_included,
+                schedule, price, free_cancellation, is_deleted
+            },{
+                where:{
+                    id_tour,
+                }
+            });
+        }
+        else{
+            await model.tour.create({
+                name, id_company, id_des, id_category, num_max, duration, description, included, not_included,
+                schedule, price, free_cancellation, is_deleted
+            }); 
+        }
+        sucessCode(res,"","Delete thành công")
+    }catch(err){
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        errorCode(res, "Lỗi BE");
+        return;
+    }
+}
+
+//POST: update freelancer avatar by id_company
+const updateTourFile = async(req, res)=>{
+    //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
+    const fs = require('fs');
+    const id_tour = req.params.id_tour;
+    const file = req.file;
+    try{
+        let tour = await model.tour.findOne({
+            where:{
+                id_tour
+            }
+        });
+        //check nếu đã upload photo
+        if(tour){
+            const exist = await model.tour_photo.findOne({
+                where:{
+                    id_tour
+                }              
+            })
+            if(exist){
+                try{
+                    //xóa avatar cũ trước khi update avatar mới
+                    fs.unlinkSync(process.cwd() + "/public/tour/" + exist.photo_path);
+                } catch(err){
+                    console.log("Lỗi khi xóa avatar cũ", err);
+                }
+                await model.tour_photo.update({
+                    photo_path: file.filename
+                }, {
+                    where:{
+                        id_tour
+                    }
+                });
+            }
+            else{
+                await model.tour_photo.create({
+                    photo_path: file.filename,
+                    id_tour
+                });
+            }
+            
+        sucessCode(res,"","Update thành công")
+        }
+    }catch(err){
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        errorCode(res, "Lỗi BE");
+        return;
     }
 }
 
@@ -355,7 +443,9 @@ const deleteTour = async(req, res)=>{
                     }
                 });
             }
-            await model.tour.update({is_deleted: true},{
+            await model.tour.update({
+                is_deleted: true
+            },{
                 where:{
                     id_tour,
                 }
@@ -534,5 +624,5 @@ const updateReport = async(req, res) =>{
 }
 
 module.exports = { getInfoByID, getLicenseByID, updateInfoByID, updateAvatarByID, deleteAvatarByID, 
-    updatePwdByID, deleteLicenseByID, updateLicenseByID, getTourByID, getBooking, updateBooking,
-    deleteTour, getReview, updateReply, updateReport}
+    updatePwdByID, deleteLicenseByID, updateLicenseByID, getTourByID, updateTourInfo, updateTourFile, 
+    getBooking, updateBooking, deleteTour, getReview, updateReply, updateReport}

@@ -27,13 +27,6 @@ function Review({img, name, date, rating, review}){
   )
 }
 
-// const reviews = [{id: 1, name: "ML", img: "", date: "12/07/2023", rating: 5, review: "The guide is so friendly!"},
-//                   {id: 2, name: "ML", img: ""},
-//                   {id: 3, name: "ML", img: ""},
-//                   {id: 4, name: "ML", img: ""},
-//                   {id: 5, name: "ML", img: ""},
-//                   {id: 6, name: "ML", img: ""},]
-
 export default function StatisticsCompany(){
   const dispatch = useDispatch() 
   const location = useLocation()

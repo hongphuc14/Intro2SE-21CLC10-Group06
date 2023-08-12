@@ -3,9 +3,6 @@ import { GET_COMPANY_INFO,
     UPDATE_COMPANY_INFO,
     UPDATE_COMPANY_LICENSE,
     GET_TOUR_BY_ID_COMPANY,
-    ADD_TOUR_BY_ID_COMPANY,
-    UPDATE_TOUR_BY_ID_TOUR,
-    DELETE_TOUR_BY_ID_TOUR,
     GET_COMPANY_BOOKING,
     GET_COMPANY_REVIEW} 
   from "../types";
@@ -174,3 +171,67 @@ import { GET_COMPANY_INFO,
     };
   };
   
+  export const deleteCompanyTour = (id_company, id_tour) => {
+    return async (dispatch) => {
+      try {
+        dispatch(displayLoadingAction);
+  
+        await companyService.deleteCompanyTour(id_tour);
+        const result = await companyService.getCompanyTour(id_company);
+        if (result.status === 200) {
+          dispatch({
+            type: GET_TOUR_BY_ID_COMPANY,
+            company_tour: result.data.content,
+          });
+          dispatch(hideLoadingAction);
+        }
+      } catch (error) {
+        console.log("error", error.response);
+      }
+    };
+  };
+
+  export const updateTour = (id_company, tour, preview) => {
+    return async (dispatch) => {
+      try {
+        dispatch(displayLoadingAction);
+  
+        await companyService.updateTourInfo(tour.id_tour, {...tour, id_company: id_company});
+        if (preview){
+          const formData = new FormData();
+          formData.append('file', preview);
+          await companyService.updateTourFile(tour.id_tour, formData);
+        }
+        const result = await companyService.getCompanyTour(id_company);
+        if (result.status === 200) {
+          dispatch({
+            type: GET_TOUR_BY_ID_COMPANY,
+            company_tour: result.data.content,
+          });
+          dispatch(hideLoadingAction);
+        }
+      } catch (error) {
+        console.log("error", error.response);
+      }
+    };
+  };
+
+  // export const updateTourFile = (id_company, id_tour, preview) => {
+  //   return async (dispatch) => {
+  //     try {
+  //       dispatch(displayLoadingAction);
+        
+  //       const result = await companyService.getCompanyTour(id_company);
+  //       if (result.status === 200) {
+  //         dispatch({
+  //           type: GET_TOUR_BY_ID_COMPANY,
+  //           company_tour: result.data.content,
+  //         });
+  //         dispatch(hideLoadingAction);
+  //       }
+  //     }
+  //     catch (error) {
+  //       console.log("error", error.response);
+  //     }
+  //   }
+  // };
