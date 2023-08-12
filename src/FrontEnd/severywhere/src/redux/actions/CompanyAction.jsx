@@ -154,4 +154,23 @@ import { GET_COMPANY_INFO,
       }
     }
   };
+
+  export const getCompanyTour = (id_company) => {
+    return async (dispatch) => {
+      try {
+        dispatch(displayLoadingAction);
+  
+        const result = await companyService.getCompanyTour(id_company);
+        if (result.status === 200) {
+          dispatch({
+            type: GET_TOUR_BY_ID_COMPANY,
+            company_tour: result.data.content,
+          });
+          dispatch(hideLoadingAction);
+        }
+      } catch (error) {
+        console.log("error", error.response);
+      }
+    };
+  };
   

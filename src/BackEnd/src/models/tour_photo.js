@@ -9,7 +9,11 @@ class tour_photo extends Sequelize.Model {
     id_tour: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'tour',
+        key: 'id_tour'
+      }
     },
     photo_path: {
       type: DataTypes.STRING(255),

@@ -300,5 +300,239 @@ const updateLicenseByID = async(req, res)=>{
     }
 }
 
+//GET: get company tour by id_company
+const getTourByID = async(req, res) =>{
+    try{
+        let { id_company } = req.params;
+        
+        let checkCompany = await model.company.findOne({
+            where:{
+                id_company
+            }
+        });
+        if(checkCompany){
+            const [data, metadata] = await sequelize.query
+            (`SELECT tour.*, tour_photo.photo_path FROM tour LEFT JOIN tour_photo ON tour.id_tour = tour_photo.id_tour WHERE tour.id_company = ${id_company}`);
+
+            sucessCode(res,data,"Get thành công")
+        }
+        else{
+            failCode(res,"","Company không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+// PUT: delete company tour by id_tour
+const deleteTour = async(req, res)=>{
+    //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
+    const fs = require('fs');
+    const id_tour = req.params.id_tour;
+
+    try{
+        const checkTour = await model.tour.findOne({
+            where:{
+                id_tour
+            }
+        })
+        if (checkTour){
+            // xoa file
+            const photo = await model.tour_photo.findOne({
+                where:{
+                    id_tour
+                }
+            })
+            if (photo){
+                try{
+                    fs.unlinkSync(process.cwd() + "/public/tour/" + photo.photo_path);
+                } catch(err){
+                    console.log("Lỗi khi xóa", err);
+                } 
+                await model.tour_photo.destroy({
+                    where:{
+                        id_tour,
+                    }
+                });
+            }
+            await model.tour.update({is_deleted: true},{
+                where:{
+                    id_tour,
+                }
+            });
+            sucessCode(res,"","Delete thành công")
+        }
+        else
+            failCode(res,"","Tour không tồn tại")
+    }catch(err){
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        errorCode(res, "Lỗi BE");
+        return;
+    }
+}
+
+//GET: get company review by id_company
+const getBooking = async(req, res) =>{
+    try{
+        let { id_company } = req.params;
+        
+        let checkCompany = await model.company.findOne({
+            where:{
+                id_company
+            }
+        });
+        if(checkCompany){
+            const [allTour, metadata] = await sequelize.query
+            (`SELECT DISTINCT tour_booking.id_tour, tour_booking.start_date
+            FROM tour
+            INNER JOIN tour_booking ON tour.id_tour = tour_booking.id_tour
+            WHERE tour.id_company = ${id_company}`);
+
+            const [allBooking, meta] = await sequelize.query
+            (`SELECT tour_booking.*, tourist.*
+            FROM tour
+            INNER JOIN tour_booking ON tour.id_tour = tour_booking.id_tour
+            INNER JOIN tourist ON tour_booking.id_tourist = tourist.id_tourist
+            WHERE tour.id_company = ${id_company}`);
+
+            const data = allTour.map(item => {
+                const booking = allBooking.filter(itemm => itemm.id_tour == item.id_tour || itemm.start_date.toString().slice(0,10) == item.start_date.toString().slice(0,10))
+                // dt = item.start_date.toString().slice(0,10)
+                return {id_tour: item.id_tour, start_date: item.start_date, booking}
+            })
+            sucessCode(res,data,"Get thành công")
+        }
+        else{
+            failCode(res,"","Company không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+// PUT: update booking reply by id_company
+const updateBooking = async(req, res) =>{
+    try{
+        let {id_tour_booking} = req.params
+        let {status } = req.body;
+        
+        let checkBooking = await model.tour_booking.findOne({
+            where:{
+                id_tour_booking
+            }
+        });
+        if(checkBooking){
+            await model.tour_booking.update({ 
+                status
+            }, {
+                where:{
+                    id_tour_booking
+                }
+            }); 
+            sucessCode(res,"","Update thành công")
+        }
+        else{
+            failCode(res,"","Review không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+//GET: get company review by id_company
+const getReview = async(req, res) =>{
+    try{
+        let { id_company } = req.params;
+        
+        let checkCompany = await model.company.findOne({
+            where:{
+                id_company
+            }
+        });
+        if(checkCompany){
+            const [allReview, metadata] = await sequelize.query
+            (`SELECT tour.id_tour, tour_booking.id_tourist, tour_review.*
+            FROM tour 
+            INNER JOIN tour_booking ON tour.id_tour = tour_booking.id_tour 
+            INNER JOIN tour_review ON tour_review.id_tour_booking = tour_booking.id_tour_booking
+            WHERE tour.id_company = ${id_company} AND tour.is_deleted = 0`);
+
+            const tour = await model.tour.findAll({
+                where:{
+                    id_company
+                }
+            })
+
+            const data = tour.map(item => {
+                const review = allReview.filter(itemm => itemm.id_tour == item.id_tour)
+                return {id_tour: item.id_tour, review}
+            })
+            sucessCode(res,data,"Get thành công")
+        }
+        else{
+            failCode(res,"","Company không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+// PUT: update booking reply by id_company
+const updateReply = async(req, res) =>{
+    try{
+        let { id_tour_booking, reply, reply_date } = req.body;
+        
+        let checkReview = await model.tour_review.findOne({
+            where:{
+                id_tour_booking
+            }
+        });
+        if(checkReview){
+            await model.tour_review.update({ 
+                reply, reply_date
+            }, {
+                where:{
+                    id_tour_booking
+                }
+            }); 
+            sucessCode(res,"","Update thành công")
+        }
+        else{
+            failCode(res,"","Review không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+// PUT: update booking report by id_company
+const updateReport = async(req, res) =>{
+    try{
+        let { id_tour_booking, report, report_date } = req.body;
+        
+        let checkReview = await model.tour_review.findOne({
+            where:{
+                id_tour_booking
+            }
+        });
+        if(checkReview){
+            await model.tour_review.update({ 
+                report, report_date
+            }, {
+                where:{
+                    id_tour_booking
+                }
+            }); 
+            sucessCode(res,"","Update thành công")
+        }
+        else{
+            failCode(res,"","Company không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
 module.exports = { getInfoByID, getLicenseByID, updateInfoByID, updateAvatarByID, deleteAvatarByID, 
-    updatePwdByID, deleteLicenseByID, updateLicenseByID}
+    updatePwdByID, deleteLicenseByID, updateLicenseByID, getTourByID, getBooking, updateBooking,
+    deleteTour, getReview, updateReply, updateReport}

@@ -2,167 +2,121 @@ import placeholder from '../../placeholder-image.png'
 import "./TourCompany.scss";
 import HeaderCompany from '../../Components/Header/HeaderCompany';
 import NavbarCompany from '../../Components/Navbar/NavbarCompany';
-
-import ButtonNextFreelancer from '../../Components/Button/ButtonNextFreelancer';
+import {ButtonEditFreelancer, ButtonDeleteFreelancer, ButtonViewFreelancer, ButtonUploadFreelancer} from '../../Components/Button/ButtonFreelancer'
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import {getTourGuideByIdGuide, getGuideLicenseByIdGuide,getGuideTimeByIdGuide, updateGuideInfo, 
-    updateGuideTimeByIdGuide } from '../../redux/actions/FreelancerAction'
-
-const day_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-const month_of_year = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-function Day({day, week, month,focus, onClick}){
-    return(
-        <button className ={focus ? "date focus" : "date"} onClick = {onClick}>
-        <p>{week}</p>
-        <p>{day}</p>
-        <p>{month_of_year[month]}</p>
-        </button>
-  )
-}
+import {getCompanyInfo, getCompanyLicense, getCompanyTour} from '../../redux/actions/CompanyAction'
 
 export default function TourCompany(){ 
     const dispatch = useDispatch() 
     
     const { user_login} = useSelector(state => state.BasicReducer)
-    const {verified, guide_time_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
+    const { company_tour, company_info} = useSelector(state => state.CompanyReducer)
 
     const importAvatar = (filename) => {
         if (typeof filename === 'undefined' || filename === "")
           return null
-        const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
+        const path = require(`../../../../../BackEnd/public/company_avatar/${filename}`)
+        return path
+    }
+
+    const importPhoto= (filename) => {
+        if (typeof filename === 'undefined' || filename === "")
+          return null
+        const path = require(`../../../../../BackEnd/public/tour/${filename}`)
         return path
     }
 
     useEffect(() => {
-        dispatch(getTourGuideByIdGuide(user_login.email))
+        dispatch(getCompanyInfo(user_login.email))
     },[] )
 
-    // useEffect(() => {
-    //     dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
-        
-    //   },[] )
+    useEffect(() => {
+        if (company_info?.id_company) {
+            dispatch(getCompanyLicense(company_info.id_company))
+            dispatch(getCompanyTour(company_info.id_company))
+        }
+    }, [company_info.id_company])
+
+    const [tours, setTours] = useState([])
 
     useEffect(() => {
-        if (guide_info?.id_guide) {
-            dispatch(getGuideLicenseByIdGuide(guide_info.id_guide))
-            dispatch(getGuideTimeByIdGuide(guide_info.id_guide))
-        }
-    }, [guide_info.id_guide])
+        if (tours.length === 0)
+            setTours(company_tour)
+    },[company_info])
 
-    const [next, setNext] = useState(0)
+    const [isCreate, setIsCreate] = useState(false)
+    const [isAdd, setIsAdd] = useState(false)
+    const [isUpdate, setIsUpdate] = useState(false)
+    const [isChange, setIsChange] = useState(false)
 
-    const dates = []
-    const currentDate = new Date()
-    for (let i = 0; i < 7; i++) {
-        const date = new Date(currentDate);
-        date.setDate(currentDate.getDate() + i + 7 * next);
-        dates.push({week: day_of_week[date.getDay()], day: date.getDate(), month: date.getMonth(), year: date.getFullYear()});
-    }
-    
-    const [no, setNo] = useState(0)
 
-    const checkExist = (session) => {
-        if ( no !== ""){
-            const dateStr = `${dates[no].year}-${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}-${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
-            return (guide_time_by_id_guide.some((time)=> {
-                // console.log(time.guide_date, dateStr);
-                // console.log(time.guide_session, session);
-                // console.log(time.guide_date === dateStr && time.guide_session === session)
-                return time.guide_date === dateStr && time.guide_session === session
-            }))
-        }
-        return false
-    }
-    const handleSession = (session) => {
-        const dateStr = `${dates[no].year}-${dates[no].month < 10 ? '0' : ''}${dates[no].month + 1}-${dates[no].day < 10 ? '0' : ''}${dates[no].day}`;
-        console.log(dateStr, session); 
-        // const isExist = (guide_time_by_id_guide.some((time)=> {
-        //     return time.guide_date === dateStr && time.guide_session === session
-        // }))
-        // if (isExist)
-        dispatch(updateGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
-        // else 
-        //     dispatch(addGuideTimeByIdGuide(guide_info.id_guide, dateStr, session))
-    }
+    console.log(company_tour)
 
-    const [price, setPrice] = useState(null)
-    const savePrice = () => {
-        const newInfo = {...guide_info, price_per_session: parseFloat(price) }
-        dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
-    }
-
-    const [cancel, setCancel] = useState(null)
-    const saveCancel = () => {
-        setCancel(!cancel)
-        const newInfo = {...guide_info, free_cancellation: !cancel }
-        dispatch(updateGuideInfo(newInfo.id_guide, newInfo))
-    }
-
-    useEffect(() => {
-        setPrice(parseFloat(guide_info.price_per_session).toFixed(2))
-        setCancel(guide_info.free_cancellation)
-
-    },[guide_info])
-
-    console.log(guide_time_by_id_guide)
+    const verified= true
+    const tourss = [1,2,4,5,6,7,8,9,10,11,12,13,14,15]
 
     return (
-        <div className = "calendar-freelancer">
+        <div className = "tour-company">
             <HeaderCompany/>
-            <NavbarCompany src = {importAvatar(guide_info.avatar) || placeholder} fullname ={guide_info?.fullname?.toUpperCase()} flag2 = "focus"/>
-            {verified ? (
-                <div className = "main-calendar">
-                <div className = "select-date">
-                    <p>Select the date you want to schedule</p>
-                    <ButtonNextFreelancer onClick = {() => {setNext(next-1); setNo(null)}} disabled = {next === 0}/>
-                    <div className = "list-date">
-                    {
-                        dates.map((date,index)=>{
-                            return <Day key={`${date.day}-${date.month}`} {...date} focus = {index === no} onClick = {() => {setNo(index)}}/>
-                        })
-                    }
-                    </div>
-                    <ButtonNextFreelancer onClick = {() => {setNext(next+1); setNo(null)}}  next/>
+            <NavbarCompany src = {importAvatar(company_info.avatar) || placeholder} name ={company_info?.name?.toUpperCase()} flag2 = "focus"/>
+            {
+                verified &&!isCreate && !isAdd && (
+                <div className = "main-managetour ver2">
+                <div className = "create-tour">
+                    <i className="fa-solid fa-circle-plus"></i>
+                    <p>Create a tour</p>
                 </div>
-                <div className = "select-session">
-                    <p>Select the available session</p>
-                    { typeof (no) === "number" && (
-                    <div className = "list-session">
-                        <div className = "check-box-calendar">
-                            <input id = "morning" type = "checkbox" name = "session" value = {1} checked = {checkExist(1)} onChange = {() => handleSession(1)}></input>
-                            <label htmlFor="morning">Morning (7:00 - 11:00)</label>
-                        </div>
-                        <div className = "check-box-calendar">
-                            <input id = "afternoon" type = "checkbox" name = "session" value = {2} checked = {checkExist(2)} onChange = {() => handleSession(2)}></input>
-                            <label htmlFor="afternoon">Afternoon (13:00 - 17:00)</label>
-                        </div>
-                        <div className = "check-box-calendar">
-                            <input id = "evening" type = "checkbox" name = "session" value = {3} checked = {checkExist(3)} onChange = {() => handleSession(3)}></input>
-                            <label htmlFor="evening">Evening (18:00 - 21:00)</label>
-                        </div>
-                    </div>
-                    )} 
+                {
+                    tourss.map(tour =>{
+                        return (
+                            <div className = "tour">
+                                <div className = "tour-hover">
+                                    <ButtonEditFreelancer type = "button"/>
+                                    <ButtonDeleteFreelancer/>
+                                    <ButtonViewFreelancer/>
+                                </div>
+                                <img src = {importPhoto(tour.photo_path) || placeholder}></img>
+                                {/* <p className = "name">{tour.name}</p> */}
+                                {/* <p className = "des">{tour.id_des}</p>
+                                <p className = "price">{tour.price.toFixed(2)}$</p>
+                                <p className = "duration">{tour.duration}</p>
+                                <p className = "tourist">{tour.num_max}</p> */}
+
+                                <p className = "name">Halong Bay Deluxe Day Tour</p>
+                                <p className = "des">Ho Chi Minh City</p>
+                                <p className = "price">52.00$</p>
+                                <p className = "duration">1 day</p>
+                                <p className = "num-tourist">20</p>
+                            </div>
+                        )
+                    })
+                }
                 </div>
-                <div className = "input-field">
-                    <label htmlFor="price_session">
-                        Price per session ($)
-                        <p> * </p>
-                    </label>
-                    <input id = "price_session" type = "number" name = "price" value = {price} onChange = {(e) => setPrice(e.target.value)} onBlur = {savePrice} required ></input>
+            )}
+            {
+                // verified && (isAdd || isUpdate) && (
+
+                // )
+            }
+            {
+                verified && isAdd && (
+                    <ButtonUploadFreelancer className="button-save"/>
+                )
+            }
+            {
+                verified && isUpdate && (
+                    <ButtonUploadFreelancer className="button-upload"/>
+                )
+            }
+
+            {
+                !verified && (
+                <div className = "main-managetour">
+                    <p className = "welcome">Welcome to Manage Tour</p>
+                    <p>You have to upload legitimate tourism licenses to unlock this section</p>
                 </div>
-                <input type="checkbox" id="free-cancallation" checked = {cancel} onChange = {saveCancel}></input>
-                <label htmlFor="free-cancallation">Free cancellation up to 24 hours before the start time</label>
-                </div>
-            ):
-            (
-                <div className = "main-calendar">
-                <p className = "welcome">Welcome to Set Calendar</p>
-                <p>You have to upload legitimate tourism licenses to unlock this section</p>
-                </div>
-            )
-            }   
+            )} 
         </div>
     )
 }

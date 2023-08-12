@@ -139,6 +139,8 @@ function initModels(sequelize) {
   tour_wishlist.belongsTo(tourist, { as: "id_tourist_tourist", foreignKey: "id_tourist"});
   tourist.hasMany(tour_wishlist, { as: "tour_wishlists", foreignKey: "id_tourist"});
 
+  // tour_photo.belongsTo(tour, {as: "tour_photo", foreignKey: "id_tour"});
+  // tour.hasOne(tour_photo, { as: "tour", foreignKey: "id_tour"});
   return {
     admin_se,
     company,

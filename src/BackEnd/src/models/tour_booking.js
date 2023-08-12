@@ -51,6 +51,10 @@ class tour_booking extends Sequelize.Model {
     status: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    free_cancel: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     }
   }, {
     sequelize,
