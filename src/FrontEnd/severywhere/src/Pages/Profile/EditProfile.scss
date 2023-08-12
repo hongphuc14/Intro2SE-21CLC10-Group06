@@ -15,12 +15,15 @@
 
 .ThreeColumnLayout{
   display: flex;
+  position: relative;
   .editprofile-content{
     margin-left: 7rem;
     display: flex;
   }
   .avatar{
     margin-top: 4rem;
-    margin-right: 2rem;
+    position: absolute;
+    margin-right: 7rem;
+    right: 16rem;
   }
 }

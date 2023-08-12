@@ -12,8 +12,8 @@
 
   p {
     font-size: 1.5rem;
-    font-weight: lighter;
-    margin-bottom: 4rem;
+    font-weight: bold;
+    margin-bottom: 3.5rem;
     color: #0C721F;
   }
 
@@ -193,14 +193,30 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.8rem;
     width: 50%;
     max-width: 100px;
 
     &:hover {
       background-color: #0C721F;
       color: #fff;
+      transform: scale(1.05);
+    }
+  }
+  .DeleteAccount{
+    color: #DF4D4D;
+    font-size: 0.9rem;
+    font-weight: lighter;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+ 
+    &:hover {
+      background-color: #fff;
+      color: #C51605;
       transform: scale(1.05);
     }
   }

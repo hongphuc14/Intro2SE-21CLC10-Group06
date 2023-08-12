@@ -78,6 +78,9 @@ export default function MyForm() {
       </div>
 
       <button type="submit" className="SaveButton">Save</button>
+      <hr/>
+      <button className="DeleteAccount">Delete account</button>
+
     </form>
     </div>
   );
