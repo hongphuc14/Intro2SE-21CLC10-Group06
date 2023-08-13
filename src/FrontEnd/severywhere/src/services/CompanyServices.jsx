@@ -54,13 +54,13 @@ export class CompanyService extends baseService {
       return this.put(`company/deleteTour/${id_tour}`)
     }
 
-    // getCompanyBooking = (id_company) => {
-    //   return this.get(`company/getBooking/${id_company}`)
-    // }
+    getCompanyBooking = (id_company) => {
+      return this.get(`company/getBooking/${id_company}`)
+    }
 
-    // updateCompanybooking = (id_company, obj) => {
-    //   return this.put(`company/updateBooking/${id_company}`, obj)
-    // }
+    updateCompanyBooking = (id_tour_booking, obj) => {
+      return this.put(`company/updateBooking/${id_tour_booking}`, obj)
+    }
 
     getCompanyReview = (id_company) => {
       return this.get(`company/getReview/${id_company}`)

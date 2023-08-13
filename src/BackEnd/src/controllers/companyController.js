@@ -473,9 +473,11 @@ const getBooking = async(req, res) =>{
         });
         if(checkCompany){
             const [allTour, metadata] = await sequelize.query
-            (`SELECT DISTINCT tour_booking.id_tour, tour_booking.start_date
+            (`SELECT DISTINCT tour.name, tour.id_des, tour.num_max, tour.price,
+            tour_photo.photo_path, tour_booking.id_tour, tour_booking.start_date, tour_booking.end_date
             FROM tour
             INNER JOIN tour_booking ON tour.id_tour = tour_booking.id_tour
+            INNER JOIN tour_photo ON tour.id_tour = tour_photo.id_tour
             WHERE tour.id_company = ${id_company}`);
 
             const [allBooking, meta] = await sequelize.query
@@ -488,7 +490,7 @@ const getBooking = async(req, res) =>{
             const data = allTour.map(item => {
                 const booking = allBooking.filter(itemm => itemm.id_tour == item.id_tour || itemm.start_date.toString().slice(0,10) == item.start_date.toString().slice(0,10))
                 // dt = item.start_date.toString().slice(0,10)
-                return {id_tour: item.id_tour, start_date: item.start_date, booking}
+                return {...item, booking}
             })
             sucessCode(res,data,"Get thành công")
         }
@@ -541,21 +543,39 @@ const getReview = async(req, res) =>{
         });
         if(checkCompany){
             const [allReview, metadata] = await sequelize.query
-            (`SELECT tour.id_tour, tour_booking.id_tourist, tour_review.*
+            (`SELECT tour.id_tour, tourist.fullname, tourist.avatar, tour_review.*
             FROM tour 
             INNER JOIN tour_booking ON tour.id_tour = tour_booking.id_tour 
             INNER JOIN tour_review ON tour_review.id_tour_booking = tour_booking.id_tour_booking
+            LEFT JOIN tourist ON tour_booking.id_tour_booking = tourist.id_tourist
             WHERE tour.id_company = ${id_company} AND tour.is_deleted = 0`);
 
-            const tour = await model.tour.findAll({
-                where:{
-                    id_company
-                }
-            })
+            const [allTour, meta] = await sequelize.query
+            (`SELECT tour.*, tour_photo.photo_path
+            FROM tour 
+            LEFT JOIN tour_photo ON tour.id_tour = tour_photo.id_tour 
+            WHERE tour.id_company = ${id_company} AND tour.is_deleted = 0`);
 
-            const data = tour.map(item => {
+            const data = allTour.map(item => {
                 const review = allReview.filter(itemm => itemm.id_tour == item.id_tour)
-                return {id_tour: item.id_tour, review}
+                const totalReview = review.reduce((accumulator,element) => {
+                    if (element.review)
+                     return accumulator + 1
+                    else
+                      return accumulator
+                  }, 0)
+                let length = 0;
+                const totalRating = review.reduce((accumulator,element) => {
+                if (element.rating){
+                    length += 1
+                    return accumulator + element.rating
+                }
+                else
+                    return accumulator
+                }, 0)
+                const rating = length ? totalRating / length : null
+                return {id_tour: item.id_tour, name: item.name, id_des: item.id_des, photo_path: item.photo_path, 
+                    totalReview: totalReview, rating: Math.floor(rating), review}
             })
             sucessCode(res,data,"Get thành công")
         }

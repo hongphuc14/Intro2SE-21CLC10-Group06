@@ -2,132 +2,136 @@ import placeholder from '../../placeholder-image.png'
 import './StatisticCompany.scss';
 import HeaderCompany from '../../Components/Header/HeaderCompany';
 import NavbarCompany from '../../Components/Navbar/NavbarCompany';
-import TouristFreelancer from '../../Components/TouristBooking/TouristFreelancer'
 import RatingStar from '../../Components/RatingReview/RatingStar';
-import {Link, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import {getGuideBookingByIdGuide, getGuideReviewByIdGuidebooking, getTourGuideByIdGuide } from '../../redux/actions/FreelancerAction'
-
-function Review({img, name, date, rating, review}){
-  img = img==="" ? placeholder : img
-
-  return(
-    <div className = "review">
-      <img src={img} alt = "tourist-avatar"></img>
-      <div>
-        <p className = "review-name">{name}</p>
-        <RatingStar numberStar={rating}/>
-        <i className="fas fa-flag"></i>
-        <i className="fas fa-comment-dots"></i>
-      </div>
-      <p className = "review-date">{date}</p>
-      <p className = "review-line">{review}</p>
-    </div>
-  )
-}
+import { getCompanyInfo,getCompanyBooking, getCompanyReview } from '../../redux/actions/CompanyAction';
 
 export default function StatisticsCompany(){
   const dispatch = useDispatch() 
-  const location = useLocation()
-  window.history.replaceState(null, null, location.pathname);
 
-  const { user_login} = useSelector(state => state.BasicReducer)
-  const { guide_info, guide_booking_by_id_guide, guide_review_by_id_booking} = useSelector(state => state.FreelancerReducer)
-  const [tourists, setTourists] = useState([])
-  const [reviews, setReviews] = useState([])
+  const { user_login, destination } = useSelector(state => state.BasicReducer)
+  const { company_info, company_booking, company_review, company_tour} = useSelector(state => state.CompanyReducer)
+ 
+  const [tourByDate, setTourByDate] = useState([])
+  const [reviewByTour, setReviewByTour] = useState([])
+
   useEffect(() => {
-    if (guide_info === {})
-      dispatch(getTourGuideByIdGuide(user_login.email))
+      dispatch(getCompanyInfo(user_login.email))
   },[] )
 
   useEffect(() => {
-    if (guide_info?.id_guide) {
-        dispatch(getGuideBookingByIdGuide(guide_info.id_guide))
-        dispatch(getGuideReviewByIdGuidebooking(guide_info.id_guide))
+    if (company_info?.id_company) {
+        dispatch(getCompanyBooking(company_info.id_company))
+        dispatch(getCompanyReview(company_info.id_company))
     }
-  }, [guide_info.id_guide])
+  }, [company_info.id_company])
 
   useEffect(() => {
-    setTourists([...guide_booking_by_id_guide]);
-  },[guide_booking_by_id_guide])
+    setTourByDate([...company_booking]);
+  },[company_booking])
+
+  useEffect(() => {
+    setReviewByTour([...company_review]);
+  },[company_review])
 
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/freelancer_avatar/${filename}`)
+    try{
+      const path = require(`../../../../../BackEnd/public/company_avatar/${filename}`)
+      return path}
+    catch (err) {
+      return null
+    }
+  }
+
+  const importPhoto = (filename) => {
+    if (typeof filename === 'undefined' || filename === "")
+      return null
+    const path = require(`../../../../../BackEnd/public/tour/${filename}`)
     return path
   }
 
-  // console.log(guide_booking_by_id_guide)
-  // console.log(guide_booking_by_id_guide.length)
+  const getDes = (id) =>{
+    let name = ""
+    destination.forEach(des => {
+        if (id === des.id_des)
+            name = des.name
+    })
+    return name
+  }
 
-  // let totalSale = 0;
-  // for (const item of tourists) {
-  //   totalSale += item.price
-  // }
-
-  const totalSale = tourists.reduce((accumulator, tourist) => accumulator + tourist.price, 0)
-  const validReview = reviews.length > 0 ? reviews.filter(review => review.rating) : []
-  let averageRating = validReview.reduce((accumulator,review) => accumulator + review.rating, 0) 
-  if (averageRating.length > 0) 
-    averageRating = averageRating / averageRating.length
+  console.log(tourByDate, reviewByTour)
   
+  let totalSales = 0
+  let totalBookings = 0
+  for (const item of tourByDate){
+    for (const tmp of item.booking)
+      if (tmp.status === 6 || tmp.status === 2 || tmp.status === 5)
+        totalSales += tmp.total_price
+    totalBookings += item.booking?.length
+  }
+
+  let totalRating = 0
+  let lengthRating = 0
+  for (const tour of reviewByTour){
+    for (const review of tour.review)
+      if (review.rating){
+        totalRating += review.rating
+        lengthRating += 1
+      }    
+  }
+  let averageRating = lengthRating ? totalRating / lengthRating : 0
+
+
   return(
-    <div className = "statistics-freelancer">
+    <div className = "statistics-company">
         <HeaderCompany/>
-        <NavbarCompany src = {importAvatar(guide_info.avatar) || placeholder} fullname = {guide_info?.fullname?.toUpperCase()} flag3 = "focus"/>  
+        <NavbarCompany src = {importAvatar(company_info.avatar) || placeholder} name = {company_info?.name?.toUpperCase()} flag3 = "focus"/>  
         <div className = "main-statistic">
           <div className = "statistic">
             <div className = "sale">
               <i className="fas fa-dollar-sign"></i>
               <p className = "title">TOTAL SALES</p>
-              <p className = "data">{totalSale}</p>
+              <p className = "data">{totalSales}</p>
               <p className = "des">$</p>
             </div>
             <div className = "booking">
               <i className="fas fa-cart-plus"></i>
               <p className = "title">TOTAL BOOKINGS</p>
-              <p className = "data">{tourists.length}</p>
+              <p className = "data">{totalBookings}</p>
               <p className = "des">BOOKINGS</p>
             </div>
             <div className = "rating">
               <i className="fas fa-star"></i>
               <p className = "title">AVERAGE RATINGS</p>
-              <p className = "data">{averageRating}</p>
-              <p className = "des">(100 RATINGS)</p>
+              <p className = "data">{averageRating.toFixed(1)}</p>
+              <p className = "des">({lengthRating} RATINGS)</p>
             </div>
           </div>
 
           <div className = "hr"></div>
 
-          <div className = "tourist-section">
+          <div className = "tourbydate-section">
             <p>BOOKINGS</p>
-            <div className = "select">
-              <div className = "check-box-calendar">
-                  <input id = "select-pending" type = "checkbox" name = "status" value = "pending"></input>
-                  <label htmlFor="select-pending">Pending</label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-aprroved" type = "checkbox" name = "status" value = "approved"></input>
-                  <label htmlFor="select-aprroved">Approved</label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-completed" type = "checkbox" name = "status" value = "completed"></input>
-                  <label htmlFor="select-completed">Completed</label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-canceled" type = "checkbox" name = "status" value = "canceled"></input>
-                  <label htmlFor="select-canceled">Canceled</label>
-              </div>
-            </div>
-            <div className = "tourist-list">
+            <div className = "tourbydate-list">
               {
-                tourists.map(tourist =>{
+                tourByDate.map(item =>{
                   return (
-                    <Link key={tourist.id_tourist} style={{ textDecoration: 'none' }}
-                     to = {{pathname: "/booking-freelancer", state: {info: tourist}}}>
-                      <TouristFreelancer key={tourist.id_tourist} {...tourist}/>
+                    <Link key={`${item.id_tour}${item.start_date}`} style={{ textDecoration: 'none' }}
+                     to = {{pathname: "/booking-company", state: {list: item.booking}}}>
+                      <div className = "tourbydate">
+                        <img src = {importPhoto(item.photo_path) || placeholder}></img>
+                        <div className = "info">
+                          <p>{item.name}</p>
+                          <p>{getDes(item.id_des)}</p>
+                          <p>{item?.start_date?.toString().slice(0,10)} - {item?.end_date?.toString().slice(0,10)}</p>
+                          <p>{item.booking.length}/{item.num_max} tourists</p>
+                          <p>{item.price}$</p>
+                        </div>
+                      </div>
                     </Link>
                     )
                 })
@@ -139,48 +143,24 @@ export default function StatisticsCompany(){
 
           <div className = "review-section">
             <p>RATINGS & REVIEWS</p>
-            <div className = "select">
-              <div className = "check-box-calendar">
-                  <input id = "select-5" type = "checkbox" name = "star" value = "5"></input>
-                  <label htmlFor="select-5">
-                    <RatingStar numberStar = {5}/>
-                  </label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-4" type = "checkbox" name = "star" value = "4"></input>
-                  <label htmlFor="select-aprroved">
-                    <RatingStar numberStar = {4}/>
-                  </label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-3" type = "checkbox" name = "star" value = "3"></input>
-                  <label htmlFor="select-3">
-                    <RatingStar numberStar = {3}/>
-                  </label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-2" type = "checkbox" name = "star" value = "2"></input>
-                  <label htmlFor="select-2">
-                    <RatingStar numberStar = {2}/>
-                  </label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-1" type = "checkbox" name = "star" value = "1"></input>
-                  <label htmlFor="select-1">
-                    <RatingStar numberStar = {1}/>
-                  </label>
-              </div>
-              <div className = "check-box-calendar">
-                  <input id = "select-0" type = "checkbox" name = "star" value = "0"></input>
-                  <label htmlFor="select-0">
-                    <RatingStar numberStar = {0}/>
-                  </label>
-              </div>
-            </div>
+
             <div className = "review-list">
               {
-                reviews.map(review =>{
-                  return <Review key={review.id} {...review}/>
+                reviewByTour.map(item =>{
+                  return (
+                    <Link key={item.id_tour} style={{ textDecoration: 'none' }}
+                     to = {{pathname: "/review-company", state: {list: item.review}}}>
+                      <div className = "reviewbytour">
+                        <img src = {importPhoto(item.photo_path) || placeholder}></img>
+                        <div className = "info">
+                          <p>{item.name}</p>
+                          <RatingStar numberStar = {item.rating}/>
+                          <p>{getDes(item.id_des)}</p>
+                          <p>{item.totalReview} reviews</p>
+                        </div>
+                      </div>
+                    </Link>
+                    )
                 })
               }
             </div>

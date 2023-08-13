@@ -10,10 +10,10 @@ import ProfileCompany from './pages/Company/ProfileCompany';
 import LicenseCompany from './pages/Company/LicenseCompany';
 import TourCompany from './pages/Company/TourCompany';
 import StatisticsCompany from './pages/Company/StatisticCompany';
+import BookingCompany from './pages/Company/BookingCompany';
+import ReviewCompany from './pages/Company/ReviewCompany';
 
 export const history = createBrowserHistory();
-
-
 
 function App(){
   return(
@@ -29,8 +29,9 @@ function App(){
           <Route path = "/profile-company" exact component ={ProfileCompany} />
           <Route path = "/license-company" exact component ={LicenseCompany} />
           <Route path = "/tour-company" exact component ={TourCompany} />
-          {/* <Route path = "/booking-company" exact component ={BookingCompany} /> */}
-          {/* <Route path = "/statistics-company" exact component ={StatisticsCompany} /> */}
+          <Route path = "/statistics-company" exact component ={StatisticsCompany} />
+          <Route path = "/booking-company" exact component ={BookingCompany} />
+          <Route path = "/review-company" exact component ={ReviewCompany} />
         </Switch>
       </div>
     </Router>

@@ -39,6 +39,14 @@ switch (action.type) {
       return { ...state, 
         company_license: action.company_license };
     }
+    case GET_COMPANY_BOOKING: {
+      return { ...state, 
+        company_booking: action.company_booking};
+    }
+    case GET_COMPANY_REVIEW:{
+      return {...state, 
+        company_review: action.company_review}
+    }
   default:
     return { ...state };
 }
