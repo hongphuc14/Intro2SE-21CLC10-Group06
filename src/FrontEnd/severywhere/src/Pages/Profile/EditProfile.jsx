@@ -18,8 +18,8 @@ export default function EditProfile() {
                 </div>
             </div>
             
-            // <Footer />
-        // </div>
+            <Footer />
+        </div>
         
     );
 }

@@ -6,7 +6,7 @@ export default function HeaderCompany(){
         <header className = "header-company">
             <img  src={logo} className="SE-logoo" alt="logo" />
             <div>
-                <a href = "https://www.google.com/" className = "about-faq">About & FAQs</a>
+                <a href = "/aboutus" className = "about-faq">About & FAQs</a>
             </div>
         </header>
     )

@@ -6,7 +6,6 @@ import {
   UPDATE_GUIDE_LANGUAGE,
   UPDATE_GUIDE_LICENSE,
   GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
-  UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
   GET_GUIDE_TIME_BY_ID_GUIDE,
   UPDATE_GUIDE_TIME_BY_ID_GUIDE,
   GET_GUIDE_BOOKING_BY_ID_GUIDE,
@@ -76,12 +75,6 @@ export const FreelancerReducer = (state = stateInit, action) => {
                 guide_attraction_by_id_guide: action.guide_attraction_by_id_guide };
       }
 
-      // how to update photo path TT
-      case UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE: {
-        return { ...state,
-                guide_attraction_by_id_guide: action.guide_attraction_by_id_guide };
-      }
-
       case GET_GUIDE_TIME_BY_ID_GUIDE:{
         return{ ...state,
                 guide_time_by_id_guide: action.guide_time_by_id_guide};
@@ -101,21 +94,6 @@ export const FreelancerReducer = (state = stateInit, action) => {
         return {...state, 
           guide_review_by_id_booking: action.guide_review_by_id_booking}
       }
-
-      // case UPDATE_BOOKING_STATUS:{
-      //   return {...state, 
-      //     guide_booking_by_id_guide: action.guide_booking_by_id_guide}
-      // }
-
-      // case UPDATE_REPLY:{
-      //   return {...state, 
-      //     guide_review_by_id_booking: action.guide_review_by_id_booking}
-      // }
-
-      // case UPDATE_REPORT:{
-      //   return {...state, 
-      //     guide_review_by_id_booking: action.guide_review_by_id_booking}
-      // }
 
       default:
         return { ...state };
