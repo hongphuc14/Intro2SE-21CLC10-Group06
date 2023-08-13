@@ -104,6 +104,13 @@ export class FreelancerService extends baseService {
       return this.put(`freelancer/updateReport/${id_guide}`, obj);
     };
 
+    updateGuideAttractionByIdGuide = (id_guide, formData) => {
+      return this.post(`freelancer/updateAttraction/${id_guide}`, formData);
+    };
+
+    deleteAttraction = (id_guide, obj) => {
+      return this.put(`freelancer/deleteAttraction/${id_guide}`, obj);
+    };
 
   }
   

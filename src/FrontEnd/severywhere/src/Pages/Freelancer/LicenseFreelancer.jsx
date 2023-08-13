@@ -10,7 +10,7 @@ import {Link, useLocation} from 'react-router-dom'
 export default function LicenseFreelancer(){
   const {guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)
   const location = useLocation()
-  window.history.replaceState(null, null, location.pathname);
+  // window.history.replaceState(null, null, location.pathname);
   
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
@@ -26,7 +26,7 @@ export default function LicenseFreelancer(){
     return path
   }
   
-  const {info, isChange, pre} = location.state
+  const {info, isChange, pre} = location.state || {}
   // console.log(pre)
   const [license, setLicense] = useState(location.state.license)
   const [isDelete, setIsDelete] = useState(license.length < guide_license_by_id_guide.length)

@@ -252,12 +252,38 @@ export const getGuideAttractionByIdGuide = (id_guide) => {
 };
 
 export const updateGuideAttractionByIdGuide = (id_guide, attractions) => {
-  // return async (dispatch) => {
-  //   dispatch({
-  //   type: UPDATE_GUIDE_ATTRACTION_BY_ID_GUIDE,
-  //   guide_attraction_by_id_guide: attractions
-  //   })
-  // }
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+      for (let index = 0; index < attractions.length; index++) {
+        const item = attractions[index];
+        if (item.title || item.content || item.file || item.photo_path) {
+          const { file, title, content, photo_path } = item;
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("title", title);
+          formData.append("content", content);
+          formData.append("photo_path", photo_path);
+          formData.append("id", index + 1);
+          await freelancerService.updateGuideAttractionByIdGuide(id_guide, formData);
+        }
+        else{
+          const obj = {id: index + 1}
+          await freelancerService.deleteAttraction(id_guide, obj);
+        }
+      }
+      const result = await freelancerService.getGuideAttractionByIdGuide(id_guide);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_ATTRACTION_BY_ID_GUIDE,
+          guide_attraction_by_id_guide: result.data.content,
+        });
+        dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
 };
 
 export const getGuideTimeByIdGuide = (id_guide) => {

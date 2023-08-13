@@ -6,12 +6,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import {getGuideAttractionByIdGuide, updateGuideAttractionByIdGuide} from '../../redux/actions/FreelancerAction'
 import ErrorInput from '../Message/ErrorInput';
 
+// photo_path -> "" -> delete
+// file -> null -> no update image
+const attractionsDefault = [
+    {id_attraction: '', photo_path: '', content: '', title: '', file: null},
+    {id_attraction: '', photo_path: '', content: '', title: '', file: null},
+    {id_attraction: '', photo_path: '', content: '', title: '', file: null}
+]
+
 export default function AttractionFreelancer(){
     
     const dispatch = useDispatch()
     const {guide_info} = useSelector(state => state.FreelancerReducer)
     const guide_attractions = useSelector(state => state.FreelancerReducer.guide_attraction_by_id_guide )
-    const [attractions, setAttractions] = useState(guide_attractions)
+    const [attractions, setAttractions] = useState(attractionsDefault)
     
     useEffect(() => {
         if (guide_info.id_guide)
@@ -19,17 +27,29 @@ export default function AttractionFreelancer(){
     },[guide_info.id_guide])
 
     useEffect(() => {
-        // console.log("1")
-        setAttractions([...guide_attractions]);
+        const tmp = [...attractions]
+        if (guide_attractions[0])
+            tmp[0] = {...guide_attractions[0]}
+        if (guide_attractions[1])
+            tmp[1] = {...guide_attractions[1]}
+        if (guide_attractions[2])
+            tmp[2] = {...guide_attractions[2]}
+        setAttractions(tmp);
     },[guide_attractions])
     
-    // console.log(guide_attractions)
+    // console.log(attractions)
     const importImage = (filename) => {
         // console.log(filename)
         if (typeof filename === 'undefined' || filename === "")
             return null
-        const path = require(`../../../../../BackEnd/public/attraction/${filename}`)
-        return path
+        try{
+            const path = require(`../../../../../BackEnd/public/attraction/${filename}`)
+            return path
+        }
+        catch(err){
+            console.log(err)
+        }
+        
     }
     
     const loadLicense = (file) =>{
@@ -93,7 +113,7 @@ export default function AttractionFreelancer(){
 
     const handleDeleteImage = (e,id) =>{
         const newAttraction = [...attractions]
-        newAttraction[id] = {...newAttraction[id], photo_path: "", file: ""}
+        newAttraction[id] = {...newAttraction[id], photo_path: "", file: null}
         setAttractions(newAttraction) 
         const newErr = [...err]
         newErr[id].img = ""
@@ -105,9 +125,9 @@ export default function AttractionFreelancer(){
     const handleSave = () => {
         dispatch(updateGuideAttractionByIdGuide(guide_info.id_guide, attractions))
         setSaveChange(false)
+        console.log(attractions)
     }
-
-    // console.log(attractions)
+    
     if (attractions)
     return(
         <>

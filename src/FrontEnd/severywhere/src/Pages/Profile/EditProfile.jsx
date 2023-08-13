@@ -9,10 +9,10 @@ export default function EditProfile() {
         <div className="editprofile-page">
             <HeaderGuest className="headerGuest"/>
             <div className="ThreeColumnLayout">
-                <NavBar/> */
+                <NavBar/>
                 <div className="editprofile-content">
                     <FormEdit />
-                    /* <div className="avatar">
+                     <div className="avatar">
                         <Avatar className="avatarcomponent"/>
                     </div>
                 </div>

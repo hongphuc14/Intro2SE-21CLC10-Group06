@@ -118,6 +118,118 @@ const getAttractionByID = async(req, res) =>{
     }
 } 
 
+//POST: update freelancer avatar by id_guide
+const updateAttrationByID = async(req, res)=>{
+    //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
+    const fs = require('fs');
+    const id_guide = req.params.id_guide;
+    const file = req.file;
+    const {title, content, photo_path, id} = req.body;
+    try{
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        // //check nếu đã upload avatar
+        if(guide){
+            let attraction = await model.guide_attraction.findOne({
+                where:{
+                    id_attraction: id,
+                    id_guide
+                }});
+            if(!attraction)
+                await model.guide_attraction.create({
+                        id_attraction: id,
+                        id_guide
+                });
+
+            else if (file || photo_path === ""){
+                try{
+                    //xóa avatar cũ trước khi update avatar mới
+                    fs.unlinkSync(process.cwd() + "/public/attraction/" + attraction.photo_path);
+                } catch(err){
+                    console.log("Lỗi khi xóa avatar cũ", err);
+                }
+            }
+            
+            await model.guide_attraction.update({
+                title, content, 
+                photo_path: file?.filename || photo_path
+            }, {
+                where:{
+                    id_guide,
+                    id_attraction: id
+                }
+            });
+            sucessCode(res,"","Update thành công")
+        }
+    }catch(err){
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        errorCode(res, "Lỗi BE");
+        return;
+    }
+    // fs.readFile(process.cwd() + "/public/freelancer_avatar/" + req.file.filename, (err, data)=>{
+    //     if(err){
+    //         errorCode(res, "Lỗi khi đọc tệp tin");
+    //         return;
+    //     }
+    //     let dataBase = `data:${req.file.mimetype};base64,${Buffer.from(data).toString("base64")}`;
+    //     res.send(dataBase);
+    // })
+}
+
+//POST: delete freelancer attraction by id_guide
+const deleteAttraction = async(req, res)=>{
+    //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
+    const fs = require('fs');
+    const id_guide = req.params.id_guide;
+    const { id} = req.body;
+    try{
+        let guide = await model.tour_guide.findOne({
+            where:{
+                id_guide
+            }
+        });
+        // //check nếu đã upload avatar
+        if(guide){
+            let attraction = await model.guide_attraction.findOne({
+                where:{
+                    id_attraction: id,
+                    id_guide
+                }});
+            if(attraction){
+                try{
+                    //xóa avatar cũ trước khi update avatar mới
+                    fs.unlinkSync(process.cwd() + "/public/attraction/" + attraction.photo_path);
+                } catch(err){
+                    console.log("Lỗi khi xóa avatar cũ", err);
+                }
+            
+                await model.guide_attraction.destroy({
+                    where:{
+                        id_guide,
+                        id_attraction: id
+                    }
+                });
+        }
+            sucessCode(res,"","Update thành công")
+        }
+    }catch(err){
+        // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
+        errorCode(res, "Lỗi BE");
+        return;
+    }
+    // fs.readFile(process.cwd() + "/public/freelancer_avatar/" + req.file.filename, (err, data)=>{
+    //     if(err){
+    //         errorCode(res, "Lỗi khi đọc tệp tin");
+    //         return;
+    //     }
+    //     let dataBase = `data:${req.file.mimetype};base64,${Buffer.from(data).toString("base64")}`;
+    //     res.send(dataBase);
+    // })
+}
+
 //GET: get freelancer time by id_guide
 const getTimeByID = async(req, res) =>{
     try{
@@ -725,5 +837,5 @@ const updateGuideReportByID = async(req, res) =>{
 
 module.exports = { getInfoByID, getLanguageByID, getLicenseByID, getAttractionByID, getTimeByID,
 updateInfoByID, updatePwdByID, updateLanguageByID, updateAvatarByID, deleteAvatarByID, 
-deleteLicenseByID, updateLicenseByID, updateTimeByID,
+deleteLicenseByID, updateLicenseByID, updateTimeByID, updateAttrationByID, deleteAttraction,
 getGuideBookingByID, updateBookingStatusByID, getGuideReviewByID, updateGuideReplyByID, updateGuideReportByID } 

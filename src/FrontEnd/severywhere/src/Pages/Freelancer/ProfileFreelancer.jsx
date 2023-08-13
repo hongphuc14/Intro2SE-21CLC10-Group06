@@ -19,7 +19,7 @@ import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGu
 export default function ProfileFreelancer(){
   const dispatch = useDispatch()
   const location = useLocation()
-  window.history.replaceState(null, null, location.pathname);
+  // window.history.replaceState(null, null, location.pathname);
 
   const {destination, user_login} = useSelector(state => state.BasicReducer)
   const {guide_language_by_id_guide, verified, guide_license_by_id_guide, guide_info} = useSelector(state => state.FreelancerReducer)

@@ -10,7 +10,7 @@ import {Link, useLocation} from 'react-router-dom'
 export default function LicenseCompany(){
   const {company_license, company_info} = useSelector(state => state.CompanyReducer)
   const location = useLocation()
-  window.history.replaceState(null, null, location.pathname);
+  // window.history.replaceState(null, null, location.pathname);
   
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
