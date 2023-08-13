@@ -1,0 +1,107 @@
+.button-edit::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+.button-edit, .button-delete, .button-view{
+    width: 4em;
+    height: 4em;
+    margin: 0 0.5em;
+    border-radius: 0.8em;
+    background-color: #0E4D90;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;  
+}
+
+
+.button-edit[type=file]::before{
+    content: '\f14b';
+    font-family: "FontAwesome";
+    color: white;
+    font-size: 2em;
+    position : relative;
+    top: 0.5em;
+    left: 0.58em;
+}
+
+button[class=button-edit] .fa-solid{
+    color: white;
+    font-size: 1.7em; 
+}
+
+.button-view .fa-solid{
+    color: white;
+    font-size: 1.5em; 
+}
+
+
+.button-delete .fas{
+    content: '\f14b';
+    font-family: "FontAwesome";
+    color: white;
+    font-size: 1.8em;
+}
+
+.button-delete:hover , .button-edit:hover,
+.button-view:hover{
+    background: white;
+    outline: 0.25em solid #0E4D90;
+    outline-offset: -0.25em;
+}
+
+.button-edit:hover::before, 
+.button-delete:hover .fas,
+.button-view:hover .fa-solid,
+.button-edit:hover .fa-solid{
+    color: #0E4D90
+}
+
+.button-edit:active{
+    transform: none;
+}
+
+.button-upload, .button-save{
+    font-family: 'RocknRoll One';
+    display: inline-block;
+    background: #0E4D90;
+    height: 2.5em;
+    width: fit-content;
+    padding: 0 1em;
+    margin: 1em auto 0;
+    border-radius: 1em;
+    color: white;
+    border: none;
+}
+
+.button-save{
+    background: #0C721F;
+    // margin-top: 4em;
+}
+
+.button-upload:hover{
+    background: white;
+    outline: 2px solid #0E4D90;
+    outline-offset: -2px;
+    color: #0E4D90;
+}
+
+.button-save:not(:disabled):hover{
+    background: white;
+    outline: 2px solid #0C721F;
+    outline-offset: -2px;
+    color: #0C721F;
+}
+
+.button-save:not(:disabled):active, .button-upload:not(:disabled):active,
+.button-edit:active, .button-delete:active{
+    transform: translateY(2px);
+}
+
+.button-upload:disabled, .button-save:disabled{
+    background: #D8D8D8;
+}
+
+
