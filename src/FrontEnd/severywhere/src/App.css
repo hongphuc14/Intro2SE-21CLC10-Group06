@@ -1,6 +1,21 @@
+<<<<<<< HEAD
 .App{
     position: relative;
 }
 *{
     font-family: 'RocknRoll One', sans-serif;
 }
+=======
+.App {
+  text-align: center;
+  display:flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+button{
+  cursor: pointer;
+}
+
+
+>>>>>>> 65a54289b64b69b36f7f9608fdad89e6a93459d2

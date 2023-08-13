@@ -1,0 +1,39 @@
+.button-next{
+    width: 2.5em;
+    height: 2.5em;
+    background-color: #0E4D90;
+    border-radius: 0.8em;
+    display: inline-block;
+    position: relative;
+    top: 2.5em;
+    border: none;
+}
+
+.button-next .fas{
+    color: white;
+    font-size: 1.2em;
+}
+
+.button-next:hover{
+    background-color: white;
+    outline: 2px solid #0E4D90;
+    outline-offset: -2px;
+}
+
+.button-next:hover .fas{
+    color: #0E4D90;
+    transition: .2s ease;
+}
+
+.button-next:disabled{
+    background-color: #d8d8d8;
+    outline: none
+}
+
+.button-next:disabled .fas{
+    color: white;
+}
+
+.button-next:not(:disabled):active{
+    transform: translateY(2px);
+}
