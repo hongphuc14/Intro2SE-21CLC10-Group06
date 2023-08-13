@@ -30,7 +30,7 @@ const tour_default = {
 
 export default function TourCompany(){ 
     const dispatch = useDispatch() 
-    
+    console.log("1")
     const { user_login, destination} = useSelector(state => state.BasicReducer)
     const { verified, company_tour, company_info} = useSelector(state => state.CompanyReducer)
 

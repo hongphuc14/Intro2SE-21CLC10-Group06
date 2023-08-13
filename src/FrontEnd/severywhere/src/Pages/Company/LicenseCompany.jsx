@@ -26,7 +26,7 @@ export default function LicenseCompany(){
     return path
   }
   
-  const {info, isChange, pre} = location.state
+  const {info, isChange, pre} = location.state || {}
   // console.log(pre)
   const [license, setLicense] = useState(location.state.license)
   const [isDelete, setIsDelete] = useState(license.length < company_license.length)

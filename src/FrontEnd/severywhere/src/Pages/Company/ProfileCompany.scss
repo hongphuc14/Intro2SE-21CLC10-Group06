@@ -228,6 +228,14 @@ margin: 0 auto;
 display: flex;
 align-items: flex-start;
 flex-wrap: wrap;
+
+    #email-setting, #pwd, #cur-pwd, #new-pwd, #confirm-pwd {
+        min-width: 19em;
+    }
+
+    #email-setting, #pwd{
+        background-color: #D8D8D8;
+    }
 }
 
 .setting .info, .change-pass {
@@ -239,14 +247,6 @@ flex-direction: column;
 
 .setting .input-field{
 width: fit-content;
-}
-
-#email, #pwd, #cur-pwd, #new-pwd, #confirm-pwd {
-min-width: 19em;
-}
-
-#email, #pwd{
-background-color: #D8D8D8;
 }
 
 .change-pass {

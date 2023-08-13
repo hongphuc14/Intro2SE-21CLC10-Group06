@@ -11,15 +11,12 @@ body{
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-<<<<<<< HEAD
   overflow-x: hidden;
-=======
   background: #F8F6F4;
 }
 
 p{
   font-family: 'RocknRoll One';
->>>>>>> 65a54289b64b69b36f7f9608fdad89e6a93459d2
 }
 
 code {
@@ -27,9 +24,6 @@ code {
     monospace;
 }
 
-<<<<<<< HEAD
 *{
   font-family: 'RocknRoll One', sans-serif;
 }
-=======
->>>>>>> 65a54289b64b69b36f7f9608fdad89e6a93459d2

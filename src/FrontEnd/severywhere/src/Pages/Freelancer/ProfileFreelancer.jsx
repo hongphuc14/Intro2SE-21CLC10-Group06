@@ -292,11 +292,11 @@ export default function ProfileFreelancer(){
         <div className = "setting">
           <div className = "info">
             <div className = "input-field">
-                <label htmlFor="email">
+                <label htmlFor="email-setting">
                     Email address
                     <p> * </p>
                 </label>
-                <input id = "email" name = "email" type = "email" value = {formik.values.email || ''} disabled/>
+                <input id = "email-setting" name = "email" type = "email" value = {formik.values.email || ''} disabled/>
             </div>
             <div className = "input-field">
                 <label htmlFor="pwd">

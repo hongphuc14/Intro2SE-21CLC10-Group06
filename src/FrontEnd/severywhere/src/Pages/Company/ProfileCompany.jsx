@@ -230,7 +230,7 @@ export default function ProfileCompany(){
                     Email address
                     <p> * </p>
                 </label>
-                <input id = "email" name = "email" type = "email" value = {formik?.values?.email || ''} disabled/>
+                <input id = "email-setting" name = "email" type = "email" value = {formik?.values?.email || ''} disabled/>
             </div>
             <div className = "input-field">
                 <label htmlFor="pwd">

@@ -7,6 +7,11 @@
     align-items: center;
     z-index: 1;
     position: fixed;
+
+    .SE-logoo{
+        height: 2.8em;
+        margin: 0 auto 0 2em;
+    }
 }
 
 .header-company *{
@@ -16,10 +21,7 @@
     font-size: 0.85em;
 }
 
-.SE-logo{
-    height: 2.8em;
-    margin: 0 auto 0 2em;
-}
+
 
 .header-company a:hover{
     text-decoration: underline;
