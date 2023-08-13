@@ -450,6 +450,17 @@ const deleteTour = async(req, res)=>{
                     id_tour,
                 }
             });
+            const changeStatus = [1,2,3]
+            await model.tour_booking.update({
+                status: 7
+            },{
+                where:{
+                    status: {
+                        [Op.in]: changeStatus
+                    },
+                }
+            });
+
             sucessCode(res,"","Delete thành công")
         }
         else
