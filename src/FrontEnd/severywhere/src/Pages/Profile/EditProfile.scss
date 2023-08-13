@@ -5,7 +5,7 @@
 
     width:100vw;
     height:fit-content;
-    position: absolute;
+    position: relative;
     top: 0;
   }
 
@@ -16,6 +16,7 @@
 .ThreeColumnLayout{
   display: flex;
   position: relative;
+  align-items: flex-start;
   .editprofile-content{
     margin-left: 7rem;
     display: flex;
@@ -23,7 +24,7 @@
   .avatar{
     margin-top: 4rem;
     position: absolute;
-    margin-right: 7rem;
+    margin-right: 6rem;
     right: 16rem;
   }
 }

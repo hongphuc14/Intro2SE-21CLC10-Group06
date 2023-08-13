@@ -37,7 +37,7 @@ export default function MyForm() {
         EDIT PROFILE
       </p>
       <div className="fullname-block">
-        <label htmlFor="fullname">Fullname</label>
+        <label htmlFor="fullname" id = "fullnameEdit">Fullname</label>
         <div className="fullname-input">
           <input value={fullname} onChange={(e) => setFullname(e.target.value)} type="text" placeholder="Nguyen Thi Minh Minh" id="fullname" className="fullname"/>
           <i className="fa-solid fa-pen-to-square"></i>
@@ -45,13 +45,13 @@ export default function MyForm() {
       </div>
         <div className="email-phone">
           <div className="email-block">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" id ="emailEdit">Email</label>
             <div className="email-input">
               <input value={email} readOnly type="email" placeholder="ntmminh21@clc.fitus.edu.vn"id="emailEdit" name="email"/>
             </div>
           </div>
           <div className="phone-block">
-            <label htmlFor="phone">Phone number</label>
+            <label htmlFor="phone" id = "phoneEdit">Phone number</label>
             <div className="phone-input">
               <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" placeholder="0899496257" id="phonenum" name="phonenum"/>
               <i className="fa-solid fa-pen-to-square phone-icon"></i>
@@ -60,14 +60,14 @@ export default function MyForm() {
         </div>
       <div className="birthday-gender">
         <div className="birthday-block">
-          <label htmlFor="birthday">Birthday</label>
+          <label htmlFor="birthday" id="birthdayEdit">Birthday</label>
           <div className="birthday-input">
             <input type="date" value={birthday} onChange={handleBirthdayChange} className="birthday-box"/>
           </div>
         </div>
 
         <div className="gender">
-          <label>Gender</label>
+          <label id = "genderEdit">Gender</label>
           <div className="gender-button">
             <input type="radio" className ="option-input" name="gender" value="Male" defaultChecked/>
             <label className = "maleCheck">Male</label>
