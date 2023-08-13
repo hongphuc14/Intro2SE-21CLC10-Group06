@@ -1,0 +1,58 @@
+.navbar-freelancer{
+    background-image: url("./bg1.jpg");
+    background-size: auto;
+    background-repeat: repeat-y;
+    width: 12em;
+    height: 100vh;
+    display: inline-block;
+    top: 3em;
+    // left: 0em;
+    position: fixed;
+    z-index: 1;
+}
+
+.navbar-freelancer .avatar img{
+    background: #FFFFFF;
+    width: 8em;
+    height: 8em;
+    border-radius: 100em;
+    margin: 2em auto 0.6em;
+    object-fit: cover;
+}
+
+.avatar p{
+    color: #FFFFFF;
+    font-size: 0.8em;
+    margin: 0 auto 2.5em;
+}
+
+.navbar-freelancer button{
+    width: 13em;
+    height: 3.5em;
+    margin: 1.5em auto;
+    border-radius: 1.5em;
+    border: none;
+    background: #0E4D90;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.navbar-freelancer .focus{
+    background: #FFFFFF;
+    color: #0E4D90;
+}
+
+.navbar-freelancer button .fas{
+    font-size: 1.8em;
+    margin: 0 0.4em;
+}
+
+.navbar-freelancer button .textNavbar{
+    margin: 0 0.1em; 
+    text-decoration: none;
+}
+
+.navbar-freelancer button:active{
+    transform: translateY(2px);
+}

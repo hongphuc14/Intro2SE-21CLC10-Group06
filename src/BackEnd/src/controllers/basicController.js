@@ -7,8 +7,10 @@ const { parseToken, clearLocalStorage } = require('../middlewares/baseToken');
 const bcrypt = require('bcrypt'); 
 //GET: login
 const login = async(req, res)=>{
+    console.log("controller");
     try{
         let { email, password } = req.body;
+        console.log(email, password);
         // Admin login
         let checkAdmin = await model.admin_se.findOne({
             where:{
@@ -36,8 +38,8 @@ const login = async(req, res)=>{
         if(checkTourist){
             //let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
             //let checkPass = bcrypt.compareSync(password, passWordHash);
-            let checkPass = bcrypt.compareSync(password, checkTourist.password);
-            if(checkPass){
+            //let checkPass = bcrypt.compareSync(password, checkTourist.password);
+            if(password == checkTourist.password){
                 sucessCode(res, parseToken(checkTourist), "Login thành công");
                 return;
             }
@@ -228,7 +230,7 @@ const deleteAccount = async(req, res) => {
         errorCode(res, "Loi BE");
     }
 }
-
+// không cần do trong FE đã xử lý
 const logout = async(req, res) =>{
     try{
         // Xóa token khỏi localStorage khi đăng xuất
@@ -238,4 +240,65 @@ const logout = async(req, res) =>{
         errorCode(res, "Lỗi BE");
     }
 }
-module.exports = { login, signUp, deleteAccount, logout }
+
+const getDestination = async(req, res) => {
+    try{
+        let destinations = await model.destination.findAll()
+        sucessCode(res, destinations, "Get successfully");
+    }catch(err){
+        errorCode(res, "Lỗi BE");
+    }
+}
+
+//GET: get user info by email
+const getInfoByEmail = async(req, res) =>{
+    try{
+        let { email } = req.params;
+        let checkAdmin = await model.admin_se.findOne({
+            where:{
+                email
+            }
+        })
+        if(checkAdmin){
+            sucessCode(res, checkAdmin, "Login thành công");
+            return;
+        }    
+
+        let checkTourist = await model.tourist.findOne({
+            where:{
+                email
+            }
+        })
+        if(checkTourist){
+            sucessCode(res, checkTourist, "Login thành công");
+                return;
+        }
+        
+        let checkCompany = await model.company.findOne({
+            where:{
+                email
+            }
+        })
+        if(checkCompany){
+            sucessCode(res, parseToken(checkCompany), "Login thành công");
+            return;
+        }
+        
+        let checkFreelancer = await model.tour_guide.findOne({
+            where:{
+                email
+            }
+        })
+        if(checkFreelancer){
+            sucessCode(res, parseToken(checkFreelancer), "Login thành công");
+            return;
+        }
+        else{
+            failCode(res, "", "Email không đúng!");
+            return;
+        }
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+module.exports = { login, signUp, deleteAccount, logout, getDestination, getInfoByEmail }

@@ -62,6 +62,7 @@ const updateInfoByID = async(req, res) =>{
     }
 }
 
+const bcrypt = require('bcrypt'); 
 //PUT: update tourist password by id_tourist
 const updatePwdByID = async(req, res) =>{
     try{

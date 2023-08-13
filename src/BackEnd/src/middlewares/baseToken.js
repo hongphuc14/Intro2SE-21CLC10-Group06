@@ -33,7 +33,6 @@ const verifyToken = (req, res, next) => {
     } else {
         res.status(401).send(verifyToken.message);
     }
-
 }
 
 const clearLocalStorage = (name) => {

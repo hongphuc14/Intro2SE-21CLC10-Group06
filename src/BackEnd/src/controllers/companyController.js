@@ -18,18 +18,17 @@ const getInfoByID = async(req, res) =>{
                     id_company
                 }
             });
-            res.send(data);
+            sucessCode(res,data,"Lấy thành công");;
         }
         else{
-            failCode(res,"","Company không tồn tại")
+            failCode(res,"","Company không tồn tại");
         } 
     }catch(err){
-        errorCode(res,"Lỗi BE")
+        errorCode(res,"Lỗi BE");
     }
 } 
 
 //PUT: update company info by id_company
-// Mỹ Linh fix lại theo giao diện profile phần update profile nha
 const updateInfoByID = async(req, res) =>{
     try{
         let { id_company } = req.params;
@@ -53,16 +52,17 @@ const updateInfoByID = async(req, res) =>{
                     id_company
                 }
             });
-            sucessCode(res,data,"Update thành công")
+            sucessCode(res,data,"Update thành công");
         }
         else{
-            failCode(res,"","Company không tồn tại")
+            failCode(res,"","Company không tồn tại");
         } 
     }catch(err){
-        errorCode(res,"Lỗi BE")
+        errorCode(res,"Lỗi BE");
     }
 }
 
+const bcrypt = require('bcrypt'); 
 //PUT: update company password by id_company
 const updatePwdByID = async(req, res) =>{
     try{
