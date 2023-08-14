@@ -99,21 +99,22 @@ const updatePwdByID = async(req, res) =>{
 }
 
 //POST: upload tourist avatar by id_tourist
-const uploadTourist = async(req, res)=>{
+const updateAvatar = async(req, res)=>{
     //import 'fs' (file system) để làm việc với các tệp tin trong hệ thống tệp của Node.js
     const fs = require('fs');
     const id_tourist = req.params.id_tourist;
     
     //Nếu size tệp vượt quá 4Mb, hàm sẽ xóa tệp và gửi phản hồi
-    if(req.file.size >= 400000){
+    if(req.file.size >= 4  * 1024 * 1024){
         fs.unlinkSync(process.cwd() + "/public/tourist_avatar/" + req.file.filename);
-        res.send("chỉ được phép upload 4Mb");
+        failCode(res,"","Chỉ được phép upload 4Mb");
         return;
     }
     // Nếu định dạng tệp không phải jpeg, jpg, png thì xóa tệp và gửi phản hồi
     if(req.file.mimetype != "image/jpeg" && req.file.mimetype != "image/jpg" && req.file.mimetype != "image/png"){
         fs.unlinkSync(process.cwd() + "/public/tourist_avatar/" + req.file.filename);
-        res.send("sai định dạng");
+        failCode(res,"","Hình ảnh phải có dạng jpeg, jpg, png ");
+        return
     }
     try{
         //lấy info tourist từ db
@@ -140,19 +141,20 @@ const uploadTourist = async(req, res)=>{
                 id_tourist
             }
         });
+        sucessCode(res,"","Update thành công")
     }catch(err){
         fs.unlinkSync(process.cwd() + "/public/tourist_avatar/" + req.file.filename);
         errorCode(res, "Lỗi BE");
-        return;
+        // return;
     }
-    fs.readFile(process.cwd() + "/public/tourist_avatar/" + req.file.filename, (err, data)=>{
-        if(err){
-            errorCode(res, "Lỗi khi đọc tệp tin");
-            return;
-        }
-        let dataBase = `data:${req.file.mimetype};base64,${Buffer.from(data).toString("base64")}`;
-        res.send(dataBase);
-    })
+    // fs.readFile(process.cwd() + "/public/tourist_avatar/" + req.file.filename, (err, data)=>{
+    //     if(err){
+    //         errorCode(res, "Lỗi khi đọc tệp tin");
+    //         return;
+    //     }
+    //     let dataBase = `data:${req.file.mimetype};base64,${Buffer.from(data).toString("base64")}`;
+    //     res.send(dataBase);
+    // })
 }
 
-module.exports = { getInfoByID, updateInfoByID, updatePwdByID, uploadTourist }
+module.exports = { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar }

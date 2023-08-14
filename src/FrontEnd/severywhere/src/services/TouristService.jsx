@@ -9,16 +9,12 @@ export class TouristService extends baseService {
       return this.get(`tourist/getInfo/${email}`);
     };
 
-    // getCompanyLicense = (id_guide) => {
-    //   return this.get(`company/getLicense/${id_guide}`);
-    // };
-
     updateTouristInfo = (id_tourist, obj) => {
       return this.put(`tourist/updateInfo/${id_tourist}`, obj);
     };
 
-    updateCompanyAvatar = (id_company, formData) => {
-      return this.post(`company/updateAvatar/${id_company}`, formData);
+    updateTouristAvatar = (id_tourist, formData) => {
+      return this.post(`tourist/updateAvatar/${id_tourist}`, formData);
     };
 
     deleteCompanyAvatar = (id_company) => {

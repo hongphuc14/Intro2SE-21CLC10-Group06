@@ -45,53 +45,43 @@ import { GET_TOURIST_INFO,
     };
   };
 
-//   export const updateCompanyAvatar = (id_company, preview) => {
-//     return async (dispatch) => {
-//       try {
-//         dispatch(displayLoadingAction);
-//         if (preview === "delete"){
-//           const result = await companyService.deleteCompanyAvatar(id_company);
-//           if (result.status === 200) {
-//             dispatch({
-//               type: UPDATE_COMPANY_INFO,
-//               company_info: result.data.content})
-//             dispatch(hideLoadingAction);
-//           }
-//         }
-//         else{
-//           const formData = new FormData();
-//           formData.append('file', preview);
-//           console.log(formData)
-//           const result = await companyService.updateCompanyAvatar(id_company, formData);
-//           if (result.status === 200) {
-//             dispatch({
-//               type: UPDATE_COMPANY_INFO,
-//               company_info: result.data.content})
-//             dispatch(hideLoadingAction);
-//           }
-//         }
-//       } catch (error) {
-//         console.log("error", error.response);
-//       }
-//     }
-//   };
+  export const updateTouristAvatar = (id_tourist, avatar) => {
+    return async (dispatch) => {
+      try {
+        dispatch(displayLoadingAction);
+          const formData = new FormData();
+          formData.append('file', avatar);
+          console.log(formData)
+          const result = await touristService.updateTouristAvatar(id_tourist, formData);
+          if (result.status === 200) {
+            dispatch({
+              type: GET_TOURIST_INFO,
+              tourist_info: result.data.content})
+            dispatch(hideLoadingAction);
+          }
+      } catch (error) {
+        console.log("error", error.response);
+        alert(error?.response?.data?.message);
+      }
+    }
+  };
 
-//   export const updateCompanyPassword = (id_guide,currentPass, newPass) => {
-//     return async (dispatch) => {
-//       try {
-//         dispatch(displayLoadingAction);
-//         const obj = {c_password: currentPass, n_password: newPass};
-//         const result = await companyService.updateCompanyPassword(id_guide, obj);
-//         if (result.status === 200) {
-//           dispatch(hideLoadingAction);
-//           alert('Update password successfulort');
-//         }
-//       } catch (error) {
-//         console.log("error", error.response);
-//         alert('The current password is incorrect');
-//       }
-//     };
-//   };
+  export const updateTouristPassword = (id_tourist,currentPass, newPass) => {
+    return async (dispatch) => {
+      try {
+        dispatch(displayLoadingAction);
+        const obj = {c_password: currentPass, n_password: newPass};
+        const result = await touristService.updateTouristPassword(id_tourist, obj);
+        if (result.status === 200) {
+          dispatch(hideLoadingAction);
+          alert('Update password successfulort');
+        }
+      } catch (error) {
+        console.log("error", error.response);
+        alert('The current password is incorrect');
+      }
+    };
+  };
 
 //   export const getCompanyTour = (id_company) => {
 //     return async (dispatch) => {

@@ -13,7 +13,7 @@ touristRoute.put("/updateInfo/:id_tourist",  updateInfoByID);
 //PUT: update tourist password by id_tourist
 touristRoute.put("/updatePwd/:id_tourist", updatePwdByID);
 
-//POST: upload tourist avatar by id_tourist
-// touristRoute.post("/updateAvatar/:id_tourist", upload('tourist_avatar').single("file"), updateAvatar);
+// POST: upload tourist avatar by id_tourist
+touristRoute.post("/updateAvatar/:id_tourist", upload('tourist_avatar').single("file"), updateAvatar);
 
 module.exports = touristRoute;
