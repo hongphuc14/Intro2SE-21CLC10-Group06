@@ -1,3 +1,4 @@
+
 .aboutus-faq-page{
     position: relative;
     display: flex;
@@ -10,7 +11,7 @@
 /* ICON HIKING */
 .icon-hiking {
     position: absolute;
-    width: 28rem;
+    width: 30rem;
     height: 25rem;
     left: 2rem;
     top: 30rem;
@@ -41,8 +42,8 @@
     position: absolute;
     width: 40rem;
     height: 40rem;
-    left: 543px;
-    top: 489px;
+    left: 35rem;
+    top: 33rem;
     font-style: normal;
     font-size: 1.2rem;
     line-height: 36px;
@@ -56,7 +57,7 @@
     width: 40rem;
     height: 40rem;
     left: 88px;
-    top: 903px;
+    top: 60rem;
     font-style: normal;
     font-size: 1.2rem;
     line-height: 36px;
@@ -67,9 +68,9 @@
 /* Sailing pic */
 .sailing-pic {
     position: absolute;
-    width: 28rem;
-    height: 25rem;
-    right: 2rem;
+    width:auto;
+    height: 27rem;
+    right: 5rem;
     top: 55rem;
 }
 
@@ -90,6 +91,7 @@
 
 .head-banner {
     position: absolute;
+    background-size: cover;
     width: 1440px;
     height: 367px;
     left: 0px;
