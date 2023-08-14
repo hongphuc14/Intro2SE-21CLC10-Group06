@@ -1,0 +1,14 @@
+#search-page {
+    background-color: thistle;
+    margin: auto;
+    height: 100%;
+    width: 80%;
+}
+#filter-container {
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+margin-top: 1rem;
+margin-bottom: 1rem;
+width: fit-content;
+}

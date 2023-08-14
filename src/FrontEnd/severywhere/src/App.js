@@ -7,6 +7,7 @@ import ResetPasswordEmail from './Pages/ResetPasswordEmail/ResetPasswordEmail';
 import ResetPassword from './Pages/ResetPassword/ResetPassword';
 import ChangePassword from './Pages/ChangePassword/ChangePassword';
 import AboutUs_FAQ from './Pages/AboutUs_FAQ/AboutUs_FAQ';
+import Search from './Pages/Search/Search';
 
 import ProfileFreelancer from "./Pages/Freelancer/ProfileFreelancer";
 import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
@@ -37,6 +38,7 @@ function App() {
         <Route path = "/resetpw" exact component = {ResetPassword} />
         <Route path = "/changepw" exact component = {ChangePassword} />
         <Route path = "/aboutus" exact component = {AboutUs_FAQ} />
+        <Route path = "/search" exact component = {Search} />
 
         <Route path = "/profile-freelancer" exact component ={ProfileFreelancer} />
         <Route path = "/license-freelancer" exact component ={LicenseFreelancer} />
