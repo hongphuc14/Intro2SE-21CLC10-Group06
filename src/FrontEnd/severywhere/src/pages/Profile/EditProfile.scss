@@ -1,0 +1,29 @@
+.editprofile-page{
+  // text-align: center;
+  flex:1;
+  color: white;
+
+  width:100vw;
+  height:fit-content;
+  position: absolute;
+  top: 0;
+}
+
+.headerGuest{
+z-index: 1000;
+}
+
+.ThreeColumnLayout{
+display: flex;
+position: relative;
+.editprofile-content{
+  margin-left: 7rem;
+  display: flex;
+}
+.avatar{
+  margin-top: 4rem;
+  position: absolute;
+  margin-right: 7rem;
+  right: 16rem;
+}
+}

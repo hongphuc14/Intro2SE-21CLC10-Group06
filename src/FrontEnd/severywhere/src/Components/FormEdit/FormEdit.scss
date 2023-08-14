@@ -1,0 +1,224 @@
+/* Import your other styles if needed */
+
+.my-form {
+  max-width: 500px;
+  margin: 6.5rem auto;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  padding: 20px;
+  border: none;
+  background-color: none;
+
+
+  p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 3.5rem;
+    color: #0C721F;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #000;
+    padding-right: 20px;
+  }
+
+  input {
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+    border-radius: 7px;
+    border: 1px solid #9C9C9C;
+    background: #FFF;
+    padding: 0.5em;
+    max-width: 400px;
+    color:black;
+
+    &:focus {
+      border-color: none;
+      outline: none;
+    }
+  }
+
+  .fullname-input {
+    position: relative;
+    display: flex;
+  }
+
+  #fullname {
+    width: 15rem;
+    align-items: flex-start;
+
+    &.with-icon {
+      padding-right: 2.5rem; // Make space for the icon
+    }
+
+    &+.fa-pen-to-square {
+      position: absolute;
+      top: 50%;
+      left: 14.3rem;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #0C721F;
+    }
+  }
+
+  .email-phone {
+    display: flex;
+    // align-items:flex-start; 
+
+    .email-block {
+      margin-right: 2em;
+      .email-input{
+        position: relative;
+          #emailEdit {
+            width: 15rem; // Chiều dài bằng với fullname-input
+            margin: 0;
+            margin-top: 0.5em;
+          }
+      }
+    }
+
+    .phone-block {
+      .phone-input {
+        position: relative;
+      }
+
+      &.with-icon {
+        padding-right: 2.5rem; // Make space for the icon
+      }
+
+      .phone-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px; // Cách lề phải của input
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #0C721F;
+      }
+    }
+  }
+
+  .birthday-gender {
+    display: flex;
+    margin-bottom: 1.5rem;
+
+    // .birthday-box {
+      // color: #9C9C9C;
+    // }
+
+    .gender {
+      margin-left: 8.8em;
+      color: #9C9C9C;
+
+      .gender-button {
+        padding-top: 0.5em;
+
+        .maleCheck,
+        .femaleCheck {
+          position: relative;
+          display: inline-block;
+          bottom: 1em;
+          color: #445069;
+        }
+
+        .option-input {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          -ms-appearance: none;
+          -o-appearance: none;
+          appearance: none;
+          position: relative;
+          // top: 2px;
+          height: 20px;
+          width: 20px;
+          margin-right: .5rem;
+          transition: all 0.15s ease-out 0s;
+          background: #9C9C9C;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          display: inline-block;
+          outline: none;
+          position: relative;
+          // z-index: 1000;
+        }
+
+        .option-input:hover {
+          background: #7E94AB;
+        }
+
+        .option-input:checked {
+          background: #0C721F;
+        }
+
+        .option-input:checked::before {
+          height: 20px;
+          width: 20px;
+          position: absolute;
+          display: inline-block;
+          font-size: 18px;
+          text-align: center;
+          line-height: 20px;
+        }
+
+        .option-input:checked::after {
+          -webkit-animation: click-wave 0.65s;
+          -moz-animation: click-wave 0.65s;
+          animation: click-wave 0.65s;
+          background: #0C721F;
+          display: block;
+          position: relative;
+          z-index: 100;
+        }
+
+        .option-input.radio {
+          border-radius: 50%;
+        }
+
+        .option-input.radio::after {
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+  .SaveButton{
+    background-color: #0C721F;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 0.5rem;
+    margin-bottom: 0.8rem;
+    width: 50%;
+    max-width: 100px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0C721F;
+      color: #fff;
+      transform: scale(1.05);
+    }
+  }
+  .DeleteAccount{
+    color: #DF4D4D;
+    font-size: 0.9rem;
+    font-weight: lighter;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+ 
+    &:hover {
+      background-color: #fff;
+      color: #C51605;
+      transform: scale(1.05);
+    }
+  }
+}

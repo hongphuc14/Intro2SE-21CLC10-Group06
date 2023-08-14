@@ -1,0 +1,95 @@
+.license-company {
+    text-align: center;
+    display:flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.main-license{
+    width: calc(100vw - 18em);
+    // margin-left: auto;
+    height: fit-content;
+    // position: relative;
+    margin-left: 16em;
+    margin-top: 3em;
+    display: inline-flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.license-company > a{
+    // position: relative;
+    // top: 6em;
+    // left: 19em;
+    display: inline-block;
+    margin-top: 3.3em;
+    margin-left: 13em;
+    margin-right: 0;
+    position: fixed;
+}
+
+.license{
+    width: 23em;
+    height: 28.25em;
+    margin: 1em auto;
+    border-radius: 1.5em;
+    background-color: white;
+    border: 2px solid #d8d8d8;
+}
+
+.license img{
+    width: 15em;
+    height: 22em;
+    object-fit: cover;
+    border-radius: 0.8em;
+    margin: 1em auto 0.5em;
+}
+
+.license .license-info{
+    width: 19em;
+    height: fit-content;
+    display: flex;
+    margin: 0em 2em;
+
+}
+
+.license .license-info p{
+    width: 10em;
+    height: fit-content;
+    font-size: 0.8em;
+    margin: 0 auto;
+    color: #0E4D90;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.license .license-info .gray{
+    color: #8A8A8A;
+}
+
+.license .license-info .red{
+    color: #F71F39;
+}
+
+.license .license-info p:nth-child(1)::before{
+    content: '\f1c5';
+    font-family: "Font Awesome 6 Free";  
+    position: relative;
+    left: 0;
+    margin-right: 0.5em;
+    font-weight: 900;
+    font-size: 1.2em;
+    color: #0E4D90;
+}
+
+.license .license-info p:nth-child(2)::before{
+    content: '\f2f1';
+    font-family: "Font Awesome 6 Free";  
+    position: relative;
+    left: 0;
+    margin-right: 0.5em;
+    font-weight: 900;
+    font-size: 1.1em;
+    color: #0E4D90;
+}

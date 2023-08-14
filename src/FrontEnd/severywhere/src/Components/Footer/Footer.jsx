@@ -2,7 +2,7 @@ import './Footer.scss';
 
 const Footer = () => {
     return (  
-    <footer>
+    <footer id="main-footer">
         <div id="footer-container">
             <div className="footer-col">
                 <img className="footer-logo col-title" src=".\logo.png" />
@@ -32,6 +32,7 @@ const Footer = () => {
                 </div>
                 <p>Subcribe our newsletter to get latest update & news.</p>
                 <div className="newsletter-input">
+                    <i className="fa-solid fa-paper-plane"></i>
                     <input type="text" placeholder="Email address" />
                 </div>
             </div>

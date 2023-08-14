@@ -16,8 +16,8 @@ footer {
     display: flex;
     padding: 30px 3%;
     justify-content: center;
-    // background-image: url("../../../public/login-background.png"); 
-    background-color: black;
+    background-image: url("./footerbg.png"); 
+    // background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -83,7 +83,29 @@ footer {
     color: #0C721F;
     cursor: pointer;
 }
+
+.newsletter-input{
+    position: relative;
+}
+
+.newsletter-input i{
+    // content: "\f1d8"; /* Replace '\f0e0' with the Unicode for your Font Awesome icon (check Font Awesome documentation) */
+    // font-family: "Font Awesome 5 Free"; /* Set the Font Awesome font family */
+    width: 2em;
+    font-size: 2em;
+    color: #0C721F;
+    display: inline-block;
+    z-index: 1;
+    position: absolute;
+    top: 0.3em;
+    left: 90%;
+    cursor: pointer;
+}
+
 .newsletter-input {
+    // content: "\f1d8"; /* Replace '\f0e0' with the Unicode for your Font Awesome icon (check Font Awesome documentation) */
+    // font-family: "Font Awesome 5 Free"; /* Set the Font Awesome font family */
+    // font: var(--fa-font-solid);
     margin-top: 3rem;
     height: fit-content;
     width: 100%;
@@ -93,12 +115,13 @@ footer {
     width: 100%;
     border: none;
     border-radius: 10px;
-    position: relative;
+    position: absolute;
     left: 0;
     top: 0px;
     padding: 5px 10px;
     margin: 0;
 }
+
 /* .newsletter-input > button[type=submit] {
     border: 2px solid #0C721F;
     border-radius: 0 10px 10px 0;

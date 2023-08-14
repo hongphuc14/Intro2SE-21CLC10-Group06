@@ -7,16 +7,23 @@ html, body{
 }
 
 body{
+  font-family: 'RocknRoll One';
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   background: #F8F6F4;
 }
 
-*{
+p{
   font-family: 'RocknRoll One';
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*{
+  font-family: 'RocknRoll One', sans-serif;
 }
