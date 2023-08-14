@@ -1,19 +1,19 @@
 const express = require('express');
 const touristRoute = express.Router();
-const { getInfoByID, updateInfoByID, updatePwdByID, uploadTourist } = require('../controllers/touristController')
+const { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar } = require('../controllers/touristController')
 const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
 //GET: get tourist info by id_tourist
-touristRoute.get("/getInfo/:id_tourist", verifyToken, getInfoByID);
+touristRoute.get("/getInfo/:email", getInfoByID);
 
 //PUT: update tourist info by id_tourist
-touristRoute.put("/updateInfo/:id_tourist", verifyToken, updateInfoByID);
+touristRoute.put("/updateInfo/:id_tourist",  updateInfoByID);
 
 //PUT: update tourist password by id_tourist
-touristRoute.put("/updatePwd/:id_tourist", verifyToken, updatePwdByID);
+touristRoute.put("/updatePwd/:id_tourist", updatePwdByID);
 
 //POST: upload tourist avatar by id_tourist
-touristRoute.post("/uploadAvatar/:id_tourist", verifyToken, upload('tourist_avatar').single("dataUpload"), uploadTourist);
+// touristRoute.post("/updateAvatar/:id_tourist", upload('tourist_avatar').single("file"), updateAvatar);
 
 module.exports = touristRoute;

@@ -3,8 +3,11 @@ import { GET_DESTINATION,
 from "../types";
 
 export const stateDefault = {
+  // tourist
+  user_login: {email: "phmyxlinh@gmail.com", role: 1},
+
   // freelancer
-    user_login: {email: "tunglamtran.work@gmail.com"},
+    // user_login: {email: "tunglamtran.work@gmail.com", role: 3},
 
   // company
     // user_login: {email: "ldgroup@gmail.com"},

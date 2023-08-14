@@ -5,13 +5,13 @@ import { BasicReducer } from "./reducers/BasicReducer";
 import { FreelancerReducer } from "./reducers/FreelancerReducer";
 import { LoadingReducer } from "./reducers/LoadingReducer";
 import { CompanyReducer } from "./reducers/CompanyReducer";
-
+import {TouristReducer } from './reducers/TouristReducer'
 const rootReducer = combineReducers({
     BasicReducer,
     FreelancerReducer,
     CompanyReducer,
-    LoadingReducer
-
+    LoadingReducer,
+    TouristReducer
 })
 
 // cấu hình thunk

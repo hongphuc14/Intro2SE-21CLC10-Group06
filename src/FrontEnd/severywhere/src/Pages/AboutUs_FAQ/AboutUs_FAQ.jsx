@@ -5,12 +5,17 @@ import Sailing from './AU2.png';
 import FAQs from './FAQs.png';
 import HeaderGuest from '../../Components/Header/HeaderGuest';
 import Footer from '../../Components/Footer/Footer';
-
+import HeaderAbout from '../../Components/Header/HeaderAbout';
+import {useSelector} from 'react-redux'
 
 export default function AboutUs_FAQ() {
+    const role = useSelector(state => state.BasicReducer.user_login.role) || null
+
     return (
         <div className="aboutus-faq-page">
-            <HeaderGuest />
+            {
+                (role === 2 || role === 3) ? <HeaderAbout/> : <HeaderGuest/>
+            }
             <div className='content-ab-faq'>
                 <section class="head-banner">
                     <img src={HeadBanner} alt="Head Banner Image" width="100%"/>

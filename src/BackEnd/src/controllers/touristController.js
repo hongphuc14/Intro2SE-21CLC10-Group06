@@ -6,19 +6,14 @@ const { sucessCode, failCode, errorCode } = require('../config/response');
 //GET: get tourist info by id_tourist
 const getInfoByID = async(req, res) =>{
     try{
-        let { id_tourist } = req.params;
+        let { email } = req.params;
         let checkTourist = await model.tourist.findOne({
             where:{
-                id_tourist
+                email
             }
         });
         if(checkTourist){
-            let data = await model.tourist.findOne({
-                where:{
-                    id_tourist
-                }
-            });
-            res.send(data);
+            sucessCode(res,checkTourist,"Get thanh cong")
         }
         else{
             failCode(res,"","Tourist không tồn tại")
@@ -32,7 +27,7 @@ const getInfoByID = async(req, res) =>{
 const updateInfoByID = async(req, res) =>{
     try{
         let { id_tourist } = req.params;
-        let { fullname, email, phone, birthday, gender } = req.body;
+        let { fullname, phone, birthday, gender } = req.body;
         
         let checkTourist = await model.tourist.findOne({
             where:{
@@ -41,7 +36,7 @@ const updateInfoByID = async(req, res) =>{
         });
         if(checkTourist){
             await model.tourist.update({ 
-                fullname, email, phone, birthday, gender
+                fullname, phone, birthday, gender
             }, {
                 where:{
                     id_tourist
