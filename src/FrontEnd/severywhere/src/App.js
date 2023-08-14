@@ -1,5 +1,6 @@
 import './App.module.css';
 
+import HomePage from './Pages/HomePage/HomePage';
 import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import EditProfile from './Pages/Profile/EditProfile';
@@ -30,6 +31,7 @@ function App() {
     <Router history={history}>
     <div className = "App">
       <Switch>
+        <Route path = "/homepage" exact component={HomePage} />
         <Route path = "/signup" exact component={Signup} />
         <Route path = "/login" exact component ={Login} />
         <Route path = "/editprofile" exact component = {EditProfile} />
