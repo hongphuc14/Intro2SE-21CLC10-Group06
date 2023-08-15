@@ -15,6 +15,7 @@ import * as yup from 'yup'
 import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
   updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
   updateGuidePassword } from '../../redux/actions/FreelancerAction';
+import {getDestination} from '../../redux/actions/BasicAction'
 
 export default function ProfileFreelancer(){
   const dispatch = useDispatch()
@@ -28,7 +29,8 @@ export default function ProfileFreelancer(){
   // login mới get để lưu vào state
   useEffect(() => {
     dispatch(getTourGuideByIdGuide(user_login.email))
-  },[] )
+    dispatch(getDestination())
+  },[guide_info?.id_guide] )
 
   useEffect(() => {
     

@@ -7,54 +7,54 @@ const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
 //GET: get company info by email
-companyRoute.get("/getInfo/:email", getInfoByID);
+companyRoute.get("/getInfo/:email", verifyToken, getInfoByID);
 
 //GET: get company license by id_company
-companyRoute.get("/getLicense/:id_company", getLicenseByID);
+companyRoute.get("/getLicense/:id_company", verifyToken, getLicenseByID);
 
 //PUT: update company info by id_company
-companyRoute.put("/updateInfo/:id_company", updateInfoByID);
+companyRoute.put("/updateInfo/:id_company", verifyToken, updateInfoByID);
 
 //POST: update freelancer avatar by id_guide
-companyRoute.post("/updateAvatar/:id_company", upload('company_avatar').single("file"), updateAvatarByID);
+companyRoute.post("/updateAvatar/:id_company", verifyToken, upload('company_avatar').single("file"), updateAvatarByID);
 
 //PUT: update freelancer info by id_guide
-companyRoute.put("/deleteAvatar/:id_company", deleteAvatarByID);
+companyRoute.put("/deleteAvatar/:id_company", verifyToken, deleteAvatarByID);
 
 //PUT: update company password by id_company
-companyRoute.put("/updatePwd/:id_company", updatePwdByID);
+companyRoute.put("/updatePwd/:id_company", verifyToken, updatePwdByID);
 
 // PUT: delete company license by id_company
-companyRoute.put("/deleteLicense/:id_company", deleteLicenseByID);
+companyRoute.put("/deleteLicense/:id_company", verifyToken, deleteLicenseByID);
 
 // POST: update company license by id_company
-companyRoute.post("/updateLicense/:id_company", upload('company_license').array("file"), updateLicenseByID);
+companyRoute.post("/updateLicense/:id_company", verifyToken, upload('company_license').array("file"), updateLicenseByID);
 
 //GET: get company tour by id_company
-companyRoute.get("/getTour/:id_company", getTourByID);
+companyRoute.get("/getTour/:id_company", verifyToken, getTourByID);
 
 // PUT: update tour info by id_tour
-companyRoute.put("/updateTourInfo/:id_tour", updateTourInfo);
+companyRoute.put("/updateTourInfo/:id_tour", verifyToken, updateTourInfo);
 
 // POST: update tour file by id_tour
-companyRoute.post("/updateTourFile/:id_tour", upload('tour').single("file"), updateTourFile);
+companyRoute.post("/updateTourFile/:id_tour", verifyToken, upload('tour').single("file"), updateTourFile);
 
 // PUT: delete company tour by id_tour
-companyRoute.put("/deleteTour/:id_tour", deleteTour);
+companyRoute.put("/deleteTour/:id_tour", verifyToken, deleteTour);
 
 // GET: get company booking by id_company
-companyRoute.get("/getBooking/:id_company", getBooking);
+companyRoute.get("/getBooking/:id_company", verifyToken, getBooking);
 
 // PUT: update company booking by id_tour
-companyRoute.put("/updateBooking/:id_tour_booking", updateBooking);
+companyRoute.put("/updateBooking/:id_tour_booking", verifyToken, updateBooking);
 
 //GET: get company review by id_company
-companyRoute.get("/getReview/:id_company", getReview);
+companyRoute.get("/getReview/:id_company", verifyToken, getReview);
 
 // PUT: update booking reply by id_company
-companyRoute.put("/updateReply/:id_company", updateReply);
+companyRoute.put("/updateReply/:id_company", verifyToken, updateReply);
 
 // PUT: update booking report by id_company
-companyRoute.put("/updateReport/:id_company", updateReport);
+companyRoute.put("/updateReport/:id_company", verifyToken, updateReport);
 
 module.exports = companyRoute;

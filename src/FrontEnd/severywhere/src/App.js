@@ -23,35 +23,70 @@ import ReviewCompany from './Pages/Company/ReviewCompany'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from "history";
+import { useSelector } from 'react-redux';
 
 export const history = createBrowserHistory();
 
 function App() {
+  const role = useSelector(state => state.BasicReducer.user_login.id_role)
+
   return (
     <Router history={history}>
     <div className = "App">
       <Switch>
-        <Route path = "/homepage" exact component={HomePage} />
-        <Route path = "/signup" exact component={Signup} />
-        <Route path = "/login" exact component ={Login} />
-        <Route path = "/editprofile" exact component = {EditProfile} />
-        <Route path = "/emailResetpw" exact component = {ResetPasswordEmail} />
-        <Route path = "/resetpw" exact component = {ResetPassword} />
-        <Route path = "/changepw" exact component = {ChangePassword} />
+{/*all users*/}        
         <Route path = "/aboutus" exact component = {AboutUs_FAQ} />
-
-        <Route path = "/profile-freelancer" exact component ={ProfileFreelancer} />
-        <Route path = "/license-freelancer" exact component ={LicenseFreelancer} />
-        <Route path = "/calendar-freelancer" exact component ={CalendarFreelancer} />
-        <Route path = "/booking-freelancer" exact component ={BookingFreelancer} />
-        <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
-
-        <Route path = "/profile-company" exact component ={ProfileCompany} />
-        <Route path = "/license-company" exact component ={LicenseCompany} />
-        <Route path = "/tour-company" exact component ={TourCompany} />
-        <Route path = "/statistics-company" exact component ={StatisticsCompany} />
-        <Route path = "/booking-company" exact component ={BookingCompany} />
-        <Route path = "/review-company" exact component ={ReviewCompany} />
+{/*guest + tourist*/}
+        {
+          (role !== 2)  && (role !== 3) && (role !== 4) && (
+            <Route path = "/homepage" exact component={HomePage} />
+          )
+        }
+{/*guest*/}
+        {
+          (role !== 1)  && (role !== 2)  && (role !== 3) && (role !== 4)&& (
+            <>
+            <Route path = "/signup" exact component={Signup} />
+            <Route path = "/login" exact component ={Login} />
+            <Route path = "/emailResetpw" exact component = {ResetPasswordEmail} />
+            <Route path = "/resetpw" exact component = {ResetPassword} />
+            </>
+          )
+        }
+{/*tourist*/}
+        {
+          role === 1 && (
+            <>
+            <Route path = "/editprofile" exact component = {EditProfile} />
+            <Route path = "/changepw" exact component = {ChangePassword} />
+            </>
+          )
+        }
+{/*freelancer*/}
+        {
+          role === 3 && (
+            <>
+            <Route path = "/profile-freelancer" exact component ={ProfileFreelancer} />
+            <Route path = "/license-freelancer" exact component ={LicenseFreelancer} />
+            <Route path = "/calendar-freelancer" exact component ={CalendarFreelancer} />
+            <Route path = "/booking-freelancer" exact component ={BookingFreelancer} />
+            <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
+            </>
+          )
+        }
+{/*company*/}
+        {
+          role === 2 && (
+            <>
+            <Route path = "/profile-company" exact component ={ProfileCompany} />
+            <Route path = "/license-company" exact component ={LicenseCompany} />
+            <Route path = "/tour-company" exact component ={TourCompany} />
+            <Route path = "/statistics-company" exact component ={StatisticsCompany} />
+            <Route path = "/booking-company" exact component ={BookingCompany} />
+            <Route path = "/review-company" exact component ={ReviewCompany} />
+            </>
+          )
+        }
       </Switch>
     </div>
   </Router>

@@ -1,48 +1,94 @@
-import { GET_DESTINATION, LOGIN } 
-from "../types";
+import { GET_DESTINATION, LOGIN, SIGNUP } from "../types";
 import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
-import { BasicService } from "../../services/BasicService";
+import { basicService } from "../../services/BasicService";
+import { history } from "../../App";
+import { USER_LOGIN, TokenKey, RoleKey } from "../../util/config";
 
-// const user_login = {email: "tunglamtran.work@gmail.com", password: "tunglam23@@"}
-
-export const logIn = (user_login) => {
+export const logInAction = (user_login) => {
   return async (dispatch) => {
-    // try {
-    //   const result = await BasicService.logIn(user_login);
-    //   if (result.status === 200) {
-    //     await dispatch({
-    //       type: LOGIN,
-    //       user_login: result.data,
-    //     });
+    console.log("try")
+    try {
+      console.log("action");
+      const result = await basicService.logIn(user_login);
+      if (result.status === 200) {
+        // Store token in localStorage
+        localStorage.setItem(TokenKey, result.data.content);
+        const userResult = await basicService.getInfoByEmail(user_login.email);
+        console.log(userResult)
+        if (userResult.status === 200) {
+          dispatch({
+            type: LOGIN,
+            user_login: userResult.data.content
+          });
+        }
+        // Store user information in localStorage
+        localStorage.setItem(USER_LOGIN, JSON.stringify(userResult.data.content));
+        localStorage.setItem(RoleKey, JSON.stringify(userResult.data.content.id_role));
 
-    //     // Thông báo đăng nhập thành công và quay về trang chủ
-    //     alert("Logged in successfully");
-    //     // history.push("/profile-freelancer");
-    //     // window.location.reload();
-    //   }
-    // } catch (error) {
-    //   alert("Login failed, username or password is incorrect");
-    //   console.log("error", error.response);
-    // }
+        const roleId = localStorage.getItem(RoleKey);
+        
+        if(roleId === "1")
+          window.history.pushState(null,null,"/homepage-tourist");
+        if(roleId === "2")
+          window.history.pushState(null,null,"/profile-company");
+        if(roleId === "3"){
+          window.history.pushState(null,null,"/profile-freelancer");
+        }
+        if(roleId === "4")
+          window.history.pushState(null,null,"aprofile-admin");
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
   };
 };
 
-  export const getDestination = () => {
-    return async (dispatch) => {
-      try {
-        dispatch(displayLoadingAction);
+export const getDestination = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+
+      const result = await basicService.getDestination();
   
-        const result = await BasicService.getDestination();
-  
-        if (result.status === 200) {
-          dispatch({
-            type: GET_DESTINATION,
-            destination: result.data,
-          });
-          dispatch(hideLoadingAction);
-        }
-      } catch (error) {
-        console.log("error", error.response);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_DESTINATION,
+          destination: result.data.content,
+        });
+        dispatch(hideLoadingAction);
       }
-    };
+    } catch (error) {
+      console.log("error", error.response);
+    }
   };
+};
+
+export const signUpAction = (formData) => {
+  return async (dispatch) =>{
+    try {
+      const result = await basicService.signUp(formData);
+      if (result.status === 201){
+        dispatch({
+          type: SIGNUP,
+          formData: result.data.content
+        });
+        
+        history.push("/login");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};
+
+export const deleteAccountAction = (id_role, id) => {
+  return async (dispatch) =>{
+    try {
+        const result = await basicService.deleteAccount(id_role, id);
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};

@@ -9,7 +9,7 @@ import HeaderAbout from '../../Components/Header/HeaderAbout';
 import {useSelector} from 'react-redux'
 
 export default function AboutUs_FAQ() {
-    const role = useSelector(state => state.BasicReducer.user_login.role) || null
+    const role = useSelector(state => state.BasicReducer.user_login.id_role) || null
 
     return (
         <div className="aboutus-faq-page">

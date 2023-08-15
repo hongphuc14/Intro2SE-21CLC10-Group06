@@ -4,6 +4,8 @@ export const HIDE_LOADING = "HIDE_LOADING";
 // BASIC
 export const LOGIN = "LOGIN";
 
+export const SIGNUP = "SIGNUP";
+
 export const GET_DESTINATION = "GET_DESTINATION";
 
 

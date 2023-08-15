@@ -4,18 +4,28 @@ import axios from "axios";
 export class baseService {
   getUserRole = () =>{
     const roleId = localStorage.getItem(RoleKey);
+    //const roleId = 4;
     return RoleMapping[roleId];
   };
 
   //add common headers to all requests
   addCommonHeaders = (headers = {}) => {
     const role = this.getUserRole();
-    return {
-      ...headers,
-      TokenByClass: localStorage.getItem(TokenKey),
-      Token: localStorage.getItem(TokenKey),
-      Role: role, // Add the user role to the request headers
-    };
+    const Token = localStorage.getItem(TokenKey);
+    if(Token){
+      return {
+        ...headers,
+        TokenByClass: Token,
+        Token: Token,
+        Role: role // Add the user role to the request headers
+      };
+    }
+    else{
+      return {
+        ...headers,
+        Role: role
+      };
+    }
   };
 
   get = (url, headers = {}) => {
@@ -63,6 +73,7 @@ export class baseService {
 
   isGuest = () =>{
     const roleId = localStorage.getItem(RoleKey);
+    //const roleId = 4;
     // if roleId is null or undefined, the user is a guest
     return !roleId;
   }

@@ -128,6 +128,7 @@ export default function AttractionFreelancer(){
         console.log(attractions)
     }
     
+    console.log(attractions)
     if (attractions)
     return(
         <>

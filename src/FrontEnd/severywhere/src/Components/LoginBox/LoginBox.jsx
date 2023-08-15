@@ -1,16 +1,24 @@
 import "./LoginBox.scss"
 import React, {useState} from "react";
+import { useDispatch } from "react-redux";
+import { logInAction } from "../../redux/actions/BasicAction";
 
 const LoginBox = () =>{
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const handleSubmit = (e)=>{
         e.preventDefault();
-        console.log(email);
-    }
+        const user_login = {
+            email: email,
+            password: pass
+        };
+        console.log("user_login: ", user_login);
+        dispatch(logInAction(user_login));
+    };
     return(
         <div className = "auth-form-container">
-            <form className = "login-form">
+            <form className = "login-form" onSubmit={handleSubmit}>
                 <h2>LOGIN</h2>
                 <div className = "mailInput">
                     <input value= {email} onChange={(e) =>setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email">

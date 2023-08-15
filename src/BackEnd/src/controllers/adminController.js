@@ -18,10 +18,10 @@ const getInfoByID = async(req, res) =>{
                     id_admin
                 }
             });
-            res.send(data);
+            sucessCode(res,data,"Lấy thành công");
         }
         else{
-            failCode(res,"","Admin không tồn tại")
+            failCode(res,"","Admin không tồn tại");
         } 
     }catch(err){
         errorCode(res,"Lỗi BE")
@@ -52,21 +52,22 @@ const updateInfoByID = async(req, res) =>{
                     id_admin
                 }
             });
-            sucessCode(res,data,"Update thành công")
+            sucessCode(res,data,"Update thành công");
         }
         else{
-            failCode(res,"","Admin không tồn tại")
+            failCode(res,"","Admin không tồn tại");
         } 
     }catch(err){
-        errorCode(res,"Lỗi BE")
+        errorCode(res,"Lỗi BE");
     }
 }
 
+const bcrypt = require('bcrypt'); 
 //PUT: update admin password by id_admin
 const updatePwdByID = async(req, res) =>{
     try{
         let { id_admin } = req.params;
-        let { c_password, n_password } = req.body;
+        let { c_password, n_password, cf_password } = req.body;
         
         let checkAdmin = await model.admin_se.findOne({
             where:{
@@ -89,17 +90,17 @@ const updatePwdByID = async(req, res) =>{
                         id_admin
                     }
                 });
-                sucessCode(res,data,"Update thành công")
+                sucessCode(res,data,"Update thành công");
             }
             else{
-                failCode(res,"","Mật khẩu không đúng")
+                failCode(res,"","Mật khẩu không đúng");
             }
         }
         else{
-            failCode(res,"","Admin không tồn tại")
+            failCode(res,"","Admin không tồn tại");
         } 
     }catch(err){
-        errorCode(res,"Lỗi BE")
+        errorCode(res,"Lỗi BE");
     }
 }
 

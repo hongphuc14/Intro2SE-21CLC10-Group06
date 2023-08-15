@@ -8,7 +8,7 @@ export default function HeaderAbout(){
         <header className = "header-about">
             <img  src={logo} className="SE-logoo" alt="logo" />
             <div>
-                <a href = "#" className = "about-faq" onClick = {goBack}>Back to dashboard</a>
+                <a href = "/profile-freelancer" className = "about-faq" onClick = {goBack}>Back to dashboard</a>
             </div>
         </header>
     )
