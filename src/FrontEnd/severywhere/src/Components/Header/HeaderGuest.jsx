@@ -1,8 +1,7 @@
 
 import "./HeaderGuest.scss";
-import React, { useState, useRef } from 'react';
-//import React, { useState, useEffect, useRef } from 'react';
-//import {Link} from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import {Link} from 'react-router-dom';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

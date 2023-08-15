@@ -11,6 +11,7 @@ body{
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* overflow: hidden; */
   background: #F8F6F4;
 }
 
@@ -21,4 +22,8 @@ p{
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+*{
+  font-family: 'RocknRoll One', sans-serif;
 }

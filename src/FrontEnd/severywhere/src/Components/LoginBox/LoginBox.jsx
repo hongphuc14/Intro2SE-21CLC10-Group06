@@ -7,13 +7,13 @@ const LoginBox = () =>{
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+    
     const handleSubmit = (e)=>{
         e.preventDefault();
         const user_login = {
             email: email,
             password: pass
         };
-        console.log("user_login: ", user_login);
         dispatch(logInAction(user_login));
     };
     return(

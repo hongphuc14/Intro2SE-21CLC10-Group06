@@ -1,0 +1,102 @@
+.adminInfo {
+  .admin-path{
+    align-items: center;
+    color: #0E4D90;
+    display: flex;
+    margin-bottom: 20px;
+    .admin-path-name{
+      margin-left: 10px;
+      font-weight: 700;
+      font-size: 17px;
+      text-align: center;
+    }
+  }
+  .profile-form{
+    background-color: #fff;
+    border-radius: 5px;
+    width: 100%;
+    padding: 1px 30px 20px 30px;
+    margin-bottom: 20px;
+    box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.05);
+    .custom-form-group{
+      width: 100%;
+    }
+    .custom-form-control{
+      width: 100%;
+    }
+  }
+  .profile-header{
+    color: #0E4D90 !important;
+    height: 40px;
+    border-radius: 3px 3px 0 0;
+  }
+  .custom-form{
+    color: #7E94AB;
+  }
+  .custom-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+  }
+
+  .custom-form-group.custom-column label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .custom-form-group.custom-column.email-group {
+    flex-basis: calc(50% - 5px); /* Độ dài của input email */
+    margin-right: 35px;
+  }
+  
+  .custom-form-group.custom-column.phone-group {
+    flex-basis: calc(50% - 5px); /* Độ dài của input phone */
+  }
+
+  .custom-form-group.custom-column.birthday-group {
+    flex-basis: calc(50% - 5px); /* Độ dài của input email */
+    margin-right: 35px;
+  }
+  
+  .custom-form-group.custom-column.gender-group {
+    flex-basis: calc(50% - 5px); /* Độ dài của input phone */
+  }
+
+  .custom-form-control {
+    width: 100%;
+    padding: 8px 8px 8px 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    color: #0E4D90;
+    font-weight: 550;
+    font-family: "RocknRoll One", sans-serif;
+    &:focus{
+      outline: none;
+    }
+  }
+  #btnUpdate, #btnUpload, #btnChange {
+    font-family: "RocknRoll One", sans-serif;
+    font-size: 15px;
+    font-weight: 550;
+    padding: 3px 10px 5px 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #0E4D90;
+    color: white;
+    border: 1px solid #0E4D90;
+    &:hover {
+      background-color: #175fa6;
+      border: 1px solid #175fa6;
+      color: white;
+      transition: 0.5s;
+    }
+  }
+  .pwd-header{
+    background-color: #fff;
+    color: #0E4D90 !important;
+    height: 40px;
+    border-radius: 3px 3px 0 0;
+  } 
+}
+  

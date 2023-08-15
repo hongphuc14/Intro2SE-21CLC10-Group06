@@ -11,20 +11,24 @@ export class AdminService extends baseService {
     };
 
     // Api 2: Update admin info
-    updateAdminInfo = ( id_admin, formData) =>{
+    updateAdminInfo = ( id_admin, formData ) =>{
         return this.put(`admin/updateInfo/${id_admin}`, formData);
     };
 
     // Api 3: Update admin password
-    updateAdminPwd = ( id_admin, formData) =>{
+    updateAdminPwd = ( id_admin, formData ) =>{
         return this.put(`admin/updatePwd/${id_admin}`, formData);
     };
 
     // Api 4: Upload admin avatar 
-    uploadAdminAvatar = ( id_admin, img) =>{
-        return this.put(`admin/updateAvatar/${id_admin}`, img);
+    uploadAdminAvatar = ( id_admin, img ) =>{
+        return this.post(`admin/uploadAvatar/${id_admin}`, img);
     };
 
+    //Api 5: Get admin avatar
+    getAdminAvatar = ( id_admin ) =>{
+        return this.get(`admin/getAvatar/${id_admin}`);
+    }
 }
 
 export const adminService = new AdminService();

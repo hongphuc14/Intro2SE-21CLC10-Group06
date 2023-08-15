@@ -1,26 +1,56 @@
 import "./SignupBox.scss";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signUpAction } from "../../redux/actions/BasicAction";
 
 const SignupBox = () => {
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
+    const [idRole, setIdRole] = useState('');
+    
+    const handleSignup = (e)=>{
+        //e.preventDefault();
+        if(pass === confirmPass){
+            const user_signup = {
+                email: email,
+                password: pass,
+                id_role: idRole
+            };
+            console.log("user_signup: ", user_signup);
+            dispatch(signUpAction(user_signup));
+        }
+        else{
+            alert("Passwords do not match. Please try again!!!");
+            return;
+        }
+        // Clear form fields after signup
+        setEmail('');
+        setPass('');
+        setConfirmPass('');
+        setIdRole('');
+    };
     return (  
         <div id="signup-container">
             <div id="signup-left">
                 <p className="signup-title">SIGN UP</p>
                 <p className="signup-subtitle">Create your new account</p>
                 <ul className="signup-input">
-                    <li><input type="text" placeholder="Email address *"/></li>
-                    <li><input type="password" placeholder="Password *"/></li>
-                    <li><input type="password" placeholder="Confirm password *"/></li>
+                    <li><input type="text" placeholder="Email address *" value={email} onChange={(e) => setEmail(e.target.value)}/></li>
+                    <li><input type="password" placeholder="Password *" value={pass} onChange={(e) => setPass(e.target.value)}/></li>
+                    <li><input type="password" placeholder="Confirm password *" value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)}/></li>
                 </ul>
                 <div class="signup-button">
-                    <input type="submit" value="SIGN UP"/>
+                    <input type="submit" value="SIGN UP" onClick={handleSignup}/>
                 </div>
             </div>
             <div id="signup-right">
                 <p className="role-title">Who are you?</p>
                 <ul className="role-option">
-                    <li><input type="button" value="Tourist"/></li>
-                    <li><input type="button" value="Tour Company"/></li>
-                    <li><input type="button" value="Tour Guide"/></li>
+                    <li><input type="button" value="Tourist" onClick={() => setIdRole('1')}/></li>
+                    <li><input type="button" value="Tour Company" onClick={() => setIdRole('2')}/></li>
+                    <li><input type="button" value="Tour Guide" onClick={() => setIdRole('3')}/></li>
                 </ul>
                 
             </div>

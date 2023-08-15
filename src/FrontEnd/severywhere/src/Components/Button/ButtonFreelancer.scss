@@ -2,7 +2,7 @@
     visibility: hidden;
   }
 
-.button-edit, .button-delete{
+.button-edit, .button-delete, .button-view{
     width: 4em;
     height: 4em;
     margin: 0 0.5em;
@@ -17,7 +17,7 @@
 }
 
 
-.button-edit::before{
+.button-edit[type=file]::before{
     content: '\f14b';
     font-family: "FontAwesome";
     color: white;
@@ -27,6 +27,17 @@
     left: 0.58em;
 }
 
+button[class=button-edit] .fa-solid{
+    color: white;
+    font-size: 1.7em; 
+}
+
+.button-view .fa-solid{
+    color: white;
+    font-size: 1.5em; 
+}
+
+
 .button-delete .fas{
     content: '\f14b';
     font-family: "FontAwesome";
@@ -34,13 +45,17 @@
     font-size: 1.8em;
 }
 
-.button-delete:hover , .button-edit:hover{
+.button-delete:hover , .button-edit:hover,
+.button-view:hover{
     background: white;
     outline: 0.25em solid #0E4D90;
     outline-offset: -0.25em;
 }
 
-.button-edit:hover::before, .button-delete:hover .fas{
+.button-edit:hover::before, 
+.button-delete:hover .fas,
+.button-view:hover .fa-solid,
+.button-edit:hover .fa-solid{
     color: #0E4D90
 }
 

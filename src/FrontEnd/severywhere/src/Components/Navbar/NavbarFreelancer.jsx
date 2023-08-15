@@ -1,15 +1,22 @@
 import "./NavbarFreelancer.scss";
 import {Link} from "react-router-dom"
 
-export default function NavbarNavbarFreelancer({src, fullname, flag1, flag2, flag3}){
+export default function NavbarFreelancer({src, fullname, flag1, flag2, flag3}){
+    // const history = useHistory();
+    // const handleClick = () => {
+    //     history.push("/profile-freelancer");
+    //   };
+
+    //   onClick={handleClick}
+
     return(
         <nav className = "navbar-freelancer">
             <div className = "avatar">
                 <img src={src} alt = "avatar"></img>
                 <p>{fullname}</p>
             </div>
-            <Link to = "/profile-freelancer" style={{ textDecoration: 'none' }}>
-                <button className = {flag1}>
+            <Link to =  "/profile-freelancer"  style={{ textDecoration: 'none' }}>
+                <button className = {flag1} >
                     <i className="fas fa-user-circle"></i>
                     <p className = "textNavbar">PROFILE</p>
                 </button>

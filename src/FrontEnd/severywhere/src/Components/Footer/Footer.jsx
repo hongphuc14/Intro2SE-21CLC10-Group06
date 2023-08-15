@@ -2,10 +2,10 @@ import './Footer.scss';
 
 const Footer = () => {
     return (  
-    <footer>
+    <footer id="main-footer">
         <div id="footer-container">
             <div className="footer-col">
-                <img className="footer-logo col-title" src=".\logo.png" alt=''/>
+                <img className="footer-logo col-title" src=".\logo.png" />
                 <p>SEverywhere will guide you to every corner of Vietnam. Join us and have more fun!</p>
                 <div id="social-media">
                     <i className="fab fa-facebook-f social-icon"></i>

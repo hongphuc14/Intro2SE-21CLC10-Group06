@@ -4,7 +4,6 @@ import axios from "axios";
 export class baseService {
   getUserRole = () =>{
     const roleId = localStorage.getItem(RoleKey);
-    //const roleId = 4;
     return RoleMapping[roleId];
   };
 
@@ -73,8 +72,6 @@ export class baseService {
 
   isGuest = () =>{
     const roleId = localStorage.getItem(RoleKey);
-    //const roleId = 4;
-    // if roleId is null or undefined, the user is a guest
     return !roleId;
   }
 }

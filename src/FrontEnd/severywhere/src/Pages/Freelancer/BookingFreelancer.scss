@@ -1,0 +1,126 @@
+// page
+.booking-freelancer {
+  text-align: center;
+  display:flex;
+  flex-wrap: wrap;
+  position: relative;
+  height: fit-content;
+}
+  
+  // main
+.main-booking{
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 12em);
+  height: fit-content;
+  position: relative;
+  left: 12em;
+  top: 3em;
+  align-items: flex-start;
+}
+
+.main-booking .tourist-booking{
+  width: calc(100vw - 20em);
+  height: fit-content;  
+  background-color: white;
+  border-radius: 0.8em;
+  margin: 2em auto 1em;
+}
+
+.main-booking .tourist-info{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2em auto 0;
+  justify-content: center;
+}
+
+.main-booking .tourist-info .input-field{
+  width: fit-content;
+  text-align: start;
+  margin: 0em 1em;
+}
+
+.main-booking .tourist-info .input-field input,
+.main-booking .tourist-info .input-field input:focus-visible{
+  background-color: #D8D8D8;
+  color: #7E94AB;
+  min-width: 19em;
+  border: 1.5px solid #0E4D90;
+}
+
+// .main-booking input[type=date]::-webkit-calendar-picker-indicator {
+//   display: none;
+// }
+
+// .main-booking input[type=date]{
+//   cursor: text;
+// }
+
+.main-booking .check-box{
+  width: 28.7em;
+  // width: fit-content;
+  text-align: start;
+  margin: 0em 1em;
+}
+
+.main-booking .tourist-booking .check-box input{
+  margin-left: 0;
+}
+
+.main-booking .check-box label{
+  min-width: fit-content;
+  margin-right: 0
+}
+
+.main-booking .check-box label:first-of-type{
+  margin-right:6.75em;
+}
+
+.main-booking .hr{
+  margin: 1.5em auto;
+}
+
+.main-booking .booking-info{
+  font-size: 0.8em;
+  color: #0E4D90;  
+  text-align: start;
+  width: 75%;
+  margin: 0 auto 1em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.main-booking .booking-info > div{
+  position: relative;
+  display: inline-block;
+  margin-bottom: -0.5em;
+  width: 50%;
+}
+
+.main-booking .booking-info > div:nth-of-type(5){
+  // margin-left: 5em;
+  width: 100%;
+}
+
+.main-booking .booking-button{
+  width: 100%;
+  margin: 0 auto 1em;
+}
+
+.main-booking .tourist-booking .cancel{
+  margin: 1em auto 2em;
+}
+
+.main-booking .booking-info p{
+  display: inline-block;
+}
+
+.main-booking .booking-info p:nth-of-type(even){
+  color: #7E94AB;
+  margin-left: 1em;
+}
+
+.main-booking .button-upload{
+  margin-left: 2em;
+}

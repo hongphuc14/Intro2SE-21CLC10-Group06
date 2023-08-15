@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRoute = express.Router();
-const { getInfoByID, updateInfoByID, updatePwdByID, uploadAdmin } = require('../controllers/adminController')
+const { getInfoByID, updateInfoByID, updatePwdByID, uploadAdmin, getAvatarByID } = require('../controllers/adminController')
 const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
@@ -15,5 +15,8 @@ adminRoute.put("/updatePwd/:id_admin", verifyToken, updatePwdByID);
 
 //POST: upload admin avatar by id_admin
 adminRoute.post("/uploadAvatar/:id_admin", verifyToken, upload('admin_avatar').single("dataUpload"), uploadAdmin);
+
+//GET: get admin avatar by id_admin
+adminRoute.get("/getAvatar/:id_admin", verifyToken, getAvatarByID);
 
 module.exports = adminRoute;

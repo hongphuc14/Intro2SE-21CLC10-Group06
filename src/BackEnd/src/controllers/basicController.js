@@ -10,7 +10,6 @@ const login = async(req, res)=>{
     console.log("controller");
     try{
         let { email, password } = req.body;
-        console.log(email, password);
         // Admin login
         let checkAdmin = await model.admin_se.findOne({
             where:{
@@ -36,10 +35,8 @@ const login = async(req, res)=>{
             }
         })
         if(checkTourist){
-            //let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
-            //let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkTourist.password);
-            if(password == checkTourist.password){
+            let checkPass = bcrypt.compareSync(password, checkTourist.password);
+            if(checkPass){
                 sucessCode(res, parseToken(checkTourist), "Login thành công");
                 return;
             }
@@ -56,8 +53,6 @@ const login = async(req, res)=>{
             }
         })
         if(checkCompany){
-            //let passWordHash = bcrypt.hashSync(checkCompany.password, 10);
-            //let checkPass = bcrypt.compareSync(password, passWordHash);
             let checkPass = bcrypt.compareSync(password, checkCompany.password);
             if(checkPass){
                 sucessCode(res, parseToken(checkCompany), "Login thành công");
@@ -76,8 +71,6 @@ const login = async(req, res)=>{
             }
         })
         if(checkFreelancer){
-            //let passWordHash = bcrypt.hashSync(checkFreelancer.password, 10);
-            //let checkPass = bcrypt.compareSync(password, passWordHash);
             let checkPass = bcrypt.compareSync(password, checkFreelancer.password);
             if(checkPass){
                 sucessCode(res, parseToken(checkFreelancer), "Login thành công");
@@ -230,16 +223,6 @@ const deleteAccount = async(req, res) => {
         errorCode(res, "Loi BE");
     }
 }
-// không cần do trong FE đã xử lý
-const logout = async(req, res) =>{
-    try{
-        // Xóa token khỏi localStorage khi đăng xuất
-        clearLocalStorage("Token");
-        sucessCode(res, null, "Logout successful");
-    } catch (error) {
-        errorCode(res, "Lỗi BE");
-    }
-}
 
 const getDestination = async(req, res) => {
     try{
@@ -301,4 +284,5 @@ const getInfoByEmail = async(req, res) =>{
         errorCode(res,"Lỗi BE")
     }
 } 
-module.exports = { login, signUp, deleteAccount, logout, getDestination, getInfoByEmail }
+
+module.exports = { login, signUp, deleteAccount, getDestination, getInfoByEmail }

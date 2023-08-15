@@ -1,6 +1,5 @@
 #adminTemplate {
   .site-layout-background{
-    font-family: "RocknRoll One", sans-serif;
     position: fixed;
     top: 0;
     left: 0;
@@ -21,13 +20,16 @@
     display: flex;
     text-align: left;
     aside {
-      flex: 0 0 300px  !important;
-      max-width: 300px !important;
-      width: 300px !important;
+      position: fixed;
+      height: 100vh;
+      flex: 0 0 250px  !important;
+      max-width: 250px !important;
+      width: 250px !important;
       background-color: #fff;
       color: #0E4D90;
+      box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.05);
       .info{
-        padding-left: 100px;
+        padding-left: 75px;
         padding-top: 30px;
         padding-bottom: 15px;
         .avatar{
@@ -48,10 +50,10 @@
 
     .site-layout{
       flex: 1;
-      width: 1400px;
+      width: 1285px;
+      margin-left: 250px;
     }
     .ant-menu{
-      font-family: "RocknRoll One", sans-serif;
       .ant-menu-item{
         a{
           color: #0E4D90;

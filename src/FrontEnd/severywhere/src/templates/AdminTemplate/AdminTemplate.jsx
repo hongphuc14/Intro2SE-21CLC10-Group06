@@ -6,19 +6,25 @@ import { history } from "../../App";
 import { Layout, Menu } from "antd";
 import "./AdminTemplate.scss";
 import logo from "./horizontal_black.png";
-import ava from "./1691817344693_shinchan.jpg";
-import AdminAvatar from "../../Components/AdminAvatar/AdminAvatar";
+import { USER_LOGIN } from "../../util/config";
+import { logOutAction } from "../../redux/actions/BasicAction";
+
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
 export const AdminTemplate = (props) => {
     const { Component, ...restProps}  = props;
-    const { admin_info } = useSelector( (state) => state.AdminReducer );
-    console.log("avatar: ", admin_info.avatar);
+    const { admin_info } = useSelector( (state) => state.AdminReducer ) || JSON.parse(localStorage.getItem(USER_LOGIN));
+    const { admin_avatar } = useSelector((state) => state.AdminReducer);
+    console.log("admin_avatar_tem: ", admin_avatar);
+    const dispatch = useDispatch();
+    
     useEffect(() =>{
         window.scrollTo(0, 0);
     });
-    
+    const handleLogout = () =>{
+        dispatch(logOutAction());
+    }
     const menuItems = [
         {
           key: 'dashboard',
@@ -71,7 +77,8 @@ export const AdminTemplate = (props) => {
             key: 'logout',
             icon: <i className="fa-solid fa-right-from-bracket"></i>,
             title: 'LOGOUT',
-            link: '/admin-logout'
+            link: 'edit-profile',
+            onClick: handleLogout
         },
     ];
     
@@ -96,8 +103,7 @@ export const AdminTemplate = (props) => {
                             <Sider>
                                 <div className="info">
                                     <div className="avatar">
-                                        {/* <AdminAvatar avatarFileName={admin_info.avatar}/> */}
-                                        <img src={ava} alt="avatar" />
+                                        <img src={admin_avatar} alt="avatar" />
                                     </div>
                                     <p style={{paddingLeft:"8px"}}>{admin_info.fullname}</p>
                                 </div>
@@ -115,7 +121,7 @@ export const AdminTemplate = (props) => {
                                             );
                                         } else {
                                             return (
-                                                <Menu.Item key={menuItem.key} icon={menuItem.icon} >
+                                                <Menu.Item key={menuItem.key} icon={menuItem.icon} onClick={menuItem.onClick}>
                                                     <NavLink to={menuItem.link} style={{fontWeight:"600"}}>{menuItem.title}</NavLink>
                                                 </Menu.Item>
                                             );
@@ -125,7 +131,7 @@ export const AdminTemplate = (props) => {
                             </Sider>
 
                             <Layout className='site-layout'>
-                                <Content style={{margin:0}}>
+                                <Content>
                                     <div className='site-layout-content' style={{ paddingTop: 40, paddingLeft: 70, paddingRight: 70}}>
                                         <Component {...propsRoute}/>
                                     </div>
