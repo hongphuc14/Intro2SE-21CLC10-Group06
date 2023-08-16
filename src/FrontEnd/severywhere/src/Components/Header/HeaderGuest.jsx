@@ -12,8 +12,8 @@ const Navbar = () => {
   return (
     <nav className="Header-Guest">
       <div className="container">
-        <a href="https://www.google.com/" id="lg">
-          <img src="/horizontal_white.png" className="SE-logo" alt="logo" />
+        <a href="/homepage" id="lg">
+          <img src="/horizontal_white.png" className="SE-logo" alt="logo"/>
         </a>
 
         <div className="subcontainer">
