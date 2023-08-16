@@ -1,4 +1,4 @@
-import { GET_DESTINATION, LOGIN, SIGNUP } from "../types";
+import { GET_DESTINATION, LOGIN, SIGNUP, LOGOUT } from "../types";
 import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
 import { basicService } from "../../services/BasicService";
 import { history } from "../../App";
@@ -87,6 +87,24 @@ export const deleteAccountAction = (id_role, id) => {
   return async (dispatch) =>{
     try {
         const result = await basicService.deleteAccount(id_role, id);
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};
+
+export const logOutAction = () => {
+  return async (dispatch) =>{
+    try {
+      localStorage.removeItem(USER_LOGIN);
+      localStorage.removeItem(TokenKey);
+      localStorage.removeItem(RoleKey);
+      dispatch({
+        type: LOGOUT,
+        user_login: ""
+      });
+      // history.push("/homepage");
+      // window.location.reload();
     } catch (error) {
       console.log("error", error.response);
     }

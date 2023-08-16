@@ -8,6 +8,7 @@ export const SIGNUP = "SIGNUP";
 
 export const GET_DESTINATION = "GET_DESTINATION";
 
+export const LOGOUT = "LOGOUT";
 
 // TOURIST 
 export const GET_TOURIST_INFO = "GET_TOURIST_INFO";

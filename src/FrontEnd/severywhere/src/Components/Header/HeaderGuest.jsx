@@ -2,12 +2,21 @@
 import "./HeaderGuest.scss";
 import React, { useState, useEffect, useRef } from 'react';
 import {Link} from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logOutAction } from "../../redux/actions/BasicAction";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const role = useSelector(state => state.BasicReducer.user_login?.id_role)
   let menuRef = useRef();
+
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    console.log("logout");
+    dispatch(logOutAction());
+
+    window.location.href = "/homepage";
+  }
 
   return (
     <nav className="Header-Guest">
@@ -44,8 +53,8 @@ const Navbar = () => {
                   {role === 1 ?(
                       <>
                         <DropdownItem className={"fas fa-user-alt"} text={"Account"} link = "/editprofile"/>
-                        <DropdownItem className={"fa-solid fa-cart-shopping"} text={"Bookings"} link = "/"/>
-                        <DropdownItem className={"fa-solid fa-arrow-right-from-bracket"} text={"Log out"} link = "/"/>
+                        <DropdownItem className={"fa-solid fa-cart-shopping"} text={"Bookings"} link = "/changepw"/>
+                        <DropdownItem className={"fa-solid fa-arrow-right-from-bracket"} text={"Log out"} onClick= {()=>handleLogout()} link = "/homepage"/>
                       </>
                   )
                   : (
