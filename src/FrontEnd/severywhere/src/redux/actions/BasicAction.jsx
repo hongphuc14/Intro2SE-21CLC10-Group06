@@ -103,7 +103,7 @@ export const logOutAction = () => {
         type: LOGOUT,
         user_login: ""
       });
-      // history.push("/homepage");
+      // window.history.pushState(null, null, "/home");
       // window.location.reload();
     } catch (error) {
       console.log("error", error.response);
