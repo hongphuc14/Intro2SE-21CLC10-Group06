@@ -28,7 +28,7 @@ export const logInAction = (user_login) => {
         const roleId = localStorage.getItem(RoleKey);
         
         if(roleId === "1")
-          window.history.pushState(null,null,"/homepage-tourist");
+          window.history.pushState(null,null,"/homepage");
         if(roleId === "2")
           window.history.pushState(null,null,"/profile-company");
         if(roleId === "3"){
