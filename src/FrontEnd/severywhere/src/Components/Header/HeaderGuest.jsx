@@ -2,9 +2,11 @@
 import "./HeaderGuest.scss";
 import React, { useState, useEffect, useRef } from 'react';
 import {Link} from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const role = useSelector(state => state.BasicReducer.user_login?.id_role)
   let menuRef = useRef();
 
   return (
@@ -39,8 +41,20 @@ const Navbar = () => {
             {open && (
               <div className="dropdown-menu" ref={menuRef}>
                 <ul>
-                  <DropdownItem className={"fa-regular fa-user"} text={"Login"} link = "/login"/>
-                  <DropdownItem className={"fa-solid fa-user-plus"} text={"Register"} link = "/signup"/>
+                  {role === 1 ?(
+                      <>
+                        <DropdownItem className={"fas fa-user-alt"} text={"Account"} link = "/editprofile"/>
+                        <DropdownItem className={"fa-solid fa-cart-shopping"} text={"Bookings"} link = "/"/>
+                        <DropdownItem className={"fa-solid fa-arrow-right-from-bracket"} text={"Log out"} link = "/"/>
+                      </>
+                  )
+                  : (
+                      <>
+                      <DropdownItem className={"fa-regular fa-user"} text={"Login"} link = "/login"/>
+                      <DropdownItem className={"fa-solid fa-user-plus"} text={"Register"} link = "/signup"/>
+                      </>
+                  )}
+                  
                 </ul>
               </div>
             )}

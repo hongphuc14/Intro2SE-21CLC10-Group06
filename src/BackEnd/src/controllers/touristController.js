@@ -69,8 +69,9 @@ const updatePwdByID = async(req, res) =>{
             }
         });
         if(checkTourist){
-            let checkPass = bcrypt.compareSync(c_password, checkTourist.password);
-            if(checkPass){
+            //let checkPass = bcrypt.compareSync(c_password, checkTourist.password);
+            //if(checkPass){
+            if(c_password == checkTourist.password){    
                 let passWordHash = bcrypt.hashSync(n_password, 10);
                 await model.tourist.update({ 
                     password:passWordHash
