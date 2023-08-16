@@ -2,7 +2,7 @@ import './Card.scss';
 
 const TypeFilter = () => {
     return (  
-        <div className="card">
+        <div className="filter-card">
             <p className="card-title">Type</p>
             <label className="container">Tour
                 <input type="radio" checked="checked" name="radio"/>

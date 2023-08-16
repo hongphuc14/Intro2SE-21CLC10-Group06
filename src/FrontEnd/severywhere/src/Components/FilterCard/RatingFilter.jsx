@@ -2,7 +2,7 @@ import './Card.scss';
 
 const RatingFilter = () => {
     return (  
-        <div className="card">
+        <div className="filter-card">
             <p className="card-title">Rating</p>
             <label className="container">1 star
                 <input type="radio" name="radio"/>

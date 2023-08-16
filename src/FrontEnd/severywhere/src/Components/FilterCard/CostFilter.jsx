@@ -2,7 +2,7 @@ import './Card.scss';
 
 const CostFilter = () => {
     return (  
-        <div className="card">
+        <div className="filter-card">
             <p className="card-title">Cost</p>
             <label className="container">Under $20
                 <input type="radio" name="radio"/>

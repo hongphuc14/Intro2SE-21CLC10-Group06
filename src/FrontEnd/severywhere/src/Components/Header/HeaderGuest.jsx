@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <nav className="Header-Guest">
-      <div className="container">
+      <div className="header-container">
         <a href="https://www.google.com/" id="lg">
           <img src="/horizontal_white.png" className="SE-logo" alt="logo" />
         </a>
