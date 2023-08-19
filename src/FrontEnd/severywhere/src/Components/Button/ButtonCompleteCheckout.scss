@@ -1,0 +1,18 @@
+.button-complete-checkout{
+    width: 100%;
+    background-color: #D9D9D9;
+    padding: 10px 8px;
+    border-radius: 15px;
+    border: none;
+    span{
+        font-size: 22px;
+        color: #0C721F;
+        text-transform: capitalize;
+    }
+    &.active{
+        background-color: #0C721F;
+        span{
+            color: #fff;
+        }
+    }
+}
