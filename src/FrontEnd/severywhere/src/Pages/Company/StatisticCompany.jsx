@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getCompanyInfo,getCompanyBooking, getCompanyReview } from '../../redux/actions/CompanyAction';
+import {getDestination} from '../../redux/actions/BasicAction'
 
 export default function StatisticsCompany(){
   const dispatch = useDispatch() 
@@ -19,6 +20,8 @@ export default function StatisticsCompany(){
 
   useEffect(() => {
       dispatch(getCompanyInfo(user_login.email))
+      if (destination?.length === 0)
+        dispatch(getDestination())
   },[] )
 
   useEffect(() => {
@@ -50,8 +53,12 @@ export default function StatisticsCompany(){
   const importPhoto = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/tour/${filename}`)
-    return path
+      try{
+        const path = require(`../../../../../BackEnd/public/tour/${filename}`)
+        return path}
+      catch (err) {
+        return null
+      }
   }
 
   const getDes = (id) =>{

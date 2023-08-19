@@ -10,18 +10,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {getGuideBookingByIdGuide, getGuideReviewByIdGuidebooking, getTourGuideByIdGuide,
   updateReply, updateReport } from '../../redux/actions/FreelancerAction'
-
+import {getDestination} from '../../redux/actions/BasicAction'
 export default function StatisticsFreelancer(){
   const dispatch = useDispatch() 
   const location = useLocation()
   window.history.replaceState(null, null, location.pathname);
 
-  const { user_login} = useSelector(state => state.BasicReducer)
+  const { user_login, destination} = useSelector(state => state.BasicReducer)
   const { guide_info, guide_booking_by_id_guide, guide_review_by_id_booking} = useSelector(state => state.FreelancerReducer)
 
   useEffect(() => {
-    if (!guide_info.id_guide)
+    if (!guide_info.id_guide){}
       dispatch(getTourGuideByIdGuide(user_login.email))
+    if (destination?.length === 0)
+      dispatch(getDestination())
   },[] )
 
   useEffect(() => {

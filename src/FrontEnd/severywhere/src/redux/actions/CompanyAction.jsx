@@ -13,14 +13,14 @@ import { GET_COMPANY_INFO,
   export const getCompanyInfo = (email) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
         const result = await companyService.getCompanyInfo(email);
         if (result.status === 200) {
           dispatch({
             type: GET_COMPANY_INFO,
             company_info: result.data.content,
           });
-          dispatch(hideLoadingAction);
+          // dispatch(hideLoadingAction);
         }
       } catch (error) {
         console.log("error", error.response);
@@ -31,7 +31,7 @@ import { GET_COMPANY_INFO,
   export const getCompanyLicense = (id_company) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
   
         const result = await companyService.getCompanyLicense(id_company);
         if (result.status === 200) {
@@ -40,7 +40,7 @@ import { GET_COMPANY_INFO,
             company_license: result.data.content,
             verified: result.data.content.some((license) => license.status === 2)
           });
-          dispatch(hideLoadingAction);
+          // dispatch(hideLoadingAction);
         }
       } catch (error) {
         console.log("error", error.response);
@@ -51,7 +51,7 @@ import { GET_COMPANY_INFO,
   export const updateCompanyInfo = (id_company, info) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
   
         const result = await companyService.updateCompanyInfo(id_company, info);
         if (result.status === 200) {
@@ -59,7 +59,7 @@ import { GET_COMPANY_INFO,
             type: UPDATE_COMPANY_INFO,
             company_info: result.data.content,
           });
-          dispatch(hideLoadingAction);
+          // dispatch(hideLoadingAction);
         }
       } catch (error) {
         console.log("error", error.response);
@@ -70,14 +70,14 @@ import { GET_COMPANY_INFO,
   export const updateCompanyAvatar = (id_company, preview) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
         if (preview === "delete"){
           const result = await companyService.deleteCompanyAvatar(id_company);
           if (result.status === 200) {
             dispatch({
               type: UPDATE_COMPANY_INFO,
               company_info: result.data.content})
-            dispatch(hideLoadingAction);
+            // dispatch(hideLoadingAction);
           }
         }
         else{
@@ -89,7 +89,7 @@ import { GET_COMPANY_INFO,
             dispatch({
               type: UPDATE_COMPANY_INFO,
               company_info: result.data.content})
-            dispatch(hideLoadingAction);
+            // dispatch(hideLoadingAction);
           }
         }
       } catch (error) {
@@ -101,11 +101,11 @@ import { GET_COMPANY_INFO,
   export const updateCompanyPassword = (id_guide,currentPass, newPass) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
         const obj = {c_password: currentPass, n_password: newPass};
         const result = await companyService.updateCompanyPassword(id_guide, obj);
         if (result.status === 200) {
-          dispatch(hideLoadingAction);
+          // dispatch(hideLoadingAction);
           alert('Update password successfulort');
         }
       } catch (error) {
@@ -118,7 +118,7 @@ import { GET_COMPANY_INFO,
   export const updateCompanyLicense = (id_company, license) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
         const formData = new FormData();
         for (const item of license) {
           if (item.file)
@@ -144,7 +144,7 @@ import { GET_COMPANY_INFO,
             type: UPDATE_COMPANY_LICENSE,
             company_license: result.data.content,
             verified: license.some((license) => license.status === 2)})
-          dispatch(hideLoadingAction);
+          // dispatch(hideLoadingAction);
         }
       } catch (error) {
         console.log("error", error.response);
@@ -155,7 +155,7 @@ import { GET_COMPANY_INFO,
   export const getCompanyTour = (id_company) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
   
         const result = await companyService.getCompanyTour(id_company);
         if (result.status === 200) {
@@ -163,7 +163,7 @@ import { GET_COMPANY_INFO,
             type: GET_TOUR_BY_ID_COMPANY,
             company_tour: result.data.content,
           });
-          dispatch(hideLoadingAction);
+          // dispatch(hideLoadingAction);
         }
       } catch (error) {
         console.log("error", error.response);
@@ -174,7 +174,7 @@ import { GET_COMPANY_INFO,
   export const deleteCompanyTour = (id_company, id_tour) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
   
         await companyService.deleteCompanyTour(id_tour);
         const result = await companyService.getCompanyTour(id_company);
@@ -183,7 +183,7 @@ import { GET_COMPANY_INFO,
             type: GET_TOUR_BY_ID_COMPANY,
             company_tour: result.data.content,
           });
-          dispatch(hideLoadingAction);
+          // dispatch(hideLoadingAction);
         }
       } catch (error) {
         console.log("error", error.response);
@@ -194,13 +194,19 @@ import { GET_COMPANY_INFO,
   export const updateTour = (id_company, tour, preview) => {
     return async (dispatch) => {
       try {
-        dispatch(displayLoadingAction);
+        // dispatch(displayLoadingAction);
   
-        await companyService.updateTourInfo(tour.id_tour, {...tour, id_company: id_company});
+        const id = await companyService.updateTourInfo(tour.id_tour, {...tour, id_company: id_company});
         if (preview){
+          console.log(preview)
           const formData = new FormData();
           formData.append('file', preview);
-          await companyService.updateTourFile(tour.id_tour, formData);
+          if (tour.id_tour === 0)
+            await companyService.updateTourFile(id.data.content, formData);
+          else
+            await companyService.updateTourFile(tour.id_tour, formData);
+          // console.log(result.data);
+          
         }
         const result = await companyService.getCompanyTour(id_company);
         if (result.status === 200) {

@@ -8,11 +8,15 @@
 
 .main-managetour{
     width: calc(100vw - 12em);
-    margin-left: auto;
+    // margin-left: auto;
     height: fit-content;
     position: relative;
     left: 14em;
     top: 3em;
+
+    .welcome{
+        text-align: center;
+    }
 }
 
 .main-managetour > p{

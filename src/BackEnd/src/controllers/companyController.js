@@ -347,14 +347,16 @@ const updateTourInfo = async(req, res)=>{
                     id_tour,
                 }
             });
+            sucessCode(res,checkTour.id_tour,"Update thành công")
         }
         else{
-            await model.tour.create({
+            const data = await model.tour.create({
                 name, id_company, id_des, id_category, num_max, duration, description, included, not_included,
                 schedule, price, free_cancellation, is_deleted
-            }); 
+            });
+            sucessCode(res,data.id_tour,"Update thành công") 
         }
-        sucessCode(res,"","Delete thành công")
+        
     }catch(err){
         // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
         errorCode(res, "Lỗi BE");
@@ -369,45 +371,37 @@ const updateTourFile = async(req, res)=>{
     const id_tour = req.params.id_tour;
     const file = req.file;
     try{
-        let tour = await model.tour.findOne({
+        const exist = await model.tour_photo.findOne({
             where:{
                 id_tour
+            }              
+        })
+        if(exist){
+            try{
+                //xóa avatar cũ trước khi update avatar mới
+                fs.unlinkSync(process.cwd() + "/public/tour/" + exist.photo_path);
+            } catch(err){
+                console.log("Lỗi khi xóa avatar cũ", err);
             }
-        });
-        //check nếu đã upload photo
-        if(tour){
-            const exist = await model.tour_photo.findOne({
+            await model.tour_photo.update({
+                photo_path: file.filename
+            }, {
                 where:{
                     id_tour
-                }              
-            })
-            if(exist){
-                try{
-                    //xóa avatar cũ trước khi update avatar mới
-                    fs.unlinkSync(process.cwd() + "/public/tour/" + exist.photo_path);
-                } catch(err){
-                    console.log("Lỗi khi xóa avatar cũ", err);
                 }
-                await model.tour_photo.update({
-                    photo_path: file.filename
-                }, {
-                    where:{
-                        id_tour
-                    }
-                });
-            }
-            else{
-                await model.tour_photo.create({
-                    photo_path: file.filename,
-                    id_tour
-                });
-            }
-            
-        sucessCode(res,"","Update thành công")
+            });
         }
+        else{
+            await model.tour_photo.create({
+                id_tour: id_tour,
+                photo_path: file.filename,
+            });
+        }
+        
+        sucessCode(res,exist,"Update thành công")
     }catch(err){
         // fs.unlinkSync(process.cwd() + "/public/freelancer_avatar/" + req.file.filename);
-        errorCode(res, "Lỗi BE");
+        failCode(res,id_tour, "Lỗi BE");
         return;
     }
 }

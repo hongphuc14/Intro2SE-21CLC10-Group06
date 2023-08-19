@@ -150,7 +150,7 @@ export default function ProfileFreelancer(){
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: info || {...guide_info,language: guide_language_by_id_guide},
-    onSubmit: handleSaveChanges,
+    onSubmit:  handleSaveChanges,
     validationSchema: yup.object().shape({
       fullname: yup.string().max(50,"Full name has the maximum of 50 characters").min(5,"Full name must have at least 5 characters").required('Full name is required'),
       birthday: yup.string().required('Birthday is required'),

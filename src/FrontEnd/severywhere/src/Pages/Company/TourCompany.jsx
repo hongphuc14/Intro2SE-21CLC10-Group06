@@ -11,6 +11,7 @@ import * as yup from 'yup';
 
 import {deleteCompanyTour, getCompanyInfo, getCompanyLicense, getCompanyTour,updateTour,
 } from '../../redux/actions/CompanyAction'
+import {getDestination} from '../../redux/actions/BasicAction'
 
 const tour_default = {
     name: "",
@@ -30,7 +31,7 @@ const tour_default = {
 
 export default function TourCompany(){ 
     const dispatch = useDispatch() 
-    console.log("1")
+    
     const { user_login, destination} = useSelector(state => state.BasicReducer)
     const { verified, company_tour, company_info} = useSelector(state => state.CompanyReducer)
 
@@ -70,13 +71,15 @@ export default function TourCompany(){
     }
     
     useEffect(() => {
-        dispatch(getCompanyInfo(user_login.email))
+        if (!company_info?.id_company)
+            dispatch(getCompanyInfo(user_login.email))
+        if (destination?.length === 0)
+            dispatch(getDestination())
     },[] )
 
     useEffect(() => {
         if (company_info?.id_company) {
-            if (JSON.stringify(company_tour) === "[]")
-                dispatch(getCompanyTour(company_info.id_company))
+            dispatch(getCompanyTour(company_info.id_company))
             if (verified === null)
                 dispatch(getCompanyLicense(company_info.id_company))
         }
@@ -85,9 +88,9 @@ export default function TourCompany(){
     const [tours, setTours] = useState([])
     const [tour_info, setTour_Info] = useState({})
     if (JSON.stringify(tour_info) === "{}"){
-        setTour_Info(tour_default)
-        console.log("!")
+        setTour_Info({...tour_default})
     }
+    console.log(tour_info)
         
     useEffect(() => {
         setTours(company_tour)
@@ -118,15 +121,21 @@ export default function TourCompany(){
             }
             else if (!(e.target.files[0].size / 1024 <= 4)){
             setIsChange(false)
-            setErrPre('Phot must not exceed 4MB')
+            setErrPre('Photo must not exceed 4MB')
             }
     }
 
     const viewPhoto = () => {
-        window.open(loadPreview(preview) || importPhoto(tour_info?.photo_path),'_blank')
+        if (preview)
+            window.open(loadPreview(preview),'_blank')
+        else if(tour_info?.photo_path)
+            window.open(importPhoto(tour_info?.photo_path),'_blank')
+        else 
+            alert("Empty photo")
     }
 
     const reset = () => {
+        formik.resetForm();
         setTour_Info({...tour_default})
         setIsChange(false)
         setIsAdd(false)
@@ -138,7 +147,8 @@ export default function TourCompany(){
     const handleSave = () => {
         formik.values.id_des = parseInt(formik.values.id_des)
         formik.values.id_category = parseInt(formik.values.id_category)
-        dispatch(updateTour(company_info.id_company, formik.values,preview))
+        const obj = {...formik.values}
+        dispatch(updateTour(company_info.id_company, obj,preview))
         reset()
     }
 
@@ -148,7 +158,7 @@ export default function TourCompany(){
 
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: tour_info,
+        initialValues: {...tour_info},
         onSubmit: handleSave,
         validationSchema: yup.object().shape({
           name: yup.string().max(50,"Tour name has the maximum of 50 characters").min(5,"Tour name must have at least 5 characters").required('Tour name is required'),
@@ -163,7 +173,7 @@ export default function TourCompany(){
         }),
       })
 
-    // console.log(tour_info)
+    console.log(formik.values)
 
     return (
         <div className = "tour-company">

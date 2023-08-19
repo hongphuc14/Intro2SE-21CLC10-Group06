@@ -100,7 +100,11 @@ export default function CalendarFreelancer(){
     }
 
     useEffect(() => {
-        setPrice(parseFloat(guide_info.price_per_session).toFixed(2))
+        const val = 0
+        if (guide_info.price_per_session === "")
+            setPrice(val.toFixed(2))
+        else 
+            setPrice(parseFloat(guide_info.price_per_session).toFixed(2))
         setCancel(guide_info.free_cancellation)
 
     },[guide_info])
