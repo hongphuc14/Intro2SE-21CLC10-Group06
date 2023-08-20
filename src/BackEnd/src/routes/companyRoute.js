@@ -43,7 +43,7 @@ companyRoute.post("/updateTourFile/:id_tour", verifyToken, upload('tour').single
 companyRoute.put("/deleteTour/:id_tour", verifyToken, deleteTour);
 
 // GET: get company booking by id_company
-companyRoute.get("/getBooking/:id_company", verifyToken, getBooking);
+companyRoute.get("/getBooking/:id_company", getBooking);
 
 // PUT: update company booking by id_tour
 companyRoute.put("/updateBooking/:id_tour_booking", verifyToken, updateBooking);

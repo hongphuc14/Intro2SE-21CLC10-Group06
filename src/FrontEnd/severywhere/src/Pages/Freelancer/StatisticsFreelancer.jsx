@@ -35,11 +35,10 @@ export default function StatisticsFreelancer(){
 
   let {list_tourist, list_checked} = location.state || {}
   const [tourists, setTourists] = useState((list_tourist &&[...list_tourist]) || [])
-  const [isChecked, setIsChecked] = useState((list_checked && [...list_checked]) || [true,true,true,true])
+  const [isChecked, setIsChecked] = useState((list_checked && [...list_checked]) || [true,true])
 
   useEffect(() => {
     // console.log(tourists, "1")
-    if (tourists.length == 0)
       setTourists([...guide_booking_by_id_guide]);
   },[guide_booking_by_id_guide])
 
@@ -48,20 +47,20 @@ export default function StatisticsFreelancer(){
     const isShow = isChecked[no]
     if (isShow) {
       const newList = tourists.filter(item => {
-        if (status === 3)
-          return item.status != 3 && item.status != 4 && item.status != 5
+        if (status === 2)
+          return item.status !== 2 && item.status !== 4 && item.status !== 3
         else
-          return item.status !== status} )
+          return item.status !== 1 && item.status !== 5} )
       newChecked[no] = false
       setTourists(newList)
       // console.log(newList)
     }
     else{
       const tmp = guide_booking_by_id_guide.filter(item => {
-        if (status === 3)
-        return item.status === 3 || item.status === 4 || item.status === 5
-      else
-        return item.status === status} )
+      if (status === 2)
+        return item.status === 2 || item.status === 3 || item.status === 4
+      else 
+        return item.status === 1 || item.status === 5} )
       const newList = [...tourists,...tmp]
       newChecked[no] = true
       setTourists(newList)
@@ -82,14 +81,14 @@ export default function StatisticsFreelancer(){
     const isShow = isSelected[no]
     if (isShow) {
       const newList = reviews.filter(item => {
-          return item.guide_review.rating !== rating} )
+          return item.rating !== rating} )
       newSelected[no] = false
       setReviews(newList)
       // console.log(newList)
     }
     else{
       const tmp = guide_review_by_id_booking.filter(item => {
-        return item.guide_review.rating === rating} )
+        return item.rating === rating} )
       const newList = [...reviews,...tmp]
       newSelected[no] = true
       setReviews(newList)
@@ -101,13 +100,25 @@ export default function StatisticsFreelancer(){
   const importAvatar = (folder, filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/${folder}/${filename}`)
-    return path
+    try{
+      const path = require(`../../../../../BackEnd/public/${folder}/${filename}`)
+      return path
+    }
+    catch(err){
+      return null
+    }
+      
+    
   }
 
-  const totalSale = tourists.reduce((accumulator, tourist) => {
-    if (tourist.status !== 3 && tourist.status !== 4 && tourist.status !== 5)
+  const totalSale = guide_booking_by_id_guide.reduce((accumulator, tourist) => {
+    if (tourist.status === 1 || tourist.status === 5)
       return accumulator + tourist.price
+    else 
+      return accumulator}, 0)
+  const totalBooking = guide_booking_by_id_guide.reduce((accumulator, tourist) => {
+    if (tourist.status === 1 || tourist.status === 5)
+      return accumulator + 1
     else 
       return accumulator}, 0)
   const validReview = reviews.length > 0 ? reviews.filter(review => review.rating) : []
@@ -195,7 +206,7 @@ export default function StatisticsFreelancer(){
             <div className = "booking">
               <i className="fas fa-cart-plus"></i>
               <p className = "title">TOTAL BOOKINGS</p>
-              <p className = "data">{tourists.length}</p>
+              <p className = "data">{totalBooking}</p>
               <p className = "des">BOOKINGS</p>
             </div>
             <div className = "rating">
@@ -211,20 +222,20 @@ export default function StatisticsFreelancer(){
           <div className = "tourist-section">
             <p>BOOKINGS</p>
             <div className = "select">
-              <div className = "check-box-calendar">
+              {/* <div className = "check-box-calendar">
                   <input id = "select-pending" type = "checkbox" name = "status" value = {1} checked = {isChecked[0]} onChange= {(e) => changeTourists(parseInt(e.target.value),0)}></input>
                   <label htmlFor="select-pending">Pending</label>
-              </div>
+              </div> */}
               <div className = "check-box-calendar">
-                  <input id = "select-aprroved" type = "checkbox" name = "status" value = {2} checked = {isChecked[1]} onChange= {(e) => changeTourists(parseInt(e.target.value),1)}></input>
+                  <input id = "select-aprroved" type = "checkbox" name = "status" value = {1} checked = {isChecked[0]} onChange= {(e) => changeTourists(parseInt(e.target.value),0)}></input>
                   <label htmlFor="select-aprroved">Approved</label>
               </div>
-              <div className = "check-box-calendar">
+              {/* <div className = "check-box-calendar">
                   <input id = "select-completed" type = "checkbox" name = "status" value = {6} checked = {isChecked[2]} onChange= {(e) => changeTourists(parseInt(e.target.value),2)}></input>
                   <label htmlFor="select-completed">Completed</label>
-              </div>
+              </div> */}
               <div className = "check-box-calendar">
-                  <input id = "select-canceled" type = "checkbox" name = "status" value = {3} checked = {isChecked[3]} onChange= {(e) => changeTourists(parseInt(e.target.value),3)}></input>
+                  <input id = "select-canceled" type = "checkbox" name = "status" value = {2} checked = {isChecked[1]} onChange= {(e) => changeTourists(parseInt(e.target.value),1)}></input>
                   <label htmlFor="select-canceled">Canceled</label>
               </div>
             </div>
@@ -287,18 +298,18 @@ export default function StatisticsFreelancer(){
             <div className = "review-list">
               {
                 reviews.map(review =>{
-                  const {id_tourist_tourist, guide_review, id_guidebooking} = review
+                  // const { guide_review, id_guidebooking} = review
                   return (
                     <div key = {review.id_guidebooking} className = "review">
-                      <img src={importAvatar("tourist_avatar",id_tourist_tourist.avatar)} alt = "tourist-avatar"></img>
+                      <img src={importAvatar("tourist_avatar",review.avatar)} alt = "tourist-avatar"></img>
                       <div>
-                        <p className = "review-name">{id_tourist_tourist.fullname}</p>
-                        <RatingStar numberStar={guide_review.rating}/>
-                        <i className="fas fa-flag" onClick = {() => {setIsReport(true); setNoReview(id_guidebooking)}}></i>
-                        <i className="fas fa-comment-dots" onClick = {() => {setIsReply(true); setNoReview(id_guidebooking)}}></i>
+                        <p className = "review-name">{review.fullname}</p>
+                        <RatingStar numberStar={review.rating}/>
+                        <i className="fas fa-flag" onClick = {() => {setIsReport(true); setNoReview(review.id_guidebooking)}}></i>
+                        <i className="fas fa-comment-dots" onClick = {() => {setIsReply(true); setNoReview(review.id_guidebooking)}}></i>
                       </div>
-                      <p className = "review-date">{new Date(guide_review.review_date).toLocaleDateString("en-GB")}</p>
-                      <p className = "review-line">{guide_review.review}</p>
+                      <p className = "review-date">{new Date(review.review_date).toLocaleDateString("en-GB")}</p>
+                      <p className = "review-line">{review.review}</p>
                     </div>
                   )
                 })

@@ -60,7 +60,7 @@ freelancerRoute.get("/getBooking/:id_guide", verifyToken, getGuideBookingByID);
 freelancerRoute.put("/updateBookingStatus/:id_guide", verifyToken, updateBookingStatusByID);
 
 //GET: get freelancer review by id_guide
-freelancerRoute.get("/getReview/:id_guide", verifyToken, getGuideReviewByID);
+freelancerRoute.get("/getReview/:id_guide", getGuideReviewByID);
 
 //PUT: update freelancer reply by id_guide
 freelancerRoute.put("/updateReply/:id_guide", verifyToken, updateGuideReplyByID);

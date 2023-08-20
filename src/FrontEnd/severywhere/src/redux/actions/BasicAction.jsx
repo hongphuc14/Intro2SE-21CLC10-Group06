@@ -28,18 +28,19 @@ export const logInAction = (user_login) => {
         const roleId = localStorage.getItem(RoleKey);
         
         if(roleId === "1")
-          window.history.pushState(null,null,"/homepage");
+          window.history.pushState(null,null,"/editprofile");
         if(roleId === "2")
           window.history.pushState(null,null,"/profile-company");
         if(roleId === "3"){
           window.history.pushState(null,null,"/profile-freelancer");
         }
         if(roleId === "4")
-          window.history.pushState(null,null,"aprofile-admin");
+          window.history.pushState(null,null,"/profile-admin");
         window.location.reload()
       }
     } catch (error) {
       console.log("error", error.response);
+      alert(error.response.data.message)
     }
   };
 };
@@ -67,18 +68,20 @@ export const getDestination = () => {
 export const signUpAction = (formData) => {
   return async (dispatch) =>{
     try {
+      console.log(formData)
       const result = await basicService.signUp(formData);
-      if (result.status === 201){
+      if (result.status === 200){
         dispatch({
           type: SIGNUP,
           formData: result.data.content
         });
-        
-        history.push("/login");
-        window.location.reload();
+        // window.history.pushState(null, null,"/editprofile");
+        // window.location.reload();
+        window.location.href = "/login"
       }
     } catch (error) {
       console.log("error", error.response);
+      alert(error.response.data.message)
     }
   };
 };

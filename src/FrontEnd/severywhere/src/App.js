@@ -24,6 +24,8 @@ import ReviewCompany from './Pages/Company/ReviewCompany'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from "history";
 import { useSelector } from 'react-redux';
+import { useEffect,useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export const history = createBrowserHistory();
 
@@ -39,7 +41,7 @@ function App() {
 {/*guest + tourist*/}
         {
           (role !== 2)  && (role !== 3) && (role !== 4) && (
-            <Route path = "/homepage" exact component={HomePage} />
+            <Route path = "/" exact component={HomePage} />
           )
         }
 {/*guest*/}

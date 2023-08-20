@@ -25,7 +25,7 @@ const login = async(req, res)=>{
                 return;
             }
             else{
-                failCode(res, "", "Mật khẩu không đúng!");
+                failCode(res, "", "Password is wrong!");
                 return;
             }
         }
@@ -45,7 +45,7 @@ const login = async(req, res)=>{
                 return;
             }
             else{
-                failCode(res, "", "Mật khẩu không đúng!");
+                failCode(res, "", "Password is wrong!");
                 return;
             }
         }
@@ -66,7 +66,7 @@ const login = async(req, res)=>{
                 return;
             }
             else{
-                failCode(res, "", "Mật khẩu không đúng!");
+                failCode(res, "", "Password is wrong!");
                 return;
             }
         }
@@ -87,7 +87,7 @@ const login = async(req, res)=>{
                 return;
             }
             else{
-                failCode(res, "", "Mật khẩu không đúng!");
+                failCode(res, "", "Password is wrong!");
                 return;
             }
         }
@@ -111,7 +111,7 @@ const signUp = async(req, res) =>{
                 }
             })
             if(checkEmail){
-                failCode(res,"","Email đã tồn tại");
+                failCode(res,"","Email is existing");
                 return;
             }
             else{
@@ -129,7 +129,7 @@ const signUp = async(req, res) =>{
                 }
             })
             if(checkEmail){
-                failCode(res,"","Email đã tồn tại");
+                failCode(res,"","Email is existing");
                 return;
             }
             else{
@@ -147,7 +147,7 @@ const signUp = async(req, res) =>{
                 }
             })
             if(checkEmail){
-                failCode(res,"","Email đã tồn tại");
+                failCode(res,"","Email is existing");
                 return;
             }
             else{
