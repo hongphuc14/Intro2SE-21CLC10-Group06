@@ -22,6 +22,17 @@ export default function BookingCompany(){
         dispatch(getCompanyInfo(user_login.email))
     },[] )
   
+    const isCompleted = (start_date, end_date) => {
+        const now = new Date(); // Current date and time
+        const targetDateTime = new Date(end_date);
+        const targetDateTime2 = new Date(start_date); // Specific target date
+
+        console.log(now, targetDateTime)
+        if ((targetDateTime <= now) || (targetDateTime2 >= now)) 
+          return false; // targetDate is in the past
+        else 
+          return true; // targetDate is the same as now
+    }
 
     const importAvatar = (filename) => {
         if (typeof filename === 'undefined' || filename === "")
@@ -41,11 +52,7 @@ export default function BookingCompany(){
     const showStatus = (status) => {
         switch (status) {
           case 1:
-            return "Pending"
-          case 2:
             return "Approved"
-          case 6:
-            return "Completed"
           default:
             return "Canceled"
         }
@@ -96,11 +103,11 @@ export default function BookingCompany(){
                 <div className = "booking-info">
                     <div>
                     <p>Start date: </p>
-                    <p>{item?.start_date.toString().substring(0,10)}</p>
+                    <p>{new Date(item?.start_date).toLocaleDateString("en-GB")}</p>
                     </div>
                     <div>
                     <p>End date: </p>
-                    <p> {item?.end_date.toString().substring(0,10)}</p>
+                    <p>{new Date(item?.end_date).toLocaleDateString("en-GB")}</p>
                     </div>
                     <div>
                     <p>The number of tickets: </p>
@@ -112,23 +119,23 @@ export default function BookingCompany(){
                     </div>
                     <div>
                     <p>Booking date: </p>
-                    <p>{item?.booking_date.toString().substring(0,10)}</p>
+                    <p>{new Date(item?.booking_date).toLocaleDateString("en-GB")}</p>
                     </div>
                     <div>
                     <p>Status: </p>
                     <p>{showStatus(item?.status)}</p>
                     </div>
                     {
-                    ((item?.status < 6 && item?.status > 2) || (item?.status == 7)) &&
+                    ((item?.status !== 1)) &&
                     (
                         <div>
                         <p>Reason for cancellation: </p>
                         {
-                            ((item?.status == 3) || (item?.status == 7)) ? (
+                            ((item?.status == 2)) ? (
                             <p>Company canceled the booking 
                             and wait for refund</p>
                             ) :(
-                            <p>Tourist canceled the booking and {item?.status == 4 ? "wait for" : "no"} refund</p>
+                            <p>Tourist canceled the booking and {item?.status == 3 ? "wait for" : "no"} refund</p>
                             )
                         }
                         </div>
@@ -136,23 +143,23 @@ export default function BookingCompany(){
                     }
                 </div>
                 {
-                    item?.status == 1 &&
-                    (
-                    <div className = "booking-button">
-                        <Link to= {{pathname: "/statistics-company"}} >
-                        <ButtonUploadFreelancer className="button-save" title = "ACCEPT" onClick = {() => {handleUpdateBooking(item.id_tour_booking, 2)}}/>
-                        </Link>
-                        <Link to= {{pathname: "/statistics-company"}} >
-                        <ButtonUploadFreelancer className="button-upload" title = "REJECT" onClick = {() => {handleUpdateBooking(item.id_tour_booking, 3)}} />
-                        </Link>
-                    </div>
-                    )
+                    // item?.status == 1 &&
+                    // (
+                    // <div className = "booking-button">
+                    //     <Link to= {{pathname: "/statistics-company"}} >
+                    //     <ButtonUploadFreelancer className="button-save" title = "CANCEL" onClick = {() => {handleUpdateBooking(item.id_tour_booking, 2)}}/>
+                    //     </Link>
+                    //     <Link to= {{pathname: "/statistics-company"}} >
+                    //     <ButtonUploadFreelancer className="button-upload" title = "COMPLETE" onClick = {() => {handleUpdateBooking(item.id_tour_booking, 3)}} />
+                    //     </Link>
+                    // </div>
+                    // )
                 }
                 {
-                    item?.status == 2 &&
+                    (item?.status === 1 && !isCompleted(item?.start_date, item?.end_date) ) &&
                     (
                     <Link to= {{pathname: "/statistics-company"}} >
-                        <ButtonUploadFreelancer className="button-upload cancel" title = "CANCEL" onClick = {() => {handleUpdateBooking(item.id_tour_booking, 3)}}/>
+                        <ButtonUploadFreelancer className="button-upload cancel" title = "CANCEL" onClick = {() => {handleUpdateBooking(item.id_tour_booking, 2)}}/>
                     </Link>
                     )
                 }

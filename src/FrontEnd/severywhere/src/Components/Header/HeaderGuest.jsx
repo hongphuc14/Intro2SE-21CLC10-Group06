@@ -15,7 +15,7 @@ const Navbar = () => {
     console.log("logout");
     dispatch(logOutAction());
 
-    window.location.href = "/homepage";
+    window.location.href = "/";
   }
 
   return (
@@ -54,7 +54,7 @@ const Navbar = () => {
                       <>
                         <DropdownItem className={"fas fa-user-alt"} text={"Account"} link = "/editprofile"/>
                         <DropdownItem className={"fa-solid fa-cart-shopping"} text={"Bookings"} link = "/changepw"/>
-                        <DropdownItem className={"fa-solid fa-arrow-right-from-bracket"} text={"Log out"} onClick= {()=>handleLogout()} link = "/homepage"/>
+                        <DropdownItem className={"fa-solid fa-arrow-right-from-bracket"} text={"Log out"} onClick= {()=>handleLogout()}/>
                       </>
                   )
                   : (

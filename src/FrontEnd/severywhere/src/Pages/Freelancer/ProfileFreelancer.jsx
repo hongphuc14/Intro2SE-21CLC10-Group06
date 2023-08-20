@@ -15,7 +15,7 @@ import * as yup from 'yup'
 import { getTourGuideByIdGuide, getGuideLanguageByIdGuide, getGuideLicenseByIdGuide,
   updateGuideInfo, updateGuideLanguage, updateGuideLicense, updateGuideAvatar, 
   updateGuidePassword } from '../../redux/actions/FreelancerAction';
-import {getDestination} from '../../redux/actions/BasicAction'
+import {getDestination, logOutAction} from '../../redux/actions/BasicAction'
 
 export default function ProfileFreelancer(){
   const dispatch = useDispatch()
@@ -346,8 +346,7 @@ export default function ProfileFreelancer(){
 
         <div className = "hr"></div>      
 
-        <a href = "https://www.google.com/" className = "delete-acc">Delete account</a>
-        <a href = "https://www.google.com/" className = "log-out">Log out</a>        
+        <a href = "/" className = "log-out" onClick = {() => {dispatch(logOutAction())}}>Log out</a>        
       </div>
   </div>
   );

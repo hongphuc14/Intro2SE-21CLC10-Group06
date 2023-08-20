@@ -708,48 +708,57 @@ const getGuideReviewByID = async(req, res) =>{
             }
         });
         if(guide){
-            let guidetime = await model.guide_time.findAll({
-                where:{
-                    id_guide
-                }
-            })
+            // let guidetime = await model.guide_time.findAll({
+            //     where:{
+            //         id_guide
+            //     }
+            // })
 
-            let idguidetime = []
-            for (const item of guidetime){
-                const {id_guidetime} = item
-                idguidetime.push(id_guidetime)
-            }
+            // let idguidetime = []
+            // for (const item of guidetime){
+            //     const {id_guidetime} = item
+            //     idguidetime.push(id_guidetime)
+            // }
 
-            const data1 = await model.guide_booking.findAll({
-                where: {
-                    id_guidetime:{
-                        [Op.in]: idguidetime
-                    },
-                    status: 6
-                },
-                include: [{model: model.tourist, as: "id_tourist_tourist"}],
-            });
+            // const data1 = await model.guide_booking.findAll({
+            //     where: {
+            //         id_guidetime:{
+            //             [Op.in]: idguidetime
+            //         },
+            //         status: 1
+            //     },
+            //     include: [{model: model.tourist, as: "id_tourist_tourist"}],
+            // });
 
-            const data2 = await model.guide_booking.findAll({
-                where: {
-                    id_guidetime:{
-                        [Op.in]: idguidetime
-                    },
-                    status: 6
-                },
-                include: [{model: model.guide_review, as: "guide_review"}],
-            });
+            // const data2 = await model.guide_booking.findAll({
+            //     where: {
+            //         id_guidetime:{
+            //             [Op.in]: idguidetime
+            //         },
+            //         status: 1
+            //     },
+            //     include: [{model: model.guide_review, as: "guide_review"}],
+            // });
 
-            const data = []
-            for (let i = 0; i < data1.length; i++) {
-                const {id_guidebooking, id_tourist_tourist} = data1[i];
-                const {guide_review} = data2[i];
-                data.push({id_guidebooking, id_tourist_tourist, guide_review})
-            }
+            // const data = []
+            // for (let i = 0; i < data1.length; i++) {
+            //     const {id_guidebooking, id_tourist_tourist} = data1[i];
+            //     const {guide_review} = data2[i];
+            //     data.push({id_guidebooking, id_tourist_tourist, guide_review})
+            // }
 
-            let result = data.filter(item => item.guide_review !== null)
+            // let result = data.filter(item => item.guide_review !== null)
 
-            sucessCode(res,result,"Get thành công")
+            const [data, metadata] = await sequelize.query
+            (`SELECT tourist.*, guide_review.*
+            FROM tour_guide  
+            INNER JOIN guide_time ON tour_guide.id_guide = guide_time.id_guide
+            INNER JOIN guide_booking ON guide_time.id_guidetime = guide_booking.id_guidetime
+            INNER JOIN tourist ON guide_booking.id_tourist = tourist.id_tourist
+            INNER JOIN guide_review ON guide_booking.id_guidebooking = guide_review.id_guidebooking
+            WHERE tour_guide.id_guide = ${id_guide}`);
+
+            sucessCode(res,data,"Get thành công")
         }
         else{
             failCode(res,"","Freelancer không tồn tại")

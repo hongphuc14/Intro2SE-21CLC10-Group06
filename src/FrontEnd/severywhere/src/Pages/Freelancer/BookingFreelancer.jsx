@@ -52,22 +52,27 @@ export default function BookingFreelancer(){
     }
 
   }
-
   const showStatus = (status) => {
     switch (status) {
       case 1:
-        return "Pending"
-      case 2:
         return "Approved"
-      case 6:
-        return "Completed"
+      case 5:
+          return "Approved"
       default:
         return "Canceled"
     }
   }
 
-  const saveStatus = (status) => {
-    dispatch(updateBookingStatus(id_guide, info.id_guidebooking, status))
+  const saveStatus = (id_guidetime,status) => {
+    const now = new Date(); 
+    const result = guide_time_by_id_guide.find(time => time.id_guidetime === id_guidetime)
+    const {guide_date} = result || {}
+    const targetDateTime = new Date(guide_date);
+
+    if (targetDateTime > now)
+      alert("It is not completed")
+    else
+      dispatch(updateBookingStatus(id_guide, info.id_guidebooking, status))
   }
 
   return(
@@ -126,16 +131,16 @@ export default function BookingFreelancer(){
                   <p>{info?.price}$</p>
                 </div>
                 {
-                  info?.status < 6 && info?.status > 2 &&
+                  info?.status !== 1 && info?.status !== 5 &&
                   (
                     <div>
                       <p>Reason for cancellation: </p>
                       {
-                        info?.status == 3 ? (
+                        info?.status === 2 ? (
                           <p>Tour guide canceled the booking 
                           and wait for refund</p>
                         ) :(
-                          <p>Tourist canceled the booking and {info?.status == 4 ? "wait for" : "no"} refund</p>
+                          <p>Tourist canceled the booking and {info?.status === 3 ? "wait for" : "no"} refund</p>
                         )
                       }
                       
@@ -148,22 +153,22 @@ export default function BookingFreelancer(){
                 (
                   <div className = "booking-button">
                     <Link to= {{pathname: "/statistics-freelancer"}} >
-                      <ButtonUploadFreelancer className="button-save" title = "ACCEPT" onClick = {() => {saveStatus(2)}}/>
+                      <ButtonUploadFreelancer className="button-save" title = "CANCEL" onClick = {() => {saveStatus(info?.id_guidetime,2)}}/>
                     </Link>
                     <Link to= {{pathname: "/statistics-freelancer"}} >
-                      <ButtonUploadFreelancer className="button-upload" title = "REJECT" onClick = {() => {saveStatus(3)}} />
+                      <ButtonUploadFreelancer className="button-upload" title = "COMPLETE" onClick = {() => {saveStatus(info?.id_guidetime,5)}} />
                     </Link>
                   </div>
                 )
               }
-              {
-                info?.status == 2 &&
+              {/* {
+                info?.status === 1 &&
                 (
                   <Link to= {{pathname: "/statistics-freelancer"}} >
-                    <ButtonUploadFreelancer className="button-upload cancel" title = "CANCEL" onClick = {() => {saveStatus(3)}}/>
+                    <ButtonUploadFreelancer className="button-upload cancel" title = "CANCEL" onClick = {() => {saveStatus(2)}}/>
                   </Link>
                 )
-              }
+              } */}
             </div>
           <Link to= {{pathname: "/statistics-freelancer", state: {list_tourist, list_checked}}} >
             <ButtonUploadFreelancer className="button-upload" title = "BACK" />

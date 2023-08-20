@@ -76,9 +76,12 @@ export default function StatisticsCompany(){
   let totalBookings = 0
   for (const item of tourByDate){
     for (const tmp of item.booking)
-      if (tmp.status === 6 || tmp.status === 2 || tmp.status === 5)
+      if (tmp.status === 1){
         totalSales += tmp.total_price
-    totalBookings += item.booking?.length
+        totalBookings += 1
+      }
+      
+        
   }
 
   let totalRating = 0
@@ -126,6 +129,11 @@ export default function StatisticsCompany(){
             <div className = "tourbydate-list">
               {
                 tourByDate.map(item =>{
+                  const num_tourist = item.booking.reduce((accumulator, item) => {
+                    if (item.status === 1)
+                      return accumulator + 1
+                    else 
+                      return accumulator}, 0)
                   return (
                     <Link key={`${item.id_tour}${item.start_date}`} style={{ textDecoration: 'none' }}
                      to = {{pathname: "/booking-company", state: {list: item.booking}}}>
@@ -134,8 +142,8 @@ export default function StatisticsCompany(){
                         <div className = "info">
                           <p>{item.name}</p>
                           <p>{getDes(item.id_des)}</p>
-                          <p>{item?.start_date?.toString().slice(0,10)} - {item?.end_date?.toString().slice(0,10)}</p>
-                          <p>{item.booking.length}/{item.num_max} tourists</p>
+                          <p>{new Date(item?.start_date).toLocaleDateString("en-GB")}- {new Date(item?.end_date).toLocaleDateString("en-GB")}</p>
+                          <p>{num_tourist}/{item.num_max} tourists</p>
                           <p>{item.price}$</p>
                         </div>
                       </div>

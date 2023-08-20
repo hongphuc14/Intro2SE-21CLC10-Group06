@@ -446,7 +446,7 @@ const deleteTour = async(req, res)=>{
             });
             const changeStatus = [1,2,3]
             await model.tour_booking.update({
-                status: 7
+                status: 2
             },{
                 where:{
                     status: {
@@ -482,7 +482,7 @@ const getBooking = async(req, res) =>{
             tour_photo.photo_path, tour_booking.id_tour, tour_booking.start_date, tour_booking.end_date
             FROM tour
             INNER JOIN tour_booking ON tour.id_tour = tour_booking.id_tour
-            INNER JOIN tour_photo ON tour.id_tour = tour_photo.id_tour
+            LEFT JOIN tour_photo ON tour.id_tour = tour_photo.id_tour
             WHERE tour.id_company = ${id_company}`);
 
             const [allBooking, meta] = await sequelize.query
@@ -493,7 +493,7 @@ const getBooking = async(req, res) =>{
             WHERE tour.id_company = ${id_company}`);
 
             const data = allTour.map(item => {
-                const booking = allBooking.filter(itemm => itemm.id_tour == item.id_tour || itemm.start_date.toString().slice(0,10) == item.start_date.toString().slice(0,10))
+                const booking = allBooking.filter(itemm => itemm.id_tour === item.id_tour && itemm.start_date.toString().slice(0,10) === item.start_date.toString().slice(0,10))
                 // dt = item.start_date.toString().slice(0,10)
                 return {...item, booking}
             })

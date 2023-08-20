@@ -11,7 +11,7 @@ import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as yup from 'yup'
 // import image from '../../../../../BackEnd/public/freelancer_avatar'
-
+import {logOutAction} from '../../redux/actions/BasicAction'
 import { getCompanyInfo, getCompanyLicense, updateCompanyPassword,
   updateCompanyLicense, updateCompanyAvatar, updateCompanyInfo} from '../../redux/actions/CompanyAction';
 
@@ -278,8 +278,7 @@ export default function ProfileCompany(){
 
         <div className = "hr"></div>      
 
-        <a href = "https://www.google.com/" className = "delete-acc">Delete account</a>
-        <a href = "https://www.google.com/" className = "log-out">Log out</a>        
+        <a href = "/" className = "log-out" onClick = {() => dispatch(logOutAction())}>Log out</a>        
       </div>
   </div>
   );

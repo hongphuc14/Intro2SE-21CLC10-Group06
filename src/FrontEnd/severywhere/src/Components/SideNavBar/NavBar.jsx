@@ -29,6 +29,19 @@ const NavBar = () => {
     //         });
     // }, []);
 
+    const importAvatar =  (filename) =>  {
+        if (typeof filename === 'undefined' || filename === "")
+          return null
+        // filename = "tourist_2.jpg"
+        try{
+          const path =  require(`../../../../../BackEnd/public/tourist_avatar/${filename}`)
+          return path
+        }
+        catch(err){
+          return null
+        }
+      }
+
     useEffect(() => {
         setProfileImage(tourist_info.avatar);
         setProfileName(tourist_info.fullname);
@@ -39,7 +52,7 @@ const NavBar = () => {
         <nav className="sidebar">
             <div className="user-profile">
                 <div className="profile-image">
-                    <img src={profileImage} alt="User Profile"/>
+                    <img src={importAvatar(profileImage) || defaultAvatar} alt="User Profile"/>
                 </div>
             </div>
             <div className="profile-name">
