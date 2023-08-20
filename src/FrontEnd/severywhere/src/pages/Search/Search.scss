@@ -1,7 +1,10 @@
 #search-page {
     background-color: #E5F2CA;
-    width: 100%;
-    height: fit-content;
+    // display: flex;
+    // flex-direction: column;
+    flex:1;
+    width:100vw;
+    height:fit-content;
 }
 
 #search-page-container {
@@ -10,6 +13,8 @@
     margin: auto;
     height: 100%;
     width: 85%;
+    position:relative;
+    top: 5rem;
 }
 
 #filter-container {
