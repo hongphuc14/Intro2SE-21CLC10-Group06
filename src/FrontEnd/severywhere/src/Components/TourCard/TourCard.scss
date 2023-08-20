@@ -1,0 +1,55 @@
+.tour-card {
+    display: inline-block;
+    background-image: url("./halong.jpg");
+    background-size: cover;
+    background-color: grey;
+    height: 290px;
+    width: 240px;
+    border-radius: 15px;
+    margin: 0 1rem 1rem 0;
+}
+.tour-subcard {
+    position: relative;
+    top: 55%;
+    background-color: black;
+    opacity: 0.8;
+    height: 45%;
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+    color: grey;
+}
+.tour-title {
+    position: relative;
+    top: 0.4rem;
+    left: 0.5rem;
+    font-size: 1rem;
+    color: white;
+}
+.tour-rating {
+    position: relative;
+    top: 0.2rem;
+    left: 0.5rem;
+    font-size: 0.7rem;
+    color: yellow;
+}
+.tour-info {
+    position: relative;
+    top: 0.8rem;
+    left: 0.5rem;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 0.7rem;
+}
+.tour-info i {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+    margin-right: 0.5rem;
+    width: 0.8rem;
+}
+.tour-info-bottom {
+    display: inline-block;
+    margin-top: 0.5rem;
+    margin-right: 1rem;
+}
