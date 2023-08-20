@@ -228,5 +228,155 @@ const getGuideSearch = async(req, res) =>{
     }
 }
 
+const reportTour = async(req, res) =>{
+    try{
+        let { id_tourist } = req.params;
+        let { id_tour, content, report_date } = req.body;
+        
+        let checkTourist = await model.tourist.findOne({
+            where:{
+                id_tourist
+            }
+        });
+        if(checkTourist){
+            let checkReport = await model.tour_report.findOne({
+                where:{
+                    id_tourist, id_tour
+                }
+            });
+            if(checkReport){
+                await model.tour_report.update({ 
+                     content, report_date, status: 1
+                }, {
+                    where:{
+                        id_tourist, id_tour
+                    }
+                }); 
+            }
+            else
+                await model.tour_report.create({ 
+                    id_tour, content, report_date, id_tourist, status: 1
+                }); 
+            // let data = await model.tourist.findOne({
+            //     where:{
+            //         id_tourist
+            //     }
+            // });
+            sucessCode(res,"","Update thành công")
+        }
+        else{
+            failCode(res,"","Tourist không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+const reportGuide = async(req, res) =>{
+    try{
+        let { id_tourist } = req.params;
+        let { id_guide, content, report_date } = req.body;
+        
+        let checkTourist = await model.tourist.findOne({
+            where:{
+                id_tourist
+            }
+        });
+        if(checkTourist){
+            let checkReport = await model.guide_report.findOne({
+                where:{
+                    id_tourist, id_guide
+                }
+            });
+            if(checkReport){
+                await model.guide_report.update({ 
+                     content, report_date, status: 1
+                }, {
+                    where:{
+                        id_tourist, id_guide
+                    }
+                }); 
+            }
+            else
+                await model.guide_report.create({ 
+                    id_guide, content, report_date, id_tourist, status: 1
+                }); 
+            // let data = await model.tourist.findOne({
+            //     where:{
+            //         id_tourist
+            //     }
+            // });
+            sucessCode(res,"","Update thành công")
+        }
+        else{
+            failCode(res,"","Tourist không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+const bookTour = async(req, res) =>{
+    try{
+        let { id_tourist } = req.params;
+        let { id_tour, booking_date, start_date, end_date, num_tourist,	total_price} = req.body;
+        
+        let checkTourist = await model.tourist.findOne({
+            where:{
+                id_tourist
+            }
+        });
+        if(checkTourist){
+                let checkTour = await model.tour.findOne({
+                    where:{
+                        id_tour
+                    }
+                })
+                await model.tour_booking.create({ 
+                    id_tourist, id_tour, booking_date, start_date, end_date, num_tourist, total_price, 
+                    status: 1,
+                    free_cancel: checkTour.free_cancellation
+                }); 
+            sucessCode(res,"","Create thành công")
+        }
+        else{
+            failCode(res,"","Tourist không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+const bookGuide = async(req, res) =>{
+    try{
+        let { id_tourist } = req.params;
+        let { id_guidetime, booking_date, meeting_point, price} = req.body;
+        
+        let checkTourist = await model.tourist.findOne({
+            where:{
+                id_tourist
+            }
+        });
+        if(checkTourist){
+                // let checkGuide = await model.tour_guide.findOne({
+                //     where:{
+                //         id_guide
+                //     }
+                // })
+                await model.guide_booking.create({ 
+                    id_tourist, id_guidetime, booking_date, meeting_point, price, 
+                    status: 1,
+                    // free_cancel: checkGuide.free_cancellation
+                }); 
+            sucessCode(res,"","Create thành công")
+        }
+        else{
+            failCode(res,"","Tourist không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
 module.exports = { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar,
-    getTourSearch, getGuideSearch }
+    getTourSearch, getGuideSearch, reportTour, reportGuide, bookTour, bookGuide }
