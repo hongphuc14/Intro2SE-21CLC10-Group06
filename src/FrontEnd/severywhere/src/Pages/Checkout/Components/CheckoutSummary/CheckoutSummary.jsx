@@ -23,6 +23,7 @@ export default function CheckoutSummary() {
                         color: '#0C721F',
                         textTransform: 'uppercase',
                         textAlign: 'start',
+                        paddingTop: '0px',
                     }}
                 >check out</h1>
                 {/* Summary */}
@@ -32,6 +33,8 @@ export default function CheckoutSummary() {
                         flexDirection: 'column',
                         height: '210px',
                         justifyContent: 'space-between',
+                        marginTop: '90px',
+                        marginBottom: '30px',
                     }}
                 >
                     <h2
@@ -39,6 +42,7 @@ export default function CheckoutSummary() {
                             fontSize: '35px',
                             color: '#0C721F',
                             textTransform: 'uppercase',
+                      
                         }}
                     >
                         summary
