@@ -175,9 +175,10 @@ const getTourSearch = async(req, res) =>{
         const [tour_search, metadata] = await sequelize.query
             (`SELECT tour.id_tour, tour.name, tour.price, tour.duration,
             tour.num_max, tour.description, tour.included, tour.not_included,
-            tour.schedule, tour.ggmap_address, tour.free_cancellation,
-            destination.name as destination, company.name as company, tour_photo.photo_path, 
-            tour_category.name as category,
+            tour.schedule, tour.ggmap_address, tour.free_cancellation, tour.schedule,
+            destination.name as destination, company.name as company, company.phone,
+            tour_photo.photo_path, tour_category.name as category, 
+            COUNT(tour_review.rating) as num_review,
                 CASE
                     WHEN COUNT(tour_review.rating) = 0 THEN 0
                     ELSE AVG(tour_review.rating) 
@@ -191,7 +192,7 @@ const getTourSearch = async(req, res) =>{
             LEFT JOIN tour_review ON tour_review.id_tour_booking = tour_booking.id_tour_booking
             WHERE tour.is_deleted = 0 AND tour.id_des = ${destination} AND
             tour.price <= ${upper_price} AND  tour.price >= ${below_price}
-            GROUP BY tour.id_tour, tour.name, tour.price, tour.duration,
+            GROUP BY tour.id_tour, tour.name, tour.price, tour.duration, tour.schedule, 
             tour.num_max, destination.name, company.name, tour_photo.photo_path,
             tour.description, tour.included, tour.not_included, tour_category.name,
             tour.schedule, tour.ggmap_address, tour.free_cancellation
