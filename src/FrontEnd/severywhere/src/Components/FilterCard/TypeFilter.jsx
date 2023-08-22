@@ -5,12 +5,12 @@ const TypeFilter = () => {
         <div className="filter-card">
             <p className="card-title">Type</p>
             <label className="container">Tour
-                <input type="radio" checked="checked" name="radio"/>
-                <span className="checkmark"></span>
+                <input type="radio" checked="checked" name="type"/>
+                {/* <span className="checkmark"></span> */}
             </label>
             <label className="container">Tour Guide
-                <input type="radio" name="radio"/>
-                <span className="checkmark"></span>
+                <input type="radio" name="type"/>
+                {/* <span className="checkmark"></span> */}
             </label>
         </div>
     );

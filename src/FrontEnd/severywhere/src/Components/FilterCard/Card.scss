@@ -14,7 +14,7 @@
     margin-bottom: 0.5rem;
 }
 /* The container */
-.container {
+.card-title .container {
   display: block;
   position: relative;
   padding-left: 2rem;
@@ -30,7 +30,7 @@
 }
 
 /* Hide the browser's default radio button */
-.container input {
+.card-title .container input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -49,12 +49,12 @@
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.card-title .container:hover input ~ .checkmark {
   background-color: #8C8C8C;
 }
 
 /* When the radio button is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.card-title .container input:checked ~ .checkmark {
   background-color: #0C721F;
   border-color: #0C721F;
 }

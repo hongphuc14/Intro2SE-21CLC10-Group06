@@ -1,7 +1,7 @@
 
 import "./HeaderGuest.scss";
 import React, { useState, useEffect, useRef } from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { logOutAction } from "../../redux/actions/BasicAction";
 
@@ -21,24 +21,24 @@ const Navbar = () => {
   return (
     <nav className="Header-Guest">
       <div className="container">
-        <a href="/homepage" id="lg">
+        <a href="/" id="lg">
           <img src="/horizontal_white.png" className="SE-logo" alt="logo"/>
         </a>
 
         <div className="subcontainer">
           <div className="Menu">
-            <a href="https://www.google.com/">About</a>
-            <a href="https://www.google.com/">FAQs</a>
-            <a href="https://www.google.com/">Tour Guides</a>
-            <a href="https://www.google.com/">Tours</a>
+            <a href="/aboutus">About</a>
+            <a href="/aboutus">FAQs</a>
+            <a href="#">Tour Guides</a>
+            <a href="#">Tours</a>
           </div>
 
           <line className="vertical-line"></line>
           <icons className="icons">
-            <a href="https://www.google.com/">
+            <a href="#">
               <i className="fa-solid fa-cart-shopping cartheart"></i>
             </a>
-            <a href="https://www.google.com/">
+            <a href="#">
               <i className="fa-solid fa-heart cartheart"></i>
             </a>
 
@@ -76,7 +76,7 @@ const Navbar = () => {
 
 function DropdownItem(props) {
   return (
-      <li className="dropdownItem">
+      <li className="dropdownItem" onClick = {props.onClick}>
         <i className={props.className}></i>
         <a href = {props.link}>{props.text}</a>
       </li>

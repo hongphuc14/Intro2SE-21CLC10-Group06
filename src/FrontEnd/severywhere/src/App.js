@@ -26,12 +26,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from "history";
 import { useSelector } from 'react-redux';
 import { useEffect,useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 export const history = createBrowserHistory();
 
 function App() {
-  const role = useSelector(state => state.BasicReducer.user_login.id_role)
+  const role = useSelector(state => state.BasicReducer.user_login.id_role) || 0
+  // console.log(role)
 
   return (
     <Router history={history}>
@@ -40,16 +42,12 @@ function App() {
         
 {/*all users*/}        
         <Route path = "/aboutus" exact component = {AboutUs_FAQ} />
-{/*guest + tourist*/}
-        {
-          (role !== 2)  && (role !== 3) && (role !== 4) && (
-            <Route path = "/" exact component={HomePage} />
-          )
-        }
+
 {/*guest*/}
         {
-          (role !== 1)  && (role !== 2)  && (role !== 3) && (role !== 4)&& (
+          (role !== 1)  && (role !== 2)  && (role !== 3) && (role !== 4) && (
             <>
+            <Route path = "/" exact component={HomePage} />
             <Route path = "/signup" exact component={Signup} />
             <Route path = "/login" exact component ={Login} />
             <Route path = "/emailResetpw" exact component = {ResetPasswordEmail} />
@@ -62,8 +60,10 @@ function App() {
         {
           role === 1 && (
             <>
+            <Route path = "/" exact component={HomePage} />
             <Route path = "/editprofile" exact component = {EditProfile} />
             <Route path = "/changepw" exact component = {ChangePassword} />
+            <Route path = "/search" exact component = {Search} />
             </>
           )
         }
