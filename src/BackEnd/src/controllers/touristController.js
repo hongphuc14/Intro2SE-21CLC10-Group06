@@ -378,5 +378,82 @@ const bookGuide = async(req, res) =>{
     }
 }
 
+const cancelGuide = async(req, res) =>{
+    try{
+        let { id_tourist } = req.params;
+        let { id_guidebooking} = req.body;
+        
+        let checkTourist = await model.guide_booking.findOne({
+            where:{
+                id_guidebooking, id_tourist
+            }
+        });
+        if(checkTourist){
+            const [guide, metadata] = await sequelize.query
+            (`SELECT tour_guide.free_cancellation,guide_time.guide_date
+            FROM guide_booking
+            INNER JOIN guide_time ON guide_time.id_guidetime = guide_booking.id_guidetime
+            INNER JOIN tour_guide ON tour_guide.id_guide = guide_time.id_guide 
+            WHERE guide_booking.id_guidebooking = ${id_guidebooking}`);
+
+            let status = 3
+            let compare = new Date(guide[0].guide_date) - new Date() 
+            if (!guide[0].free_cancellation)
+                if (compare <= 24 * 60 * 60 * 1000){
+                status = 4
+            }
+            await model.guide_booking.update({ 
+                status,
+            },{
+                where:{
+                    id_guidebooking 
+                }
+            }); 
+            sucessCode(res,"","Update thành công")
+        }
+        else{
+            failCode(res,"","Tourist không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+const cancelTour = async(req, res) =>{
+    try{
+        let { id_tourist } = req.params;
+        let { id_tour_booking} = req.body;
+        
+        let tour = await model.tour_booking.findOne({
+            where:{
+                id_tour_booking, id_tourist
+            }
+        });
+        if(tour){
+                let status = 3
+                let compare = new Date(tour.end_date) - new Date() 
+                if (!tour.free_cancel)
+                    if (compare <= 24 * 60 * 60 * 1000){
+                    status = 4
+                }
+                await model.tour_booking.update({ 
+                    status,
+                },{
+                    where:{
+                        id_tour_booking 
+                    }
+                }); 
+            sucessCode(res,"","Update thành công")
+        }
+        else{
+            failCode(res,"","Tourist không tồn tại")
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+
 module.exports = { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar,
-    getTourSearch, getGuideSearch, reportTour, reportGuide, bookTour, bookGuide }
+    getTourSearch, getGuideSearch, reportTour, reportGuide, bookTour, bookGuide,
+    cancelGuide, cancelTour }
