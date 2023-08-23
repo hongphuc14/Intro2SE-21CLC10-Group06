@@ -161,13 +161,16 @@ export default function Search() {
                         {
                             (type === "Tour") && tourCard.map((card) => {
                                 return(
+                                <Link to = {{pathname: "/tourpage", state: {info: card}}} style = {{textDecoration: "none"}} >
                                     <TourCard key = {card.id_tour} info = {card}/>
+                                </Link>
                                 )
                             })
                         }
                         {
                             (type === "Guide") && guideCard.map((card) => {
                                 return(
+                                    
                                     <TourGuideCard key = {card.id_guide} info = {card}/>
                                 )
                             })

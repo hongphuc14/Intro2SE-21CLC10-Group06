@@ -9,6 +9,7 @@ import ResetPassword from './Pages/ResetPassword/ResetPassword';
 import ChangePassword from './Pages/ChangePassword/ChangePassword';
 import AboutUs_FAQ from './Pages/AboutUs_FAQ/AboutUs_FAQ';
 import Search from './Pages/Search/Search';
+import TourPage from './Pages/TourPage/TourPage';
 
 import ProfileFreelancer from "./Pages/Freelancer/ProfileFreelancer";
 import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
@@ -53,6 +54,7 @@ function App() {
             <Route path = "/emailResetpw" exact component = {ResetPasswordEmail} />
             <Route path = "/resetpw" exact component = {ResetPassword} />
             <Route path = "/search" exact component = {Search} />
+            <Route path = "/tourpage" exact component = {TourPage} />
             </>
           )
         }
@@ -64,6 +66,7 @@ function App() {
             <Route path = "/editprofile" exact component = {EditProfile} />
             <Route path = "/changepw" exact component = {ChangePassword} />
             <Route path = "/search" exact component = {Search} />
+            <Route path = "/tourpage" exact component = {TourPage} />
             </>
           )
         }
