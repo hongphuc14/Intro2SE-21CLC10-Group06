@@ -70,6 +70,7 @@ export const getTourSearch = (feature) => {
   return async (dispatch) => {
     try {
       dispatch(displayLoadingAction);
+      console.log(feature)
       const result = await touristService.getTourSearch(feature);
       if (result.status === 200) {
         dispatch({
@@ -88,6 +89,7 @@ export const getGuideSearch = (feature) => {
   return async (dispatch) => {
     try {
       dispatch(displayLoadingAction);
+      console.log(feature)
       const result = await touristService.getGuideSearch(feature);
       if (result.status === 200) {
         dispatch({

@@ -3,7 +3,7 @@ import './SearchBar.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import {getDestination} from '../../redux/actions/BasicAction'
 
-export const SearchBar = ({ setResult }) => {
+export const SearchBar = ({ setResult, val = ""}) => {
     const dispatch = useDispatch()
     const {destination} = useSelector((state) => state.BasicReducer)
     const [search, setSearch] = useState("");
@@ -13,6 +13,7 @@ export const SearchBar = ({ setResult }) => {
     }, [])
 
     const fetchSearch = (value) => {
+        value = value.toLowerCase()
 
         const results = destination.filter((user) => {
             return (
@@ -30,10 +31,10 @@ export const SearchBar = ({ setResult }) => {
         fetchSearch(value);
     }
 
-    console.log(destination)
+    console.log(val)
     return (
         <div className="input-wrapper">
-            <input placeholder='Enter your favorite destination !' value={search} onChange={(e) => handleSearch(e.target.value)} id="input-search"/>
+            <input placeholder={val || 'Enter your favorite destination !'} value={search} onChange={(e) => handleSearch(e.target.value)} id="input-search"/>
             <i class="fa-solid fa-magnifying-glass-location" id='seach-icon'></i>
         </div>
     );
