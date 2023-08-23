@@ -4,7 +4,7 @@ import CostFilter from '../../Components/FilterCard/CostFilter';
 import TourCard from '../../Components/TourCard/TourCard';
 import HeaderGuest from '../../Components/Header/HeaderGuest';
 import Footer from '../../Components/Footer/Footer';
-import './Search.scss';
+import { SearchBar } from '../../Components/SearchBar/SearchBar'
 
 export default function Search() {
     return (  
@@ -17,7 +17,7 @@ export default function Search() {
                     <CostFilter />
                 </div> 
                 <div id="search-container">
-                    {/* <SearchBar /> */}
+                    <SearchBar />
                     <div id="result-container">
                         <TourCard />
                         <TourCard />
