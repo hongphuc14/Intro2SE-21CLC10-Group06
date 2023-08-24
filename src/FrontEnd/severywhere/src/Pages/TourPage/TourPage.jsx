@@ -6,7 +6,7 @@ import placeholder from '../../placeholder-image.png'
 
 import {Link, useLocation} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import {getTouristInfo, updateTourCart, updateReport} from '../../redux/actions/TouristAction'
+import {getTouristInfo, reportTour} from '../../redux/actions/TouristAction'
 import { useEffect,useState } from 'react';
 import './TourPage.scss';
 
@@ -46,7 +46,7 @@ export default function TourPage() {
         }
       }
 
-    console.log(tourist_info)
+    // console.log(tourist_info)
 
     const updateTourCart = () => {
       if (!tourist_info?.id_tourist){
@@ -72,7 +72,7 @@ export default function TourPage() {
         const formattedDate = `${year}-${month}-${day}`;
   
         console.log(report)
-        // dispatch(updateReport(tourist_info.id_tourist, info.id_tour, report, formattedDate))
+        dispatch(reportTour(tourist_info.id_tourist, info.id_tour, report, formattedDate))
         setIsReport(false)
         setReport("")
       }
@@ -106,11 +106,14 @@ export default function TourPage() {
                 <RatingStar numberStar={Math.floor(info.rating)}/>
                 <p className = "review">({info.num_review} reviews)</p>
                 <div className = "container-smaller">
-                  <Info title = "Cost per person" info = {info.price+"$"} icon = "fa-solid fa-language"/>
+                  <Info title = "Cost per person" info = {info.price+"$"} icon = "fa-solid fa-credit-card"/>
                   <Info title = "Duration" info ={info.duration + (info.duration > 1 ? " days" : " day")} icon = "fa-solid fa-clock"/>
                   <Info title = "Max people" info = {info.num_max} icon = "fa-solid fa-user-group"/>
                 </div>
-                <button onClick = {updateTourCart}>Add to cart <i class="fa-solid fa-cart-plus"></i></button>
+                <Link to = {{pathname: "/checkoutTour", state: {info: info}}} style = {{textDecoration: "none"}} >
+                  <button >Checkout <i class="fa-solid fa-cart-plus"></i></button>
+                </Link>
+                
                 <i className="fa-regular fa-heart" ></i>
                 <i class="fa-regular fa-flag" onClick = {() => {
                   if (!tourist_info.id_tourist)

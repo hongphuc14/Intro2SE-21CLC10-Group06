@@ -277,7 +277,7 @@ const getGuideSearch = async(req, res) =>{
 const reportTour = async(req, res) =>{
     try{
         let { id_tourist } = req.params;
-        let { id_tour, content, report_date } = req.body;
+        let { id_tour, report, report_date } = req.body;
         
         let checkTourist = await model.tourist.findOne({
             where:{
@@ -292,7 +292,7 @@ const reportTour = async(req, res) =>{
             });
             if(checkReport){
                 await model.tour_report.update({ 
-                     content, report_date, status: 1
+                     report, report_date, status: 1
                 }, {
                     where:{
                         id_tourist, id_tour
@@ -301,14 +301,9 @@ const reportTour = async(req, res) =>{
             }
             else
                 await model.tour_report.create({ 
-                    id_tour, content, report_date, id_tourist, status: 1
+                    id_tour, report, report_date, id_tourist, status: 1
                 }); 
-            // let data = await model.tourist.findOne({
-            //     where:{
-            //         id_tourist
-            //     }
-            // });
-            sucessCode(res,"","Update thành công")
+            sucessCode(res,checkReport,"Report tour successfully")
         }
         else{
             failCode(res,"","Tourist không tồn tại")

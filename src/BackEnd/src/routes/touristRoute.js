@@ -27,18 +27,18 @@ touristRoute.post("/reportTour/:id_tourist", reportTour);
 
 touristRoute.post("/reportGuide/:id_tourist", reportGuide);
 
-touristRoute.post("/bookTour/:id_tourist", bookTour);
+// touristRoute.post("/bookTour/:id_tourist", bookTour);
 
-touristRoute.post("/bookGuide/:id_tourist", bookGuide);
+// touristRoute.post("/bookGuide/:id_tourist", bookGuide);
 
-touristRoute.put("/cancelTour/:id_tourist", cancelTour);
+// touristRoute.put("/cancelTour/:id_tourist", cancelTour);
 
-touristRoute.put("/cancelGuide/:id_tourist", cancelGuide);
+// touristRoute.put("/cancelGuide/:id_tourist", cancelGuide);
 
-touristRoute.get("/getBookedBooking/:id_tourist", getBookedBooking);
+// touristRoute.get("/getBookedBooking/:id_tourist", getBookedBooking);
 
-touristRoute.get("/getCancelBooking/:id_tourist", getCancelBooking);
+// touristRoute.get("/getCancelBooking/:id_tourist", getCancelBooking);
 
-touristRoute.post("/leaveReview/:id_tourist", leaveReview);
+// touristRoute.post("/leaveReview/:id_tourist", leaveReview);
 
 module.exports = touristRoute;
