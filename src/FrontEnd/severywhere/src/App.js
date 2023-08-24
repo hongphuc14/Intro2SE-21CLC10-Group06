@@ -72,6 +72,7 @@ function App() {
             <Route path = "/search" exact component = {Search} />
             <Route path = "/tourpage" exact component = {TourPage} />
             <Route path = "/checkoutTour" exact component = {CheckoutTour} />
+            <Route path = "/tourguidepage" exact component = {TourGuidePage} />
             </>
           )
         }

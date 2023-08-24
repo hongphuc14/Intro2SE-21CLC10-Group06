@@ -3,7 +3,7 @@
     height: fit-content;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-    width: 18rem;
+    width: 20rem;
     margin-left: auto;
     margin-right: 0.8rem;
     margin-top: 0.8rem;
@@ -17,14 +17,14 @@
 .intro-card > p.intro-content{
     margin: 0rem;
     padding: 0.5rem 0;
-    color: #8C8C8C;
+    color: gray;
     font-size: 0.8rem;
     text-align: center;
 }
 .intro-card > .horizontal-line {
     height: 1px;
     width: 100%;
-    background-color: #8C8C8C;
+    background-color: gray;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
@@ -34,7 +34,7 @@
     margin-bottom: 1rem;
 }
 .info-container .type-title {
-    color: #8C8C8C;
+    color: gray;
     font-size: 0.8rem;
 }
 .info-container .type-content {
@@ -42,7 +42,7 @@
     font-size: 1rem;
 }
 .info-container .type-icon {
-    color: #0C721F;
+    color: green;
     font-size: 2rem;
     margin-top: 0.3rem;
     width: 3.2rem;
