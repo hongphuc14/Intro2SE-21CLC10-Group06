@@ -12,6 +12,7 @@ import Search from './Pages/Search/Search';
 import TourPage from './Pages/TourPage/TourPage';
 import TourGuidePage from './Pages/TourGuidePage/TourGuidePage';
 import CheckoutTour from './Pages/CheckoutPage/CheckoutTour';
+import CheckoutGuide from './Pages/CheckoutPage/CheckoutGuide';
 
 import ProfileFreelancer from "./Pages/Freelancer/ProfileFreelancer";
 import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
@@ -74,6 +75,8 @@ function App() {
             <Route path = "/tourpage" exact component = {TourPage} />
             <Route path = "/checkoutTour" exact component = {CheckoutTour} />
             <Route path = "/tourguidepage" exact component = {TourGuidePage} />
+            <Route path = "/checkouttour" exact component ={CheckoutTour} />
+            <Route path = "/checkoutguide" exact component ={CheckoutGuide} />
             </>
           )
         }

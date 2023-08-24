@@ -1,0 +1,227 @@
+#checkout-guide-page {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+}
+.guide-cart-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 15rem;
+    padding: 0;
+    border-radius: 1rem 1rem 0 0;
+    background-color: white;
+}
+.left-cart-container {
+    width: 15rem;
+    height: inherit;
+    padding: 0;
+    margin: 0;
+    background-color: green;
+    border-radius: 1rem 0 0 0;
+}
+.right-cart-container {
+    width: 30rem;
+    height: inherit;
+    padding: 0;
+    margin: 0;
+}
+.guide-ava {
+    border-radius: 50%;
+    background-color: thistle;
+    height: 60%;
+    width: 60%;
+    border: 0.5rem solid white;
+    margin: auto;
+    margin-top: 15%;
+    /* margin-bottom: 1%; */
+}
+.guide-ava > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.guide-name {
+    font-size: 1.4rem;
+    margin: 0;
+    color: black;
+    margin: 1rem auto 0 1rem;
+}
+.guide-rating {
+    font-size: 1.2rem;
+    margin: 0;
+    color: gray;
+    margin: 0.3rem auto 0 1rem;
+}
+.guide-info-cost-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-left: 1rem;
+    padding: 0;
+}
+.guide-info-container {
+    width: 60%;
+    height: fit-content;
+    margin-top: 2rem;
+}
+.guide-info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.8rem;
+}
+.guide-info > i {
+    font-size: 1.3rem;
+    color: green;
+    margin-right: 1rem;
+    width: 2rem;
+    text-align: center;
+}
+.guide-info > p {
+    font-size: 1rem;
+    color: gray;
+    margin: 0;
+}
+
+.guide-cost-container {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    margin-top: 5.8rem;
+    /* margin-bottom: 1rem; */
+}
+
+.guide-cost-container .cost-title {
+    color: gray;
+    font-size: 0.8rem;
+}
+.guide-cost-container .cost{
+    color: black;
+    font-size: 1rem;
+}
+.guide-cost-container .cost-icon {
+    color: green;
+    font-size: 2rem;
+    margin-top: 0.3rem;
+    width: 3.2rem;
+    text-align: center;
+    text-decoration: bold;
+}
+
+.checkout-page-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 50rem;
+    padding: 0;
+    margin: auto;
+}
+.checkout-left-container {
+    width: 70%;
+    height: fit-content;
+    padding: 0;
+    margin: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
+}
+.checkout-right-container {
+    width: 30%;
+    height: inherit;
+    padding: 1rem 1.5rem;
+    margin: 0;
+}
+.checkout-right-container h1 {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: green;
+    text-decoration: none;
+}
+.checkout-right-container > p {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: green;
+}
+.checkout-right-container .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    color: gray;
+    >p {
+        margin: 0;
+        margin-bottom: 0.5rem;
+        padding: 0;
+    }
+}
+.checkout-right-container .total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    color: green;
+    >p {
+        margin: 0;
+        padding: 0;
+    }
+}
+.checkout-right-container .horizontal-line {
+    height: 1.1px;
+    width: 100%;
+    background-color: gray;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.fillin-form {
+    background-color: lightgray;
+    width: 100%;
+    height: 20rem;
+    border-radius: 0 0 1rem 1rem;
+}
+.fillin-components {
+    height: fit-content;
+    /* padding: 1rem; */
+    display: flex;
+    flex-direction: row;
+}
+.info-part {
+    width: 50%;
+    height: fit-content;
+    color: black;
+    font-size: 1rem;
+    background-color: yellow;
+    margin: 1rem;
+}
+.info-part > input {
+    width: 96%;
+    height: 1.7rem;
+    border-radius: 0.5rem;
+    border: 1px solid #979797;
+    padding-left: 0.5rem;
+    font-family: 'RocknRoll One', sans-serif;
+    margin-top: 0.2rem;
+}
+
+.show-total {
+    width: fit-content;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: 1rem;
+    color: black;
+    font-size: 1.2rem;;
+    > a {
+        margin-left: 0.5rem;
+        color: green;
+        font-size: 1.5rem;
+    }
+}
