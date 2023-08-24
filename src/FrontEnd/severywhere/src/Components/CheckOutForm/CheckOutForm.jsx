@@ -54,8 +54,57 @@ const CheckOutForm = () => {
                         </div>
                     </div>
                 </div>
+                <div id="customer-info">
+                    <div id="info_one">
+                        <div id="info_name">
+                            <p>Fullname</p>
+                            <input type="text" placeholder='Nguyen Thi Minh Minh'/>
+                        </div>
+                        <div id="info_email">
+                            <p>Email</p>
+                            <input type="text" placeholder='ntmminh21@clc.fitus.edu.vn'/>
+                        </div>
+                    </div>
+                    <div id="info_two">
+                        <div id="info_phone">
+                            <p>Phone</p>
+                            <input type="phone" placeholder='0123456789'/>
+                        </div>
+                        <div id="info_gender">
+                            <p>Gender</p>
+                            <div id="checkboxGender">
+                                <label>
+                                    <input type="radio" name ="genderinfo" value ="Male"/>
+                                    Male
+                                </label>
+
+                                <label>
+                                    <input type="radio" name ="genderinfo" value ="Female"/>
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="info_three">
+                        <div id="info_startdate">
+                            <p>Start date</p>
+                            <input type="date" placeholder='Start Date'/>
+                        </div>
+                        <div id="info_enddate">
+                            <p>End date</p>
+                            <input type="date" placeholder='End Date'/>
+                        </div>
+                    </div>
+                    <div id="info_four">
+                        <div id="infoticket">
+                            <p>Number of ticket:</p>
+                            <input type="number" placeholder='1'/>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="payment">
+                hi
             </div>
 
         </div>
