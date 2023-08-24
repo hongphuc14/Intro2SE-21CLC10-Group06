@@ -11,6 +11,7 @@ import AboutUs_FAQ from './Pages/AboutUs_FAQ/AboutUs_FAQ';
 import Search from './Pages/Search/Search';
 import TourPage from './Pages/TourPage/TourPage';
 import TourGuidePage from './Pages/TourGuidePage/TourGuidePage';
+import CheckoutTour from './Pages/CheckoutPage/CheckoutTour';
 
 import ProfileFreelancer from "./Pages/Freelancer/ProfileFreelancer";
 import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
@@ -70,6 +71,7 @@ function App() {
             <Route path = "/changepw" exact component = {ChangePassword} />
             <Route path = "/search" exact component = {Search} />
             <Route path = "/tourpage" exact component = {TourPage} />
+            <Route path = "/checkoutTour" exact component = {CheckoutTour} />
             <Route path = "/tourguidepage" exact component = {TourGuidePage} />
             </>
           )

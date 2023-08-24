@@ -95,9 +95,9 @@ export default function MyForm() {
         <div className="gender">
           <label>Gender</label>
           <div className="gender-button">
-            <input type="radio" className ="option-input" name="gender" value="0" checked = {tourist_info?.gender === 0 || false} onChange={(e) => setGender(e.target.value)}/>
+            <input type="radio" className ="option-input" name="gender" value="0" checked = {gender === "0" || false} onChange={(e) => setGender(e.target.value)}/>
             <label className = "maleCheck">Male</label>
-            <input type="radio" className="option-input" name="gender" value="1" checked = {tourist_info?.gender === 1 || false} onChange={(e) => setGender(e.target.value)}/>
+            <input type="radio" className="option-input" name="gender" value="1" checked = {gender === "1" || false} onChange={(e) => setGender(e.target.value)}/>
             <label className = "femaleCheck">Female</label>
           </div>
         </div>
