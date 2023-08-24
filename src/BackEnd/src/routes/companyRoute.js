@@ -31,7 +31,7 @@ companyRoute.put("/deleteLicense/:id_company", verifyToken, deleteLicenseByID);
 companyRoute.post("/updateLicense/:id_company", verifyToken, upload('company_license').array("file"), updateLicenseByID);
 
 //GET: get company tour by id_company
-companyRoute.get("/getTour/:id_company", verifyToken, getTourByID);
+companyRoute.get("/getTour/:id_company", getTourByID);
 
 // PUT: update tour info by id_tour
 companyRoute.put("/updateTourInfo/:id_tour", verifyToken, updateTourInfo);

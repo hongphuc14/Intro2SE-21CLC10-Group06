@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
+import {Link} from 'react-router-dom'
 
 import {deleteCompanyTour, getCompanyInfo, getCompanyLicense, getCompanyTour,updateTour,
 } from '../../redux/actions/CompanyAction'
@@ -193,7 +194,10 @@ export default function TourCompany(){
                                 <div className = "tour-hover">
                                     <ButtonEditFreelancer type = "button" onClick = {() => {setIsUpdate(true); setTour_Info({...tour})}}/>
                                     <ButtonDeleteFreelancer onClick = {() => {handleDelete(tour.id_tour)}}/>
-                                    <ButtonViewFreelancer/>
+                                    <Link to = {{pathname: "/viewtour-company", state: {info: tour}}} style = {{textDecoration: "none"}} >
+                                        <ButtonViewFreelancer/>
+                                    </Link>
+                                    
                                 </div>
                                 <img src = {importPhoto(tour?.photo_path) || placeholder}></img>
                                 <p className = "name">{tour.name}</p>
