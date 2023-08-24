@@ -150,6 +150,46 @@ export const reportGuide = (id_tourist, id_guide, report, report_date) => {
   };
 };
 
+export const bookTour = (id_tourist, obj) => {
+  return async (dispatch) => {
+    try {
+      console.log(obj)
+      const result = await touristService.bookTour(id_tourist, obj);
+      // const result = await touristService.getBookedBooking(id_tourist);
+      // if (result.status === 200) {
+      //   alert(result.data.message)
+      //   dispatch({
+      //     type: GET_COMPANY_REVIEW,
+      //     company_review: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      // }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};
+
+export const bookGuide = (id_tourist, obj) => {
+  return async (dispatch) => {
+    try {
+      console.log(obj)
+      const result = await touristService.bookGuide(id_tourist, obj);
+      // const result = await touristService.getBookedBooking(id_tourist);
+      // if (result.status === 200) {
+      //   alert(result.data.message)
+      //   dispatch({
+      //     type: GET_COMPANY_REVIEW,
+      //     company_review: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      // }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};
+
 // export const updateTouristPassword = (id_tourist,currentPass, newPass) => {
 //   return async (dispatch) => {
 //     try {
