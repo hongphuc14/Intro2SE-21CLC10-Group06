@@ -236,7 +236,7 @@ const getGuideSearch = async(req, res) =>{
             upper_rating = rating + 1
 
         const [guide_search, metadata] = await sequelize.query
-            (`SELECT tour_guide.id_guide, tour_guide.fullname, tour_guide.experience,
+            (`SELECT tour_guide.id_guide, tour_guide.fullname, tour_guide.experience, tour_guide.phone,
             destination.name as destination, tour_guide.avatar, tour_guide.price_per_session as price,
                 CASE
                     WHEN COUNT(guide_review.rating) = 0 THEN 0
@@ -250,7 +250,7 @@ const getGuideSearch = async(req, res) =>{
             WHERE tour_guide.id_des = ${destination} AND 
             tour_guide.price_per_session >= ${below_price} AND tour_guide.price_per_session <= ${upper_price}
             GROUP BY tour_guide.id_guide, tour_guide.fullname, tour_guide.experience,
-            destination.name, tour_guide.avatar
+            destination.name, tour_guide.avatar, tour_guide.phone
             `);
         
             const guides = guide_search.filter( guide => rating <= guide.rating && upper_rating > guide.rating)
@@ -264,8 +264,13 @@ const getGuideSearch = async(req, res) =>{
                     INNER JOIN languages ON guide_language.id_lang = languages.id_lang
                     WHERE guide_language.id_guide = ${guide.id_guide}`)
                 const id_lang = language.map (lang => lang.lang_name)
+
+                const [attraction, metadata1] = await sequelize.query
+                    (`SELECT guide_attraction.*
+                    FROM guide_attraction
+                    WHERE guide_attraction.id_guide = ${guide.id_guide}`)
                 
-                data.push({...guide, language: [...id_lang]});
+                data.push({...guide, language: [...id_lang], attractions: [...attraction] });
             }
 
         sucessCode(res,data,"Get thanh cong")
@@ -292,7 +297,7 @@ const reportTour = async(req, res) =>{
             });
             if(checkReport){
                 await model.tour_report.update({ 
-                     report, report_date, status: 1
+                     report_date, status: 1, content: report
                 }, {
                     where:{
                         id_tourist, id_tour
@@ -301,7 +306,7 @@ const reportTour = async(req, res) =>{
             }
             else
                 await model.tour_report.create({ 
-                    id_tour, report, report_date, id_tourist, status: 1
+                    id_tour, report_date, id_tourist, status: 1, content: report
                 }); 
             sucessCode(res,checkReport,"Report tour successfully")
         }
@@ -316,7 +321,7 @@ const reportTour = async(req, res) =>{
 const reportGuide = async(req, res) =>{
     try{
         let { id_tourist } = req.params;
-        let { id_guide, content, report_date } = req.body;
+        let { id_guide, report, report_date } = req.body;
         
         let checkTourist = await model.tourist.findOne({
             where:{
@@ -331,7 +336,7 @@ const reportGuide = async(req, res) =>{
             });
             if(checkReport){
                 await model.guide_report.update({ 
-                     content, report_date, status: 1
+                     content: report, report_date, status: 1
                 }, {
                     where:{
                         id_tourist, id_guide
@@ -340,14 +345,14 @@ const reportGuide = async(req, res) =>{
             }
             else
                 await model.guide_report.create({ 
-                    id_guide, content, report_date, id_tourist, status: 1
+                    id_guide, content: report, report_date, id_tourist, status: 1
                 }); 
             // let data = await model.tourist.findOne({
             //     where:{
             //         id_tourist
             //     }
             // });
-            sucessCode(res,"","Update thành công")
+            sucessCode(res,"","Report guide successfully")
         }
         else{
             failCode(res,"","Tourist không tồn tại")
