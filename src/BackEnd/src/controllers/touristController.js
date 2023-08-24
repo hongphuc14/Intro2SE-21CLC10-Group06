@@ -238,6 +238,7 @@ const getGuideSearch = async(req, res) =>{
         const [guide_search, metadata] = await sequelize.query
             (`SELECT tour_guide.id_guide, tour_guide.fullname, tour_guide.experience, tour_guide.phone,
             destination.name as destination, tour_guide.avatar, tour_guide.price_per_session as price,
+            COUNT(guide_review.rating) as num_review,
                 CASE
                     WHEN COUNT(guide_review.rating) = 0 THEN 0
                     ELSE AVG(guide_review.rating) 
@@ -269,8 +270,18 @@ const getGuideSearch = async(req, res) =>{
                     (`SELECT guide_attraction.*
                     FROM guide_attraction
                     WHERE guide_attraction.id_guide = ${guide.id_guide}`)
+
+                const [reviews, metadata2] = await sequelize.query
+                    (`SELECT guide_review.review, guide_review.review_date, guide_review.rating,
+                    tourist.fullname, tourist.avatar, guide_review.id_guidebooking
+                    FROM guide_review
+                    INNER JOIN guide_booking ON guide_review.id_guidebooking = guide_booking.id_guidebooking
+                    INNER JOIN guide_time ON guide_time.id_guidetime = guide_booking.id_guidetime
+                    INNER JOIN tourist ON guide_booking.id_tourist = tourist.id_tourist
+                    WHERE guide_time.id_guide = ${guide.id_guide}
+                    LIMIT 2`)
                 
-                data.push({...guide, language: [...id_lang], attractions: [...attraction] });
+                data.push({...guide, language: [...id_lang], attractions: [...attraction], reviews: [...reviews] });
             }
 
         sucessCode(res,data,"Get thanh cong")
