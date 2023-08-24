@@ -56,7 +56,7 @@ export default function ViewTourCompany() {
                 <Info title = "Duration" info ={info?.duration + (info?.duration > 1 ? " days" : " day")} icon = "fa-solid fa-clock"/>
                 <Info title = "Max people" info = {info?.num_max} icon = "fa-solid fa-user-group"/>
               </div>
-              <button>Check out <i class="fa-solid fa-cart-plus"></i></button>
+              <button>Book tour <i class="fa-solid fa-cart-plus"></i></button>
               <i className="fa-regular fa-heart"></i>
               <i className="fa-regular fa-flag"></i>
             </div>
