@@ -1,0 +1,109 @@
+.guide-cart-card {
+    display: flex;
+    flex-direction: row;
+    width: 48rem;
+    height: 15rem;
+    padding: 0;
+    margin: auto;
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
+}
+.left-cart-container {
+    width: 15rem;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: green;
+    border-radius: 1rem 0 0 1rem;
+}
+.right-cart-container {
+    width: 30rem;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.guide-ava {
+    border-radius: 50%;
+    background-color: thistle;
+    height: 60%;
+    width: 60%;
+    border: 0.5rem solid white;
+    margin: auto;
+    margin-top: 15%;
+    /* margin-bottom: 1%; */
+}
+.guide-ava > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.guide-name {
+    font-size: 1.4rem;
+    margin: 0;
+    color: black;
+    margin: 1rem auto 0 1rem;
+}
+.guide-rating {
+    font-size: 1.2rem;
+    margin: 0;
+    color: gray;
+    margin: 0.3rem auto 0 1rem;
+}
+.guide-info-cost-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-left: 1rem;
+    padding: 0;
+}
+.guide-info-container {
+    width: 60%;
+    height: fit-content;
+    margin-top: 2rem;
+}
+.guide-info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.8rem;
+}
+.guide-info > i {
+    font-size: 1.3rem;
+    color: green;
+    margin-right: 1rem;
+    width: 2rem;
+    text-align: center;
+}
+.guide-info > p {
+    font-size: 1rem;
+    color: gray;
+    margin: 0;
+}
+
+.guide-cost-container {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    margin-top: 5.8rem;
+    /* margin-bottom: 1rem; */
+}
+
+.guide-cost-container .cost-title {
+    color: gray;
+    font-size: 0.8rem;
+}
+.guide-cost-container .cost{
+    color: black;
+    font-size: 1rem;
+}
+.guide-cost-container .cost-icon {
+    color: green;
+    font-size: 2rem;
+    margin-top: 0.3rem;
+    width: 3.2rem;
+    text-align: center;
+    text-decoration: bold;
+}
