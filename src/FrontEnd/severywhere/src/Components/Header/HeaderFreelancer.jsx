@@ -6,7 +6,7 @@ export default function HeaderFreelancer(){
         <header className = "header-freelancer">
             <img  src={logo} className="SE-logoo" alt="logo" />
             <div>
-                <a href = "https://www.google.com/" className = "view-profile">View profile as tourist</a>
+                <a href = "/view-freelancer" className = "view-profile">View profile as tourist</a>
                 <a href = "/aboutus" className = "about-faq">About & FAQs</a>
             </div>
         </header>

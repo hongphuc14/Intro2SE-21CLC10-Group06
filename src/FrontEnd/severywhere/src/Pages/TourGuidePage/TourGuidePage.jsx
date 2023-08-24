@@ -29,12 +29,12 @@ const TourGuidePage = () => {
 
     const importPhoto = (filename, folder) => {
         if (typeof filename === 'undefined' || filename === "")
-          return null
+          return placeholder
         try{
           const path = require(`../../../../../BackEnd/public/${folder}/${filename}`)
           return path}
         catch (err) {
-          return null
+          return placeholder
         }
       }
 

@@ -6,6 +6,11 @@ import FormEdit from '../../Components/FormEdit/FormEdit';
 import Avatar from '../../Components/AvatarComponent/Avatar';
 
 export default function EditProfile() {
+    // Lắng nghe sự kiện popstate
+    window.addEventListener("popstate", function(event) {
+    // Điều hướng ngược lại trang trước đó
+        window.location.href = "/";
+  });
     return (
         <div className="editprofile-page">
             <HeaderGuest className="headerGuest"/>
