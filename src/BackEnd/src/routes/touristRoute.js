@@ -27,7 +27,7 @@ touristRoute.post("/reportTour/:id_tourist", reportTour);
 
 touristRoute.post("/reportGuide/:id_tourist", reportGuide);
 
-// touristRoute.post("/bookTour/:id_tourist", bookTour);
+touristRoute.post("/bookTour/:id_tourist", bookTour);
 
 // touristRoute.post("/bookGuide/:id_tourist", bookGuide);
 

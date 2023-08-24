@@ -19,6 +19,7 @@ import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
 import StatisticsFreelancer from "./Pages/Freelancer/StatisticsFreelancer";
 import LicenseFreelancer from "./Pages/Freelancer/LicenseFreelancer";
 import BookingFreelancer from "./Pages/Freelancer/BookingFreelancer";
+// import ViewFreelancer from "./Pages/Freelancer/ViewFreelancer";
 
 import ProfileCompany from './Pages/Company/ProfileCompany';
 import LicenseCompany from './Pages/Company/LicenseCompany';
@@ -88,6 +89,7 @@ function App() {
             <Route path = "/calendar-freelancer" exact component ={CalendarFreelancer} />
             <Route path = "/booking-freelancer" exact component ={BookingFreelancer} />
             <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
+            {/* <Route path = "/view-freelancer" exact component ={ViewFreelancer} /> */}
             </>
           )
         }
