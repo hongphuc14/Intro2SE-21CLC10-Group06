@@ -24,7 +24,8 @@ const stateDefault = {
     guide_search: [],
 
     // array các tour được bỏ vào giỏ hàng
-    tourist_cart: [],
+    tour_cart: [],
+    guide_cart: [],
 
     // array các booking
     tourist_booking: []

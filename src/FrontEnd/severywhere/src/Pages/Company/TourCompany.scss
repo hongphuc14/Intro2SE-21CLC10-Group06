@@ -152,7 +152,8 @@
     visibility: hidden;
 }
 
-.tour-hover > *{
+.tour-hover > button,
+.tour-hover > a > button{
     width: 3.25em;
     height: 3.25em;
     margin: 0.5em auto;

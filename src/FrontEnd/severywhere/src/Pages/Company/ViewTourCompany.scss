@@ -110,10 +110,6 @@
                     margin-right: 0.8em;
                 }
             }
-
-            button:active{
-                transform: translateY(2px);
-            }
             
             .fa-regular.fa-heart,
             .fa-regular.fa-flag{
@@ -122,16 +118,14 @@
                 left: 6.8em;
                 font-size: 3.3em;
                 color: #0C721F;
-                cursor: pointer;
             }
 
             .fa-regular.fa-flag{
                 left: 9em;
             }
 
-            .fa-regular.fa-heart:hover,
-            .fa-regular.fa-flag:hover{
-                color: #DF4D4D;
+            button:active{
+                transform: none;
             }
 
         }

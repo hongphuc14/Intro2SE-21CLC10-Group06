@@ -5,7 +5,7 @@ import placeholder from '../../placeholder-image.png'
 
 import {Link, useLocation} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import {getTourSearch, getGuideSearch} from '../../redux/actions/TouristAction'
+import {getTouristInfo} from '../../redux/actions/TouristAction'
 import { useEffect,useState } from 'react';
 import './TourPage.scss';
 
@@ -22,10 +22,17 @@ const Info = ({title, info, icon}) => {
 export default function TourPage() {
     const dispatch = useDispatch()
     // window.history.replaceState(null, null, "/search");
+    const {user_login} = useSelector(state => state.BasicReducer)
+    const {tourist_info} = useSelector(state => state.TouristReducer)
+    
+    useEffect(() => {
+      if (user_login)
+        dispatch(getTouristInfo(user_login.email))
+    },[] )
 
     const location = useLocation()
     const {info} = location?.state || {}
-    console.log(info)
+    // console.log(info)
 
     const importPhoto = (filename, folder) => {
         if (typeof filename === 'undefined' || filename === "")
@@ -38,7 +45,16 @@ export default function TourPage() {
         }
       }
 
-    // add tour
+    console.log(tourist_info)
+
+    const updateTourCart = () => {
+      if (!tourist_info?.id_tourist)
+        // window.history.pushState(null, null,"/login")
+        window.location.href = "/login"
+      else
+        dispatch(updateTourCart(info.id_tour))
+    }
+
     // make report 
 
     return (  
@@ -58,7 +74,7 @@ export default function TourPage() {
                   <Info title = "Duration" info ={info.duration + (info.duration > 1 ? " days" : " day")} icon = "fa-solid fa-clock"/>
                   <Info title = "Max people" info = {info.num_max} icon = "fa-solid fa-user-group"/>
                 </div>
-                <button>Add to cart <i class="fa-solid fa-cart-plus"></i></button>
+                <button onClick = {updateTourCart}>Add to cart <i class="fa-solid fa-cart-plus"></i></button>
                 <i className="fa-regular fa-heart"></i>
                 <i class="fa-regular fa-flag"></i>
               </div>

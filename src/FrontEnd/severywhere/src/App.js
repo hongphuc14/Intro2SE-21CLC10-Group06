@@ -16,12 +16,14 @@ import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
 import StatisticsFreelancer from "./Pages/Freelancer/StatisticsFreelancer";
 import LicenseFreelancer from "./Pages/Freelancer/LicenseFreelancer";
 import BookingFreelancer from "./Pages/Freelancer/BookingFreelancer";
+
 import ProfileCompany from './Pages/Company/ProfileCompany';
 import LicenseCompany from './Pages/Company/LicenseCompany';
 import TourCompany from './Pages/Company/TourCompany';
 import StatisticsCompany from './Pages/Company/StatisticCompany';
 import BookingCompany from './Pages/Company/BookingCompany';
 import ReviewCompany from './Pages/Company/ReviewCompany'
+import ViewTourCompany from './Pages/Company/ViewTourCompany';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from "history";
@@ -34,7 +36,6 @@ export const history = createBrowserHistory();
 
 function App() {
   const role = useSelector(state => state.BasicReducer.user_login.id_role) || 0
-  // console.log(role)
 
   return (
     <Router history={history}>
@@ -92,6 +93,7 @@ function App() {
             <Route path = "/statistics-company" exact component ={StatisticsCompany} />
             <Route path = "/booking-company" exact component ={BookingCompany} />
             <Route path = "/review-company" exact component ={ReviewCompany} />
+            <Route path = "/viewtour-company" exact component = {ViewTourCompany} />
             </>
           )
         }

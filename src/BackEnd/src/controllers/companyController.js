@@ -312,10 +312,25 @@ const getTourByID = async(req, res) =>{
         });
         if(checkCompany){
             const [data, metadata] = await sequelize.query
-            (`SELECT tour.*, tour_photo.photo_path 
-            FROM tour LEFT JOIN tour_photo ON tour.id_tour = tour_photo.id_tour 
-            WHERE tour.id_company = ${id_company} AND tour.is_deleted = false`);
-
+            (`SELECT tour.id_tour, tour.name, tour.id_category, tour.price, tour.duration,
+            tour.num_max, tour.description, tour.included, tour.not_included,
+            tour.schedule, tour.ggmap_address, tour.free_cancellation, tour.schedule,
+            tour_photo.photo_path, company.name as company, company.phone as phone, destination.name as destination,
+            COUNT(tour_review.rating) as num_review,
+            AVG(tour_review.rating) as rating
+            FROM tour 
+            LEFT JOIN tour_photo ON tour.id_tour = tour_photo.id_tour 
+            INNER JOIN company ON tour.id_company = company.id_company
+            INNER JOIN destination ON destination.id_des = tour.id_des
+            LEFT JOIN tour_booking ON tour.id_tour = tour_booking.id_tour
+            LEFT JOIN tour_review ON tour_review.id_tour_booking = tour_booking.id_tour_booking
+            WHERE tour.id_company = ${id_company} AND tour.is_deleted = false
+            GROUP BY tour.id_tour, tour.name, tour.id_category, tour.price, tour.duration,
+            tour.num_max, tour.description, tour.included, tour.not_included,
+            tour.schedule, tour.ggmap_address, tour.free_cancellation, tour.schedule,
+            tour_photo.photo_path, company.phone,
+            company.name, destination.name`);
+        
             sucessCode(res,data,"Get thành công")
         }
         else{
