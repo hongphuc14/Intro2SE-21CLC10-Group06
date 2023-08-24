@@ -27,6 +27,10 @@ export class TouristService extends baseService {
       return this.get(`tourist/getGuideSearch/${destination}/${rating}/${below_price}/${upper_price}`);;
     };
 
+    reportTour = (id_tourist, obj) => {
+      return this.post(`tourist/reportTour/${id_tourist}`, obj);
+    };
+
   }
   
   export const touristService = new TouristService();

@@ -104,7 +104,28 @@ export const getGuideSearch = (feature) => {
   };
 };
 
+export const reportTour = (id_tourist, id_tour, report, report_date) => {
+  return async (dispatch) => {
+    try {
+      // dispatch(displayLoadingAction);
 
+      const obj  = {id_tour, report, report_date}
+      console.log(obj)
+      const result = await touristService.reportTour(id_tourist, obj);
+      // const result = await companyService.getCompanyReview(id_company);
+      if (result.status === 200) {
+        alert(result.data.message)
+      //   dispatch({
+      //     type: GET_COMPANY_REVIEW,
+      //     company_review: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};
 // export const updateTouristPassword = (id_tourist,currentPass, newPass) => {
 //   return async (dispatch) => {
 //     try {
