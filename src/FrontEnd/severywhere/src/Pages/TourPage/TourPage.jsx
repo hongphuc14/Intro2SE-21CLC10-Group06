@@ -27,18 +27,19 @@ export default function TourPage() {
     const {info} = location?.state || {}
     console.log(info)
 
-    const importPhoto = (filename) => {
+    const importPhoto = (filename, folder) => {
         if (typeof filename === 'undefined' || filename === "")
           return null
         try{
-          const path = require(`../../../../../BackEnd/public/tour/${filename}`)
+          const path = require(`../../../../../BackEnd/public/${folder}/${filename}`)
           return path}
         catch (err) {
           return null
         }
       }
 
-    // get review
+    // add tour
+    // make report 
 
     return (  
         <div id="tour-page">
@@ -61,7 +62,7 @@ export default function TourPage() {
                 <i className="fa-regular fa-heart"></i>
                 <i class="fa-regular fa-flag"></i>
               </div>
-              <img src = {importPhoto(info.photo_path) || placeholder}></img>
+              <img src = {importPhoto(info.photo_path, "tour") || placeholder}></img>
             </div>
             <div className="tour-description">
               <div className = "description">
@@ -91,7 +92,24 @@ export default function TourPage() {
                   {info.phone}
                 </p>
               </div>
-              <div className = "tourist-review"></div>
+              <div className = "tour-review">
+                {
+                  info?.tourist_reviews?.map (review =>{
+                    // const {id_tour_booking, avatar, fullname, rating, review, review_date} = info.tourist_reviews;
+                    return (
+                      <div key = {review.id_tour_booking} className = "review-card">
+                        <img src={importPhoto(review.avatar, "tourist_avatar")} alt = "tourist-avatar"></img>
+                        <div>
+                          <p className = "review-card-name">{review.fullname}</p>
+                          <RatingStar numberStar={review.rating}/>
+                        </div>
+                        <p className = "review-card-date">{review.review_date ? new Date(review.review_date).toLocaleDateString("en-GB") : new Date().toLocaleDateString("en-GB")}</p>
+                        <p className = "review-card-line">{review.review}</p>
+                      </div>
+                    )
+                  })
+                }
+              </div>
             </div>
             <Footer />
         </div>
