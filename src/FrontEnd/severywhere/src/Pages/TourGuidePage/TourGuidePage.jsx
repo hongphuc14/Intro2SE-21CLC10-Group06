@@ -4,6 +4,7 @@ import HeaderGuest from '../../Components/Header/HeaderGuest';
 import Footer from '../../Components/Footer/Footer';
 import RatingStar from '../../Components/RatingReview/RatingStar';
 import {ButtonUploadFreelancer} from '../../Components/Button/ButtonFreelancer'
+import placeholder from '../../placeholder-image.png'
 import "./TourGuidePage.scss"
 
 import {Link, useLocation} from 'react-router-dom'
@@ -85,6 +86,7 @@ const TourGuidePage = () => {
                         <div class="fullname-heart-flag-container">
                             <h1>{info.fullname}</h1>
                             <RatingStar numberStar={parseInt(info.rating)}/>
+                            <p>({info.num_review} reviews)</p>
                             <i class="fa-regular fa-heart"></i>
                             <i class="fa-regular fa-flag" onClick = {() => {
                                 if (!tourist_info.id_tourist)
@@ -111,14 +113,35 @@ const TourGuidePage = () => {
             <div id="guide-main-page">
                 <div id="left-container">
                     <IntroCard  info = {info} />
+                    <div className = "guide-review">
+                        <p>Reviews & Ratings</p>
+                        <div class="horizontal-line"></div>
+                        {
+                            info?.reviews?.map (review =>{
+                                // const {id_tour_booking, avatar, fullname, rating, review, review_date} = info.tourist_reviews;
+                                return (
+                                <div key = {review.id_guidebooking} className = "review-card">
+                                    <img src={importPhoto(review.avatar, "tourist_avatar")} alt = "tourist-avatar"></img>
+                                    <div>
+                                        <p className = "review-card-name">{review.fullname}</p>
+                                        <p className = "review-card-date">{review.review_date ? new Date(review.review_date).toLocaleDateString("en-GB") : new Date().toLocaleDateString("en-GB")}</p>
+                                        <RatingStar numberStar={review.rating}/>
+                                    </div>
+                                    <p className = "review-card-line">{review.review}</p>
+                                </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
                 <div id="right-container">
-                    <AttractionCard />
-                    <AttractionCard />
-                    {/* <AttractionCard />
-                    <AttractionCard />
-                    <AttractionCard />
-                    <ReviewCard /> */}
+                    {
+                        info.attractions.map(attr => {
+                            return (
+                                <AttractionCard key = {attr.id_attraction} {...attr}/>
+                            )
+                        })
+                    }
                 </div>
             </div>
             <Footer />
