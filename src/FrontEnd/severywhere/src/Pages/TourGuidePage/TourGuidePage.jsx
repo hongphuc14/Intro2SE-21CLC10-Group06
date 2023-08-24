@@ -6,7 +6,7 @@ import "./TourGuidePage.scss"
 const TourGuidePage = () => {
     return (  
         <div id="tourguide-page">
-            <div id="guide-header"></div>
+            <GuideHeader/>  
             <div id="guide-main-page">
                 <div id="left-container">
                     <IntroCard />

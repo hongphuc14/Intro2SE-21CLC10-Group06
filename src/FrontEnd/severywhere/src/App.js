@@ -70,6 +70,7 @@ function App() {
             <Route path = "/changepw" exact component = {ChangePassword} />
             <Route path = "/search" exact component = {Search} />
             <Route path = "/tourpage" exact component = {TourPage} />
+            <Route path = "/tourguidepage" exact component = {TourGuidePage} />
             </>
           )
         }

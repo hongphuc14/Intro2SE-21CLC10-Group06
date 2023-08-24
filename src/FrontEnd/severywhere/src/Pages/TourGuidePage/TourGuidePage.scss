@@ -1,21 +1,23 @@
 #tourguide-page {
-    background-color: #EFEFEF;
-    height: 100vh;
+    background-color: lightgray;
 }
 #guide-header {
     background-color: wheat;
-    height: 10rem;
-    width: 100%;
+    height: 30rem;
+    /* width: 80%;
+    padding: 0 10%; */
 }
 #guide-main-page {
     display: flex;
     flex-direction: row;
 }
 #left-container {
+    /* background-color: aquamarine; */
     width: 35%;
     height: 100vh;
 }
 #right-container {
+    /* background-color: yellow; */
     width: 65%;
     height: 100vh;
 }
