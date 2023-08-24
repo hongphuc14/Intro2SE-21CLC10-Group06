@@ -103,8 +103,18 @@ const CheckOutForm = () => {
                     </div>
                 </div>
             </div>
-            <div id="payment">
-                hi
+            <div className='checkout-right-container'>
+            <h1>CHECK OUT</h1>
+                <p>SUMMARY</p>
+                <div class="price">
+                    <p>Price:</p>
+                    <p>$52.00</p>
+                </div>
+                <div class="horizontal-line"></div>
+                <div class="total">
+                    <p>Total:</p>
+                    <p>$52.00</p>
+                </div>
             </div>
 
         </div>

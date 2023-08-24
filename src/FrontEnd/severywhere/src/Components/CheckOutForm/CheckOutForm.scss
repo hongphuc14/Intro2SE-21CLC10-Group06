@@ -3,7 +3,7 @@ body{
 
 #checkout-box{
     height: fit-content;
-    padding: 1rem;
+    padding-top: 5rem;
     margin: 2rem;
     // height: 100vh;
     // overflow: hidden;
@@ -17,14 +17,8 @@ body{
     height: 100vh;
     display: flex;
     flex-direction: column;
+    margin-bottom: 4rem;
     /* margin-right: auto; */
-}
-
-#payment{
-    background-color: yellow;
-    width: 30%;
-    height: 100vh;
-    
 }
 
 #checkout-infotour{
@@ -256,4 +250,59 @@ body{
 #checkout-box i{
     font-size: larger;
     color: #0C721F;
+}
+.checkout-right-container {
+    width: 30%;
+    height: inherit;
+    padding: 1rem 1.5rem;
+    margin: 0;
+}
+.checkout-right-container h1 {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: green;
+    text-decoration: none;
+}
+.checkout-right-container > p {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: green;
+}
+.checkout-right-container .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    color: gray;
+    >p {
+        margin: 0;
+        margin-bottom: 0.5rem;
+        padding: 0;
+    }
+}
+.checkout-right-container .total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    color: green;
+    >p {
+        margin: 0;
+        padding: 0;
+    }
+}
+.checkout-right-container .horizontal-line {
+    height: 1.1px;
+    width: 100%;
+    background-color: gray;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
