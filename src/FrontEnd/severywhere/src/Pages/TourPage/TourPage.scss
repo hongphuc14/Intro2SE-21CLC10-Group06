@@ -91,7 +91,7 @@
 
             }
 
-            button{
+            > button{
                 background-color: #0C721F;
                 width: 9em;
                 border-radius: 0.5em;
@@ -143,6 +143,83 @@
             border-radius: 2em;
             margin: 5em auto 5em 0
         }
+
+        .report-section{
+            position: fixed;
+            top: -1em;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+
+            .report {
+                position: absolute;
+                width: 60%;
+                height: 60%;
+                left: 20%;
+                top: 10% ;
+                background-color: #F8F6F4;
+                color:#0E4D90;
+                border-radius: 0.8em;
+                text-align: center;
+                font-size: 1.5em;
+            }
+
+            .report p{
+                font-size: 2em;
+                margin: 0.5em auto 0.3em;
+                color: #0C721F
+                }
+            
+            .report p:nth-of-type(2),
+            .report p:nth-of-type(3){
+                font-size: 1em;
+                color: #0C721F;
+                margin-top: -0.2em;
+                text-align: start;
+                margin-left: 5em;
+                opacity: 0.5;
+            }
+
+            .report textarea{
+                min-width: 80%;
+                background: white;
+                border: 0.1em solid #DEDEDE;
+                border-radius: 0.8em;  
+                color: black;
+                font-family: 'RocknRoll One';
+                padding: 0.5em;
+                -webkit-box-sizing: border-box; 
+                -moz-box-sizing: border-box;    
+                box-sizing: border-box; 
+                margin: 1em auto 0;
+                height: 40%;
+                resize: none;
+                display: block;
+            }
+
+            .reply textarea:focus-within,
+            .report textarea:focus-within{
+              outline-color: #0C721F
+            }
+          
+            .button-save{
+              background-color: black;
+            }
+
+            .button-upload{
+                background-color: #0C721F;
+            }
+
+            .button-save:hover,
+            .button-upload:hover{
+                color: white;
+                outline: none
+            }
+
+        }
+
     }
 
     .tour-description{
@@ -190,12 +267,12 @@
 
         .tour-review{
             display: flex;
-            flex-direction: column;
             height: fit-content;
+            justify-content: space-evenly;
 
             .review-card{
                 width: 50em;
-                height: fit-content;
+                height: 12em;
                 min-height: 10em;
                 margin: 0.5em 0.5em ;
                 background-color: white;
@@ -251,12 +328,17 @@
                       .review-card-line{
                         position: relative;
                         left: 1em;
-                        top: 0em;
+                        top: -1em;
                         color: #7E94AB;
                         font-size: 1em;
                         font-family: "Assistant";
                         text-align: left;
-                        font-size: 1.5em;
+                        font-size: 1.3em;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        // white-space: nowrap;
+                        width: 30em;
+                        height: 5em;
                       }
               }
         

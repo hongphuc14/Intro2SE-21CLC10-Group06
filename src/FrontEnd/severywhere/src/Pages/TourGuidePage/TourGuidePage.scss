@@ -1,0 +1,21 @@
+#tourguide-page {
+    background-color: #EFEFEF;
+    height: 100vh;
+}
+#guide-header {
+    background-color: wheat;
+    height: 10rem;
+    width: 100%;
+}
+#guide-main-page {
+    display: flex;
+    flex-direction: row;
+}
+#left-container {
+    width: 35%;
+    height: 100vh;
+}
+#right-container {
+    width: 65%;
+    height: 100vh;
+}

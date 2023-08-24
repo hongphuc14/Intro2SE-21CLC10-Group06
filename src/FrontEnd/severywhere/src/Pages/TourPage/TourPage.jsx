@@ -1,11 +1,12 @@
 import HeaderGuest from '../../Components/Header/HeaderGuest';
 import Footer from '../../Components/Footer/Footer';
 import RatingStar from '../../Components/RatingReview/RatingStar';
+import {ButtonUploadFreelancer} from '../../Components/Button/ButtonFreelancer'
 import placeholder from '../../placeholder-image.png'
 
 import {Link, useLocation} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import {getTourSearch, getGuideSearch} from '../../redux/actions/TouristAction'
+import {getTouristInfo, updateTourCart, updateReport} from '../../redux/actions/TouristAction'
 import { useEffect,useState } from 'react';
 import './TourPage.scss';
 
@@ -22,10 +23,17 @@ const Info = ({title, info, icon}) => {
 export default function TourPage() {
     const dispatch = useDispatch()
     // window.history.replaceState(null, null, "/search");
+    const {user_login} = useSelector(state => state.BasicReducer)
+    const {tourist_info} = useSelector(state => state.TouristReducer)
+    
+    useEffect(() => {
+      if (user_login)
+        dispatch(getTouristInfo(user_login.email))
+    },[] )
 
     const location = useLocation()
     const {info} = location?.state || {}
-    console.log(info)
+    // console.log(info)
 
     const importPhoto = (filename, folder) => {
         if (typeof filename === 'undefined' || filename === "")
@@ -38,13 +46,57 @@ export default function TourPage() {
         }
       }
 
-    // add tour
-    // make report 
+    console.log(tourist_info)
+
+    const updateTourCart = () => {
+      if (!tourist_info?.id_tourist){
+        // window.history.pushState(null, null,"/login")
+        console.log("1")
+        window.location.href = "/login"
+      }
+      else
+        console.log("1")
+        // dispatch(updateTourCart(info.id_tour))
+    }
+
+    const [isReport, setIsReport] = useState(false)
+    const [report, setReport] = useState("")
+    const saveReport = () => {
+      if (report === "")
+        alert ("Please don't leave an empty report or press the Back button.")
+      else{
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+  
+        console.log(report)
+        // dispatch(updateReport(tourist_info.id_tourist, info.id_tour, report, formattedDate))
+        setIsReport(false)
+        setReport("")
+      }
+    }
 
     return (  
         <div id="tour-page">
             <HeaderGuest />
             <div className="tour-info">
+            {
+              isReport && (
+                <div className = "report-section">
+                  <div className = "report">
+                    <p>Report</p>
+                    <p>We're sorry something's wrong. How can we help you? </p>
+                    <p>Please provide a detailed description of this issue.</p>
+                    <textarea value = {report} onChange = {(e) => {setReport(e.target.value)}}></textarea>
+                    <ButtonUploadFreelancer className = "button-save" title = "BACK" onClick = {() => {setIsReport(false); setReport("")}}/>
+                    <ButtonUploadFreelancer className = "button-upload" title = "COMMIT" onClick = {saveReport}/>
+                  </div>
+                </div>
+              )
+            }
+
               <div>
                 <p className = "name">{info.name}</p>
                 <i class="fa-solid fa-location-dot"></i>
@@ -58,9 +110,14 @@ export default function TourPage() {
                   <Info title = "Duration" info ={info.duration + (info.duration > 1 ? " days" : " day")} icon = "fa-solid fa-clock"/>
                   <Info title = "Max people" info = {info.num_max} icon = "fa-solid fa-user-group"/>
                 </div>
-                <button>Add to cart <i class="fa-solid fa-cart-plus"></i></button>
-                <i className="fa-regular fa-heart"></i>
-                <i class="fa-regular fa-flag"></i>
+                <button onClick = {updateTourCart}>Add to cart <i class="fa-solid fa-cart-plus"></i></button>
+                <i className="fa-regular fa-heart" ></i>
+                <i class="fa-regular fa-flag" onClick = {() => {
+                  if (!tourist_info.id_tourist)
+                    window.location.href = "/login"
+                  else 
+                    setIsReport(true)
+                  }}></i>
               </div>
               <img src = {importPhoto(info.photo_path, "tour") || placeholder}></img>
             </div>

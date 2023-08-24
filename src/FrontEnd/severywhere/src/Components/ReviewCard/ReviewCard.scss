@@ -1,0 +1,72 @@
+.tour-review{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+
+    .review-card{
+        width: 50em;
+        height: fit-content;
+        min-height: 10em;
+        margin: 0.5em 0.5em ;
+        background-color: white;
+        border-radius: 0.8em;
+        border: 2px solid #d8d8d8;
+        color: #0E4D90;
+        font-size: 0.7em;
+        position: relative;
+
+            img{
+                width: 4.8em;
+                height: 4.8em;
+                object-fit: cover;
+                border-radius: 10em;
+                margin: 0.7em 1em 0.2em;
+            }
+
+            > div{
+                width: 25em;
+                position: absolute;
+                left: 7em;
+                display: inline-flex;
+                align-items: center;
+                justify-content: flex-start;
+              }
+            
+              .review-card-name{
+                // width: fit-content;
+                // margin-right: 0.6em;
+                font-size: 1.3em;
+              }
+            
+              .rating-line {
+                color: #FFF500;
+                margin: -0.1em auto 0em 1em;
+                width: fit-content;
+                // left: 17em;
+                // position: absolute;
+
+                i{
+                    margin-right: 0em;
+                }
+              }
+
+              .review-card-date{
+                position: absolute;
+                left: 5.8em;
+                top: 2em;
+                color: #7E94AB;
+                font-size: 1.2em;
+              }
+            
+              .review-card-line{
+                position: relative;
+                left: 1em;
+                top: 0em;
+                color: #7E94AB;
+                font-size: 1em;
+                font-family: "Assistant";
+                text-align: left;
+                font-size: 1.5em;
+              }
+      }
+}
