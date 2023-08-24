@@ -7,7 +7,9 @@ import CheckOutForm from '../../Components/CheckOutForm/CheckOutForm'
 const  CheckoutPage= () => {
     return ( 
         <div className = "checkout-page">
+            <HeaderGuest/>
             <CheckOutForm/>
+            <Footer/>
         </div>
     );
 }

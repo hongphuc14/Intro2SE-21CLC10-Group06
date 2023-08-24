@@ -2,40 +2,30 @@ body{
     font-family: 'RocknRoll One', sans-serif;}
 
 #checkout-box{
-    background-color: white;
     height: fit-content;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-    padding: 1rem;
+    padding-top: 5rem;
     margin: 2rem;
-    height: 100vh;
-    overflow: hidden;
+    // height: 100vh;
+    // overflow: hidden;
     justify-content: flex-start;
     display: flex;
     flex-direction: row;
 }
 
 #checkout{
-    background-color: aquamarine;
     width: 70%;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    margin-bottom: 4rem;
     /* margin-right: auto; */
-}
-
-#payment{
-    background-color: yellow;
-    width: 30%;
-    height: 100vh;
-    
 }
 
 #checkout-infotour{
     display: flex;
     flex-direction: row;
     height: 50%;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     background-color: #E5F2CA;
     margin:0;
     padding: 0%;
@@ -48,7 +38,7 @@ body{
     flex-direction: column;
     /* justify-content: space-around; */
     padding: 1rem;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
     margin-right: 0;
     align-items: flex-start;
     
@@ -66,7 +56,7 @@ body{
 #tour-image{
     width: 40%;
     height: 100%;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 0 0 0;
     background-repeat: no-repeat;
     background-image: url("halongbay.jpg");
     background-size: cover;
@@ -130,7 +120,189 @@ body{
     }
 }
 
+#customer-info{
+    height: 50%;
+    background-color: #ECECEC;
+    border-radius: 0 0 10px 10px;
+    padding: 2rem;
+
+    #info_one{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 5rem;
+        input{
+            width: 18rem;
+            height: 2rem;
+            border-radius: 5px;
+            border: 1px solid #979797;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+        #info_name{
+            p{
+                margin: 0;
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+        }
+        #info_email{
+            p{
+                margin: 0;
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+        }
+    }
+
+    #info_two{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 5rem;
+        input{
+            width: 18rem;
+            height: 2rem;
+            border-radius: 5px;
+            border: 1px solid #979797;
+            margin-bottom: 0.7rem;
+            padding-left: 0.5rem;
+        }
+        #info_phone{
+            p{
+                margin: 0;
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+        }
+        #info_gender{
+            p{
+                margin: 0;
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+            #checkboxGender{
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                margin-bottom: 0.7rem;
+                margin-top: 0.5rem;
+                input{
+                    width: 1rem;
+                    height: 1rem;
+                }
+                label{
+                    margin: 0;
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+
+    #info_three{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 13.2rem;
+        input{
+            width: 10rem;
+            height: 2rem;
+            border-radius: 5px;
+            border: 1px solid #979797;
+            margin-bottom: 0.7rem;
+            padding-left: 0.5rem;
+        }
+        #info_startdate, #info_enddate{
+            p{
+                margin: 0;
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+        }
+    }
+
+    #info_four{
+        display: flex;
+        flex-direction: row;
+        margin-top: 0.3rem;
+        p{
+            margin: 0;
+            margin-top: 0.3rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+        }
+        #infoticket{
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            input{
+                width: 3rem;
+                height: 2rem;
+                border-radius: 5px;
+                border: 1px solid #979797;
+                margin-bottom: 0.7rem;
+                padding-left: 0.5rem;
+            }
+        }
+    }
+}
+
 #checkout-box i{
     font-size: larger;
     color: #0C721F;
+}
+.checkout-right-container {
+    width: 30%;
+    height: inherit;
+    padding: 1rem 1.5rem;
+    margin: 0;
+}
+.checkout-right-container h1 {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: green;
+    text-decoration: none;
+}
+.checkout-right-container > p {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: green;
+}
+.checkout-right-container .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    color: gray;
+    >p {
+        margin: 0;
+        margin-bottom: 0.5rem;
+        padding: 0;
+    }
+}
+.checkout-right-container .total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    color: green;
+    >p {
+        margin: 0;
+        padding: 0;
+    }
+}
+.checkout-right-container .horizontal-line {
+    height: 1.1px;
+    width: 100%;
+    background-color: gray;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }

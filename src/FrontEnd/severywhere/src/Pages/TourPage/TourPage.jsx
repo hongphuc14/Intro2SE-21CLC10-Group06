@@ -48,17 +48,6 @@ export default function TourPage() {
 
     // console.log(tourist_info)
 
-    const updateTourCart = () => {
-      if (!tourist_info?.id_tourist){
-        // window.history.pushState(null, null,"/login")
-        console.log("1")
-        window.location.href = "/login"
-      }
-      else
-        console.log("1")
-        // dispatch(updateTourCart(info.id_tour))
-    }
-
     const [isReport, setIsReport] = useState(false)
     const [report, setReport] = useState("")
     const saveReport = () => {
@@ -110,9 +99,17 @@ export default function TourPage() {
                   <Info title = "Duration" info ={info.duration + (info.duration > 1 ? " days" : " day")} icon = "fa-solid fa-clock"/>
                   <Info title = "Max people" info = {info.num_max} icon = "fa-solid fa-user-group"/>
                 </div>
-                <Link to = {{pathname: "/checkoutTour", state: {info: info}}} style = {{textDecoration: "none"}} >
-                  <button >Checkout <i class="fa-solid fa-cart-plus"></i></button>
-                </Link>
+                { tourist_info.id_tourist ? (
+                    <Link to = {{pathname: "/checkoutTour", state: {info: info}}} style = {{textDecoration: "none"}} >
+                      <button >Book tour <i class="fa-solid fa-cart-plus"></i></button>
+                    </Link>
+                  ) :
+                  (
+                    <a href = "/login">
+                      <button >Book tour <i class="fa-solid fa-cart-plus"></i></button>
+                    </a>
+                  )
+                }
                 
                 <i className="fa-regular fa-heart" ></i>
                 <i class="fa-regular fa-flag" onClick = {() => {
