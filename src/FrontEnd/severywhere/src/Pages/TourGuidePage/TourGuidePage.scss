@@ -1,5 +1,83 @@
 #tourguide-page {
     background-color: lightgray;
+    position: relative;
+    height: fit-content;
+    min-height: 100vh;
+
+    .report-section{
+        position: fixed;
+        top: 3rem;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+
+        .report {
+            position: absolute;
+            // width: 60%;
+            // height: 60%;
+            left: 25%;
+            top: 10% ;
+            background-color: #F8F6F4;
+            color:#0E4D90;
+            border-radius: 0.8em;
+            text-align: center;
+            // font-size: 1.5em;
+        }
+
+        .report p{
+            margin: 0.5em auto 0.3em;
+            color: #0C721F
+            }
+        
+        .report p:nth-of-type(2),
+        .report p:nth-of-type(3){
+            // font-size: 1em;
+            color: #0C721F;
+            margin-top: -0.2em;
+            text-align: start;
+            margin-left: 4.5em;
+            opacity: 0.5;
+        }
+
+        .report textarea{
+            // min-width: 80%;
+            // background: white;
+            // border: 0.1em solid #DEDEDE;
+            // border-radius: 0.8em;  
+            color: black;
+            // font-family: 'RocknRoll One';
+            // padding: 0.5em;
+            // -webkit-box-sizing: border-box; 
+            // -moz-box-sizing: border-box;    
+            // box-sizing: border-box; 
+            // margin: 1em auto 0;
+            height: 40%;
+            // resize: none;
+            // display: block;
+        }
+
+        .reply textarea:focus-within,
+        .report textarea:focus-within{
+          outline-color: #0C721F
+        }
+      
+        .button-save{
+          background-color: black;
+        }
+
+        .button-upload{
+            background-color: #0C721F;
+        }
+
+        .button-save:hover,
+        .button-upload:hover{
+            color: white;
+            outline: none
+        }
+
+    }
 }
 #guide-header {
     background-color: wheat;
@@ -10,14 +88,137 @@
 #guide-main-page {
     display: flex;
     flex-direction: row;
+    width: 100vw;
+    margin-bottom: 3em;
 }
 #left-container {
     /* background-color: aquamarine; */
     width: 35%;
-    height: 100vh;
+    height: fit-content;
+    min-height: 100vh; 
 }
 #right-container {
     /* background-color: yellow; */
     width: 65%;
-    height: 100vh;
+    height: fit-content;
+    min-height: 100vh;
+}
+
+.guide-background {
+    height: 60%;
+    background-color: black;
+    width: 100%;
+    // object-fit: cover;
+}
+.guide-background > img {
+    width: 100%;
+    height: 100%;
+    /* overflow: hidden; */
+    object-fit: cover;
+}
+.guide-under-background {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 40%;
+    background-color: white;
+    padding: 0 10%;
+}
+
+.guide-avatar {
+    position: relative;
+    top: -3rem;
+    /* left: 15%; */
+    border-radius: 50%;
+    background-color: thistle;
+    height: 13rem;
+    width: 13rem;
+    border: 12px solid white;
+}
+.guide-avatar > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /* overflow: hidden; */
+    object-fit: cover;
+}
+
+.guide-info-container {
+    width: fit-content;
+    height: 100%;
+}
+.fullname-heart-flag-container {
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: fit-content;
+    font-size: 2rem;
+    color: black;
+    position: relative;
+
+    .rating-line{
+        color: #F99417;
+        font-size: 0.6em;
+        position: absolute;
+        top: 2.5em;
+    }
+
+}
+.fullname-heart-flag-container > h1 {
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    margin-right: 1.2rem;
+}
+
+.fa-regular.fa-heart,
+.fa-regular.fa-flag{
+    font-size: 2rem;
+    color: #0C721F;
+    cursor: pointer;
+    height:2rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1.2rem;
+}
+
+.fa-regular.fa-heart:hover,
+.fa-regular.fa-flag:hover{
+    color: #DF4D4D;
+}
+
+#guide-header a {
+    margin-left: auto;
+    margin-right: 0;  
+}
+
+#guide-header button{
+    margin-top: 1em;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: 0;
+    background-color: #0C721F;
+    width: 12rem;
+    height: fit-content;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+
+    .fa-solid{
+        color: white;
+        font-size: 1.8rem;
+        margin-right: 0.8rem;
+    }
+}
+
+#guide-header button:active {
+    transform: translateY(2px);
 }

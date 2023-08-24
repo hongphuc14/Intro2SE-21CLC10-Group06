@@ -1,15 +1,27 @@
 import './AttractionCard.scss'
+import placeholder from '../../placeholder-image.png'
 
-const AttractionCard = () => {
+const AttractionCard = ({title, content, photo_path}) => {
+    const importPhoto = (filename) => {
+        if (typeof filename === 'undefined' || filename === "")
+          return placeholder
+        try{
+          const path = require(`../../../../../BackEnd/public/attraction/${filename}`)
+          return path}
+        catch (err) {
+          return placeholder
+        }
+      }
+
     return (  
         <div class="attraction-card">
-            <p class="attraction-title">Quy Nhon Champa Culture Excursion Half-day Tour</p>
+            <p class="attraction-title">{title}</p>
             <div class="attraction-info-container">
                 <div class="attraction-image-container">
-                    <img src=".\champa1.jpg" alt="attraction-image" />
+                    <img src={importPhoto(photo_path)}alt="attraction-image" />
                 </div>
                 <div class="attraction-description-container">
-                    <p>Discover Quy Nhon Champa Culture in one day to experience many visiting site at this beach city in south Central Vietnam. Even though Quy Nhon is not considered a tourist destination, this medium-sized city is bordered by beautiful beaches and the surrounding landscape is also breathtaking.</p>
+                    <p>{content}</p>
                 </div>
             </div>
         </div>
