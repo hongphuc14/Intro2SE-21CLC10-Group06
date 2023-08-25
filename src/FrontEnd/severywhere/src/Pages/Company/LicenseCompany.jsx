@@ -15,8 +15,14 @@ export default function LicenseCompany(){
   const importAvatar = (filename) => {
     if (typeof filename === 'undefined' || filename === "")
       return null
-    const path = require(`../../../../../BackEnd/public/company_avatar/${filename}`)
-    return path
+    try{
+      const path = require(`../../../../../BackEnd/public/company_avatar/${filename}`)
+      return path
+    }
+    catch(err){
+      return null
+    }
+    
   }
 
   const importLicense = (filename) => {
