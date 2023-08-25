@@ -46,7 +46,7 @@ const TourCard = ({info}) => {
                     </div>
                     <div class="tour-info-bottom">
                         <i class="fa-solid fa-user-group"></i>
-                        <p>{num_max || "quantity"}</p>
+                        <p>{num_max || "quantity"} tourists</p>
                     </div>
                 </div>
             </div>

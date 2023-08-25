@@ -37,12 +37,12 @@ export default function TourPage() {
 
     const importPhoto = (filename, folder) => {
         if (typeof filename === 'undefined' || filename === "")
-          return null
+          return placeholder
         try{
           const path = require(`../../../../../BackEnd/public/${folder}/${filename}`)
           return path}
         catch (err) {
-          return null
+          return placeholder
         }
       }
 
@@ -162,6 +162,15 @@ export default function TourPage() {
                         </div>
                         <p className = "review-card-date">{review.review_date ? new Date(review.review_date).toLocaleDateString("en-GB") : new Date().toLocaleDateString("en-GB")}</p>
                         <p className = "review-card-line">{review.review}</p>
+                        {
+                            review.reply && <div className = "reply-card">
+                              <div class="horizontal-line"></div>
+                              <p className = "review-card-reply-name">{info.company}</p>
+                              <p className = "review-card-reply-date">{new Date(review.reply_date).toLocaleDateString("en-GB")}</p>
+                              <p className = "review-card-reply-line">{review.reply}</p>
+                            </div>
+                        }
+                        
                       </div>
                     )
                   })
