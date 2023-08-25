@@ -204,7 +204,8 @@ const getTourSearch = async(req, res) =>{
         for (const tour of tours){
             const [reviews, metadata] = await sequelize.query
                 (`SELECT tour_review.review, tour_review.review_date, tour_review.rating,
-                tourist.fullname, tourist.avatar, tour_review.id_tour_booking
+                tourist.fullname, tourist.avatar, tour_review.id_tour_booking, tour_review.reply,
+                tour_review.reply_date
                 FROM tour_review
                 INNER JOIN tour_booking ON tour_review.id_tour_booking = tour_booking.id_tour_booking
                 INNER JOIN tourist ON tour_booking.id_tourist = tourist.id_tourist

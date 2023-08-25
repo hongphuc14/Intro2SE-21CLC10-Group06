@@ -142,6 +142,17 @@
                 height: 8em;
                 max-height: fit-content;
               }
+
+              .horizontal-line{
+                // position: unset;
+                width: 35%;
+                height: 1px;
+                background-color: #7E94AB;
+                margin-top: -0.8em;
+                left: 0;
+                // top: -2em;
+                // left: 0;
+                }
             
               .review-card-name{
                 // width: fit-content;

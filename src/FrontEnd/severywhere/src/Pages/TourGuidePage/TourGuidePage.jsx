@@ -128,6 +128,12 @@ const TourGuidePage = () => {
                                         <RatingStar numberStar={review.rating}/>
                                     </div>
                                     <p className = "review-card-line">{review.review}</p>
+                                    {
+                                        review.reply && <div class="horizontal-line"></div>
+                                    }
+                                   
+                                    <p className = "review-card-date">{review.reply && new Date(review.reply_date).toLocaleDateString("en-GB")}</p>
+                                    <p className = "review-card-line">{review.reply}</p>
                                 </div>
                                 )
                             })
