@@ -273,6 +273,7 @@ const getGuideSearch = async(req, res) =>{
 
                 const [reviews, metadata2] = await sequelize.query
                     (`SELECT guide_review.review, guide_review.review_date, guide_review.rating,
+                    guide_review.reply, guide_review.reply_date, 
                     tourist.fullname, tourist.avatar, guide_review.id_guidebooking
                     FROM guide_review
                     INNER JOIN guide_booking ON guide_review.id_guidebooking = guide_booking.id_guidebooking
@@ -280,11 +281,39 @@ const getGuideSearch = async(req, res) =>{
                     INNER JOIN tourist ON guide_booking.id_tourist = tourist.id_tourist
                     WHERE guide_time.id_guide = ${guide.id_guide}
                     LIMIT 2`)
+
+                const [times, metadata3] = await sequelize.query
+                    (`SELECT guide_time.guide_date
+                    FROM guide_time
+                    WHERE guide_time.id_guide = ${guide.id_guide} AND guide_time.is_available = 1 AND
+                    guide_time.guide_date > NOW()
+                    GROUP BY guide_time.guide_date`)
                 
-                data.push({...guide, language: [...id_lang], attractions: [...attraction], reviews: [...reviews] });
+                if (times !== []){
+                    let freetime = []
+
+                    for (const time of times){
+
+                        let result = await model.guide_time.findAll({
+                            where:{
+                                id_guide: guide.id_guide,
+                                guide_date: time.guide_date
+                            }
+                        })
+
+                        sessions = result.map((res => res.guide_session))
+                        freetime.push({date: time.guide_date, sessions: sessions})
+                    }
+                
+                    data.push({...guide, language: [...id_lang], attractions: [...attraction], 
+                    reviews: [...reviews], times: [...freetime] });
+                    // data.push(...freetime)
+                }   
             }
 
-        sucessCode(res,data,"Get thanh cong")
+            sucessCode(res,data,"Get thanh cong")
+
+        // sucessCode(res,data,"Get thanh cong")
     }catch(err){
         errorCode(res,"Lỗi BE")
     }
@@ -407,25 +436,37 @@ const bookTour = async(req, res) =>{
 const bookGuide = async(req, res) =>{
     try{
         let { id_tourist } = req.params;
-        let { id_guidetime, booking_date, meeting_point, price} = req.body;
+        let { id_guide, date, session, booking_date, meeting_point, price} = req.body;
         
-        let checkTourist = await model.tourist.findOne({
+        let checkGuide = await model.tour_guide.findOne({
             where:{
-                id_tourist
+                id_guide
             }
         });
-        if(checkTourist){
-                // let checkGuide = await model.tour_guide.findOne({
-                //     where:{
-                //         id_guide
-                //     }
-                // })
+        if(checkGuide){
+                await model.guide_time.update({
+                    is_available: 0
+                },{
+                    where:{
+                        guide_date: date,
+                        guide_session: session,
+                        id_guide
+                    }
+                })
+                const guidetime = await model.guide_time.findOne({
+                    where:{
+                        guide_date: date,
+                        guide_session: session,
+                        id_guide
+                    }
+                })
+
                 await model.guide_booking.create({ 
-                    id_tourist, id_guidetime, booking_date, meeting_point, price, 
+                    id_tourist, id_guidetime: guidetime.id_guidetime, booking_date, meeting_point, price, 
                     status: 1,
                     // free_cancel: checkGuide.free_cancellation
                 }); 
-            sucessCode(res,"","Create thành công")
+            sucessCode(res,guidetime ,"Create thành công")
         }
         else{
             failCode(res,"","Tourist không tồn tại")

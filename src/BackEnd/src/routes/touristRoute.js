@@ -8,7 +8,7 @@ const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
 //GET: get tourist info by id_tourist
-touristRoute.get("/getInfo/:email", verifyToken, getInfoByID);
+touristRoute.get("/getInfo/:email",verifyToken, getInfoByID);
 
 //PUT: update tourist info by id_tourist
 touristRoute.put("/updateInfo/:id_tourist", verifyToken,  updateInfoByID);
@@ -29,7 +29,7 @@ touristRoute.post("/reportGuide/:id_tourist", reportGuide);
 
 touristRoute.post("/bookTour/:id_tourist", bookTour);
 
-// touristRoute.post("/bookGuide/:id_tourist", bookGuide);
+touristRoute.post("/bookGuide/:id_tourist", bookGuide);
 
 // touristRoute.put("/cancelTour/:id_tourist", cancelTour);
 

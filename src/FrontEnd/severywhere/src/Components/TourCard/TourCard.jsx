@@ -21,6 +21,7 @@ const TourCard = ({info}) => {
     return (  
         <div class="tour-card">
             <img src = { importPhoto(photo_path) || placeholder }></img>
+            <div class="horizontal-line"></div>
             <div class="tour-subcard">
                 <div class="tour-rating">
                 <RatingStar numberStar = {Math.floor(rating)}/>
@@ -39,14 +40,14 @@ const TourCard = ({info}) => {
                 <p>{price || "Cost"}$</p>
                 </div>
                 <div class="tour-info">
-                <div class="tour-info-bottom">
-                    <i class="fa-regular fa-clock"></i>
-                    <p>{duration || "duration"} days</p>
-                </div>
-                <div class="tour-info-bottom">
-                    <i class="fa-solid fa-user-group"></i>
-                    <p>{num_max || "quantity"}</p>
-                </div>
+                    <div class="tour-info-bottom">
+                        <i class="fa-regular fa-clock"></i>
+                        <p>{duration || "duration"} days</p>
+                    </div>
+                    <div class="tour-info-bottom">
+                        <i class="fa-solid fa-user-group"></i>
+                        <p>{num_max || "quantity"}</p>
+                    </div>
                 </div>
             </div>
         </div>
