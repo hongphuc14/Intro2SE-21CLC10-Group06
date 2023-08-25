@@ -29,8 +29,8 @@ const CheckoutGuide = () => {
         return `${year}-${month}-${day}`
       };
 
-    const [date, setDate] = useState(formatDate(new Date()));
-    const [session, setSession] = useState([]);
+    const [date, setDate] = useState(0);
+    const [session, setSession] = useState(1);
     const [meeting, setMeeting] = useState("");
   
     useEffect(() => {
@@ -48,37 +48,28 @@ const CheckoutGuide = () => {
         }
       }
 
-    // const handleChangeDate = (value, days) => {
-    //     const d1 = new Date();
-    //     const d2 = new Date(value);
-
-    //     if (d1 > d2) {
-    //         alert('Please select a date after today')
-    //     }
-    //     else{
-    //         setStartDate(value); 
-    //         const enddate = formatDate(value, days)
-    //         setEndDate(enddate);
-    //     }
-    // }
-
     const handleConfirm = () => {
-        const obj = {
-            id_guide: info.id_guide,
-        //     start_date: startDate,
-        //     end_date: endDate,
-        //     booking_date: new Date(),
-        //     num_tourist: num_ticket,
-        //     total_price: num_ticket * info.price,
-        }
-        dispatch(bookGuide(tourist_info.id_tourist, obj))
+        if (!meeting)
+            alert("The meeting point field is required")
+        else{
+            const obj = {
+                id_guide: info.id_guide,
+                date: info.times[date].date,
+                session: parseInt(session),
+                meeting_point: meeting,
+                booking_date: formatDate(new Date()),
+                price: info.price
+            }
+            dispatch(bookGuide(tourist_info.id_tourist, obj))
 
-        window.history.replaceState(null, null, "/");
-        window.location.href = "/editprofile"
+            window.history.replaceState(null, null, "/");
+            window.location.href = "/editprofile"
+        }
     }
 
     return (  
         <div id="checkout-guide-page">
+            <HeaderGuest/>
             <div class="checkout-page-container">
                 <div class="checkout-left-container">
                     <div class="guide-cart-card">
@@ -122,45 +113,72 @@ const CheckoutGuide = () => {
                     </div>
                     <div class="fillin-form">
                         <div class="fillin-components">
+                            <div class="info-part special">
+                                Select the date you want to book  
+                                <select name = "date" onClick = {(e) => {setDate(parseInt(e.target.value))}}>
+                                    {info.times.map((time, index) => {
+                                        return(
+                                            <option key = {time.date} value = {index}>{time.date}</option>
+                                        )
+                                    })
+                                    }
+                                </select>
+                                
+                            </div>
+                            <div class="info-part special">
+                                Select the session you want to book
+                                <select name = "session" onChange = {(e) => {setSession(parseInt(e.target.value))}}>
+                                {
+                                    info.times[date].sessions.includes(1) && <option value = {1} name = "Morning">Morning (7:00 - 11:00)</option>
+                                }
+                                {
+                                    info.times[date].sessions.includes(2) && <option value = {1} name = "Afternoon">Afternoon (13:00 - 17:00)</option>
+                                }
+                                {
+                                    info.times[date].sessions.includes(3) && <option value = {1} name = "Evening">Evening (18:00 - 21:00)</option>
+                                }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="fillin-components">
                             <div class="info-part">
                                 Fullname
-                                <input type="text" value = {tourist_info.fullname} />
+                                <input type="text" value = {tourist_info.fullname} readOnly/>
                             </div>
                             <div class="info-part">
                                 Email
-                                <input type="text" value = {tourist_info.email} />
+                                <input type="text" value = {tourist_info.email} readOnly/>
                             </div>
                         </div>
                         <div class="fillin-components">
                             <div class="info-part">
                                 Phone
-                                <input type="text" value = {tourist_info.phone} />
+                                <input type="text" value = {tourist_info.phone} readOnly/>
                             </div>
                             <div class="info-part">
                                 Gender
                                 <div class="checkbox-gender">
                                     <label>
-                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 0}/>
+                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 0} disabled/>
                                         Male
                                     </label>
 
                                     <label>
-                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 1}/>
+                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 1} disabled/>
                                         Female
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="fillin-components">
-                        <div class="info-not-part">
-                                Meeting point
+                            <div class="info-not-part">
+                                Meeting point<span>*</span>
                                 <input type="text" placeholder = "The specific address where tour guide will pick you up" onChange = {(e) => {setMeeting(e.target.value)}}/>
                             </div>
                         </div>
-                        {/* <div class="show-total">
-                            Total:
-                            <a>$52.00</a> 
-                        </div> */}
+                        <div class="fillin-components">
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="checkout-right-container">
@@ -168,15 +186,17 @@ const CheckoutGuide = () => {
                     <p>SUMMARY</p>
                     <div class="price">
                         <p>Price:</p>
-                        <p>${session.length * info.price}</p>
+                        <p>${session * info.price}</p>
                     </div>
                     <div class="horizontal-line"></div>
                     <div class="total">
                         <p>Total:</p>
-                        <p>${session.length * info.price}</p>
+                        <p>${session * info.price}</p>
                     </div>
+                    <ButtonUploadFreelancer title = "CONFIRM" className = "button-save" onClick = {handleConfirm}/>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
