@@ -132,28 +132,28 @@ const  CheckoutPage= () => {
                         <div id="info_one">
                             <div id="info_name">
                                 <p>Fullname</p>
-                                <input type="text" value = {tourist_info.fullname}/>
+                                <input type="text" value = {tourist_info.fullname} readOnly/>
                             </div>
                             <div id="info_email">
                                 <p>Email</p>
-                                <input type="text" value = {tourist_info.email}/>
+                                <input type="text" value = {tourist_info.email} readOnly/>
                             </div>
                         </div>
                         <div id="info_two">
                             <div id="info_phone">
                                 <p>Phone</p>
-                                <input type="phone" value = {tourist_info.phone}/>
+                                <input type="phone" value = {tourist_info.phone} readOnly/>
                             </div>
                             <div id="info_gender">
                                 <p>Gender</p>
                                 <div id="checkboxGender">
                                     <label>
-                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 0}/>
+                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 0} disabled/>
                                         Male
                                     </label>
 
                                     <label>
-                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 1}/>
+                                        <input type="radio" name ="genderinfo" checked = {tourist_info.gender === 1} disabled/>
                                         Female
                                     </label>
                                 </div>

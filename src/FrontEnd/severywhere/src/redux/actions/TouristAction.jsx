@@ -173,8 +173,9 @@ export const bookTour = (id_tourist, obj) => {
 export const bookGuide = (id_tourist, obj) => {
   return async (dispatch) => {
     try {
-      console.log(obj)
+      // console.log(obj)
       const result = await touristService.bookGuide(id_tourist, obj);
+      // console.log("1", result)
       // const result = await touristService.getBookedBooking(id_tourist);
       // if (result.status === 200) {
       //   alert(result.data.message)

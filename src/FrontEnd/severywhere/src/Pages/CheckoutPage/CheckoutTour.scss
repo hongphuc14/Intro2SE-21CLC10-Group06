@@ -137,6 +137,7 @@
             width: 100%;
             gap: 5rem;
             
+            
             input{
                 width: 18rem;
                 height: 2rem;
@@ -144,6 +145,8 @@
                 border: 1px solid #979797;
                 margin-bottom: 1rem;
                 padding-left: 0.5rem;
+                color: gray;
+                cursor: default;
             }
             #info_name{
                 p{
@@ -166,6 +169,7 @@
             flex-direction: row;
             width: 100%;
             gap: 5rem;
+            
             input{
                 width: 18rem;
                 height: 2rem;
@@ -173,6 +177,8 @@
                 border: 1px solid #979797;
                 margin-bottom: 0.7rem;
                 padding-left: 0.5rem;
+                color: gray;
+                cursor: default;
             }
             #info_phone{
                 p{
@@ -193,7 +199,7 @@
                     gap: 1rem;
                     margin-bottom: 0.7rem;
                     margin-top: 0.5rem;
-                    accent-color: black;
+                    accent-color: gray;
                     input{
                         width: 1rem;
                         height: 1rem;
@@ -201,6 +207,7 @@
                     label{
                         margin: 0;
                         font-size: 0.9rem;
+                        color: gray
                     }
                 }
             }
@@ -210,21 +217,26 @@
             display: flex;
             flex-direction: row;
             width: 100%;
-            gap: 13.2rem;
+            gap: 5.7rem;
+            color: #0C721F;
+            // background-color: yellow;
             input{
-                width: 10rem;
+                width: 100%;
                 height: 2rem;
                 border-radius: 5px;
-                border: 1px solid #979797;
+                border: 1px solid #0C721F;
                 margin-bottom: 0.7rem;
                 padding-left: 0.5rem;
                 color: #0C721F;
             }
             #info_startdate, #info_enddate{
+                width: 18.1rem;
+                // margin-right: 5rem;
+
                 p{
                     margin: 0;
                     font-size: 0.8rem;
-                    margin-bottom: 0.3rem;
+                    margin-bottom: 0.3rem;;
                 }
             }
         }
@@ -243,11 +255,12 @@
                 display: flex;
                 flex-direction: row;
                 gap: 1rem;
+                color: #0C721F;
                 input{
-                    width: 3rem;
+                    width: 9.3rem;
                     height: 2rem;
                     border-radius: 5px;
-                    border: 1px solid #979797;
+                    border: 1px solid #0C721F;
                     margin-bottom: 0.7rem;
                     padding-left: 0.5rem;
                     color: #0C721F;
@@ -272,11 +285,9 @@
         //     background-color: #E5F2CA;
         //     color: #0C721F;
             border-radius: 0.5em;
-        //     border: none;
             margin: 2em auto;
-            margin-left: 38%;
-        //     padding: 1em;
-        //     outline: 2px solid #0C721F
+            margin-left: 26%;
+            font-size: 1.2rem;
         }
 
     }
