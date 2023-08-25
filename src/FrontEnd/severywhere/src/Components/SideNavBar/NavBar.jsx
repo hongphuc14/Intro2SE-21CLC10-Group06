@@ -94,14 +94,14 @@ const NavBar = () => {
                 </li>
                 <li>
                     <a href="#">
-                        <i className="fa-solid fa-cart-shopping cartedit"></i>
-                        <span>My Orders</span>
+                        <i class="fas fa-map"></i>
+                        <span>My Tour</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-window-close"></i>
-                        <span>Cancelled</span>
+                        <i class="fas fa-skiing-nordic"></i>
+                        <span>My Guide</span>
                     </a>
                 </li>
             </ul>
