@@ -2,13 +2,16 @@ import './ProfileAdmin.scss';
 import moment from 'moment';
 import React, { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getAdminInfoAction, updateAdminInfoAction, updateAdminPwdAction, uploadAdminAvatarAction } from "../../../redux/actions/AdminAction";
-
+import { getAdminInfoAction, updateAdminInfoAction, updateAdminPwdAction, uploadAdminAvatarAction,
+        updateSelectedMenuItemAction } from "../../../redux/actions/AdminAction";
 
 function ProfileAdmin(props){
     const { admin_info } = useSelector((state) => state.AdminReducer);
-    console.log("admin_info profile: ", admin_info);
     const dispatch = useDispatch();
+    useEffect(() =>{
+        window.scrollTo(0, 0);
+        dispatch(updateSelectedMenuItemAction('profile-admin'));
+    }, []);
     const [newInfo, setNewInfo] = useState({
         fullname: admin_info.fullname,
         email: admin_info.email,
@@ -24,7 +27,7 @@ function ProfileAdmin(props){
     });
     const [updateSuccess, setUpdateSuccess] = useState(false); // State for success message
     const [updateFail, setUpdateFail] = useState(false);
-    
+
     const handleUpdate = async () => {
         await dispatch(updateAdminInfoAction(admin_info.id_admin, newInfo));
         setUpdateSuccess(true);
@@ -93,7 +96,7 @@ function ProfileAdmin(props){
                     <div className="custom-row">
                         <div className="custom-form-group custom-column birthday-group">
                             <label>Birthday</label>
-                            <input className="custom-form-control" id="birthday" value={newInfo.birthday} onChange={(e) => setNewInfo({ ...newInfo, birthday: e.target.value })}/>
+                            <input className="custom-form-control" id="birthday" value={moment(newInfo.birthday).format('DD/MM/YYYY')} onChange={(e) => setNewInfo({ ...newInfo, birthday: e.target.value })}/>
                         </div>
                         <div className="custom-form-group custom-column gender-group">
                             <label>Gender</label>

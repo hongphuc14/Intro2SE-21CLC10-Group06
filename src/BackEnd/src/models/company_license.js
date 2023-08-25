@@ -34,6 +34,7 @@ class company_license extends Sequelize.Model {
         using: "BTREE",
         fields: [
           { name: "id_company" },
+          { name: "file_path" }
         ]
       },
     ]

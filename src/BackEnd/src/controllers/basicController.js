@@ -7,7 +7,6 @@ const { parseToken, clearLocalStorage } = require('../middlewares/baseToken');
 const bcrypt = require('bcrypt'); 
 //GET: login
 const login = async(req, res)=>{
-    console.log("controller");
     try{
         let { email, password } = req.body;
         // Admin login
@@ -17,8 +16,10 @@ const login = async(req, res)=>{
             }
         })
         if(checkAdmin){
+            console.log("admin")
             let checkPass = bcrypt.compareSync(password, checkAdmin.password);
             if(checkPass){
+
                 sucessCode(res, parseToken(checkAdmin), "Login thành công");
                 return;
             }
@@ -35,6 +36,7 @@ const login = async(req, res)=>{
             }
         })
         if(checkTourist){
+            console.log("tourist")
             let checkPass = bcrypt.compareSync(password, checkTourist.password);
             if(checkPass){
                 sucessCode(res, parseToken(checkTourist), "Login thành công");

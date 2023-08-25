@@ -14,7 +14,7 @@ export default function AboutUs_FAQ() {
     return (
         <div className="aboutus-faq-page">
             {
-                (role === 2 || role === 3) ? <HeaderAbout/> : <HeaderGuest/>
+                (role === 2 || role === 3 || role === 4) ? <HeaderAbout/> : <HeaderGuest/>
             }
             <div className='content-ab-faq'>
                 <section class="head-banner">

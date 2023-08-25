@@ -1,36 +1,44 @@
 import { Route} from "react-router";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Layout, Menu } from "antd";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { history } from "../../App";
-import { Layout, Menu } from "antd";
 import "./AdminTemplate.scss";
 import logo from "./horizontal_black.png";
-import { USER_LOGIN } from "../../util/config";
 import { logOutAction } from "../../redux/actions/BasicAction";
-
+import { updateSelectedMenuItemAction } from "../../redux/actions/AdminAction";
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
 export const AdminTemplate = (props) => {
     const { Component, ...restProps}  = props;
-    const { admin_info } = useSelector( (state) => state.AdminReducer ) || JSON.parse(localStorage.getItem(USER_LOGIN));
+    const { admin_info } = useSelector( (state) => state.AdminReducer );
     const { admin_avatar } = useSelector((state) => state.AdminReducer);
-    console.log("admin_avatar_tem: ", admin_avatar);
+    const { selectedMenuItem } = useSelector((state) => state.AdminReducer);
+    
+    const [select, setSelect] = useState (selectedMenuItem);
     const dispatch = useDispatch();
     
     useEffect(() =>{
         window.scrollTo(0, 0);
-    });
+        setSelect(selectedMenuItem);
+    }, [selectedMenuItem]);
+
+    const handleSetMenu = (selectedMenuItem) =>{
+        dispatch(updateSelectedMenuItemAction(selectedMenuItem));
+        window.location.reload();
+    }
     const handleLogout = () =>{
         dispatch(logOutAction());
     }
+
     const menuItems = [
         {
           key: 'dashboard',
           icon: <i className="fa-solid fa-house"></i>,
           title: 'DASHBOARD',
-          link: '/admin-dashboard'
+          link: '/dashboard',
+          onClick: () => {handleSetMenu("dashboard")}
         },
         {
           key: 'users',
@@ -38,40 +46,31 @@ export const AdminTemplate = (props) => {
           title: 'USERS',
           className: 'font-weight-bold',
           items: [
-            { key: 'tourists', title: 'TOURISTS', link: '/admin-users/tourists' },
-            { key: 'companies', title: 'COMPANIES', link: '/admin-users/companies' },
-            { key: 'freelancers', title: 'FREELANCERS', link: '/admin-users/freelancers' }
+            { key: 'tourists', title: 'TOURISTS', link: '/tourists-admin', onClick: () => {handleSetMenu("tourists-admin")}},
+            { key: 'companies', title: 'COMPANIES', link: '/companies-admin', onClick: () => {handleSetMenu("companies-admin")}},
+            { key: 'freelancers', title: 'FREELANCERS', link: '/freelancers-admin', onClick: () => {handleSetMenu("freelancers-admin'")}}
           ]
         },
         {
             key: 'tours',
             icon: <i className="fa-solid fa-list"></i>,
             title: 'TOURS',
-            link: '/admin-tours'
+            link: '/tours-admin',
+            onClick: handleSetMenu("tours-admin")
         },
         {
             key: 'booking',
             icon: <i className="fa-solid fa-receipt"></i>,
             title: 'BOOKING',
-            link: '/admin-booking'
+            link: '/bookings-admin',
+            onClick: handleSetMenu("bookings-admin")
         },
         {
-            key: 'reviews',
-            icon: <i className="fa-solid fa-star"></i>,
-            title: 'REVIEWS',
-            link: '/admin-reviews'
-        },
-        {
-            key: 'report',
-            icon: <i className="fa-solid fa-flag"></i>,
-            title: 'REPORT',
-            link: '/admin-report'
-        },
-        {
-            key: 'profile',
+            key: 'profile-admin',
             icon: <i className="fa-solid fa-circle-user"></i>,
             title: 'PROFILE',
-            link: '/admin-profile'
+            link: '/profile-admin',
+            onClick: () => {handleSetMenu("profile-admin")}
         },
         {
             key: 'logout',
@@ -96,7 +95,7 @@ export const AdminTemplate = (props) => {
                                 </NavLink>
                             </div>
                             <div className="about-us">
-                                <a href="#" style={{fontSize:"15px", fontWeight:"500", color:"#0E4D90"}}>About us & FAQ</a>
+                                <a href="/aboutus-admin" style={{fontSize:"15px", fontWeight:"500", color:"#0E4D90"}}>About us & FAQ</a>
                             </div>
                         </Header>
                         <Layout style={{minHeight:"100vh", marginTop:"65px"}} className='dashboard'>
@@ -107,13 +106,13 @@ export const AdminTemplate = (props) => {
                                     </div>
                                     <p style={{paddingLeft:"8px"}}>{admin_info.fullname}</p>
                                 </div>
-                                <Menu defaultSelectedKeys={["profile"]} mode='inline'>
+                                <Menu selectedKeys={[select]} mode='inline'>
                                     {menuItems.map((menuItem) => {
                                         if (menuItem.items) {
                                             return (
                                                 <SubMenu key={menuItem.key} icon={menuItem.icon} title={menuItem.title} className={menuItem.className}>
                                                     {menuItem.items.map((subItem) => (
-                                                        <Menu.Item key={subItem.key} icon={subItem.icon}>
+                                                        <Menu.Item key={subItem.key} icon={subItem.icon} onClick={subItem.onClick}>
                                                             <NavLink to={subItem.link} style={{fontWeight:"600"}}>{subItem.title}</NavLink>
                                                         </Menu.Item>
                                                     ))}

@@ -1,7 +1,6 @@
-import { GET_DESTINATION, LOGIN, LOGOUT, SIGNUP, UPLOAD_ADMIN_AVATAR } from "../types";
+import { GET_DESTINATION, LOGIN, LOGOUT, SIGNUP, UPLOAD_ADMIN_AVATAR, UPDATE_SELECTED_MENU_ITEM } from "../types";
 import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
 import { basicService } from "../../services/basicService";
-import { adminService } from "../../services/AdminService";
 import { history } from "../../App";
 import { USER_LOGIN, TokenKey, RoleKey } from "../../util/config";
 
@@ -9,6 +8,7 @@ export const logInAction = (user_login) => {
   return async (dispatch) => {
     try {
       const result = await basicService.logIn(user_login);
+      console.log("result action: ", result);
       if (result.status === 200) {
         // Store token in localStorage
         localStorage.setItem(TokenKey, result.data.content);
@@ -25,13 +25,13 @@ export const logInAction = (user_login) => {
 
         const roleId = localStorage.getItem(RoleKey);
         if(roleId === '1')
-          history.push("/homepage-tourist");
+          history.push("/homepage");
         if(roleId === '2')
           history.push("/profile-company");
         if(roleId === '3')
           history.push("/profile-freelancer");
         if(roleId === '4')
-          history.push("/profile-admin");
+          history.push("/dashboard");
         window.location.reload();
       }
     } catch (error) {

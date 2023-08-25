@@ -13,10 +13,10 @@ import {
 from "../types";
 import { stateDefault } from "../reducers/BasicReducer";
 
-let user_login = stateDefault.user_login
+//let user_login = stateDefault.user_login
 
 const stateInit = {
-    guide_info: user_login,
+    guide_info: {},
 
     guide_language_by_id_guide: [],
 

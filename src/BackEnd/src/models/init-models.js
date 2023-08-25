@@ -71,7 +71,7 @@ function initModels(sequelize) {
   tourist.belongsToMany(tour_guide, { as: 'id_guide_tour_guide_guide_reports', through: guide_report, foreignKey: "id_tourist", otherKey: "id_guide" });
   tourist.belongsToMany(tour_guide, { as: 'id_guide_tour_guide_guide_wishlists', through: guide_wishlist, foreignKey: "id_tourist", otherKey: "id_guide" });
   company_license.belongsTo(company, { as: "id_company_company", foreignKey: "id_company"});
-  company.hasOne(company_license, { as: "company_license", foreignKey: "id_company"});
+  company.hasMany(company_license, { as: "company_license", foreignKey: "id_company"});
   tour.belongsTo(company, { as: "id_company_company", foreignKey: "id_company"});
   company.hasMany(tour, { as: "tours", foreignKey: "id_company"});
   search_history.belongsTo(destination, { as: "id_des_destination", foreignKey: "id_des"});
