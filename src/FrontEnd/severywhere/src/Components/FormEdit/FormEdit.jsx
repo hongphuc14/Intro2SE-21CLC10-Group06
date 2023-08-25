@@ -55,7 +55,7 @@ export default function MyForm() {
     dispatch(updateTouristInfo(tourist_info.id_tourist, {fullname: fullname, phone: phone, birthday: birthday, gender: parseInt(gender)}))
 
   };
-
+  console.log(gender)
   return (
     <div className="form-container"> 
     <form className = "my-form" method="post" onSubmit={handleSubmit}>
@@ -95,17 +95,15 @@ export default function MyForm() {
         <div className="gender">
           <label>Gender</label>
           <div className="gender-button">
-            <input type="radio" className ="option-input" name="gender" value="0" checked = {gender === "0" || false} onChange={(e) => setGender(e.target.value)}/>
+            <input type="radio" className ="option-input" name="gender" value="0" checked = {parseInt(gender) === 0 || false} onChange={(e) => setGender(e.target.value)}/>
             <label className = "maleCheck">Male</label>
-            <input type="radio" className="option-input" name="gender" value="1" checked = {gender === "1" || false} onChange={(e) => setGender(e.target.value)}/>
+            <input type="radio" className="option-input" name="gender" value="1" checked = {parseInt(gender) === 1 || false} onChange={(e) => setGender(e.target.value)}/>
             <label className = "femaleCheck">Female</label>
           </div>
         </div>
       </div>
 
       <button type="submit" className="SaveButton">Save</button>
-      <hr/>
-      <button className="DeleteAccount">Delete account</button>
 
     </form>
     </div>

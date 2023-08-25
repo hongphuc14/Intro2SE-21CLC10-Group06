@@ -27,10 +27,10 @@ const  CheckoutPage= () => {
         return `${year}-${month}-${day}`
       };
 
-    const [startDate, setStartDate] = useState(formatDate(new Date()));
+    const [startDate, setStartDate] = useState(formatDate(new Date(),1));
     const [endDate, setEndDate] = useState(formatDate(new Date(), info.duration));
     const [num_ticket, setTicket] = useState(1);
-  
+    const [totalPrice, setTotalPrice] = useState(null)
     useEffect(() => {
       dispatch(getTouristInfo(user_login.email))
     },[] )
@@ -67,7 +67,7 @@ const  CheckoutPage= () => {
             end_date: endDate,
             booking_date: new Date(),
             num_tourist: num_ticket,
-            total_price: num_ticket * info.price,
+            total_price: totalPrice,
         }
         dispatch(bookTour(tourist_info.id_tourist, obj))
 
@@ -75,6 +75,9 @@ const  CheckoutPage= () => {
         window.location.href = "/editprofile"
         
     }
+
+    const total_price = num_ticket * info.price
+    console.log(parseFloat(num_ticket)*info.price)
 
     return ( 
         <div className = "checkout-page">
@@ -107,7 +110,7 @@ const  CheckoutPage= () => {
                                         <i class="fa-solid fa-dollar-sign"></i>
                                         <div class="tourcontent_co">
                                             <p class="sub_title"> Cost</p>
-                                            <p class="sub_val">{info.price}$</p>
+                                            <p class="sub_val">${info.price}</p>
                                         </div>
                                     </div>
                                     <div id="tour_subinfo">
@@ -166,18 +169,28 @@ const  CheckoutPage= () => {
                             </div>
                             <div id="info_enddate">
                                 <p>End date</p>
-                                <input type="date" value = {endDate}/>
+                                <input type="date" value = {endDate} readOnly/>
                             </div>
                         </div>
                         <div id="info_four">
                             <div id="infoticket">
                                 <p>Number of tickets:</p>
-                                <input type="number" min={1} value = {num_ticket} onChange = {(e) => {
+                                <input type="number" min={1} value = {num_ticket} 
+                                onChange = {(e) => {
                                     console.log(e.target.value)
-                                    if (e.target.value !== "0" && e.target.value !== "") 
+                                    if (e.target.value !== "0") 
                                         setTicket(e.target.value)
                                     else
-                                        alert("The minimum number of tickets is 1")} }/>
+                                        alert("The minimum number of tickets is 1")}} 
+                                onBlur = {(e) => {
+                                    if (e.target.value === ""){
+                                        setTicket(1)
+                                        setTotalPrice((info.price).toFixed(2))
+                                    }else{
+                                        setTotalPrice((parseInt(e.target.value ) * info.price).toFixed(2))
+                                    }
+                                        
+                                }} />
                             </div>
                         </div>
                     </div>
@@ -187,12 +200,12 @@ const  CheckoutPage= () => {
                     <p>SUMMARY</p>
                     {/* <div class="price">
                         <p>Price:</p>
-                        <p>$52.00</p>
+                        <p>{(parseInt(num_ticket)*info.price).toFixed(2)}</p>
                     </div> */}
                     <div class="horizontal-line"></div>
-                    <div class="total">
+                    <div className="total">
                         <p>Total:</p>
-                        <p>{num_ticket * info.price}$</p>
+                        <p>{totalPrice && "$" + totalPrice }</p>
                     </div>
                     <ButtonUploadFreelancer title = "CONFIRM" className = "button-save" onClick = {handleConfirm}/>
                 </div>

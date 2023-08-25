@@ -2,7 +2,8 @@ import { GET_TOURIST_INFO,
   GET_TOUR_SEARCH,
   GET_GUIDE_SEARCH,
   UPDATE_TOURIST_CART,
-  GET_TOURIST_BOOKING } 
+  GET_TOUR_BOOKING,
+  GET_GUIDE_BOOKING } 
 from "../types";
 
 const stateDefault = {
@@ -23,12 +24,9 @@ const stateDefault = {
     tour_search: [],
     guide_search: [],
 
-    // array các tour được bỏ vào giỏ hàng
-    tour_cart: [],
-    guide_cart: [],
-
     // array các booking
-    tourist_booking: []
+    tour_booking: [],
+    guide_booking: []
 };
 
 export const TouristReducer = (state = stateDefault, action) => {
@@ -45,8 +43,11 @@ switch (action.type) {
     case UPDATE_TOURIST_CART: {
       return { ...state, tourist_cart: action.tourist_cart };
     }
-    case GET_TOURIST_BOOKING: {
-      return { ...state, tourist_booking: action.tourist_booking };
+    case GET_TOUR_BOOKING: {
+      return { ...state, tour_booking: action.tour_booking };
+    }
+    case GET_GUIDE_BOOKING: {
+      return { ...state, guide_booking: action.guide_booking };
     }
   default:
     return { ...state };

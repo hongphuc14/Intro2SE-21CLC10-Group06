@@ -62,14 +62,9 @@ export default function StatisticsCompany(){
   }
 
   const getDes = (id) =>{
-    let name = ""
-    destination.forEach(des => {
-        if (id === des.id_des)
-            name = des.name
-    })
-    return name
-  }
-
+    const result = destination.filter(des => (id === des.id_des))
+    return result[0].name
+}
   console.log(tourByDate, reviewByTour)
   
   let totalSales = 0
@@ -80,8 +75,6 @@ export default function StatisticsCompany(){
         totalSales += tmp.total_price
         totalBookings += 1
       }
-      
-        
   }
 
   let totalRating = 0

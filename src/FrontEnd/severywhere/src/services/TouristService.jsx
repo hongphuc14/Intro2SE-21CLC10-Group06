@@ -43,6 +43,26 @@ export class TouristService extends baseService {
       return this.post(`tourist/bookGuide/${id_tourist}`, obj);
     };
 
+    getTourBooking = (id_tourist) => {
+      return this.get(`tourist/getTourBooking/${id_tourist}`);
+    };
+
+    getGuideBooking = (id_tourist) => {
+      return this.get(`tourist/getGuideBooking/${id_tourist}`);
+    };
+
+    cancelTour = (id_tourist, obj) => {
+      return this.put(`tourist/cancelTour/${id_tourist}`, obj);
+    };
+
+    cancelGuide = (id_tourist, obj) => {
+      return this.put(`tourist/cancelGuide/${id_tourist}`, obj);
+    };
+
+    updateReview = (id_tourist, obj) => {
+      return this.put(`tourist/updateReview/${id_tourist}`, obj);
+    };
+
   }
   
   export const touristService = new TouristService();

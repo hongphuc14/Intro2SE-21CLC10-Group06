@@ -61,15 +61,6 @@ export default function TourCompany(){
         }
         return null
       }
-
-    const getDes = (id) =>{
-        let name = ""
-        destination.forEach(des => {
-            if (id === des.id_des)
-                name = des.name
-        })
-        return name
-    }
     
     useEffect(() => {
         if (!company_info?.id_company)
@@ -189,6 +180,7 @@ export default function TourCompany(){
                 </div>
                 {
                     tours.map(tour =>{
+                        console.log(tour)
                         return (
                             <div key = {tour.id_tour} className = "tour">
                                 <div className = "tour-hover">
@@ -201,7 +193,7 @@ export default function TourCompany(){
                                 </div>
                                 <img src = {importPhoto(tour?.photo_path) || placeholder}></img>
                                 <p className = "name">{tour.name}</p>
-                                <p className = "des">{getDes(tour.id_des)}</p>
+                                <p className = "des">{tour.destination}</p>
                                 <p className = "price">{tour.price.toFixed(2)}$</p>
                                 <p className = "duration">{tour.duration} days</p>
                                 <p className = "num-tourist">{tour.num_max} tourists</p>

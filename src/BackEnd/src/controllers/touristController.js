@@ -552,7 +552,7 @@ const cancelTour = async(req, res) =>{
     }
 }
 
-const getBookedBooking = async(req, res) =>{
+const getGuideBooking = async(req, res) =>{
     try{
         let { id_tourist } = req.params;
 
@@ -578,39 +578,30 @@ const getBookedBooking = async(req, res) =>{
     }
 }
 
-const getCancelBooking = async(req, res) =>{
+const getTourBooking = async(req, res) =>{
     try{
-        let { destination, rating, price } = req.params;
+        let { id_tourist } = req.params;
 
-        const [tour_search, metadata] = await sequelize.query
-            (`SELECT tour.*, company.name, tour_photo.photo_path, AVG(tour_review.rating)
-            FROM tour 
-            INNER JOIN tour_review ON tour_review.id_tour_booking = tour_booking.id_tour_booking
-            LEFT JOIN tour_photo ON tour_photo.id_tour = tour.id_tour
-            WHERE tour.is_deleted = 0 AND tour.id_des = ${destination} AND
-            tour.price <= ${price}
-            GROUP BY tour.*, company.name, tour_photo.photo_path
-            HAVING ${rating} <= AVG(tour_review.rating) AND AVG(tour_review.rating) < ${rating + 1}`);
+        const [tour_bookings, metadata0] = await sequelize.query
+        (`SELECT tour.name, company.name as company, destination.name as destination, tour.is_deleted,
+        tour.price, tour.duration, tour_category.name as category, tour_photo.photo_path, 
+        tour_booking.id_tour_booking, tour_booking.booking_date, tour_booking.start_date,
+        tour_booking.end_date, tour_booking.num_tourist, tour_booking.total_price, tour_booking.status
+        FROM tour_booking 
+        INNER JOIN tour ON tour.id_tour = tour_booking.id_tour
+        INNER JOIN company ON company.id_company = tour.id_company
+        INNER JOIN destination ON destination.id_des = tour.id_des
+        INNER JOIN tour_category ON tour_category.id_category = tour.id_category
+        LEFT JOIN tour_photo ON tour_photo.id_tour = tour.id_tour
+        WHERE tour_booking.id_tourist = ${id_tourist}`);
 
-        const id_search = []
-        for (const item of tour_search){
-            id_search.push(item.id_tour)
-        }
-
-        let data = await model.tour.findAll({
-            where:{
-                id_tour: {
-                    [Op.in]: id_search
-                }
-            }
-        })
-        sucessCode(res,data,"Get thanh cong")
+        sucessCode(res,tour_bookings,"Get thanh cong")
     }catch(err){
         errorCode(res,"Lỗi BE")
     }
 } 
 
-const leaveReview = async(req, res) =>{
+const updateReview = async(req, res) =>{
     try{
         let { destination, rating, price } = req.params;
 
@@ -644,4 +635,4 @@ const leaveReview = async(req, res) =>{
 
 module.exports = { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar,
     getTourSearch, getGuideSearch, reportTour, reportGuide, bookTour, bookGuide,
-    cancelGuide, cancelTour, getBookedBooking, getCancelBooking, leaveReview }
+    cancelGuide, cancelTour, getGuideBooking, getTourBooking, updateReview }

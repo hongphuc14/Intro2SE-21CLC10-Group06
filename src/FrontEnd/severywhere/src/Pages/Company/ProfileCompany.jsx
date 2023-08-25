@@ -135,7 +135,6 @@ export default function ProfileCompany(){
       website: yup
       .string()
       .url("Website must be a valid URL")
-      .required("Website is required"),
     }),
   })
   

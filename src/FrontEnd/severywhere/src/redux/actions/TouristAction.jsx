@@ -1,8 +1,8 @@
 import { GET_TOURIST_INFO, 
   GET_TOUR_SEARCH,
   GET_GUIDE_SEARCH,
-  UPDATE_TOURIST_CART,
-  GET_TOURIST_BOOKING } 
+  GET_TOUR_BOOKING,
+  GET_GUIDE_BOOKING } 
 from "../types";
 
 import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
@@ -190,6 +190,105 @@ export const bookGuide = (id_tourist, obj) => {
     }
   };
 };
+
+export const getTourBooking = (id_tourist) => {
+  return async (dispatch) => {
+    try {
+      // console.log(obj)
+      const result = await touristService.getTourBooking(id_tourist);
+      // console.log("1", result)
+      // const result = await touristService.getBookedBooking(id_tourist);
+      if (result.status === 200) {
+        // alert(result.data.message)
+        dispatch({
+          type: GET_TOUR_BOOKING,
+          tour_booking: result.data.content,
+        });
+      //   dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};
+
+export const getGuideBooking = (id_tourist) => {
+  return async (dispatch) => {
+    try {
+      // console.log(obj)
+      const result = await touristService.getGuideBooking(id_tourist);
+      // console.log("1", result)
+      // const result = await touristService.getBookedBooking(id_tourist);
+      if (result.status === 200) {
+        // alert(result.data.message)
+        dispatch({
+          type: GET_GUIDE_BOOKING,
+          guide_booking: result.data.content,
+        });
+      //   dispatch(hideLoadingAction);
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+};
+
+export const cancelTour = (id_tourist, id_tour_booking) => {
+  return async (dispatch) => {
+    try {
+      const obj = {
+        id_tour_booking: id_tour_booking
+      }
+      await touristService.cancelTour(id_tourist, obj);
+      // if (result.status === 200) {
+      //   dispatch({
+      //     type: GET_TOUR_BOOKING,
+      //     tour_booking: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      // }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+}
+
+export const cancelGuide = (id_tourist, id_guidebooking) => {
+  return async (dispatch) => {
+    try {
+      const obj = {
+        id_guidebooking: id_guidebooking
+      }
+      await touristService.cancelGuide(id_tourist, obj);
+      // if (result.status === 200) {
+      //   dispatch({
+      //     type: GET_TOUR_BOOKING,
+      //     tour_booking: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      // }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+}
+
+export const updateReview = (id_tourist, obj) => {
+  return async (dispatch) => {
+    try {
+      await touristService.updateReview(id_tourist, obj);
+      // if (result.status === 200) {
+      //   dispatch({
+      //     type: GET_TOUR_BOOKING,
+      //     tour_booking: result.data.content,
+      //   });
+      //   dispatch(hideLoadingAction);
+      // }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+}
 
 // export const updateTouristPassword = (id_tourist,currentPass, newPass) => {
 //   return async (dispatch) => {

@@ -2,8 +2,8 @@ const express = require('express');
 const touristRoute = express.Router();
 const { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar,
     getTourSearch, getGuideSearch, reportTour, reportGuide, bookTour, 
-    bookGuide, cancelGuide, cancelTour, getBookedBooking, getCancelBooking,
-    leaveReview } = require('../controllers/touristController')
+    bookGuide, cancelGuide, cancelTour, getGuideBooking, getTourBooking,
+    updateReview } = require('../controllers/touristController')
 const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
@@ -31,14 +31,14 @@ touristRoute.post("/bookTour/:id_tourist", bookTour);
 
 touristRoute.post("/bookGuide/:id_tourist", bookGuide);
 
-// touristRoute.put("/cancelTour/:id_tourist", cancelTour);
+touristRoute.put("/cancelTour/:id_tourist", cancelTour);
 
-// touristRoute.put("/cancelGuide/:id_tourist", cancelGuide);
+touristRoute.put("/cancelGuide/:id_tourist", cancelGuide);
 
-// touristRoute.get("/getBookedBooking/:id_tourist", getBookedBooking);
+touristRoute.get("/getTourBooking/:id_tourist", getTourBooking);
 
-// touristRoute.get("/getCancelBooking/:id_tourist", getCancelBooking);
+touristRoute.get("/getGuideBooking/:id_tourist", getGuideBooking);
 
-// touristRoute.post("/leaveReview/:id_tourist", leaveReview);
+touristRoute.post("/updateReview/:id_tourist", updateReview);
 
 module.exports = touristRoute;

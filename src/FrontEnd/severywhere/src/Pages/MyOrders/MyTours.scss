@@ -4,18 +4,56 @@
     .container {
         display: flex;
         flex-direction: row;
+
+        .report-section{
+          
+            .report {
+              color:#0C721F;
+
+                p{
+                    font-size: 2em;
+                    margin: 0.5em auto 0.3em;
+                    text-align: center;
+                }
+
+                p:nth-of-type(2),
+                p:nth-of-type(3){
+                    opacity: 0.5;
+                    font-size: 0.8em;
+                    color: #0C721F;
+                    text-align: left;
+                    margin-left: 4.5em;
+                    margin-top: -0.2em;
+                }
+
+                textarea{
+                    height: 40%;
+                }
+
+                .button-save{
+                    margin-left: 40%;
+                    
+                }
+
+            }
+        }
+
+        .sidebar{
+            position: fixed;
+            top:0;
+        }
         .mytour-content {
-            max-height: 50rem;
+            min-height: 50rem;
             width: 52rem;
-            margin-left: 4rem;
-            margin-top: 1rem;
+            margin-left: 22rem;
             align-items: flex-start;
             padding-left: 1.3rem;
             display: flex;
             flex-direction: column;
-            position: absolute;
-            top: 1.7rem;
+            margin-top: 2rem;
             left: 17rem;
+            height: 100%;
+            margin-bottom: 2em;
 
             .mytour-header {
                 h1 {
@@ -34,13 +72,13 @@
                 flex-direction: row;
                 width: 52rem;
                 height: fit-content;
-
-
+                background-color: #E5F2CA; 
 
                 img {
                     width: 35%;
                     border-radius: 10px 0 0 0;
                     object-fit: cover;
+                    // height: fit-content;
                 }
 
 
@@ -55,6 +93,7 @@
                     padding: 1rem;
                     padding-left: 1.5rem;
                     position: relative;
+
 
                     #tour-name {
                         display: flex;
@@ -88,6 +127,10 @@
                                 background-color: #0C721F;
                                 color: white;
                             }
+
+                        }
+                        button:active{
+                            transform: translateY(2px);
                         }
                     }
 
@@ -249,7 +292,9 @@
                     #info_total {
                         display: flex;
                         flex-direction: row;
+                        align-items: center;
                         gap: 2rem;
+                        margin-top: -1em;
 
                         #totalpay {
                             align-items: center;
