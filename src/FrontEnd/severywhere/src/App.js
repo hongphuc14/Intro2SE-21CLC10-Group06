@@ -14,6 +14,9 @@ import TourGuidePage from './Pages/TourGuidePage/TourGuidePage';
 import CheckoutTour from './Pages/CheckoutPage/CheckoutTour';
 import CheckoutGuide from './Pages/CheckoutPage/CheckoutGuide';
 
+import MyGuide from './Pages/MyOrders/MyGuide';
+import MyTours from './Pages/MyOrders/MyTours';
+
 import ProfileFreelancer from "./Pages/Freelancer/ProfileFreelancer";
 import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
 import StatisticsFreelancer from "./Pages/Freelancer/StatisticsFreelancer";
@@ -77,6 +80,8 @@ function App() {
             <Route path = "/tourguidepage" exact component = {TourGuidePage} />
             <Route path = "/checkouttour" exact component ={CheckoutTour} />
             <Route path = "/checkoutguide" exact component ={CheckoutGuide} />
+            <Route path = "/myguide" exact component ={MyGuide} />
+            <Route path = "/mytours" exact component ={MyTours} />
             </>
           )
         }
