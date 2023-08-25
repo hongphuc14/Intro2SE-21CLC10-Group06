@@ -93,7 +93,7 @@ const NavBar = () => {
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/mytours">
                         <i class="fas fa-map"></i>
                         <span>My Tour</span>
                     </a>
