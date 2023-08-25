@@ -33,7 +33,7 @@
     background: #FFF;
     padding: 0.5em;
     max-width: 400px;
-    color:black;
+    color: black;
 
     &:focus {
       border-color: none;
@@ -70,13 +70,15 @@
 
     .email-block {
       margin-right: 2em;
-      .email-input{
+
+      .email-input {
         position: relative;
-          #emailEdit {
-            width: 15rem; // Chiều dài bằng với fullname-input
-            margin: 0;
-            margin-top: 0.5em;
-          }
+
+        #emailEdit {
+          width: 15rem; // Chiều dài bằng với fullname-input
+          margin: 0;
+          margin-top: 0.5em;
+        }
       }
     }
 
@@ -105,7 +107,7 @@
     margin-bottom: 1.5rem;
 
     // .birthday-box {
-      // color: #9C9C9C;
+    // color: #9C9C9C;
     // }
 
     .gender {
@@ -183,7 +185,8 @@
       }
     }
   }
-  .SaveButton{
+
+  .SaveButton {
     background-color: #0C721F;
     color: #fff;
     font-size: 1rem;
@@ -202,22 +205,6 @@
     &:hover {
       background-color: #0C721F;
       color: #fff;
-      transform: scale(1.05);
-    }
-  }
-  .DeleteAccount{
-    color: #DF4D4D;
-    font-size: 0.9rem;
-    font-weight: lighter;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    background-color: #fff;
- 
-    &:hover {
-      background-color: #fff;
-      color: #C51605;
       transform: scale(1.05);
     }
   }
