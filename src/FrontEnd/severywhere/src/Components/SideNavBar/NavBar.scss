@@ -7,7 +7,7 @@ $icon-size: 24px;
     background-color: $navbar-background-color;
     color: $navbar-text-color;
     padding: 20px;
-    height: 100vh;
+    min-height: 100vh;
     margin-top: 3rem;
     margin-left: 50px;
     display: flex;

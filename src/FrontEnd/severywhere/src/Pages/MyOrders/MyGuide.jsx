@@ -59,11 +59,11 @@ const MyGuide = () => {
                         </div>
                         <div className="lower-card">
                             <div className="fillin-components">
-                                <div className="info-part">
+                                <div className="above-info">
                                     Date:
                                     <a>25/7/2023</a>
                                 </div>
-                                <div className="info-part">
+                                <div className="above-info">
                                     Session:
                                     <a>Morning (7:00 - 11:00)</a>
                                 </div>
