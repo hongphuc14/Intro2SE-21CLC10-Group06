@@ -205,7 +205,7 @@ function FreelancerDetails(props){
                             {freelancer_time.map((time, timeIndex) =>
                                 time.guide_bookings.map((item,index) =>(
                                     <tr key={index} >
-                                        <td>{item.id_guide_booking}</td>
+                                        <td>{item.id_guidebooking}</td>
                                         <td>{item.id_guidetime}</td>
                                         <td>{item.id_tourist}</td>
                                         <td>{moment(item.booking_date).format('DD/MM/YYYY')}</td>
@@ -215,7 +215,7 @@ function FreelancerDetails(props){
                                         <td>{item.price}</td>
                                         <td>{item.status}</td>
                                         <td>
-                                            <button className="btnViewBooking" onClick={() => ViewBooking(item.id_guide_booking)}>
+                                            <button className="btnViewBooking" onClick={() => ViewBooking(item.id_guidebooking)}>
                                                 <i className="fa-solid fa-eye"></i>
                                             </button>
                                             </td>

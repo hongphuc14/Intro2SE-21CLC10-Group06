@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../../App";
 import moment from 'moment';
 import { updateSelectedMenuItemAction, getTourBookingAction } from "../../../redux/actions/AdminAction";
-function BookingGuideDetails(props){
+function BookingTourDetails(props){
     let { id_tour } = props.match.params;
     const { tour_booking } = useSelector((state) =>state.AdminReducer);
     const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function BookingGuideDetails(props){
                     <div className="custom-row">
                         <div className="custom-form-group custom-column left-group">
                             <label>IDBooking</label>
-                            <input className="custom-form-control" id="fullname" value={tour_booking.id_tour_booking}/>
+                            <input className="custom-form-control" id="fullname" value={tour_booking.id_tour}/>
                         </div>
                         <div className="custom-form-group custom-column right-group">
                             <label>IDTourist</label>
@@ -49,9 +49,7 @@ function BookingGuideDetails(props){
                         <div className="custom-form-group custom-column right-group">
                             <label>Rating</label>
                             <input className="custom-form-control" id="phone" value={tour_booking.tour_review &&
-                                    tour_booking.tour_review.rating
-                                        ? tour_booking.tour_review.rating
-                                        : ''}/>
+                                    tour_booking.tour_review.rating ? tour_booking.tour_review.rating : ''}/>
                         </div>
                     </div>
                     <div className="custom-row">
@@ -88,59 +86,44 @@ function BookingGuideDetails(props){
                         <div className="custom-form-group custom-column left-group">
                             <label>Review Date</label>
                             <input className="custom-form-control" id="birthday" value={tour_booking.tour_review &&
-                                    tour_booking.guide_review.review_date
-                                        ? moment(tour_booking.guide_review.review_date).format('DD/MM/YYYY')
-                                        : ''}/>
+                                    tour_booking.tour_review.review_date
+                                        ? moment(tour_booking.tour_review.review_date).format('DD/MM/YYYY') : ''}/>
                         </div>
                         <div className="custom-form-group custom-column right-group">
                         <label>Reply Date</label>
                             <input className="custom-form-control" id="gender" value={tour_booking.tour_review &&
-                                    tour_booking.tour_review.reply_date
-                                        ? moment(tour_booking.tour_review.reply_date).format('DD/MM/YYYY')
-                                        : ''}/>
+                                    tour_booking.tour_review.reply_date ? moment(tour_booking.tour_review.reply_date).format('DD/MM/YYYY') : ''}/>
                         </div>
                     </div>
                     <div className="custom-row">
                         <div className="custom-form-group">
                             <label>Review Content</label>
-                            <input className="custom-form-control" id="gender" value={tour_booking.guide_review &&
-                                    tour_booking.guide_review.review
-                                        ? tour_booking.guide_review.review
-                                        : ''}/>
+                            <input className="custom-form-control" id="gender" value={tour_booking.tour_review &&
+                                    tour_booking.tour_review.review ? tour_booking.tour_review.review : ''}/>
                         </div>
                     </div>
                     <div className="custom-row">
                         <div className="custom-form-group">
                             <label>Reply Content</label>
-                            <input className="custom-form-control" id="fullname" value={tour_booking.guide_review &&
-                                    tour_booking.guide_review.reply
-                                        ? tour_booking.guide_review.reply
-                                        : ''}/>
-                        </div>
-                    </div>
-                    <div className="custom-row">
-                        <div className="custom-form-group">
-                            <label>Report Content</label>
-                            <input className="custom-form-control" id="fullname" value={tour_booking.guide_review &&
-                                    tour_booking.guide_review.report
-                                        ? tour_booking.guide_review.report
-                                        : ''}/>
+                            <input className="custom-form-control" id="fullname" value={tour_booking.tour_review &&
+                                    tour_booking.tour_review.reply ? tour_booking.tour_review.reply : ''}/>
                         </div>
                     </div>
                     <div className="custom-row">
                         <div className="custom-form-group custom-column left-group">
                             <label>Report Date</label>
                             <input className="custom-form-control" id="birthday" value={tour_booking.tour_review &&
-                                    tour_booking.guide_review.report_date
-                                        ? moment(tour_booking.guide_review.report_date).format('DD/MM/YYYY')
-                                        : ''}/>
+                                    tour_booking.tour_review.report_date ? moment(tour_booking.tour_review.report_date).format('DD/MM/YYYY') : ''}/>
                         </div>
                         <div className="custom-form-group custom-column right-group">
                         <label>Report Status</label>
-                            <input className="custom-form-control" id="gender" value={tour_booking.tour_review &&
-                                    tour_booking.tour_review.report_status
-                                        ? moment(tour_booking.tour_review.report_status).format('DD/MM/YYYY')
-                                        : ''}/>
+                            <input className="custom-form-control" id="gender" value={tour_booking.tour_review && tour_booking.tour_review.report_status ? moment(tour_booking.tour_review.report_status).format('DD/MM/YYYY') : ''}/>
+                        </div>
+                    </div>
+                    <div className="custom-row">
+                        <div className="custom-form-group">
+                            <label>Report Content</label>
+                            <input className="custom-form-control" id="fullname" value={tour_booking.tour_review && tour_booking.tour_review.report ? tour_booking.tour_review.report : ''}/>
                         </div>
                     </div>
                 </div>
@@ -150,4 +133,4 @@ function BookingGuideDetails(props){
     )
 }
 
-export default memo(BookingGuideDetails);
+export default memo(BookingTourDetails);

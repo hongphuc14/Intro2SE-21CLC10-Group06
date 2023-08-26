@@ -3,17 +3,17 @@ import React, { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../../App";
 import moment from 'moment';
-import { getTourByIDAction, updateSelectedMenuItemAction, getTourBookingAction, getTourPhotoAction } from "../../../redux/actions/AdminAction";
+import { getTourByIDAction, updateSelectedMenuItemAction, getTourBookingListAction, getTourPhotoAction } from "../../../redux/actions/AdminAction";
 function TourDetails(props){
     let { id_tour } = props.match.params;
-    const { tour_info, tour_booking, tour_photo } = useSelector((state) =>state.AdminReducer);
+    const { tour_info, tour_list, tour_photo } = useSelector((state) =>state.AdminReducer);
     const dispatch = useDispatch();
     
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(updateSelectedMenuItemAction('tours'));
         dispatch(getTourByIDAction(id_tour));
-        dispatch(getTourBookingAction(id_tour));
+        dispatch(getTourBookingListAction(id_tour));
     }, []);
     const turnBack = async() =>{
         history.push('/tours-admin');
@@ -21,7 +21,7 @@ function TourDetails(props){
     }
     
     //calculate eanings
-    let totalEarnings = tour_booking.reduce((total, booking) => {
+    let totalEarnings = tour_list.reduce((total, booking) => {
         if (booking.status === 1) {
             return total + booking.total_price;
         }
@@ -29,7 +29,7 @@ function TourDetails(props){
     }, 0);
     
     //calculate total bookings
-    let totalBookings = tour_booking.reduce((total, booking) => {
+    let totalBookings = tour_list.reduce((total, booking) => {
         if (booking.status === 1) {
             return total + 1;
         }
@@ -37,7 +37,7 @@ function TourDetails(props){
     }, 0);
     
     //calculate total reviews
-    let totalReviews = tour_booking.reduce((total, booking) => {
+    let totalReviews = tour_list.reduce((total, booking) => {
         if (booking.status === 1 && booking.tour_review.review) {
             return total + 1;
         }
@@ -188,7 +188,7 @@ function TourDetails(props){
                             </tr>
                         </thead>
                         <tbody className="booking-table">
-                            {tour_booking.map((item, index) =>
+                            {tour_list.map((item, index) =>
                                 <tr key={index}>
                                     <td>{item.id_tour_booking}</td>
                                     <td>{item.id_tourist}</td>

@@ -3,16 +3,16 @@ import thunk from "redux-thunk";
 import { composeWithDevTools} from "redux-devtools-extension";
 import { BasicReducer } from "./reducers/BasicReducer";
 import { AdminReducer } from "./reducers/AdminReducer";
-import { FreelancerReducer } from "./reducers/FreelancerReducer";
+//import { FreelancerReducer } from "./reducers/FreelancerReducer";
 import { LoadingReducer } from "./reducers/LoadingReducer";
 //import { TouristReducer } from "./reducers/TouristReducer";
-import { CompanyReducer } from "./reducers/CompanyReducer";
+//import { CompanyReducer } from "./reducers/CompanyReducer";
 const rootReducer = combineReducers({ 
     BasicReducer,
     AdminReducer,
-    FreelancerReducer,
+    //FreelancerReducer,
     LoadingReducer,
-    CompanyReducer,
+    //CompanyReducer,
 //    TouristReducer
 })
 

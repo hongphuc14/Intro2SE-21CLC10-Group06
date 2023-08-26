@@ -229,6 +229,11 @@ export class AdminService extends baseService {
     getGuideBooking = (id_guide_booking) =>{
         return this.get(`admin/getGuideBooking/${id_guide_booking}`);
     }
+
+    // Api 44: get tour booking list
+    getTourBookingList = ( id_tour ) =>{
+        return this.get(`admin/getTourBookingList/${id_tour}`);
+    }
 }
 
 export const adminService = new AdminService();

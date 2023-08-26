@@ -6,7 +6,7 @@ import { GET_ADMIN_INFO_BY_ID_ADMIN, UPDATE_ADMIN_INFO, UPDATE_ADMIN_PWD, UPDATE
         GET_TOURIST_GUIDE_BOOKING, GET_TOURIST_TOUR_BOOKING, GET_COMPANY_INFO_BY_ID_COMPANY, GET_COMPANY_TOUR_BY_ID_COMPANY,
         GET_COMPANY_LICENSES_BY_ID_COMPANY, GET_FREELANCER_INFO_BY_ID_GUIDE, GET_FREELANCER_ATTRACTION_BY_ID_GUIDE,
         GET_FREELANCER_LICENSES_BY_ID_GUIDE, GET_FREELANCER_TIME_BY_ID_GUIDE, GET_FREELANCER_LANGUAGE, 
-        GET_ARR_TOUR, GET_TOUR, GET_TOUR_BOOKING, GET_TOUR_PHOTO, GET_TOUR_BOOKING_BY_ID, GET_GUIDE_BOOKING } from "../types";
+        GET_ARR_TOUR, GET_TOUR, GET_TOUR_BOOKING, GET_TOUR_PHOTO, GET_TOUR_BOOKING_BY_ID, GET_GUIDE_BOOKING, GET_TOUR_BOOKING_LIST } from "../types";
 import { stateDefault} from "../reducers/BasicReducer";
 import { adminService } from "../../services/AdminService";
 
@@ -52,9 +52,10 @@ const stateInit = {
     freelancer_language: [],
     arr_tour: [],
     tour_info: [],
-    tour_booking: [],
+    tour_booking: {},
     tour_photo: [],
     guide_booking: {},
+    tour_list:[],
 };
 
 export const AdminReducer = (state = stateInit, action) => {
@@ -166,6 +167,9 @@ export const AdminReducer = (state = stateInit, action) => {
     }
     case GET_GUIDE_BOOKING:{
       return { ...state, guide_booking: action.guide_booking};
+    }
+    case GET_TOUR_BOOKING_LIST:{
+      return { ...state, tour_list: action.tour_list};
     }
     default:
       return { ...state };

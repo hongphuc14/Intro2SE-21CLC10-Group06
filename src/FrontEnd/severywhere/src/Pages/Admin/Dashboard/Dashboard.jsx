@@ -151,8 +151,8 @@ function Dashboard(props){
     }
 
     //report tour/guide action
-    const ViewReportTour = () =>{
-        history.push("/tours-admin");   //navigate tới trang tours rồi tìm kiếm tour bằng id_tour
+    const ViewReportTour = (id_tour) =>{
+        history.push(`/tours-admin/${id_tour}`); 
         window.location.reload();
     }
     const ValidTourReport = async (id_tour) =>{
@@ -162,8 +162,8 @@ function Dashboard(props){
         dispatch(deleteTourReportAction(id_tour));
     }
 
-    const ViewReportGuide = () =>{
-        history.push("/freelancers-admin");   //navigate tới trang tours rồi tìm kiếm guide bằng id_guide
+    const ViewReportGuide = (id_guide) =>{
+        history.push(`/freelancers-admin/${id_guide}`);   
         window.location.reload();
     }
     const ValidGuideReport = async (id_guide) =>{
@@ -174,8 +174,8 @@ function Dashboard(props){
     }
 
     //report tour/guide review action
-    const ViewReportTourReview = () =>{
-        history.push("/bookings-admin");   //navigate tới trang booking rồi tìm kiếm tour bằng id_tour_booking
+    const ViewReportTourReview = (id_tour_booking) =>{
+        history.push(`/bookings-admin/tour/${id_tour_booking}`);   
         window.location.reload();
     }
     const ValidTourReviewReport = async (id_tour_booking) =>{
@@ -185,15 +185,15 @@ function Dashboard(props){
         dispatch(deleteGuideReviewReportAction(id_tour_booking));
     }
 
-    const ViewReportGuideReview = () =>{
-        history.push("/bookings-admin");   //navigate tới trang booking rồi tìm kiếm guide bằng id_guide_booking
+    const ViewReportGuideReview = (id_guidebooking) =>{
+        history.push(`/bookings-admin/guide/${id_guidebooking}`);   //navigate tới trang booking rồi tìm kiếm guide bằng id_guidebooking
         window.location.reload();
     }
-    const ValidGuideReviewReport = async (id_guide_booking) =>{
-        dispatch(updateGuideReviewReportStatusAction(id_guide_booking));
+    const ValidGuideReviewReport = async (id_guidebooking) =>{
+        dispatch(updateGuideReviewReportStatusAction(id_guidebooking));
     }
-    const InvalidGuideReviewReport = async (id_guide_booking) =>{
-        dispatch(deleteGuideReviewReportAction(id_guide_booking));
+    const InvalidGuideReviewReport = async (id_guidebooking) =>{
+        dispatch(deleteGuideReviewReportAction(id_guidebooking));
     }
 
     return(
@@ -359,7 +359,7 @@ function Dashboard(props){
                                             <td>{item.content}</td>
                                             <td>{status}</td>
                                             <td style={{"display": "flex", "align-items": "center", "justify-content": "center"}}>
-                                                <button className="btnViewTourReport" onClick={() => ViewReportTour()}>
+                                                <button className="btnViewTourReport" onClick={() => ViewReportTour(item.id_tour)}>
                                                     <i className="fa-solid fa-eye"></i>
                                                 </button>
                                                 <button className="btnValidTourReport" onClick={() => ValidTourReport(item.id_tour)}>
@@ -419,7 +419,7 @@ function Dashboard(props){
                                             <td>{item.content}</td>
                                             <td>{status}</td>
                                             <td style={{"display": "flex", "align-items": "center", "justify-content": "center"}}>
-                                                <button className="btnViewGuideReport" onClick={() => ViewReportGuide()}>
+                                                <button className="btnViewGuideReport" onClick={() => ViewReportGuide(item.id_guide)}>
                                                     <i className="fa-solid fa-eye"></i>
                                                 </button>
                                                 <button className="btnValidGuideReport" onClick={() => ValidGuideReport(item.id_guide)}>
@@ -477,7 +477,7 @@ function Dashboard(props){
                                                 <td>{item.report}</td>
                                                 <td>{report_status}</td>
                                                 <td style={{"display": "flex", "align-items": "center", "justify-content": "center"}}>
-                                                    <button className="btnViewReviewTourReport" onClick={() => ViewReportTourReview()}>
+                                                    <button className="btnViewReviewTourReport" onClick={() => ViewReportTourReview(item.id_tour_booking)}>
                                                         <i className="fa-solid fa-eye"></i>
                                                     </button>
                                                     <button className="btnValidReviewTourReport" onClick={() => ValidTourReviewReport(item.id_tour_booking)}>
@@ -530,18 +530,18 @@ function Dashboard(props){
                                         report_status = "Pending";
                                         return(
                                             <tr key={index}>
-                                                <td>{item.id_guide_booking}</td>
+                                                <td>{item.id_guidebooking}</td>
                                                 <td>{moment(item.report_date).format('DD/MM/YYYY')}</td>
                                                 <td>{item.report}</td>
                                                 <td>{report_status}</td>
                                                 <td style={{"display": "flex", "align-items": "center", "justify-content": "center"}}>
-                                                    <button className="btnViewReviewGuideReport" onClick={() => ViewReportGuideReview()}>
+                                                    <button className="btnViewReviewGuideReport" onClick={() => ViewReportGuideReview(item.id_guidebooking)}>
                                                         <i className="fa-solid fa-eye"></i>
                                                     </button>
-                                                    <button className="btnValidReviewGuideReport" onClick={() => ValidGuideReviewReport(item.id_guide_booking)}>
+                                                    <button className="btnValidReviewGuideReport" onClick={() => ValidGuideReviewReport(item.id_guidebooking)}>
                                                         <i className="fa-solid fa-check"></i>
                                                     </button>
-                                                    <button className="btnInvalidReviewGuideReport" onClick={() => InvalidGuideReviewReport(item.id_guide_booking)}>
+                                                    <button className="btnInvalidReviewGuideReport" onClick={() => InvalidGuideReviewReport(item.id_guidebooking)}>
                                                         <i className="fa-solid fa-xmark"></i>
                                                     </button>
                                                 </td>
@@ -552,7 +552,7 @@ function Dashboard(props){
                                         report_status = "Processed";
                                         return(
                                             <tr key={index}>
-                                                <td>{item.id_guide_booking}</td>
+                                                <td>{item.id_guidebooking}</td>
                                                 <td>{moment(item.report_date).format('DD/MM/YYYY')}</td>
                                                 <td>{item.report}</td>
                                                 <td>{report_status}</td>

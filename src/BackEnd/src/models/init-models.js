@@ -80,8 +80,8 @@ function initModels(sequelize) {
   destination.hasMany(tour, { as: "tours", foreignKey: "id_des"});
   tour_guide.belongsTo(destination, { as: "id_des_destination", foreignKey: "id_des"});
   destination.hasMany(tour_guide, { as: "tour_guides", foreignKey: "id_des"});
-  guide_review.belongsTo(guide_booking, { as: "id_guide_booking_guide_booking", foreignKey: "id_guide_booking"});
-  guide_booking.hasOne(guide_review, { as: "guide_review", foreignKey: "id_guide_booking"});
+  guide_review.belongsTo(guide_booking, { as: "id_guide_booking_guide_booking", foreignKey: "id_guidebooking"});
+  guide_booking.hasOne(guide_review, { as: "guide_review", foreignKey: "id_guidebooking"});
   guide_booking.belongsTo(guide_time, { as: "id_guidetime_guide_time", foreignKey: "id_guidetime"});
   guide_time.hasMany(guide_booking, { as: "guide_bookings", foreignKey: "id_guidetime"});
   guide_language.belongsTo(languages, { as: "id_lang_language", foreignKey: "id_lang"});

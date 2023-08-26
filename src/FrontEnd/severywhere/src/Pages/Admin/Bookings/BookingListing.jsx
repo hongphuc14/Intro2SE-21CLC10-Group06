@@ -19,8 +19,8 @@ function BookingListing(props){
         history.push(path);
         window.location.reload();
     }
-    const ViewGuideBooking = (id_guide_booking) =>{
-        let path = `/bookings-admin/guide/${id_guide_booking}`;        
+    const ViewGuideBooking = (id_guidebooking) =>{
+        let path = `/bookings-admin/guide/${id_guidebooking}`;        
         history.push(path);
         window.location.reload();
     }
@@ -92,7 +92,7 @@ function BookingListing(props){
                         <tbody className="booking-table">
                             {arr_guide_booking.map((item, index) =>
                                 <tr key={index} >
-                                    <td>{item.id_guide_booking}</td>
+                                    <td>{item.id_guidebooking}</td>
                                     <td>{item.id_guidetime}</td>
                                     <td>{item.id_tourist}</td>
                                     <td>{moment(item.booking_date).format('DD/MM/YYYY')}</td>
@@ -102,7 +102,7 @@ function BookingListing(props){
                                     <td>{item.price}</td>
                                     <td>{item.status}</td>
                                     <td>
-                                        <button className="btnViewBooking" onClick={() => ViewGuideBooking(item.id_guide_booking)}>
+                                        <button className="btnViewBooking" onClick={() => ViewGuideBooking(item.id_guidebooking)}>
                                             <i className="fa-solid fa-eye"></i>
                                         </button>
                                         </td>

@@ -84,7 +84,7 @@ function ProfileAdmin(props){
                     <div className="custom-row">
                         <div className="custom-form-group custom-column email-group">
                             <label>Email</label>
-                            <input className="custom-form-control" id="email-input" value={newInfo.email} onChange={(e) => setNewInfo({ ...newInfo, email: e.target.value })}/>
+                            <input className="custom-form-control" id="email-input" value={newInfo.email} readOnly/>
                         </div>
                         <div className="custom-form-group custom-column phone-group">
                             <label>Phone</label>
@@ -94,7 +94,7 @@ function ProfileAdmin(props){
                     <div className="custom-row">
                         <div className="custom-form-group custom-column birthday-group">
                             <label>Birthday</label>
-                            <input className="custom-form-control" id="birthday" value={moment(newInfo.birthday).format('DD/MM/YYYY')} onChange={(e) => setNewInfo({ ...newInfo, birthday: e.target.value })}/>
+                            <input className="custom-form-control" id="birthday" value={newInfo.birthday} type='date' onChange={(e) => setNewInfo({ ...newInfo, birthday: e.target.value })}/>
                         </div>
                         <div className="custom-form-group custom-column gender-group">
                             <label>Gender</label>

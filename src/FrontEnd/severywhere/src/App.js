@@ -83,7 +83,7 @@ function App(){
               <AdminTemplate path="/tours-admin" exact Component={TourListing}/>
               <AdminTemplate path="/tours-admin/:id_tour" exact Component={TourDetails}/>
               <AdminTemplate path="/bookings-admin" exact Component={BookingListing}/>
-              <AdminTemplate path="/bookings-admin/guide/:id_guide_booking" exact Component={BookingGuideDetails}/>
+              <AdminTemplate path="/bookings-admin/guide/:id_guidebooking" exact Component={BookingGuideDetails}/>
               <AdminTemplate path="/bookings-admin/tour/:id_tour" exact Component={BookingTourDetails}/>
               </>
             )

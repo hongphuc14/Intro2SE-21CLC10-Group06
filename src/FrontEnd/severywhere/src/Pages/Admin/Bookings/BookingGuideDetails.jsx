@@ -5,14 +5,14 @@ import { history } from "../../../App";
 import moment from 'moment';
 import { updateSelectedMenuItemAction, getGuideBookingAction } from "../../../redux/actions/AdminAction";
 function BookingGuideDetails(props){
-    let { id_guide_booking } = props.match.params;
+    let { id_guidebooking } = props.match.params;
     const { guide_booking } = useSelector((state) =>state.AdminReducer);
     const dispatch = useDispatch();
     
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(updateSelectedMenuItemAction('bookings'));
-        dispatch(getGuideBookingAction(id_guide_booking));
+        dispatch(getGuideBookingAction(id_guidebooking));
     }, []);
     
     const turnBack = async() =>{
@@ -24,7 +24,7 @@ function BookingGuideDetails(props){
         <div className='freelancerInfo'>
             <div className='admin-path'>
                 <i className="fa-solid fa-house" style={{fontSize:"18px"}}></i>
-                <span className='admin-path-name'>Bookings / Freelancers / {id_guide_booking}</span>
+                <span className='admin-path-name'>Bookings / Freelancers / {id_guidebooking}</span>
             </div>
             <div className='profile-form'>
                 <div className='profile-header'>
@@ -34,7 +34,7 @@ function BookingGuideDetails(props){
                     <div className="custom-row">
                         <div className="custom-form-group custom-column left-group">
                             <label>IDBooking</label>
-                            <input className="custom-form-control" id="fullname" value={guide_booking.id_guide_booking}/>
+                            <input className="custom-form-control" id="fullname" value={guide_booking.id_guidebooking}/>
                         </div>
                         <div className="custom-form-group custom-column right-group">
                             <label>IDTourist</label>
@@ -42,23 +42,23 @@ function BookingGuideDetails(props){
                         </div>
                     </div>
                     <div className="custom-row">
-                        <div className="custom-form-group custom-column left-group">
-                            <label>IDGuide</label>
-                            <input className="custom-form-control" id="email-input" value={guide_booking.id_guide}/>
-                        </div>
-                        <div className="custom-form-group custom-column right-group">
+                    <div className="custom-form-group custom-column left-group">
                             <label>IDGuideTime</label>
                             <input className="custom-form-control" id="phone" value={guide_booking.id_guidetime}/>
                         </div>
-                    </div>
-                    <div className="custom-row">
-                        <div className="custom-form-group custom-column left-group">
+                        <div className="custom-form-group custom-column right-group">
                             <label>Booking Date</label>
                             <input className="custom-form-control" id="birthday" value={moment(guide_booking.booking_date).format('DD/MM/YYYY')}/>
                         </div>
-                        <div className="custom-form-group custom-column right-group">
+                    </div>
+                    <div className="custom-row">
+                    <div className="custom-form-group custom-column left-group">
                             <label>Price</label>
                             <input className="custom-form-control" id="gender" value={guide_booking.price}/>
+                        </div>
+                        <div className="custom-form-group custom-column right-group">
+                            <label>Status</label>
+                            <input className="custom-form-control" id="gender" value={guide_booking.status}/>
                         </div>
                     </div>
                     <div className="custom-row">
@@ -70,35 +70,31 @@ function BookingGuideDetails(props){
                                         : ''}/>
                         </div>
                         <div className="custom-form-group custom-column right-group">
-                            <label>Status</label>
-                            <input className="custom-form-control" id="gender" value={guide_booking.status}/>
-                        </div>
-                    </div>
-                    <div className="custom-row">
-                        <div className="custom-form-group custom-column left-group">
                             <label>Review Date</label>
                             <input className="custom-form-control" id="birthday" value={guide_booking.guide_review &&
                                     guide_booking.guide_review.review_date
                                         ? moment(guide_booking.guide_review.review_date).format('DD/MM/YYYY')
                                         : ''}/>
                         </div>
-                        <div className="custom-form-group custom-column right-group">
+                    </div>
+                    <div className="custom-row">
+                        <div className="custom-form-group custom-column left-group">
                             <label>Reply Date</label>
                             <input className="custom-form-control" id="gender" value={guide_booking.guide_review &&
                                     guide_booking.guide_review.reply_date
                                         ? moment(guide_booking.guide_review.reply_date).format('DD/MM/YYYY')
                                         : ''}/>
                         </div>
-                    </div>
-                    <div className="custom-row">
-                        <div className="custom-form-group custom-column left-group">
+                        <div className="custom-form-group custom-column right-group">
                             <label>Report Date</label>
                             <input className="custom-form-control" id="birthday" value={guide_booking.guide_review &&
                                     guide_booking.guide_review.report_date
                                         ? moment(guide_booking.guide_review.report_date).format('DD/MM/YYYY')
                                         : ''}/>
                         </div>
-                        <div className="custom-form-group custom-column right-group">
+                    </div>
+                    <div className="custom-row">
+                        <div className="custom-form-group">
                             <label>Report Status</label>
                             <input className="custom-form-control" id="gender" value={guide_booking.guide_review &&
                                     guide_booking.guide_review.report_status

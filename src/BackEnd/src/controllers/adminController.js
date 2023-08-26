@@ -32,7 +32,7 @@ const getInfoByID = async(req, res) =>{
 const updateInfoByID = async(req, res) =>{
     try{
         let { id_admin } = req.params;
-        let { fullname, email, phone, birthday, gender } = req.body;
+        let { fullname, phone, birthday, gender } = req.body;
         
         let checkAdmin = await model.admin_se.findOne({
             where:{
@@ -41,7 +41,7 @@ const updateInfoByID = async(req, res) =>{
         });
         if(checkAdmin){
             await model.admin_se.update({ 
-                fullname, email, phone, birthday, gender
+                fullname, phone, birthday, gender
             }, {
                 where:{
                     id_admin
@@ -63,6 +63,7 @@ const updateInfoByID = async(req, res) =>{
 }
 
 const bcrypt = require('bcrypt'); 
+const tour_review = require('../models/tour_review');
 //PUT: update admin password by id_admin
 const updatePwdByID = async(req, res) =>{
     try{
@@ -594,14 +595,14 @@ const deleteTourReviewReport = async(req, res) =>{
     }
 }
 
-//PUT: update guide review report status by id_guide_booking
+//PUT: update guide review report status by id_guidebooking
 const updateGuideReviewReportStatus = async(req, res) =>{
     try{
-        let { id_guide_booking } = req.params;
+        let { id_guidebooking } = req.params;
         let report_status = 2;
         let checkReport = await model.guide_review.findOne({
             where:{
-                id_guide_booking
+                id_guidebooking
             }
         });
         if(checkReport){
@@ -609,12 +610,12 @@ const updateGuideReviewReportStatus = async(req, res) =>{
                 report_status
             }, {
                 where:{
-                    id_guide_booking
+                    id_guidebooking
                 }
             }); 
             let data = await model.guide_review.findOne({
                 where:{
-                    id_guide_booking
+                    id_guidebooking
                 }
             });
             res.send(data);
@@ -627,19 +628,19 @@ const updateGuideReviewReportStatus = async(req, res) =>{
     }
 }
 
-//DELETE: delete guide report by id_guide_booking
+//DELETE: delete guide report by id_guidebooking
 const deleteGuideReviewReport = async(req, res) =>{
     try{
-        let { id_guide_booking } = req.params;
+        let { id_guidebooking } = req.params;
         let checkReport = await model.guide_review.findOne({
             where:{
-                id_guide_booking
+                id_guidebooking
             }
         });
         if(checkReport){
             await model.guide_review.destroy({ 
                 where:{
-                    id_guide_booking
+                    id_guidebooking
                 }
             }); 
             sucessCode(res, checkReport, "Xóa guide review report thành công")
@@ -986,13 +987,13 @@ const getTourByID = async(req, res) =>{
 //GET: get tour booking
 const getTourBooking = async(req,res) =>{
     let { id_tour } = req.params;
-    let checkBooking = await model.tour_booking.findAll({
+    let checkBooking = await model.tour_booking.findOne({
         where:{
             id_tour
         }
     });
     if(checkBooking){
-        let dataBooking = await model.tour_booking.findAll({
+        let dataBooking = await model.tour_booking.findOne({
             where:{
                 id_tour
             },
@@ -1058,25 +1059,44 @@ const getTourBookingByID = async(req,res) =>{
         let dataBooking = await model.tour_booking.findOne({
             where:{
                 id_tour
-            },
-            include:["tour_review"]
+            }, include:[tour_review]
         })
+        console.log("dataBooking: ", dataBooking);
+        res.send(dataBooking);
+    }
+}
+
+//GET: get tour booking list
+const getTourBookingList = async(req,res) =>{
+    let { id_tour } = req.params;
+    let checkBooking = await model.tour_booking.findAll({
+        where:{
+            id_tour
+        }
+    });
+    if(checkBooking){
+        let dataBooking = await model.tour_booking.findAll({
+            where:{
+                id_tour
+            }, include:["tour_review"]
+        })
+        console.log("dataBooking: ", dataBooking);
         res.send(dataBooking);
     }
 }
 
 //GET: get guide booking
 const getGuideBooking = async(req,res) =>{
-    let { id_guide_booking } = req.params;
+    let { id_guidebooking } = req.params;
     let checkBooking = await model.guide_booking.findOne({
         where:{
-            id_guide_booking
+            id_guidebooking
         }
     });
     if(checkBooking){
         let dataBooking = await model.guide_booking.findOne({
             where:{
-                id_guide_booking
+                id_guidebooking
             },
             include: ["guide_review"]
         })
@@ -1092,4 +1112,4 @@ module.exports = { getInfoByID, updateInfoByID, updatePwdByID, uploadAdmin, getA
     updateGuideReviewReportStatus, deleteGuideReviewReport, getTouristByID, getTouristGuideBooking, getTouristTourBooking,
     getCompanyByID, getCompanyTour, getCompanyLicensesByIDCompany, getFreelancerByID, getFreelancerAttraction,
     getFreelancerLicensesByIDGuide, getFreelancerTime, getFreelancerLanguage, getArrTour, getTourByID, getTourBooking,
-    getTourPhoto, getTourBookingByID, getGuideBooking }
+    getTourPhoto, getTourBookingByID, getGuideBooking, getTourBookingList }

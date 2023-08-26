@@ -7,7 +7,7 @@ import { UPDATE_SELECTED_MENU_ITEM, UPDATE_SELECTED_SUB_MENU_ITEM, GET_ADMIN_INF
         GET_ARR_GUIDE_REPORT, GET_ARR_TOUR_REPORT, GET_TOURIST_INFO_BY_ID_TOURIST, GET_TOURIST_GUIDE_BOOKING, GET_TOURIST_TOUR_BOOKING,
         GET_COMPANY_INFO_BY_ID_COMPANY, GET_COMPANY_TOUR_BY_ID_COMPANY, GET_COMPANY_LICENSES_BY_ID_COMPANY, GET_FREELANCER_INFO_BY_ID_GUIDE,
         GET_FREELANCER_ATTRACTION_BY_ID_GUIDE, GET_FREELANCER_LICENSES_BY_ID_GUIDE, GET_FREELANCER_TIME_BY_ID_GUIDE, GET_FREELANCER_LANGUAGE,
-        GET_ARR_TOUR, GET_TOUR, GET_TOUR_BOOKING, GET_TOUR_PHOTO, GET_GUIDE_BOOKING } from "../types";
+        GET_ARR_TOUR, GET_TOUR, GET_TOUR_BOOKING, GET_TOUR_PHOTO, GET_GUIDE_BOOKING, GET_TOUR_BOOKING_LIST } from "../types";
 import { USER_LOGIN } from "../../util/config";
 
 export const updateSelectedMenuItemAction = (selectedMenuItem) => {
@@ -443,10 +443,10 @@ export const deleteTourReviewReportAction = (id_tour_booking) =>{
 }
 
 //Api 27: update guide report status by id_guide
-export const updateGuideReviewReportStatusAction = (id_guide_booking) => {
+export const updateGuideReviewReportStatusAction = (id_guidebooking) => {
     return async(dispatch) => {
         try {
-            const result = await adminService.updateGuideReviewReportStatus(id_guide_booking);
+            const result = await adminService.updateGuideReviewReportStatus(id_guidebooking);
             if (result){
                 dispatch(getArrGuideReviewAction());
             }
@@ -457,10 +457,10 @@ export const updateGuideReviewReportStatusAction = (id_guide_booking) => {
 };
 
 //Api 28: delete guide report by id_guide
-export const deleteGuideReviewReportAction = (id_guide_booking) =>{
+export const deleteGuideReviewReportAction = (id_guidebooking) =>{
     return async(dispatch) =>{
         try {
-            const result = await adminService.deleteGuideReviewReport(id_guide_booking);
+            const result = await adminService.deleteGuideReviewReport(id_guidebooking);
             if(result){
                 dispatch(getArrGuideReviewAction());
             }
@@ -696,6 +696,7 @@ export const getTourBookingAction = (id_tour) =>{
     return async(dispatch) => {
         try {
             const result = await adminService.getTourBooking(id_tour);
+            console.log(result.data)
             if (result.status === 200){
                 dispatch({
                     type: GET_TOUR_BOOKING,
@@ -726,14 +727,32 @@ export const getTourPhotoAction = (id_tour) =>{
 }
 
 //Api 45: get guide booking
-export const getGuideBookingAction = (id_guide_booking) =>{
+export const getGuideBookingAction = (id_guidebooking) =>{
     return async(dispatch) => {
         try {
-            const result = await adminService.getGuideBooking(id_guide_booking);
+            const result = await adminService.getGuideBooking(id_guidebooking);
             if (result.status === 200){
                 dispatch({
                     type: GET_GUIDE_BOOKING,
                     guide_booking: result.data
+                });
+            }
+        } catch (error) {
+            console.log("error", error.response);
+        }
+    };
+}
+
+//Api 42: get tour booking
+export const getTourBookingListAction = (id_tour) =>{
+    return async(dispatch) => {
+        try {
+            const result = await adminService.getTourBookingList(id_tour);
+            console.log(result.data)
+            if (result.status === 200){
+                dispatch({
+                    type: GET_TOUR_BOOKING_LIST,
+                    tour_list: result.data
                 });
             }
         } catch (error) {

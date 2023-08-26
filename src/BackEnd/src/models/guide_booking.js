@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 class guide_booking extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    id_guide_booking: {
+    id_guidebooking: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -54,7 +54,7 @@ class guide_booking extends Sequelize.Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_guide_booking" },
+          { name: "id_guidebooking" },
         ]
       },
       {

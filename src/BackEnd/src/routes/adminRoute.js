@@ -9,7 +9,7 @@ const { getInfoByID, updateInfoByID, updatePwdByID, uploadAdmin, getAvatarByID,
         updateGuideReviewReportStatus, deleteGuideReviewReport, getTouristByID, getTouristGuideBooking, 
         getTouristTourBooking, getCompanyByID, getCompanyTour, getCompanyLicensesByIDCompany, getFreelancerByID,
         getFreelancerAttraction, getFreelancerLicensesByIDGuide, getFreelancerTime, getFreelancerLanguage,
-        getArrTour, getTourByID, getTourBooking, getTourPhoto, getTourBookingByID, getGuideBooking } = require('../controllers/adminController')
+        getArrTour, getTourByID, getTourBooking, getTourPhoto, getTourBookingByID, getGuideBooking, getTourBookingList } = require('../controllers/adminController')
 const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
@@ -91,11 +91,11 @@ adminRoute.put("/updateTourReviewReportStatus/:id_tour_booking", verifyToken, up
 //DELETE: delete tour review report by id_tour_booking
 adminRoute.delete("/deleteTourReviewReport/:id_tour_booking", verifyToken, deleteTourReviewReport);
 
-//PUT: update guide review report status by id_guide_booking
-adminRoute.put("/updateGuideReviewReportStatus/:id_guide_booking", verifyToken, updateGuideReviewReportStatus);
+//PUT: update guide review report status by id_guidebooking
+adminRoute.put("/updateGuideReviewReportStatus/:id_guidebooking", verifyToken, updateGuideReviewReportStatus);
 
-//DELETE: delete guide  reviewreport by id_guide_booking
-adminRoute.delete("/deleteGuideReviewReport/:id_guide_booking", verifyToken, deleteGuideReviewReport);
+//DELETE: delete guide  reviewreport by id_guidebooking
+adminRoute.delete("/deleteGuideReviewReport/:id_guidebooking", verifyToken, deleteGuideReviewReport);
 
 //GET: get tourist info by id_tourist
 adminRoute.get("/getTouristByID/:id_tourist", verifyToken, getTouristByID);
@@ -142,10 +142,13 @@ adminRoute.get("/getTourBooking/:id_tour", verifyToken, getTourBooking);
 //GET: get tour photo
 adminRoute.get("/getTourPhoto/:id_tour", verifyToken, getTourPhoto);
 
-//GET: get tour booking by id_tour
+//GET: get tour booking by id_tour_booking
 adminRoute.get("/getTourBookingByID/:id_tour", verifyToken, getTourBookingByID);
 
+//GET: get tour booking list by id_tour
+adminRoute.get("/getTourBookingList/:id_tour", verifyToken, getTourBookingList);
+
 //GET: get guide booking
-adminRoute.get("/getGuideBooking/:id_guide_booking", verifyToken, getGuideBooking);
+adminRoute.get("/getGuideBooking/:id_guidebooking", verifyToken, getGuideBooking);
 
 module.exports = adminRoute;
