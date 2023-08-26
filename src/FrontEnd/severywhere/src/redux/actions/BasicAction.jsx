@@ -31,7 +31,7 @@ export const logInAction = (user_login) => {
         if(roleId === '3')
           history.push("/profile-freelancer");
         if(roleId === '4')
-          history.push("/dashboard");
+          history.push("/profile-admin");
         window.location.reload();
       }
     } catch (error) {

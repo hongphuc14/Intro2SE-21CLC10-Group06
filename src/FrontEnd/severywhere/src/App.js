@@ -2,20 +2,12 @@ import './App.module.css';
 import { createBrowserHistory } from "history";
 import { Route, Switch, Router } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ProfileFreelancer from "./Pages/Freelancer/ProfileFreelancer";
-import CalendarFreelancer from "./Pages/Freelancer/CalendarFreelancer";
-import StatisticsFreelancer from "./Pages/Freelancer/StatisticsFreelancer";
-import LicenseFreelancer from "./Pages/Freelancer/LicenseFreelancer";
-import BookingFreelancer from "./Pages/Freelancer/BookingFreelancer";
-import AboutUs_FAQ from './Pages/AboutUs_FAQ/AboutUs_FAQ';
+
 import Login from './Pages/Login/Login';
-import Signup from './Pages/Signup/Signup';
-import EditProfile from './Pages/Profile/EditProfile';
-import HomePage from './Pages/HomePage/HomePage';
-import ChangePassword from "./Pages/ChangePassword/ChangePassword";
+//import Signup from './Pages/Signup/Signup';
 import { AdminTemplate } from './templates/AdminTemplate/AdminTemplate'; 
 import ProfileAdmin from "./Pages/Admin/ProfileAdmin/ProfileAdmin";
-import AboutUs from "./Pages/Admin/FAQ/AboutUs";
+//import AboutUs from "./Pages/Admin/FAQ/AboutUs";
 import Dashboard from "./Pages/Admin/Dashboard/Dashboard";
 import TouristListing from './Pages/Admin/Users/Tourists/TouristListing';
 import TouristDetails from './Pages/Admin/Users/Tourists/TouristDetails';
@@ -36,43 +28,12 @@ function App(){
     <Router history={history}>
       <div className = "App">
         <Switch>
-          <Route path = "/aboutus" exact component = {AboutUs_FAQ} />
-          {
-            (role !== 2) && (role !== 3) && (role !== 4) && (
-              <Route path = "homepage" exact component={HomePage}/>
-            )
-          }
-          {
-            (role !== 1) && (role !== 2) && (role !== 3) && (role !== 4) && (
-              <>
-              <Route path = "/signup" exact component={Signup} />
-              <Route path = "/login" exact component ={Login} />
-              </>
-            )
-          }
-          {/* {
-            role === 1 && (
-              <>
-              <Route path = "/editprofile" exact component = {EditProfile} />
-              </>
-            )
-          } */}
-          {
-            role === 3 && (
-              <>
-              <Route path = "/profile-freelancer" exact component ={ProfileFreelancer} />
-              <Route path = "/license-freelancer" exact component ={LicenseFreelancer} />
-              <Route path = "/calendar-freelancer" exact component ={CalendarFreelancer} />
-              <Route path = "/booking-freelancer" exact component ={BookingFreelancer} />
-              <Route path = "/statistics-freelancer" exact component ={StatisticsFreelancer} />
-              </>
-            )
-          }
+          {<Route path= "/login" exact component={Login}/>}
           {
             role === 4 && (
               <>
               <AdminTemplate path="/profile-admin" exact Component={ProfileAdmin}/>
-              <Route path = "/aboutus-admin" exact component ={AboutUs} />
+              {/* <Route path = "/aboutus-admin" exact component ={AboutUs} /> */}
               <AdminTemplate path="/dashboard" exact Component={Dashboard}/>
               <AdminTemplate path="/tourists-admin" exact Component={TouristListing}/>
               <AdminTemplate path="/tourists-admin/:id_tourist" exact Component={TouristDetails}/>

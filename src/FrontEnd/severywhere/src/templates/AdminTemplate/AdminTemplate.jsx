@@ -105,7 +105,7 @@ export const AdminTemplate = (props) => {
                                     <div className="avatar">
                                         <img src={admin_avatar} alt="avatar" />
                                     </div>
-                                    <p style={{paddingLeft:"8px"}}>{admin_info.fullname}</p>
+                                    <p style={{paddingLeft:"5px"}}>{admin_info.fullname}</p>
                                 </div>
                                 <Menu selectedKeys={[select]} mode='inline'>
                                     {menuItems.map((menuItem) => {
