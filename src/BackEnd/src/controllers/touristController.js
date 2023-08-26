@@ -585,13 +585,15 @@ const getTourBooking = async(req, res) =>{
         (`SELECT tour.name, company.name as company, destination.name as destination, tour.is_deleted,
         tour.price, tour.duration, tour_category.name as category, tour_photo.photo_path, 
         tour_booking.id_tour_booking, tour_booking.booking_date, tour_booking.start_date,
-        tour_booking.end_date, tour_booking.num_tourist, tour_booking.total_price, tour_booking.status
+        tour_booking.end_date, tour_booking.num_tourist, tour_booking.total_price, tour_booking.status,
+        tour_review.review, tour_review.rating
         FROM tour_booking 
         INNER JOIN tour ON tour.id_tour = tour_booking.id_tour
         INNER JOIN company ON company.id_company = tour.id_company
         INNER JOIN destination ON destination.id_des = tour.id_des
         INNER JOIN tour_category ON tour_category.id_category = tour.id_category
         LEFT JOIN tour_photo ON tour_photo.id_tour = tour.id_tour
+        LEFT JOIN tour_review ON tour_review.id_tour_booking = tour_booking.id_tour_booking
         WHERE tour_booking.id_tourist = ${id_tourist}`);
 
         sucessCode(res,tour_bookings,"Get thanh cong")

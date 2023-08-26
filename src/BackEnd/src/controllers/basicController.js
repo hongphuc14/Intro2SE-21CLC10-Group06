@@ -21,11 +21,11 @@ const login = async(req, res)=>{
             let checkPass = bcrypt.compareSync(password, checkAdmin.password);
             if(checkPass){
                 checkAdmin.password = '**********';
-                sucessCode(res, parseToken(checkAdmin), "Login thành công");
+                sucessCode(res, parseToken(checkAdmin), "Login successfully");
                 return;
             }
             else{
-                failCode(res, "", "Password is wrong!");
+                failCode(res, "", "Password or email is wrong!");
                 return;
             }
         }
@@ -41,11 +41,11 @@ const login = async(req, res)=>{
             //let checkPass = bcrypt.compareSync(password, passWordHash);
             //let checkPass = bcrypt.compareSync(password, checkTourist.password);
             if(password == checkTourist.password){
-                sucessCode(res, parseToken(checkTourist), "Login thành công");
+                sucessCode(res, parseToken(checkTourist), "Login successfully");
                 return;
             }
             else{
-                failCode(res, "", "Password is wrong!");
+                failCode(res, "", "Password or email is wrong!");
                 return;
             }
         }
@@ -62,11 +62,11 @@ const login = async(req, res)=>{
             let checkPass = bcrypt.compareSync(password, checkCompany.password);
             if(checkPass){
                 checkCompany.password = '**********';
-                sucessCode(res, parseToken(checkCompany), "Login thành công");
+                sucessCode(res, parseToken(checkCompany), "Login successfully");
                 return;
             }
             else{
-                failCode(res, "", "Password is wrong!");
+                failCode(res, "", "Password or email is wrong!");
                 return;
             }
         }
@@ -83,16 +83,13 @@ const login = async(req, res)=>{
             let checkPass = bcrypt.compareSync(password, checkFreelancer.password);
             if(checkPass){
                 checkFreelancer.password = '**********';
-                sucessCode(res, parseToken(checkFreelancer), "Login thành công");
+                sucessCode(res, parseToken(checkFreelancer), "Login successfully");
                 return;
             }
             else{
-                failCode(res, "", "Password is wrong!");
+                failCode(res, "", "Password or email is wrong!");
                 return;
             }
-        }
-        else{
-            failCode(res, "", "Email không đúng!");
         }
     }catch(err){
         errorCode(res, "Lỗi BE");
@@ -117,7 +114,7 @@ const signUp = async(req, res) =>{
             else{
                 let passWordHash = bcrypt.hashSync(password, 10);
                 let data = await model.tourist.create({ email, password: passWordHash, id_role });
-                sucessCode(res, data, "Đăng ký thành công !");
+                sucessCode(res, data, "Sign up successfully !");
                 return;
             }
         }
@@ -135,7 +132,7 @@ const signUp = async(req, res) =>{
             else{
                 let passWordHash = bcrypt.hashSync(password, 10);
                 let data = await model.company.create({ email, password: passWordHash, id_role });
-                sucessCode(res, data, "Đăng ký thành công !");
+                sucessCode(res, data, "Sign up successfully !");
                 return;
             }
         }
@@ -153,7 +150,7 @@ const signUp = async(req, res) =>{
             else{
                 let passWordHash = bcrypt.hashSync(password, 10);
                 let data = await model.tour_guide.create({ email, password: passWordHash, id_role });
-                sucessCode(res, data, "Đăng ký thành công !");
+                sucessCode(res, data, "Sign up successfully !");
                 return;
             }
         }   

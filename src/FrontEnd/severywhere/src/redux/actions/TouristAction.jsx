@@ -272,13 +272,13 @@ export const updateTourReview = (id_tourist, obj) => {
     try {
       console.log(obj)
       await touristService.updateTourReview(id_tourist, obj);
-      // if (result.status === 200) {
-      //   dispatch({
-      //     type: GET_TOUR_BOOKING,
-      //     tour_booking: result.data.content,
-      //   });
-      //   dispatch(hideLoadingAction);
-      // }
+      const result = await touristService.getTourBooking(id_tourist);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_TOUR_BOOKING,
+          tour_booking: result.data.content,
+        });
+      }
     } catch (error) {
       console.log("error", error.response);
     }

@@ -157,6 +157,7 @@ const MyTours = () => {
                                         }
                                         {
                                             (book.status === 1) && (isCompleted (book.start_date, book.end_date, book.booking_date) === 1) && 
+                                            (!book.review) && (!book.rating) &&
                                             (<button onClick = {() => {setNo(book.id_tour_booking); setIsReport(true)}}>Review</button>)
                                         }
                                     </div>
