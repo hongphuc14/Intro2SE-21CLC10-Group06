@@ -18,10 +18,10 @@ const login = async(req, res)=>{
             }
         })
         if(checkAdmin){
+            console.log("admin")
             let checkPass = bcrypt.compareSync(password, checkAdmin.password);
             if(checkPass){
-                checkAdmin.password = '**********';
-                sucessCode(res, parseToken(checkAdmin), "Login successfully");
+                sucessCode(res, parseToken(checkAdmin), "Login thành công");
                 return;
             }
             else{
@@ -37,8 +37,7 @@ const login = async(req, res)=>{
             }
         })
         if(checkTourist){
-            //let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
-            //let checkPass = bcrypt.compareSync(password, passWordHash);
+            console.log("tourist")
             let checkPass = bcrypt.compareSync(password, checkTourist.password);
             if(checkPass){
                 sucessCode(res, parseToken(checkTourist), "Login successfully");
@@ -57,8 +56,6 @@ const login = async(req, res)=>{
             }
         })
         if(checkCompany){
-            //let passWordHash = bcrypt.hashSync(checkCompany.password, 10);
-            //let checkPass = bcrypt.compareSync(password, passWordHash);
             let checkPass = bcrypt.compareSync(password, checkCompany.password);
             if(checkPass){
                 checkCompany.password = '**********';
@@ -78,8 +75,6 @@ const login = async(req, res)=>{
             }
         })
         if(checkFreelancer){
-            //let passWordHash = bcrypt.hashSync(checkFreelancer.password, 10);
-            //let checkPass = bcrypt.compareSync(password, passWordHash);
             let checkPass = bcrypt.compareSync(password, checkFreelancer.password);
             if(checkPass){
                 checkFreelancer.password = '**********';
@@ -230,16 +225,6 @@ const deleteAccount = async(req, res) => {
         errorCode(res, "Loi BE");
     }
 }
-// không cần do trong FE đã xử lý
-const logout = async(req, res) =>{
-    try{
-        // Xóa token khỏi localStorage khi đăng xuất
-        clearLocalStorage("Token");
-        sucessCode(res, null, "Logout successful");
-    } catch (error) {
-        errorCode(res, "Lỗi BE");
-    }
-}
 
 const getDestination = async(req, res) => {
     try{
@@ -301,4 +286,5 @@ const getInfoByEmail = async(req, res) =>{
         errorCode(res,"Lỗi BE")
     }
 } 
-module.exports = { login, signUp, deleteAccount, logout, getDestination, getInfoByEmail }
+
+module.exports = { login, signUp, deleteAccount, getDestination, getInfoByEmail }

@@ -71,7 +71,7 @@ function initModels(sequelize) {
   tourist.belongsToMany(tour_guide, { as: 'id_guide_tour_guide_guide_reports', through: guide_report, foreignKey: "id_tourist", otherKey: "id_guide" });
   tourist.belongsToMany(tour_guide, { as: 'id_guide_tour_guide_guide_wishlists', through: guide_wishlist, foreignKey: "id_tourist", otherKey: "id_guide" });
   company_license.belongsTo(company, { as: "id_company_company", foreignKey: "id_company"});
-  company.hasOne(company_license, { as: "company_license", foreignKey: "id_company"});
+  company.hasMany(company_license, { as: "company_license", foreignKey: "id_company"});
   tour.belongsTo(company, { as: "id_company_company", foreignKey: "id_company"});
   company.hasMany(tour, { as: "tours", foreignKey: "id_company"});
   search_history.belongsTo(destination, { as: "id_des_destination", foreignKey: "id_des"});
@@ -80,7 +80,7 @@ function initModels(sequelize) {
   destination.hasMany(tour, { as: "tours", foreignKey: "id_des"});
   tour_guide.belongsTo(destination, { as: "id_des_destination", foreignKey: "id_des"});
   destination.hasMany(tour_guide, { as: "tour_guides", foreignKey: "id_des"});
-  guide_review.belongsTo(guide_booking, { as: "id_guidebooking_guide_booking", foreignKey: "id_guidebooking"});
+  guide_review.belongsTo(guide_booking, { as: "id_guide_booking_guide_booking", foreignKey: "id_guidebooking"});
   guide_booking.hasOne(guide_review, { as: "guide_review", foreignKey: "id_guidebooking"});
   guide_booking.belongsTo(guide_time, { as: "id_guidetime_guide_time", foreignKey: "id_guidetime"});
   guide_time.hasMany(guide_booking, { as: "guide_bookings", foreignKey: "id_guidetime"});

@@ -1,0 +1,137 @@
+.aboutus-faq-page{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+    background-color: #ffffff;
+    align-items: center;
+}
+.aboutus-faq-page .header-admin{
+    width: 98.9%;
+}
+
+/* ICON HIKING */
+.icon-hiking {
+    position: absolute;
+    width: 30rem;
+    height: 25rem;
+    left: 2rem;
+    top: 30rem;
+    margin-left: 50px;
+}
+
+.icon-hiking img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* SEverywhere */
+.severywhere {
+    position: absolute;
+    width: 343px;
+    height: 80px;
+    left: 541px;
+    top: 27rem;
+    font-style: bold;
+    font-size: 4rem;
+    line-height: 80px;
+    text-align: center;
+    color: #0C721F;
+    margin-left: 103px;
+}
+
+/* SEverywhere text1 */
+.severywhere-text1 {
+    position: absolute;
+    width: 45rem;
+    height: 40rem;
+    left: 35rem;
+    top: 33rem;
+    font-style: normal;
+    font-size: 1.2rem;
+    line-height: 36px;
+    text-align:justify;
+    color: #000000;
+    margin-left: 150px;
+}
+
+/* SEverywhere text2 */
+.severywhere-text2 {
+    position: absolute;
+    width: 45rem;
+    height: 40rem;
+    left: 80px;
+    top: 60rem;
+    font-style: normal;
+    font-size: 1.2rem;
+    line-height: 36px;
+    text-align: justify;
+    color: #000000;
+}
+
+/* Sailing pic */
+.sailing-pic {
+    position: absolute;
+    width:auto;
+    height: 27rem;
+    right: 5rem;
+    top: 55rem;
+}
+
+.sailing-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.faq-section {
+    position: absolute;
+    width: 1440px;
+    height: fit-content;
+    left: 0px;
+    top: 85rem;
+}
+
+.head-banner {
+    position: absolute;
+    background-size: cover;
+    width: 1523px;
+    height: 367px;
+    left: 0px;
+    top: 3rem;
+}
+
+.faq-content {
+    position: absolute;
+    width: 85rem;
+    height: fit-content;
+    left: 5rem;
+    top: 28rem;
+    font-family: 'RocknRoll One';
+    font-style: normal;
+    font-size: 1.2rem;
+    // line-height: 41px;
+    color: #000000;
+}
+
+.faq-content h3 {
+    font-size: 1.5rem;
+    color: #0C721F;
+    margin-bottom: 10px;
+}
+
+.faq-content p {
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+.aboutus-faq-page #main-footer{
+    position: absolute;
+    left: 0px;
+    top: 180rem;
+    z-index:1000;
+}
+

@@ -1,46 +1,41 @@
-import { GET_DESTINATION, LOGIN, SIGNUP, LOGOUT } from "../types";
+import { GET_DESTINATION, LOGIN, LOGOUT, SIGNUP, UPLOAD_ADMIN_AVATAR, UPDATE_SELECTED_MENU_ITEM } from "../types";
 import {displayLoadingAction, hideLoadingAction} from './LoadingAction';
-import { basicService } from "../../services/BasicService";
+import { basicService } from "../../services/basicService";
 import { history } from "../../App";
 import { USER_LOGIN, TokenKey, RoleKey } from "../../util/config";
 
 export const logInAction = (user_login) => {
   return async (dispatch) => {
-    console.log("try")
     try {
-      console.log("action");
       const result = await basicService.logIn(user_login);
+      console.log("result action: ", result);
       if (result.status === 200) {
         // Store token in localStorage
         localStorage.setItem(TokenKey, result.data.content);
         const userResult = await basicService.getInfoByEmail(user_login.email);
-        console.log(userResult)
-        if (userResult.status === 200) {
+        if (result.status === 200) {
           dispatch({
             type: LOGIN,
             user_login: userResult.data.content
           });
         }
-        // Store user information in localStorage
+        // Store user information and id_role in localStorage
         localStorage.setItem(USER_LOGIN, JSON.stringify(userResult.data.content));
         localStorage.setItem(RoleKey, JSON.stringify(userResult.data.content.id_role));
 
         const roleId = localStorage.getItem(RoleKey);
-        
-        if(roleId === "1")
-          window.history.pushState(null,null,"/editprofile");
-        if(roleId === "2")
-          window.history.pushState(null,null,"/profile-company");
-        if(roleId === "3"){
-          window.history.pushState(null,null,"/profile-freelancer");
-        }
-        if(roleId === "4")
-          window.history.pushState(null,null,"/profile-admin");
-        window.location.reload()
+        if(roleId === '1')
+          history.push("/homepage");
+        if(roleId === '2')
+          history.push("/profile-company");
+        if(roleId === '3')
+          history.push("/profile-freelancer");
+        if(roleId === '4')
+          history.push("/dashboard");
+        window.location.reload();
       }
     } catch (error) {
       console.log("error", error.response);
-      alert(error.response.data.message)
     }
   };
 };
@@ -55,7 +50,7 @@ export const getDestination = () => {
       if (result.status === 200) {
         dispatch({
           type: GET_DESTINATION,
-          destination: result.data.content,
+          destination: result.data,
         });
         dispatch(hideLoadingAction);
       }
@@ -68,20 +63,18 @@ export const getDestination = () => {
 export const signUpAction = (formData) => {
   return async (dispatch) =>{
     try {
-      console.log(formData)
       const result = await basicService.signUp(formData);
       if (result.status === 200){
         dispatch({
           type: SIGNUP,
           formData: result.data.content
         });
-        // window.history.pushState(null, null,"/editprofile");
-        // window.location.reload();
-        window.location.href = "/login"
+        
+        history.push("/login");
+        window.location.reload();
       }
     } catch (error) {
       console.log("error", error.response);
-      alert(error.response.data.message)
     }
   };
 };
@@ -106,8 +99,8 @@ export const logOutAction = () => {
         type: LOGOUT,
         user_login: ""
       });
-      // window.history.pushState(null, null, "/home");
-      // window.location.reload();
+      history.push("/login");
+      window.location.reload();
     } catch (error) {
       console.log("error", error.response);
     }

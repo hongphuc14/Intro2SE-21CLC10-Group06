@@ -1,0 +1,75 @@
+#adminTemplate {
+  .site-layout-background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.17);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+  }
+  .logo-admin {
+    img {
+      height: 4.5em;
+      margin: 0px 0 0 10px;
+    }
+  }
+  .dashboard{
+    display: flex;
+    text-align: left;
+    aside {
+      position: fixed;
+      height: 100vh;
+      flex: 0 0 250px  !important;
+      max-width: 250px !important;
+      width: 250px !important;
+      background-color: #fff;
+      color: #0E4D90;
+      box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.05);
+      .info{
+        padding-left: 75px;
+        padding-top: 40px;
+        padding-bottom: 25px;
+        .avatar{
+          width: 75px;
+          height: 75px;
+          border-radius: 35px;
+          overflow: hidden;
+          margin-left: 10px;
+          img{
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+
+    .site-layout{
+      flex: 1;
+      width: 1285px;
+      margin-left: 250px;
+    }
+    .ant-menu{
+      .ant-menu-item{
+        a{
+          color: #0E4D90;
+        }
+        .ant-menu-item-icon{
+          color: #0E4D90;
+        }
+      }
+      .ant-menu-submenu-title{
+        color: #0E4D90;
+        font-weight: bold;
+        .ant-menu-submenu-arrow{
+          color: #0E4D90;
+        }
+      }
+    }
+  }
+}
+  
