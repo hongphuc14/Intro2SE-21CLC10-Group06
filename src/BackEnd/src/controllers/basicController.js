@@ -39,8 +39,8 @@ const login = async(req, res)=>{
         if(checkTourist){
             //let passWordHash = bcrypt.hashSync(checkTourist.password, 10);
             //let checkPass = bcrypt.compareSync(password, passWordHash);
-            //let checkPass = bcrypt.compareSync(password, checkTourist.password);
-            if(password == checkTourist.password){
+            let checkPass = bcrypt.compareSync(password, checkTourist.password);
+            if(checkPass){
                 sucessCode(res, parseToken(checkTourist), "Login successfully");
                 return;
             }

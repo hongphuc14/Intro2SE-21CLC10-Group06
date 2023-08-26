@@ -59,6 +59,7 @@ const updateInfoByID = async(req, res) =>{
 }
 
 //PUT: update tourist password by id_tourist
+const bcrypt = require('bcrypt'); 
 const updatePwdByID = async(req, res) =>{
     try{
         let { id_tourist } = req.params;
@@ -421,6 +422,8 @@ const bookTour = async(req, res) =>{
                         id_tour
                     }
                 })
+                // dem trong tour booking những dòng có cùng start_date, end_date, id_tour
+                // vượt quá checkTour.max_num thì failCode
                 await model.tour_booking.create({ 
                     id_tourist, id_tour, booking_date, start_date, end_date, num_tourist, total_price, 
                     status: 1,
@@ -669,6 +672,8 @@ const updateGuideReview = async(req, res) =>{
         errorCode(res,"Lỗi BE")
     }
 } 
+
+
 
 module.exports = { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar,
     getTourSearch, getGuideSearch, reportTour, reportGuide, bookTour, bookGuide,

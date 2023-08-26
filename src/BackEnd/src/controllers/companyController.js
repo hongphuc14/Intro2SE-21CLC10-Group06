@@ -459,7 +459,7 @@ const deleteTour = async(req, res)=>{
                     id_tour,
                 }
             });
-            const changeStatus = [1,2,3]
+            const changeStatus = [1]
             await model.tour_booking.update({
                 status: 2
             },{
