@@ -1,6 +1,3 @@
-.headerGuest{
-    z-index: 1000;
-}
 #my-tourguide-page {
     flex:1;
     // color: white;
@@ -9,25 +6,81 @@
     height: fit-content;
     position: relative;
     top: 0;
-}   
-#my-tourguide-page-container {
-    display: flex;
-    flex-direction: row;
-}
-#my-tourguide-container {
-    margin-top: 7rem;
-    margin-left: 8rem;
-    
-    height: fit-content;
-    width: fit-content;
-    h1 {
-        margin: 0;
-        padding: 0;
-        font-size: 1.5rem;
-        color: #0C721F;
-        text-align: left;
-        margin-bottom: 3rem;
+
+    .headerGuest{
+    z-index: 1000;
     }
+
+    #my-tourguide-page-container {
+        display: flex;
+        flex-direction: row;
+
+        .report-section{
+          
+            .report {
+              color:#0C721F;
+
+                .select-rating{
+                    font-size: 1.7em;
+                    text-align: center;
+                    color: #0E4D90;
+                }
+                
+                p{
+                    font-size: 2em;
+                    margin: 0.5em auto 0.3em;
+                    text-align: center;
+                }
+
+                p:nth-of-type(2),
+                p:nth-of-type(3){
+                    opacity: 0.5;
+                    font-size: 0.8em;
+                    color: #0C721F;
+                    text-align: left;
+                    margin-left: 4.5em;
+                    margin-top: -0.2em;
+                }
+
+                textarea{
+                    height: 40%;
+                }
+
+                .button-save{
+                    margin-left: 40%;
+                    
+                }
+
+            }
+        }
+
+        .sidebar{
+            position: fixed;
+            top:0;
+        }
+
+        #my-tourguide-container {
+            margin-top: 3rem;
+            margin-left: 23rem;
+            
+            height: fit-content;
+            width: fit-content;
+
+            h1 {
+                margin: 0;
+                padding: 0;
+                text-align: left;
+                margin-bottom: 2rem;
+                font-size: 1.8rem;
+                font-weight: 600;
+                color: #0C721F;
+                padding-top: 1rem;
+            }
+
+
+        }
+        
+    }   
 }
 
 .my-tourguide-card-container {
@@ -36,7 +89,6 @@
     padding: 0;
     margin: 0;
     border-radius: 1rem;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
     margin-bottom: 2rem;
 
     .upper-card {
@@ -99,10 +151,9 @@
             }
         }
         .guide-name {
-            font-size: 1.4rem;
-            margin: 0;
+            font-size: 1.6rem;
             color: black;
-            margin: 1rem auto 0 1rem;
+            margin: 2rem auto 0 1rem;
         }
         .guide-rating {
             font-size: 1.2rem;
@@ -151,8 +202,10 @@
             display: flex;
             flex-direction: row;
             width: 40%;
-            margin-top: 6.7rem;
-            /* margin-bottom: 1rem; */
+            top: 4rem;
+            left: 25rem;
+            position: absolute;
+            
             .cost-title {
                 color: #8C8C8C;
                 font-size: 0.8rem;
@@ -172,7 +225,7 @@
         }
     }
     .lower-card {
-        background-color: lightgray;
+        background-color: #ECECEC;
         width: 100%;
         height: fit-content;
         border-radius: 0 0 1rem 1rem;
@@ -188,7 +241,7 @@
                 display: flex;
                 flex-direction: row;
                 color: black;
-                font-size: 1.2rem;
+                font-size: 1rem;
                 a {
                     margin-left: 1rem;
                     color: green;
@@ -201,7 +254,7 @@
                 width: 50%;
                 height: fit-content;
                 color: black;
-                font-size: 1.2rem;
+                font-size: 1rem;
                 // margin-bottom: 0.6rem;
                 
                 .checkbox-gender{
@@ -236,6 +289,7 @@
                 background-color: white;
                 color: #8C8C8C;
                 font-size: 1rem;
+                
             }
             .info-part > input {
                 width: 95%;
@@ -259,19 +313,22 @@
         .date-status-container {
             display: flex;
             flex-direction: row;
-            // justify-content: space-between;
+            justify-content: space-between;
             font-size: 1rem;
             width: 90%;
             margin-top: 1rem;
             padding-left: 4%;
             padding-right: 6%;
             padding-bottom: 1rem;
-            .date {
-                width: 100%;
+            font-size: 0.7rem;
+
+
+            * {
+                width: fit-content;
                 color: #8C8C8C;
+                display: inline-block;
             }
-            .status {
-                width: 100%;
+            #status {
                 color: green;
                 text-align: right;
             }

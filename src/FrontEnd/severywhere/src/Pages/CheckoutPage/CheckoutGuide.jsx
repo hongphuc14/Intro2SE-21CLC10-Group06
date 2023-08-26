@@ -30,7 +30,7 @@ const CheckoutGuide = () => {
       };
 
     const [date, setDate] = useState(0);
-    const [session, setSession] = useState(1);
+    const [session, setSession] = useState("");
     const [meeting, setMeeting] = useState("");
   
     useEffect(() => {
@@ -60,13 +60,15 @@ const CheckoutGuide = () => {
                 booking_date: formatDate(new Date()),
                 price: info.price
             }
+            console.log(obj)
             dispatch(bookGuide(tourist_info.id_tourist, obj))
 
             window.history.replaceState(null, null, "/");
-            window.location.href = "/editprofile"
+            window.location.href = "/myguide"
         }
     }
 
+    console.log(info.times)
     return (  
         <div id="checkout-guide-page">
             <HeaderGuest/>
@@ -127,15 +129,15 @@ const CheckoutGuide = () => {
                             </div>
                             <div class="info-part special">
                                 Select the session you want to book
-                                <select name = "session" onChange = {(e) => {setSession(parseInt(e.target.value))}}>
+                                <select name = "session" onClick = {(e) => {console.log(e.target.value); setSession(parseInt(e.target.value))}}>
                                 {
-                                    info.times[date].sessions.includes(1) && <option value = {1} name = "Morning">Morning (7:00 - 11:00)</option>
+                                    info.times[date].sessions.includes(1) && <option value = {1}>Morning (7:00 - 11:00)</option>
                                 }
                                 {
-                                    info.times[date].sessions.includes(2) && <option value = {1} name = "Afternoon">Afternoon (13:00 - 17:00)</option>
+                                    info.times[date].sessions.includes(2) && <option value = {2}>Afternoon (13:00 - 17:00)</option>
                                 }
                                 {
-                                    info.times[date].sessions.includes(3) && <option value = {1} name = "Evening">Evening (18:00 - 21:00)</option>
+                                    info.times[date].sessions.includes(3) && <option value = {3}>Evening (18:00 - 21:00)</option>
                                 }
                                 </select>
                             </div>
@@ -186,12 +188,12 @@ const CheckoutGuide = () => {
                     <p>SUMMARY</p>
                     <div class="price">
                         <p>Price:</p>
-                        <p>${session * info.price}</p>
+                        <p>${info.price}</p>
                     </div>
                     <div class="horizontal-line"></div>
                     <div class="total">
                         <p>Total:</p>
-                        <p>${session * info.price}</p>
+                        <p>${info.price}</p>
                     </div>
                     <ButtonUploadFreelancer title = "CONFIRM" className = "button-save" onClick = {handleConfirm}/>
                 </div>

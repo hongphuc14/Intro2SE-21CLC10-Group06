@@ -72,7 +72,7 @@ const  CheckoutPage= () => {
         dispatch(bookTour(tourist_info.id_tourist, obj))
 
         window.history.replaceState(null, null, "/");
-        window.location.href = "/editprofile"
+        window.location.href = "/mytours"
         
     }
 
@@ -110,7 +110,7 @@ const  CheckoutPage= () => {
                                         <i class="fa-solid fa-dollar-sign"></i>
                                         <div class="tourcontent_co">
                                             <p class="sub_title"> Cost</p>
-                                            <p class="sub_val">${info.price}</p>
+                                            <p class="sub_val">{info.price}</p>
                                         </div>
                                     </div>
                                     <div id="tour_subinfo">

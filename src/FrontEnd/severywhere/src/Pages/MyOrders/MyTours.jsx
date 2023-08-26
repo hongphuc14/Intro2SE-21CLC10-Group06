@@ -1,13 +1,13 @@
 import "./MyTours.scss"
 import Sidebar from "../../Components/SideNavBar/NavBar"
 import HeaderGuest from "../../Components/Header/HeaderGuest"
-import Footer from "../../Components/Footer/Footer"
+// import Footer from "../../Components/Footer/Footer"
 import placeholder from '../../placeholder-image.png'
 import { ButtonUploadFreelancer } from "../../Components/Button/ButtonFreelancer"
 
 import {Link, useLocation} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import {getTouristInfo, getTourBooking, cancelTour, updateReview} from '../../redux/actions/TouristAction'
+import {getTouristInfo, getTourBooking, cancelTour, updateTourReview} from '../../redux/actions/TouristAction'
 import { useEffect,useState } from 'react';
 
 const MyTours = () => {
@@ -21,7 +21,8 @@ const MyTours = () => {
     },[] )
 
     useEffect(() => {
-        dispatch(getTourBooking(tourist_info.id_tourist))
+        if (tourist_info.id_tourist)
+            dispatch(getTourBooking(tourist_info.id_tourist))
     },[tourist_info.id_tourist] )
   
     const importPhoto = (filename) => {
@@ -73,28 +74,37 @@ const MyTours = () => {
             return "Canceled"
     }
 
-    const cancelTour = (id_tour_booking) => {
-        // dispatch(cancelTour(id_tour_booking))
+    const handleCancelTour = (id_tour_booking) => {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const date = `${year}-${month}-${day}`;
+
+        dispatch(cancelTour(tourist_info.id_tourist, {id_tour_booking: id_tour_booking, cancel_date: date}))
     }
 
     const [no, setNo] = useState(0)
     const [isReport, setIsReport] = useState(false)
     const [report, setReport] = useState("")
+
+    const [rating, setRating] = useState(0);
+    const handleRatingChange = (selectedRating) => {
+      setRating(selectedRating);
+    };
+
     const saveReport = () => {
-      if (report === "")
-        alert ("Please don't leave an empty report or press the Back button.")
-      else{
         const currentDate = new Date();
         const year = currentDate.getFullYear();
         const month = String(currentDate.getMonth() + 1).padStart(2, '0');
         const day = String(currentDate.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
+        const date = `${year}-${month}-${day}`;
   
-        console.log(report)
-        dispatch(updateReview(no, {report, formattedDate}))
+        // console.log(report)
+        dispatch(updateTourReview(tourist_info.id_tourist, {id_tour_booking: no, review: report, date, rating}))
         setIsReport(false)
         setReport("")
-      }
+        setRating(0)
     }
 
     return (
@@ -107,9 +117,21 @@ const MyTours = () => {
                     <div className = "report-section">
                         <div className = "report">
                         <p>Review</p>
-                        {/* /rating */}
+                        <div className = "select-rating">
+                            {[1, 2, 3, 4, 5].map((value) => (
+                            <label key={value}>
+                                <input type="radio"name="rating"
+                                value={value}
+                                checked={rating === value}
+                                onChange={() => handleRatingChange(value)}
+                                style={{ display: 'none' }}
+                                />
+                                {rating >= value ? <i className="fas fa-star"></i> : <i className="far fa-star"></i>}
+                            </label>
+                            ))}
+                        </div>
                         <textarea value = {report} onChange = {(e) => {setReport(e.target.value)}}></textarea>
-                        <ButtonUploadFreelancer className = "button-save" title = "BACK" onClick = {() => {setIsReport(false); setReport("")}}/>
+                        <ButtonUploadFreelancer className = "button-save" title = "BACK" onClick = {() => {setIsReport(false); setReport(""); setRating(0)}}/>
                         <ButtonUploadFreelancer className = "button-upload" title = "COMMIT" onClick = {saveReport}/>
                         </div>
                     </div>
@@ -121,7 +143,7 @@ const MyTours = () => {
                     </div>
                     {
                     tour_booking.map(book => {
-                        console.log(book)
+                        // console.log(book)
                         return(
                         <>
                             <div key={book.id_tour_booking} className="tour_one">
@@ -130,11 +152,11 @@ const MyTours = () => {
                                     <div id="tour-name">
                                         <h2>{book.name}</h2> 
                                         {
-                                            (book.status === 1) && (isCompleted (book.start_date, book.end_date) === -1) && 
-                                            (<button onClick = {() => {cancelTour(book.id_tour_booking)}}>Cancel</button>)
+                                            (book.status === 1) && (isCompleted (book.start_date, book.end_date, book.booking_date) === -1) && 
+                                            (<button onClick = {() => {handleCancelTour(book.id_tour_booking)}}>Cancel</button>)
                                         }
                                         {
-                                            (book.status === 1) && (isCompleted (book.start_date, book.end_date) === 1) && 
+                                            (book.status === 1) && (isCompleted (book.start_date, book.end_date, book.booking_date) === 1) && 
                                             (<button onClick = {() => {setNo(book.id_tour_booking); setIsReport(true)}}>Review</button>)
                                         }
                                     </div>

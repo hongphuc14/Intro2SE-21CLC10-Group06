@@ -59,8 +59,12 @@ export class TouristService extends baseService {
       return this.put(`tourist/cancelGuide/${id_tourist}`, obj);
     };
 
-    updateReview = (id_tourist, obj) => {
-      return this.put(`tourist/updateReview/${id_tourist}`, obj);
+    updateTourReview = (id_tourist, obj) => {
+      return this.put(`tourist/updateTourReview/${id_tourist}`, obj);
+    };
+
+    updateGuideReview = (id_tourist, obj) => {
+      return this.put(`tourist/updateGuideReview/${id_tourist}`, obj);
     };
 
   }

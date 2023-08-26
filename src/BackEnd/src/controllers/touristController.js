@@ -298,7 +298,8 @@ const getGuideSearch = async(req, res) =>{
                         let result = await model.guide_time.findAll({
                             where:{
                                 id_guide: guide.id_guide,
-                                guide_date: time.guide_date
+                                guide_date: time.guide_date,
+                                is_available: true,
                             }
                         })
 
@@ -306,8 +307,9 @@ const getGuideSearch = async(req, res) =>{
                         freetime.push({date: time.guide_date, sessions: sessions})
                     }
                 
-                    data.push({...guide, language: [...id_lang], attractions: [...attraction], 
-                    reviews: [...reviews], times: [...freetime] });
+                    if (freetime.length > 0)
+                        data.push({...guide, language: [...id_lang], attractions: [...attraction], 
+                        reviews: [...reviews], times: [...freetime] });
                     // data.push(...freetime)
                 }   
             }
@@ -556,23 +558,20 @@ const getGuideBooking = async(req, res) =>{
     try{
         let { id_tourist } = req.params;
 
-        const [tour, metadata] = await sequelize.query
-            (`SELECT *
-            FROM tour_booking 
-            INNER JOIN tour ON tour.id_tour = tour_booking.id_tour
-            INNER JOIN tour_photo ON tour.id_tour = tour_photo.id_tour
-            WHERE tour_booking.id_tourist = ${id_tourist} AND tour_booking.status = 1`);
+        const [booking, metadata] = await sequelize.query
+            (`SELECT tour_guide.fullname, tour_guide.experience, tour_guide.avatar, 
+            destination.name as destination, tour_guide.price_per_session, 
+            guide_time.guide_date, guide_time.guide_session, guide_booking.id_guidebooking,
+            guide_booking.meeting_point, guide_booking.price, guide_booking.status,
+            guide_booking.booking_date, guide_review.reply, guide_review.rating
+            FROM guide_booking 
+            INNER JOIN guide_time ON guide_booking.id_guidetime = guide_time.id_guidetime
+            INNER JOIN tour_guide ON tour_guide.id_guide = guide_time.id_guide
+            INNER JOIN destination ON tour_guide.id_des = destination.id_des
+            LEFT JOIN guide_review ON guide_review.id_guidebooking = guide_booking.id_guidebooking
+            WHERE guide_booking.id_tourist = ${id_tourist}`);
 
-        // const [guide, meta] = await sequelize.query
-        //     (`SELECT *
-        //     FROM guide_booking 
-        //     INNER JOIN guide_time ON guide_time.id_guidetime = guidebooking.id_guidetime
-        //     INNER JOIN tour_guide ON tour_guide.id_guide = guide_time.id_guide
-        //     WHERE guide_booking.id_tourist = ${id_tourist} AND 
-        //     (tour_booking.status = 1 OR tour_booking.status = 5 )`);
-
-        // let data = {tour: [...tour], guide: [...guide]}
-        sucessCode(res,tour,"Get thanh cong")
+        sucessCode(res,booking,"Get thanh cong")
     }catch(err){
         errorCode(res,"Lỗi BE")
     }
@@ -601,33 +600,69 @@ const getTourBooking = async(req, res) =>{
     }
 } 
 
-const updateReview = async(req, res) =>{
+const updateTourReview = async(req, res) =>{
     try{
-        let { destination, rating, price } = req.params;
+        let { id_tourist } = req.params;
+        let {review, date, id_tour_booking, rating } = req.body;
 
-        const [tour_search, metadata] = await sequelize.query
-            (`SELECT tour.id_tour
-            FROM tour 
-            INNER JOIN tour_booking ON tour.id_tour = tour_booking.id_tour
-            INNER JOIN tour_review ON tour_review.id_tour_booking = tour_booking.id_tour_booking
-            WHERE tour.is_deleted = 0 AND tour.id_des = ${destination} AND
-            tour.price <= ${price}
-            GROUP BY tour.id_tour
-            HAVING ${rating} <= AVG(tour_review.rating) AND AVG(tour_review.rating) < ${rating + 1}`);
-
-        const id_search = []
-        for (const item of tour_search){
-            id_search.push(item.id_tour)
-        }
-
-        let data = await model.tour.findAll({
+        let booking = await model.tour_review.findOne({
             where:{
-                id_tour: {
-                    [Op.in]: id_search
-                }
+                id_tour_booking
             }
         })
-        sucessCode(res,data,"Get thanh cong")
+        if(booking)
+            await model.tour_review.update({
+                review_date: date,
+                review,
+                rating
+            },{
+                where:{
+                    id_tour_booking
+                }
+            })
+        else{
+            await model.tour_review.create({
+                review_date: date,
+                review,
+                rating,
+                id_tour_booking
+            })
+        }
+        sucessCode(res,"","Review successfully")
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+const updateGuideReview = async(req, res) =>{
+    try{
+        let { id_tourist } = req.params;
+        let {review, date, id_guidebooking, rating } = req.body;
+
+        let booking = await model.guide_review.findOne({
+            where:{
+                id_guidebooking
+            }
+        })
+        if(booking)
+            await model.guide_review.update({
+                review_date: date,
+                review,
+                rating
+            },{
+                where:{
+                    id_guidebooking
+                }
+            })
+        else{
+            await model.guide_review.create({
+                review_date: date,
+                review,
+                rating,
+                id_guidebooking
+            })
+        }
+        sucessCode(res,"","Review successfully")
     }catch(err){
         errorCode(res,"Lỗi BE")
     }
@@ -635,4 +670,4 @@ const updateReview = async(req, res) =>{
 
 module.exports = { getInfoByID, updateInfoByID, updatePwdByID, updateAvatar,
     getTourSearch, getGuideSearch, reportTour, reportGuide, bookTour, bookGuide,
-    cancelGuide, cancelTour, getGuideBooking, getTourBooking, updateReview }
+    cancelGuide, cancelTour, getGuideBooking, getTourBooking, updateGuideReview, updateTourReview }

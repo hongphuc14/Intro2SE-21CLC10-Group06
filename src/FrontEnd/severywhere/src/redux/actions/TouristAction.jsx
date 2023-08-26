@@ -233,33 +233,45 @@ export const getGuideBooking = (id_tourist) => {
   };
 };
 
-export const cancelTour = (id_tourist, id_tour_booking) => {
+export const cancelTour = (id_tourist, obj) => {
   return async (dispatch) => {
     try {
-      const obj = {
-        id_tour_booking: id_tour_booking
-      }
       await touristService.cancelTour(id_tourist, obj);
-      // if (result.status === 200) {
-      //   dispatch({
-      //     type: GET_TOUR_BOOKING,
-      //     tour_booking: result.data.content,
-      //   });
-      //   dispatch(hideLoadingAction);
-      // }
-    } catch (error) {
-      console.log("error", error.response);
-    }
-  }
-}
-
-export const cancelGuide = (id_tourist, id_guidebooking) => {
-  return async (dispatch) => {
-    try {
-      const obj = {
-        id_guidebooking: id_guidebooking
+      const result = await touristService.getTourBooking(id_tourist);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_TOUR_BOOKING,
+          tour_booking: result.data.content,
+        });
       }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+}
+
+export const cancelGuide = (id_tourist, obj) => {
+  return async (dispatch) => {
+    try {
       await touristService.cancelGuide(id_tourist, obj);
+      const result = await touristService.getGuideBooking(id_tourist);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_BOOKING,
+          guide_booking: result.data.content,
+        });
+      }
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  }
+}
+
+export const updateTourReview = (id_tourist, obj) => {
+  return async (dispatch) => {
+    try {
+      console.log(obj)
+      await touristService.updateTourReview(id_tourist, obj);
       // if (result.status === 200) {
       //   dispatch({
       //     type: GET_TOUR_BOOKING,
@@ -273,17 +285,18 @@ export const cancelGuide = (id_tourist, id_guidebooking) => {
   }
 }
 
-export const updateReview = (id_tourist, obj) => {
+export const updateGuideReview = (id_tourist, obj) => {
   return async (dispatch) => {
     try {
-      await touristService.updateReview(id_tourist, obj);
-      // if (result.status === 200) {
-      //   dispatch({
-      //     type: GET_TOUR_BOOKING,
-      //     tour_booking: result.data.content,
-      //   });
-      //   dispatch(hideLoadingAction);
-      // }
+      console.log(obj)
+      await touristService.updateGuideReview(id_tourist, obj);
+      const result = await touristService.getGuideBooking(id_tourist);
+      if (result.status === 200) {
+        dispatch({
+          type: GET_GUIDE_BOOKING,
+          guide_booking: result.data.content,
+        });
+      }
     } catch (error) {
       console.log("error", error.response);
     }
