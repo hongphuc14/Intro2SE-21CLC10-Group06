@@ -865,7 +865,6 @@ const getFreelancerAttraction = async(req,res) =>{
 
 //GET: get freelancer licenses by id_guide
 const getFreelancerLicensesByIDGuide = async(req, res) =>{
-    console.log("first")
     const fs = require('fs').promises;
     const path = require('path');
     try{
@@ -897,7 +896,6 @@ const getFreelancerLicensesByIDGuide = async(req, res) =>{
             });
             const licenseResults = await Promise.all(licensePromises);
             const validLicenses = licenseResults.filter(image => image !== null);
-            //console.log(validLicenses);     // Lọc bỏ các phần tử null
             res.send(validLicenses); 
         }
         else{
@@ -960,6 +958,132 @@ const getArrTour = async(req,res) =>{
     res.send(dataTour);
 }
 
+//GET: get tour info by id_tour
+const getTourByID = async(req, res) =>{
+    try{
+        let { id_tour } = req.params;
+        let checkTour = await model.tour.findOne({
+            where:{
+                id_tour
+            }
+        });
+        if(checkTour){
+            let data = await model.tour.findOne({
+                where:{
+                    id_tour
+                }
+            });
+            sucessCode(res,data,"Lấy thành công");
+        }
+        else{
+            failCode(res,"","Freelancer không tồn tại");
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+} 
+
+//GET: get tour booking
+const getTourBooking = async(req,res) =>{
+    let { id_tour } = req.params;
+    let checkBooking = await model.tour_booking.findAll({
+        where:{
+            id_tour
+        }
+    });
+    if(checkBooking){
+        let dataBooking = await model.tour_booking.findAll({
+            where:{
+                id_tour
+            },
+            include:["tour_review"]
+        })
+        res.send(dataBooking);
+    }
+}
+
+//GET: get tour photo
+const getTourPhoto = async(req, res) =>{
+    const fs = require('fs').promises;
+    const path = require('path');
+    try{
+        let { id_tour } = req.params;
+        let checkPhoto = await model.tour_photo.findAll({
+            where:{
+                id_tour
+            }
+        });
+        if(checkPhoto){
+            let dataPhotos = await model.tour_photo.findAll({
+                where:{
+                    id_tour
+                }
+            });
+            
+            const photoPromises = dataPhotos.map(async (data) => {
+                if (data.photo_path){
+                    const imagePath = '/home/phuc/Projects/Project/Intro2SE-21CLC10-Group06/src/BackEnd/public/tour_photo/' + data.photo_path;
+                    try {
+                        const fileData = await fs.readFile(imagePath);
+                        const imageDataBase64 = Buffer.from(fileData).toString('base64');
+                        const imageBase64Url = `data:image/png;base64,${imageDataBase64}`;
+                        return imageBase64Url;
+                    } catch (error) {
+                        console.error('Error reading image file:', err);
+                        return null;
+                    }
+                }
+            });
+            const photoResults = await Promise.all(photoPromises);
+            const validPhotos = photoResults.filter(image => image !== null);
+            res.send(validPhotos); 
+        }
+        else{
+            failCode(res,"","Tour không tồn tại");
+        } 
+    }catch(err){
+        errorCode(res,"Lỗi BE")
+    }
+}
+
+//GET: get tour booking by id
+const getTourBookingByID = async(req,res) =>{
+    let { id_tour } = req.params;
+    let checkBooking = await model.tour_booking.findOne({
+        where:{
+            id_tour
+        }
+    });
+    if(checkBooking){
+        let dataBooking = await model.tour_booking.findOne({
+            where:{
+                id_tour
+            },
+            include:["tour_review"]
+        })
+        res.send(dataBooking);
+    }
+}
+
+//GET: get guide booking
+const getGuideBooking = async(req,res) =>{
+    let { id_guide_booking } = req.params;
+    let checkBooking = await model.guide_booking.findOne({
+        where:{
+            id_guide_booking
+        }
+    });
+    if(checkBooking){
+        let dataBooking = await model.guide_booking.findOne({
+            where:{
+                id_guide_booking
+            },
+            include: ["guide_review"]
+        })
+        res.send(dataBooking);
+    }
+}
+
 module.exports = { getInfoByID, updateInfoByID, updatePwdByID, uploadAdmin, getAvatarByID,
     getArrGuideLicense, getArrCompanyLicense, getGuideLicense, getCompanyLicense, updateCompanyLicenseStatus,
     updateFreelancerLicenseStatus, getArrGuideBooking, getArrTourBooking, getArrTourist, getArrCompany,
@@ -967,4 +1091,5 @@ module.exports = { getInfoByID, updateInfoByID, updatePwdByID, uploadAdmin, getA
     deleteTourReport, updateGuideReportStatus, deleteGuideReport, updateTourReviewReportStatus, deleteTourReviewReport,
     updateGuideReviewReportStatus, deleteGuideReviewReport, getTouristByID, getTouristGuideBooking, getTouristTourBooking,
     getCompanyByID, getCompanyTour, getCompanyLicensesByIDCompany, getFreelancerByID, getFreelancerAttraction,
-    getFreelancerLicensesByIDGuide, getFreelancerTime, getFreelancerLanguage, getArrTour }
+    getFreelancerLicensesByIDGuide, getFreelancerTime, getFreelancerLanguage, getArrTour, getTourByID, getTourBooking,
+    getTourPhoto, getTourBookingByID, getGuideBooking }

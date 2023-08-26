@@ -24,6 +24,10 @@ import CompanyDetails from './Pages/Admin/Users/Companies/CompanyDetails';
 import FreelancerListing from './Pages/Admin/Users/Freelancers/FreelancerListing';
 import FreelancerDetails from './Pages/Admin/Users/Freelancers/FreelancerDetails';
 import TourListing from './Pages/Admin/Tours/TourListing';
+import TourDetails from './Pages/Admin/Tours/TourDetails';
+import BookingListing from './Pages/Admin/Bookings/BookingListing';
+import BookingGuideDetails from './Pages/Admin/Bookings/BookingGuideDetails';
+import BookingTourDetails from './Pages/Admin/Bookings/BookingTourDetails';
 
 export const history = createBrowserHistory();
 function App(){
@@ -77,6 +81,10 @@ function App(){
               <AdminTemplate path="/freelancers-admin" exact Component={FreelancerListing}/>
               <AdminTemplate path="/freelancers-admin/:id_guide" exact Component={FreelancerDetails}/>
               <AdminTemplate path="/tours-admin" exact Component={TourListing}/>
+              <AdminTemplate path="/tours-admin/:id_tour" exact Component={TourDetails}/>
+              <AdminTemplate path="/bookings-admin" exact Component={BookingListing}/>
+              <AdminTemplate path="/bookings-admin/guide/:id_guide_booking" exact Component={BookingGuideDetails}/>
+              <AdminTemplate path="/bookings-admin/tour/:id_tour" exact Component={BookingTourDetails}/>
               </>
             )
           }
@@ -85,15 +93,5 @@ function App(){
     </Router>
   );
 }
-// One of your dependencies, babel-preset-react-app, is importing the
-// "@babel/plugin-proposal-private-property-in-object" package without
-// declaring it in its dependencies. This is currently working because
-// "@babel/plugin-proposal-private-property-in-object" is already in your
-// node_modules folder for unrelated reasons, but it may break at any time.
 
-// babel-preset-react-app is part of the create-react-app project, which
-// is not maintianed anymore. It is thus unlikely that this bug will
-// ever be fixed. Add "@babel/plugin-proposal-private-property-in-object" to
-// your devDependencies to work around this error. This will make this message
-// go away.
 export default App;

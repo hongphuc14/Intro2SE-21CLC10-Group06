@@ -18,7 +18,7 @@ function ProfileAdmin(props){
         phone: admin_info.phone,
         birthday: moment(admin_info.birthday).format("YYYY-MM-DD"),
         gender: admin_info.gender
-    }); // State to hold updated admin information
+    }); 
     const [avatar, setAvatar] = useState(null);
     const [passwordData, setPasswordData] = useState({
         c_password: "",
@@ -37,11 +37,9 @@ function ProfileAdmin(props){
     };
     const handleUploadAvatar = async(e) =>{
         const selectedFile = e.target.files[0];
-        console.log("avatar: ", selectedFile);
         if(selectedFile){
             const formData = new FormData();
             formData.append("dataUpload", selectedFile);
-            console.log("formdData: ", formData);
             try {
                 const result = await dispatch(uploadAdminAvatarAction(admin_info.id_admin, formData));
                 setAvatar(selectedFile);

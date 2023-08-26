@@ -25,6 +25,7 @@ export const AdminTemplate = (props) => {
     }, [selectedMenuItem]);
 
     const handleSetMenu = (selectedMenuItem) =>{
+        console.log("menu")
         dispatch(updateSelectedMenuItemAction(selectedMenuItem));
         window.location.reload();
     }
@@ -56,14 +57,14 @@ export const AdminTemplate = (props) => {
             icon: <i className="fa-solid fa-list"></i>,
             title: 'TOURS',
             link: '/tours-admin',
-            onClick: handleSetMenu("tours-admin")
+            onClick: () => handleSetMenu("tours-admin")
         },
         {
-            key: 'booking',
+            key: 'bookings',
             icon: <i className="fa-solid fa-receipt"></i>,
             title: 'BOOKING',
             link: '/bookings-admin',
-            onClick: handleSetMenu("bookings-admin")
+            onClick: () => handleSetMenu("bookings-admin")
         },
         {
             key: 'profile-admin',
@@ -77,7 +78,7 @@ export const AdminTemplate = (props) => {
             icon: <i className="fa-solid fa-right-from-bracket"></i>,
             title: 'LOGOUT',
             link: 'edit-profile',
-            onClick: handleLogout
+            onClick: () => handleLogout()
         },
     ];
     

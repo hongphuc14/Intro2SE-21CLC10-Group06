@@ -7,7 +7,7 @@ import { UPDATE_SELECTED_MENU_ITEM, UPDATE_SELECTED_SUB_MENU_ITEM, GET_ADMIN_INF
         GET_ARR_GUIDE_REPORT, GET_ARR_TOUR_REPORT, GET_TOURIST_INFO_BY_ID_TOURIST, GET_TOURIST_GUIDE_BOOKING, GET_TOURIST_TOUR_BOOKING,
         GET_COMPANY_INFO_BY_ID_COMPANY, GET_COMPANY_TOUR_BY_ID_COMPANY, GET_COMPANY_LICENSES_BY_ID_COMPANY, GET_FREELANCER_INFO_BY_ID_GUIDE,
         GET_FREELANCER_ATTRACTION_BY_ID_GUIDE, GET_FREELANCER_LICENSES_BY_ID_GUIDE, GET_FREELANCER_TIME_BY_ID_GUIDE, GET_FREELANCER_LANGUAGE,
-        GET_ARR_TOUR } from "../types";
+        GET_ARR_TOUR, GET_TOUR, GET_TOUR_BOOKING, GET_TOUR_PHOTO, GET_GUIDE_BOOKING } from "../types";
 import { USER_LOGIN } from "../../util/config";
 
 export const updateSelectedMenuItemAction = (selectedMenuItem) => {
@@ -673,3 +673,71 @@ export const getArrTourAction = () => {
         }
     };
 };
+
+//Api 41: get tour
+export const getTourByIDAction = (id_tour) =>{
+    return async(dispatch) => {
+        try {
+            const result = await adminService.getTourByID(id_tour);
+            if (result.status === 200){
+                dispatch({
+                    type: GET_TOUR,
+                    tour_info: result.data.content
+                });
+            }
+        } catch (error) {
+            console.log("error", error.response);
+        }
+    };
+}
+
+//Api 42: get tour booking
+export const getTourBookingAction = (id_tour) =>{
+    return async(dispatch) => {
+        try {
+            const result = await adminService.getTourBooking(id_tour);
+            if (result.status === 200){
+                dispatch({
+                    type: GET_TOUR_BOOKING,
+                    tour_booking: result.data
+                });
+            }
+        } catch (error) {
+            console.log("error", error.response);
+        }
+    };
+}
+
+//Api 43: get tour photo
+export const getTourPhotoAction = (id_tour) =>{
+    return async(dispatch) => {
+        try {
+            const result = await adminService.getTourPhoto(id_tour);
+            if (result.status === 200){
+                dispatch({
+                    type: GET_TOUR_PHOTO,
+                    tour_photo: result.data
+                });
+            }
+        } catch (error) {
+            console.log("error", error.response);
+        }
+    };
+}
+
+//Api 45: get guide booking
+export const getGuideBookingAction = (id_guide_booking) =>{
+    return async(dispatch) => {
+        try {
+            const result = await adminService.getGuideBooking(id_guide_booking);
+            if (result.status === 200){
+                dispatch({
+                    type: GET_GUIDE_BOOKING,
+                    guide_booking: result.data
+                });
+            }
+        } catch (error) {
+            console.log("error", error.response);
+        }
+    };
+}

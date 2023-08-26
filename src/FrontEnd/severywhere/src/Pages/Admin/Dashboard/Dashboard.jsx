@@ -175,7 +175,7 @@ function Dashboard(props){
 
     //report tour/guide review action
     const ViewReportTourReview = () =>{
-        history.push("/booking-admin");   //navigate tới trang booking rồi tìm kiếm tour bằng id_tour_booking
+        history.push("/bookings-admin");   //navigate tới trang booking rồi tìm kiếm tour bằng id_tour_booking
         window.location.reload();
     }
     const ValidTourReviewReport = async (id_tour_booking) =>{
@@ -186,7 +186,7 @@ function Dashboard(props){
     }
 
     const ViewReportGuideReview = () =>{
-        history.push("/booking-admin");   //navigate tới trang booking rồi tìm kiếm guide bằng id_guide_booking
+        history.push("/bookings-admin");   //navigate tới trang booking rồi tìm kiếm guide bằng id_guide_booking
         window.location.reload();
     }
     const ValidGuideReviewReport = async (id_guide_booking) =>{

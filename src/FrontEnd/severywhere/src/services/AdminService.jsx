@@ -205,6 +205,30 @@ export class AdminService extends baseService {
         return this.get(`admin/getArrTour`);
     }
     
+    // Api 41: get tour info
+    getTourByID = ( id_tour ) =>{
+        return this.get(`admin/getTourByID/${id_tour}`);
+    }
+
+    // Api 42: get tour booking
+    getTourBooking = ( id_tour ) =>{
+        return this.get(`admin/getTourBooking/${id_tour}`);
+    }
+
+    // Api 43: get tour photo
+    getTourPhoto = ( id_tour ) =>{
+        return this.get(`admin/getTourPhoto/${id_tour}`);
+    }
+
+    // Api 44: get tour booking
+    getTourBookingByID = ( id_tour ) =>{
+        return this.get(`admin/getTourBookingByID/${id_tour}`);
+    }
+
+    //Api 45: get guide booking
+    getGuideBooking = (id_guide_booking) =>{
+        return this.get(`admin/getGuideBooking/${id_guide_booking}`);
+    }
 }
 
 export const adminService = new AdminService();

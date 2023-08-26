@@ -9,7 +9,7 @@ const { getInfoByID, updateInfoByID, updatePwdByID, uploadAdmin, getAvatarByID,
         updateGuideReviewReportStatus, deleteGuideReviewReport, getTouristByID, getTouristGuideBooking, 
         getTouristTourBooking, getCompanyByID, getCompanyTour, getCompanyLicensesByIDCompany, getFreelancerByID,
         getFreelancerAttraction, getFreelancerLicensesByIDGuide, getFreelancerTime, getFreelancerLanguage,
-        getArrTour } = require('../controllers/adminController')
+        getArrTour, getTourByID, getTourBooking, getTourPhoto, getTourBookingByID, getGuideBooking } = require('../controllers/adminController')
 const { upload } = require('../middlewares/upload');
 const { verifyToken } = require("../middlewares/baseToken");
 
@@ -132,5 +132,20 @@ adminRoute.get("/getFreelancerLanguage/:id_guide", verifyToken, getFreelancerLan
 
 //GET: get array tour
 adminRoute.get("/getArrTour", verifyToken, getArrTour);
+
+//GET: get tour by id_tour
+adminRoute.get("/getTourByID/:id_tour", verifyToken, getTourByID);
+
+//GET: get tour booking
+adminRoute.get("/getTourBooking/:id_tour", verifyToken, getTourBooking);
+
+//GET: get tour photo
+adminRoute.get("/getTourPhoto/:id_tour", verifyToken, getTourPhoto);
+
+//GET: get tour booking by id_tour
+adminRoute.get("/getTourBookingByID/:id_tour", verifyToken, getTourBookingByID);
+
+//GET: get guide booking
+adminRoute.get("/getGuideBooking/:id_guide_booking", verifyToken, getGuideBooking);
 
 module.exports = adminRoute;
