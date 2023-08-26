@@ -67,6 +67,10 @@ export class TouristService extends baseService {
       return this.put(`tourist/updateGuideReview/${id_tourist}`, obj);
     };
 
+    updateTouristPassword = (id_tourist, obj) => {
+      return this.put(`tourist/updatePwd/${id_tourist}`, obj);
+    }
+
   }
   
   export const touristService = new TouristService();

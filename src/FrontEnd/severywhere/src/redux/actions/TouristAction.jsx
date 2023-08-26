@@ -303,20 +303,20 @@ export const updateGuideReview = (id_tourist, obj) => {
   }
 }
 
-// export const updateTouristPassword = (id_tourist,currentPass, newPass) => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(displayLoadingAction);
-//       const obj = {c_password: currentPass, n_password: newPass};
-//       const result = await touristService.updateTouristPassword(id_tourist, obj);
-//       if (result.status === 200) {
-//         dispatch(hideLoadingAction);
-//         alert('Update password successfulort');
-//       }
-//     } catch (error) {
-//       console.log("error", error.response);
-//       alert('The current password is incorrect');
-//     }
-//   };
-// };
+export const updateTouristPassword = (id_tourist,currentPass, newPass) => {
+  return async (dispatch) => {
+    try {
+      dispatch(displayLoadingAction);
+      const obj = {c_password: currentPass, n_password: newPass};
+      const result = await touristService.updateTouristPassword(id_tourist, obj);
+      if (result.status === 200) {
+        dispatch(hideLoadingAction);
+        alert('Update password successfully');
+      }
+    } catch (error) {
+      console.log("error", error.response);
+      alert('The current password is incorrect');
+    }
+  };
+};
 

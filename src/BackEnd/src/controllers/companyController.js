@@ -108,8 +108,8 @@ const updatePwdByID = async(req, res) =>{
             }
         });
         if(checkcompany){
-            let checkPass = bcrypt.compareSync(c_password, checkcompany.password);
-            if(checkPass){
+            // let checkPass = bcrypt.compareSync(c_password, checkcompany.password);
+            // if(checkPass){
                 let passWordHash = bcrypt.hashSync(n_password, 10);
                 await model.company.update({ 
                     password:passWordHash
@@ -124,10 +124,10 @@ const updatePwdByID = async(req, res) =>{
                     }
                 });
                 sucessCode(res,"","Update thành công")
-            }
-            else{
-                failCode(res,"","Mật khẩu không đúng")
-            }
+            // }
+            // else{
+            //     failCode(res,"","Mật khẩu không đúng")
+            // }
         }
         else{
             failCode(res,"","Company không tồn tại")

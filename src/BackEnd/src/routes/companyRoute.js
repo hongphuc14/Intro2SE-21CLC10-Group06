@@ -22,7 +22,7 @@ companyRoute.post("/updateAvatar/:id_company", verifyToken, upload('company_avat
 companyRoute.put("/deleteAvatar/:id_company", verifyToken, deleteAvatarByID);
 
 //PUT: update company password by id_company
-companyRoute.put("/updatePwd/:id_company", verifyToken, updatePwdByID);
+companyRoute.put("/updatePwd/:id_company", updatePwdByID);
 
 // PUT: delete company license by id_company
 companyRoute.put("/deleteLicense/:id_company", verifyToken, deleteLicenseByID);
